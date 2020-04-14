@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CppAst" Version="0.6.0" />
+    <PackageReference Include="CppAst" Version="0.6.0">
+      <ExcludeAssets Condition="$([MSBuild]::IsOSPlatform(OSX))">native</ExcludeAssets>
+    </PackageReference>
+    <PackageReference Condition="$([MSBuild]::IsOSPlatform(OSX))" Include="libclang.runtime.osx-x64" Version="10.0.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.3.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.3.1" />
   </ItemGroup>

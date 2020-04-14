@@ -169,6 +169,18 @@ namespace CefGen
 					File.WriteAllText(Path.Combine(temp, "include", "internal", "cef_types_win.h"), content, Encoding.UTF8);
 				}
 			}
+			else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+			{
+				string path = Path.Combine(basePath, "include", "internal", "cef_types_mac.h");
+				if (File.Exists(path))
+				{
+					string content = File.ReadAllText(path, Encoding.UTF8);
+					content = content.Replace("#define cef_cursor_handle_t void*", "typedef void* HCURSOR;\n#define cef_cursor_handle_t HCURSOR");
+					content = content.Replace("#define cef_window_handle_t void*", "typedef void* HWND;\n#define cef_window_handle_t HWND");
+					content = content.Replace("#define cef_event_handle_t void*", "typedef void* CefEventHandle;\n#define cef_event_handle_t CefEventHandle");
+					File.WriteAllText(Path.Combine(temp, "include", "internal", "cef_types_mac.h"), content, Encoding.UTF8);
+				}
+			}
 			return temp;
 		}
 
@@ -193,7 +205,17 @@ namespace CefGen
 			{
 				options.Defines.Add("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH");
 			}
-
+			else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+			{
+				//options.TargetCpu = CppTargetCpu.X86_64;
+				options.TargetSystem = "darwin";
+				options.TargetVendor = "apple";
+				options.SystemIncludeFolders.Add("/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include");
+				options.SystemIncludeFolders.Add("/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1");
+				options.SystemIncludeFolders.Add("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include");
+				options.SystemIncludeFolders.Add("/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include");
+				options.AdditionalArguments.Add("-stdlib=libc++");
+			}
 
 			var nativeBuild = new NativeCefApiBuilder(onlyStdCall)
 			{
