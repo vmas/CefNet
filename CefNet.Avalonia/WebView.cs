@@ -414,9 +414,16 @@ namespace CefNet.Avalonia
 		protected virtual void RaiseCrossThreadEvent<TEventArgs>(Action<TEventArgs> raiseEvent, TEventArgs e, bool synchronous)
 		{
 			if (synchronous)
-				Dispatcher.UIThread.InvokeAsync(() => raiseEvent(e)).Wait();
+			{
+				if (Dispatcher.UIThread.CheckAccess())
+					raiseEvent(e);
+				else
+					Dispatcher.UIThread.InvokeAsync(() => raiseEvent(e)).Wait();
+			}
 			else
+			{
 				Dispatcher.UIThread.Post(() => raiseEvent(e));
+			}
 		}
 
 		/// <summary>
@@ -497,14 +504,22 @@ namespace CefNet.Avalonia
 		unsafe bool IChromiumWebViewPrivate.CefPointToScreen(ref CefPoint point)
 		{
 			PixelPoint ppt = new PixelPoint(point.X, point.Y);
-			Thread.MemoryBarrier();
-			Dispatcher.UIThread.InvokeAsync(new Action(() =>
+
+			if (Dispatcher.UIThread.CheckAccess())
+			{
+				ppt = PointToScreen(new Point(ppt.X, ppt.Y));
+			}
+			else
 			{
 				Thread.MemoryBarrier();
-				ppt = PointToScreen(new Point(ppt.X, ppt.Y));
+				Dispatcher.UIThread.InvokeAsync(new Action(() =>
+				{
+					Thread.MemoryBarrier();
+					ppt = PointToScreen(new Point(ppt.X, ppt.Y));
+					Thread.MemoryBarrier();
+				}), DispatcherPriority.Render).Wait();
 				Thread.MemoryBarrier();
-			}), DispatcherPriority.Render).Wait();
-			Thread.MemoryBarrier();
+			}
 
 			point.X = ppt.X;
 			point.Y = ppt.Y;
@@ -538,6 +553,8 @@ namespace CefNet.Avalonia
 			try
 			{
 				_suppressLostFocusEvent = true;
+				if (Dispatcher.UIThread.CheckAccess())
+					return RunContextMenu(runner, pt);
 				return Dispatcher.UIThread.InvokeAsync(new Func<bool>(() => RunContextMenu(runner, pt))).GetAwaiter().GetResult();
 			}
 			finally

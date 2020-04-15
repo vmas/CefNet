@@ -19,16 +19,19 @@ namespace WpfCoreApp
 	public partial class App : Application
 	{
 		private CefAppImpl app;
+		private Timer messagePump;
+		private int messagePumpDelay = 10;
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
 
 			string cefPath = Path.Combine(Path.GetDirectoryName(GetProjectPath()), "cef");
-
+			bool externalMessagePump = e.Args.Contains("--external-message-pump");
 
 			var settings = new CefSettings();
-			settings.MultiThreadedMessageLoop = true;
+			settings.MultiThreadedMessageLoop = !externalMessagePump;
+			settings.ExternalMessagePump = externalMessagePump;
 			settings.NoSandbox = true;
 			settings.WindowlessRenderingEnabled = true;
 			settings.LocalesDirPath = Path.Combine(cefPath, "Resources", "locales");
@@ -38,7 +41,13 @@ namespace WpfCoreApp
 			settings.UncaughtExceptionStackSize = 8;
 
 			app = new CefAppImpl();
+			app.ScheduleMessagePumpWorkCallback = OnScheduleMessagePumpWork;
 			app.Initialize(Path.Combine(cefPath, "Release"), settings);
+
+			if (externalMessagePump)
+			{
+				messagePump = new Timer(_ => Dispatcher.BeginInvoke(new Action(CefApi.DoMessageLoopWork)), null, messagePumpDelay, messagePumpDelay);
+			}
 		}
 
 		protected override void OnExit(ExitEventArgs e)
@@ -47,9 +56,16 @@ namespace WpfCoreApp
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
 
+			messagePump?.Dispose();
 			app?.Shutdown();
 			base.OnExit(e);
 
+		}
+
+		private async void OnScheduleMessagePumpWork(long delayMs)
+		{
+			await Task.Delay((int)delayMs);
+			await Dispatcher.InvokeAsync(CefApi.DoMessageLoopWork);
 		}
 
 		private static string GetProjectPath()

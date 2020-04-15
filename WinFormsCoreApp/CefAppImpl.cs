@@ -52,5 +52,12 @@ navigator.__proto__ = newProto;
 }", frame.Url, 0);
 
 		}
+
+		public Action<long> ScheduleMessagePumpWorkCallback { get; set; }
+
+		protected override void OnScheduleMessagePumpWork(long delayMs)
+		{
+			ScheduleMessagePumpWorkCallback(delayMs);
+		}
 	}
 }

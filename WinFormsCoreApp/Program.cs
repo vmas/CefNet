@@ -1,4 +1,4 @@
-using CefNet;
+﻿using CefNet;
 using CefNet.Internal;
 using System;
 using System.Collections.Generic;
@@ -14,11 +14,15 @@ namespace WinFormsCoreApp
 {
 	static class Program
 	{
+		private static readonly int messagePumpDelay = 10;
+		private static SynchronizationContext UIContext;
+		private static System.Threading.Timer messagePump;
+
 		/// <summary>
 		///  The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main()
+		static void Main(string[] args)
 		{
 			Application.SetHighDpiMode(HighDpiMode.SystemAware);
 			Application.EnableVisualStyles();
@@ -26,12 +30,14 @@ namespace WinFormsCoreApp
 
 
 			string cefPath = Path.Combine(Path.GetDirectoryName(GetProjectPath()), "cef");
+			bool externalMessagePump = args.Contains("--external-message-pump");
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			Application.ThreadException += Application_ThreadException;
 
 			var settings = new CefSettings();
-			settings.MultiThreadedMessageLoop = true;
+			settings.MultiThreadedMessageLoop = !externalMessagePump;
+			settings.ExternalMessagePump = externalMessagePump;
 			settings.NoSandbox = true;
 			settings.WindowlessRenderingEnabled = true;
 			settings.LocalesDirPath = Path.Combine(cefPath, "Resources", "locales");
@@ -41,17 +47,34 @@ namespace WinFormsCoreApp
 			settings.UncaughtExceptionStackSize = 8;
 			
 			var app = new CefAppImpl();
+			app.ScheduleMessagePumpWorkCallback = OnScheduleMessagePumpWork;
 			app.CefProcessMessageReceived += ScriptableObjectTests.HandleScriptableObjectTestMessage;
 			try
 			{
+				UIContext = new WindowsFormsSynchronizationContext();
+				SynchronizationContext.SetSynchronizationContext(UIContext);
+
 				app.Initialize(Path.Combine(cefPath, "Release"), settings);
+
+				if (externalMessagePump)
+				{
+					messagePump = new System.Threading.Timer(_ => UIContext.Post(_ => CefApi.DoMessageLoopWork(), null), null, messagePumpDelay, messagePumpDelay);
+				}
+				
 				Application.Run(new MainForm());
 			}
 			finally
 			{
+				messagePump?.Dispose();
 				app.Shutdown();
 				app.Dispose();
 			}
+		}
+
+		private static async void OnScheduleMessagePumpWork(long delayMs)
+		{
+			await Task.Delay((int)delayMs);
+			UIContext.Post(_ => CefApi.DoMessageLoopWork(), null);
 		}
 
 		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
