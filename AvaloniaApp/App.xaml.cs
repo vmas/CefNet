@@ -36,8 +36,18 @@ namespace AvaloniaApp
 
 		private void Startup(object sender, ControlledApplicationLifetimeStartupEventArgs e)
 		{
-			string cefPath = Path.Combine(Path.GetDirectoryName(GetProjectPath()), "cef");
+			string cefPath;
 			bool externalMessagePump = e.Args.Contains("--external-message-pump");
+
+			if (PlatformInfo.IsMacOS)
+			{
+				externalMessagePump = true;
+				cefPath = Path.Combine(GetProjectPath(), "Contents", "Frameworks", "Chromium Embedded Framework.framework");
+			}
+			else
+			{
+				cefPath = Path.Combine(Path.GetDirectoryName(GetProjectPath()), "cef");
+			}	
 
 			var settings = new CefSettings();
 			settings.MultiThreadedMessageLoop = !externalMessagePump;
@@ -52,7 +62,7 @@ namespace AvaloniaApp
 
 			app = new CefAppImpl();
 			app.ScheduleMessagePumpWorkCallback = OnScheduleMessagePumpWork;
-			app.Initialize(Path.Combine(cefPath, "Release"), settings);
+			app.Initialize(PlatformInfo.IsMacOS ? cefPath : Path.Combine(cefPath, "Release"), settings);
 
 			if (externalMessagePump)
 			{
@@ -75,8 +85,9 @@ namespace AvaloniaApp
 		private static string GetProjectPath()
 		{
 			string projectPath = Path.GetDirectoryName(typeof(App).Assembly.Location);
+			string projectName = PlatformInfo.IsMacOS ? "AvaloniaApp.app" : "AvaloniaApp";
 			string rootPath = Path.GetPathRoot(projectPath);
-			while (Path.GetFileName(projectPath) != "AvaloniaApp")
+			while (Path.GetFileName(projectPath) != projectName)
 			{
 				if (projectPath == rootPath)
 					throw new DirectoryNotFoundException("Could not find the project directory.");

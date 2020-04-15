@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -53,6 +54,7 @@ namespace CefNet
 		/// </summary>
 		public event EventHandler<RenderThreadCreatedEventArgs> RenderThreadCreated;
 
+		private static IntPtr _cefLibHandle;
 		private static ProcessType? _ProcessType;
 		private int _initThreadId;
 
@@ -153,12 +155,20 @@ namespace CefNet
 					if (!path.StartsWith(cefPath, StringComparison.CurrentCulture)
 						|| (path.Length > cefPath.Length && path[cefPath.Length] != ';'))
 					{
-						Environment.SetEnvironmentVariable("DYLD_LIBRARY_PATH", cefPath + ":" + path);
+						Environment.SetEnvironmentVariable("DYLD_LIBRARY_PATH", cefPath + ":" + Path.Combine(cefPath, "Libraries") + ":" + path);
 					}
-					return Path.Combine(cefPath, "libcef.so");
+					return Path.Combine(cefPath, "Chromium Embedded Framework");
 				}
 			}
-			return PlatformInfo.IsWindows ? "libcef.dll" : "libcef.so";
+
+			if (PlatformInfo.IsWindows)
+				return "libcef.dll";
+			if (PlatformInfo.IsLinux)
+				return "libcef.so";
+			if (PlatformInfo.IsMacOS)
+				return "Chromium Embedded Framework";
+
+			throw new PlatformNotSupportedException();
 		}
 
 		/// <summary>
@@ -188,19 +198,24 @@ namespace CefNet
 			if (PlatformInfo.IsWindows)
 			{
 				const int LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008;
-				if (IntPtr.Zero == NativeMethods.LoadLibraryEx(path, IntPtr.Zero, LOAD_WITH_ALTERED_SEARCH_PATH))
+				_cefLibHandle = NativeMethods.LoadLibraryEx(path, IntPtr.Zero, LOAD_WITH_ALTERED_SEARCH_PATH);
+				if (IntPtr.Zero == _cefLibHandle)
 					throw new DllNotFoundException(string.Format("Can't load '{0}' (error: {1}).", path, Marshal.GetLastWin32Error()));
 			}
 			else if (PlatformInfo.IsLinux || PlatformInfo.IsMacOS)
 			{
 				const int RTLD_NOW = 2;
-				if (IntPtr.Zero == NativeMethods.dlopen(path, RTLD_NOW))
+				_cefLibHandle = NativeMethods.dlopen(path, RTLD_NOW);
+				if (IntPtr.Zero == _cefLibHandle)
 					throw new DllNotFoundException(string.Format("Can't load '{0}'.", path));
 			}
 			else
 			{
 				throw new PlatformNotSupportedException();
 			}
+
+			if (!TryInitializeDllImportResolver(_cefLibHandle) && PlatformInfo.IsMacOS)
+				throw new NotSupportedException("Requires .NET Core 3.0 or later.");
 
 			AssertApiVersion();
 
@@ -217,6 +232,52 @@ namespace CefNet
 				throw new CefRuntimeException("Failed to initialize the CEF browser process.");
 
 			GC.KeepAlive(settings);
+		}
+
+		/// <summary>
+		/// Initializes a callback for resolving native library imports from an assembly.
+		/// </summary>
+		/// <param name="libcefHandle">The Chromium Embedded Framework library handle.</param>
+		protected virtual bool TryInitializeDllImportResolver(IntPtr libcefHandle)
+		{
+			Type nativeLibraryType = Type.GetType("System.Runtime.InteropServices.NativeLibrary");
+			if (nativeLibraryType is null)
+				return false;
+
+			Type dllImportResolverDelegateType = Type.GetType("System.Runtime.InteropServices.DllImportResolver");
+			if (dllImportResolverDelegateType is null)
+				return false;
+
+			MethodInfo setDllImportResolver = nativeLibraryType.GetMethod("SetDllImportResolver", new[] { typeof(Assembly), dllImportResolverDelegateType });
+			if (setDllImportResolver is null)
+				return false;
+
+			setDllImportResolver.Invoke(null, new object[] {
+				typeof(CefApi).Assembly,
+				Delegate.CreateDelegate(dllImportResolverDelegateType, this, new Func<string, Assembly, DllImportSearchPath?, IntPtr>(ResolveNativeLibrary).Method)
+			});
+
+			return true;
+		}
+
+		/// <summary>
+		/// Resolves native library loads initiated by this assembly.
+		/// </summary>
+		/// <param name="libname">The native library to resolve.</param>
+		/// <param name="assembly">The assembly requesting the resolution.</param>
+		/// <param name="paths">
+		/// The <see cref="DefaultDllImportSearchPathsAttribute"/> on the PInvoke, if any.
+		/// Otherwise, the <see cref="DefaultDllImportSearchPathsAttribute"/> on the assembly, if any.
+		/// Otherwise null.
+		/// </param>
+		/// <returns>
+		/// The handle for the loaded native library on success, or <see cref="IntPtr.Zero"/> on failure.
+		/// </returns>
+		protected virtual IntPtr ResolveNativeLibrary(string libname, Assembly assembly, DllImportSearchPath? paths)
+		{
+			if ("libcef".Equals(libname, StringComparison.Ordinal))
+				return _cefLibHandle;
+			return IntPtr.Zero;
 		}
 
 		/// <summary>
