@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Logging.Serilog;
@@ -14,6 +15,8 @@ namespace AvaloniaApp
 		public static void Main(string[] args)
 		{
 			BuildAvaloniaApp()
+			// workaround for https://github.com/AvaloniaUI/Avalonia/issues/3533
+			.With(new AvaloniaNativePlatformOptions { UseGpu = false })
 			.StartWithClassicDesktopLifetime(args);
 		}
 
