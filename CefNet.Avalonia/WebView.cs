@@ -538,6 +538,9 @@ namespace CefNet.Avalonia
 
 		CefRect IChromiumWebViewPrivate.GetCefViewBounds()
 		{
+			if (OffscreenGraphics is null)
+				return new CefRect(0, 0, 1, 1);
+
 			return OffscreenGraphics.GetBounds();
 		}
 
