@@ -63,6 +63,11 @@ namespace CefNet
 		/// Mac OS-X command key.
 		/// </summary>
 		IsRight = 1 << 11,
+
+		/// <summary>
+		/// Mac OS-X command key.
+		/// </summary>
+		AltgrDown = 1 << 12,
 	}
 }
 

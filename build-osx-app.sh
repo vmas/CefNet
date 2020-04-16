@@ -52,7 +52,7 @@ EOF
 BINARYNAME="AvaloniaApp"
 CONFIGURATION="Debug"
 NETTARGET="netcoreapp3.1"
-CEFZIP="cef_binary_80.1.15%2Bg7b802c9%2Bchromium-80.0.3987.163_macosx64_minimal.tar.bz2"
+CEFZIP="cef_binary_81.2.16%2Bgdacda4f%2Bchromium-81.0.4044.92_macosx64_minimal.tar.bz2"
 TARGET="bin"
 
 

@@ -72,6 +72,11 @@ namespace CefNet.CApi
 		/// Query string component (i.e., everything following the &apos;?&apos;).
 		/// </summary>
 		public cef_string_t query;
+
+		/// <summary>
+		/// Fragment (hash) identifier component (i.e., the string following the &apos;#&apos;).
+		/// </summary>
+		public cef_string_t fragment;
 	}
 }
 

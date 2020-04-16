@@ -140,8 +140,6 @@ namespace CefNet
 
 		ProxyAuthRequested = -127,
 
-		SSLWeakServerEphemeralDhKey = -129,
-
 		ProxyConnectionFailed = -130,
 
 		MandatoryProxyConfigurationFailed = -131,
@@ -258,7 +256,9 @@ namespace CefNet
 
 		CertKnownInterceptionBlocked = -217,
 
-		CertEnd = -218,
+		SSLObsoleteVersion = -218,
+
+		CertEnd = -219,
 
 		InvalidUrl = -300,
 

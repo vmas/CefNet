@@ -92,6 +92,21 @@ namespace CefNet
 			}
 		}
 
+		/// <summary>
+		/// Style.
+		/// </summary>
+		public CefCompositionUnderlineStyle Style
+		{
+			get
+			{
+				return _instance.style;
+			}
+			set
+			{
+				_instance.style = value;
+			}
+		}
+
 		public static implicit operator CefCompositionUnderline(cef_composition_underline_t instance)
 		{
 			return new CefCompositionUnderline { _instance = instance };

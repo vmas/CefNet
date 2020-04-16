@@ -223,6 +223,27 @@ namespace CefNet
 			}
 		}
 
+		/// <summary>
+		/// Fragment (hash) identifier component (i.e., the string following the &apos;#&apos;).
+		/// </summary>
+		public string Fragment
+		{
+			get
+			{
+				fixed (cef_string_t* s = &_instance.fragment)
+				{
+					return CefString.Read(s);
+				}
+			}
+			set
+			{
+				fixed (cef_string_t* s = &_instance.fragment)
+				{
+					CefString.Replace(s, value);
+				}
+			}
+		}
+
 		public void Dispose()
 		{
 			Spec = null;
@@ -234,6 +255,7 @@ namespace CefNet
 			Origin = null;
 			Path = null;
 			Query = null;
+			Fragment = null;
 		}
 
 		public static implicit operator CefUrlParts(cef_urlparts_t instance)

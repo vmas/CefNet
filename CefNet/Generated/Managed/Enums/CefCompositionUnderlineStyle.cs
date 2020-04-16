@@ -16,40 +16,20 @@ using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using CefNet.WinApi;
 
-namespace CefNet.CApi
+namespace CefNet
 {
 	/// <summary>
-	/// Structure representing IME composition underline information. This is a thin
-	/// wrapper around Blink&apos;s WebCompositionUnderline class and should be kept in
-	/// sync with that.
+	/// Composition underline style.
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
-	public unsafe partial struct cef_composition_underline_t
+	public enum CefCompositionUnderlineStyle
 	{
-		/// <summary>
-		/// Underline character range.
-		/// </summary>
-		public cef_range_t range;
+		Solid = 0,
 
-		/// <summary>
-		/// Text color.
-		/// </summary>
-		public cef_color_t color;
+		Dot = 1,
 
-		/// <summary>
-		/// Background color.
-		/// </summary>
-		public cef_color_t background_color;
+		Dash = 2,
 
-		/// <summary>
-		/// Set to true (1) for thick underline.
-		/// </summary>
-		public int thick;
-
-		/// <summary>
-		/// Style.
-		/// </summary>
-		public CefCompositionUnderlineStyle style;
+		None = 3,
 	}
 }
 
