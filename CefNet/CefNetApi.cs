@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using CefNet.MacOS;
 
 namespace CefNet
 {
@@ -28,8 +29,35 @@ namespace CefNet
 				return GetWindowsNativeKeyCode(eventType, repeatCount, (byte)NativeMethods.MapVirtualKey((uint)key, MapVirtualKeyType.MAPVK_VK_TO_VSC), modifiers.HasFlag(CefEventFlags.AltDown), isExtended);
 			if (PlatformInfo.IsLinux)
 				return GetLinuxNativeKeyCode(key, modifiers.HasFlag(CefEventFlags.ShiftDown));
-
+			if (PlatformInfo.IsMacOS)
+				return GetMacOSNativeKeyCode(key, isExtended);
 			return 0;
+		}
+
+		/// <summary>
+		/// Translates a virtual key to the corresponding native key code.
+		/// </summary>
+		/// <param name="key">Specifies the virtual key.</param>
+		/// <param name="extended">The extended key flag.</param>
+		/// <returns>A native key code.</returns>
+		public static int GetMacOSNativeKeyCode(VirtualKeys key, bool extended)
+		{
+			MacOSVirtualKey vkcode = MacOS.KeyInterop.WindowsKeyToMacOSKey(key, extended);
+			if (vkcode != MacOSVirtualKey.Invalid)
+				return (int)vkcode;
+			return 0;
+		}
+
+		/// <summary>
+		/// Converts the value of a UTF-16 encoded character into a native key code.
+		/// </summary>
+		/// <param name="c">The character to be converted.</param>
+		public static int GetMacOSNativeKeyCode(char c)
+		{
+			XKeySym keysym = Linux.KeyInterop.CharToXKeySym(c);
+			if (keysym == XKeySym.None)
+				return 0;
+			return GetMacOSNativeKeyCode(Linux.KeyInterop.XKeySymToVirtualKey(keysym), false);
 		}
 
 		/// <summary>
@@ -104,7 +132,28 @@ namespace CefNet
 				return Linux.KeyInterop.XKeySymToVirtualKey(TranslateXKeySymToAsciiXKeySym(keysym));
 			}
 
+			if (PlatformInfo.IsMacOS)
+			{
+				// US QWERTY only
+				XKeySym keysym = Linux.KeyInterop.CharToXKeySym(c);
+				return Linux.KeyInterop.XKeySymToVirtualKey(keysym);
+			}
+
 			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Converts a combination of a virtual key code and a modifier key state into a string of one or more Unicode characters.
+		/// </summary>
+		/// <param name="virtualKey">The virtual key code that is to be translated.</param>
+		/// <param name="modifiers">A bitwise combination of the <see cref="CefEventFlags"/> values.</param>
+		/// <returns>The character resulting from the virtual key code being handled.</returns>
+		public static char TranslateVirtualKey(VirtualKeys virtualKey, CefEventFlags modifiers)
+		{
+			XKeySym keysym = Linux.KeyInterop.VirtualKeyToXKeySym(virtualKey, modifiers.HasFlag(CefEventFlags.ShiftDown));
+			if (keysym == XKeySym.None)
+				return char.MinValue;
+			return Linux.KeyInterop.XKeySymToChar(keysym);
 		}
 
 		/// <summary>
@@ -176,6 +225,9 @@ namespace CefNet
 
 			if (PlatformInfo.IsLinux)
 				return GetLinuxNativeKeyCode(c);
+
+			if (PlatformInfo.IsMacOS)
+				return GetMacOSNativeKeyCode(c);
 
 			throw new NotImplementedException();
 		}

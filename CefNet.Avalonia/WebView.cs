@@ -742,6 +742,11 @@ namespace CefNet.Avalonia
 				k.IsSystemKey = isSystemKey;
 				k.WindowsKeyCode = (int)virtualKey;
 				k.NativeKeyCode = virtualKey.ToNativeKeyCode(eventType, false, modifiers, false);
+				if (PlatformInfo.IsMacOS)
+				{
+					k.UnmodifiedCharacter = char.ToUpperInvariant(CefNetApi.TranslateVirtualKey(virtualKey, CefEventFlags.None));
+					k.Character = CefNetApi.TranslateVirtualKey(virtualKey, modifiers);
+				}
 				this.BrowserObject?.Host.SendKeyEvent(k);
 
 				if (key == Key.Enter && eventType == CefKeyEventType.RawKeyDown)
@@ -794,12 +799,11 @@ namespace CefNet.Avalonia
 		{
 			foreach (char symbol in e.Text)
 			{
-				VirtualKeys key = CefNetApi.GetVirtualKey(symbol);
 				CefEventFlags modifiers = CefNetApi.IsShiftRequired(symbol) ? CefEventFlags.ShiftDown : CefEventFlags.None;
 				
 				var k = new CefKeyEvent();
 				k.Type = CefKeyEventType.Char;
-				k.WindowsKeyCode = PlatformInfo.IsWindows ? symbol : (int)key;
+				k.WindowsKeyCode = PlatformInfo.IsLinux ? (int)CefNetApi.GetVirtualKey(symbol) : symbol;
 				k.Character = symbol;
 				k.UnmodifiedCharacter = symbol;
 				k.Modifiers = (uint)modifiers;

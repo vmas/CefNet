@@ -1230,13 +1230,11 @@ namespace CefNet
 			if (metaKey)
 				modifiers |= CefEventFlags.CommandDown;
 
-			VirtualKeys key = CefNetApi.GetVirtualKey(c);
-
 			var k = new CefKeyEvent();
 			k.Type = CefKeyEventType.Char;
 			k.Modifiers = (uint)modifiers;
 			k.IsSystemKey = altKey;
-			k.WindowsKeyCode = PlatformInfo.IsWindows ? c : (int)key;
+			k.WindowsKeyCode = PlatformInfo.IsLinux ? (int)CefNetApi.GetVirtualKey(c) : c;
 			k.NativeKeyCode = CefNetApi.GetNativeKeyCode(c, 0, modifiers, extendedKey);
 			k.Character = c;
 			k.UnmodifiedCharacter = c;
