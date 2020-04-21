@@ -66,7 +66,7 @@
 		}
 
 		// void (*)(_cef_command_line_t* self, int argc, const const char** argv)*
-		.method public hidebysig void InitFromArgv(int32 argc, int8** argv)
+		.method public hidebysig void InitFromArgv(int32 argc, uint8** argv)
 		{
 			.maxstack 4
 			ldarg.0
@@ -80,7 +80,7 @@
 #else
 				cdecl
 #endif
-				void(valuetype CefNet.CApi.cef_command_line_t*, int32, int8**)
+				void(valuetype CefNet.CApi.cef_command_line_t*, int32, uint8**)
 			ret
 		}
 

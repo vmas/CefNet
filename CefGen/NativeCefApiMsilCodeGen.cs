@@ -141,7 +141,7 @@ namespace CefGen
 				case "long long":
 					return "int64";
 				case "char":
-					return "int8";
+					return "uint8";
 				case "wchar":
 				case "char16":
 					return "char";

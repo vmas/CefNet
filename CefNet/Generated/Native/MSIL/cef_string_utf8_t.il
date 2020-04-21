@@ -15,7 +15,7 @@
 	.class public cef_string_utf8_t
 	{
 		// void (*)(char* str)*
-		.method public hidebysig void Dtor(int8* str)
+		.method public hidebysig void Dtor(uint8* str)
 		{
 			.maxstack 3
 						ldarg.1
@@ -27,7 +27,7 @@
 #else
 				cdecl
 #endif
-				void(int8*)
+				void(uint8*)
 			ret
 		}
 	}

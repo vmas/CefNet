@@ -19,8 +19,8 @@
 			.override method instance bool CefNet.Internal.ICefSchemeHandlerFactoryPrivate::AvoidCreate()
 			.maxstack 2
 			ldarg.0
-			ldvirtftn instance class CefNet.CefSchemeHandlerFactory CefNet.CefSchemeHandlerFactory::Create(native int)
-			ldftn instance class CefNet.CefSchemeHandlerFactory CefNet.CefSchemeHandlerFactory::Create(native int)
+			ldvirtftn instance class CefNet.CefResourceHandler CefNet.CefSchemeHandlerFactory::Create(class CefNet.CefBrowser, class CefNet.CefFrame, string, class CefNet.CefRequest)
+			ldftn instance class CefNet.CefResourceHandler CefNet.CefSchemeHandlerFactory::Create(class CefNet.CefBrowser, class CefNet.CefFrame, string, class CefNet.CefRequest)
 			ceq
 			ret
 		}

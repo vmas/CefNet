@@ -163,7 +163,7 @@ namespace CefGen
 			fnName = fnName.Substring(5);
 			foreach (IMethodSymbol method in type.GetMembers().OfType<IMethodSymbol>())
 			{
-				if (method.Name == fnName)
+				if (method.Name == fnName && method.IsVirtual)
 					return method;
 			}
 			return null;
