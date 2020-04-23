@@ -120,10 +120,10 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Margins in millimeters. Only used if |margin_type| is set to
+		/// Margins in points. Only used if |margin_type| is set to
 		/// PDF_PRINT_MARGIN_CUSTOM.
 		/// </summary>
-		public double MarginTop
+		public int MarginTop
 		{
 			get
 			{
@@ -135,7 +135,7 @@ namespace CefNet
 			}
 		}
 
-		public double MarginRight
+		public int MarginRight
 		{
 			get
 			{
@@ -147,7 +147,7 @@ namespace CefNet
 			}
 		}
 
-		public double MarginBottom
+		public int MarginBottom
 		{
 			get
 			{
@@ -159,7 +159,7 @@ namespace CefNet
 			}
 		}
 
-		public double MarginLeft
+		public int MarginLeft
 		{
 			get
 			{

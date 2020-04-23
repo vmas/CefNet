@@ -52,16 +52,16 @@ namespace CefNet.CApi
 		public int scale_factor;
 
 		/// <summary>
-		/// Margins in millimeters. Only used if |margin_type| is set to
+		/// Margins in points. Only used if |margin_type| is set to
 		/// PDF_PRINT_MARGIN_CUSTOM.
 		/// </summary>
-		public double margin_top;
+		public int margin_top;
 
-		public double margin_right;
+		public int margin_right;
 
-		public double margin_bottom;
+		public int margin_bottom;
 
-		public double margin_left;
+		public int margin_left;
 
 		/// <summary>
 		/// Margin type.
