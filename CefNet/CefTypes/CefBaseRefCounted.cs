@@ -459,6 +459,7 @@ namespace CefNet
 		/// <summary>
 		/// Increments the reference count for the object.
 		/// </summary>
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public void AddRef()
 		{
 			NativeInstance->AddRef();
@@ -470,6 +471,7 @@ namespace CefNet
 		/// <returns>
 		/// Returns true if the resulting reference count is 0.
 		/// </returns>
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public bool Release()
 		{
 			return NativeInstance->Release() != 0;
@@ -481,6 +483,7 @@ namespace CefNet
 		/// <returns>
 		/// Returns true if the current reference count is 1.
 		/// </returns>
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public bool HasOneRef()
 		{
 			return NativeInstance->HasOneRef() != 0;
@@ -492,6 +495,7 @@ namespace CefNet
 		/// <returns>
 		/// Returns true if the current reference count is at least 1.
 		/// </returns>
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public bool HasAtLeastOneRef()
 		{
 			return NativeInstance->HasAtLeastOneRef() != 0;
@@ -503,6 +507,7 @@ namespace CefNet
 			ReleaseIfNonNull((cef_base_ref_counted_t*)Interlocked.Exchange(ref _instance, IntPtr.Zero));
 		}
 
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public void Dispose()
 		{
 			Dispose(true);

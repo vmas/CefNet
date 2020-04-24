@@ -197,6 +197,7 @@ namespace CefNet
 		/// <summary>
 		/// Deletes this object.
 		/// </summary>
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public void Del()
 		{
 			if (_instance->del != null)
