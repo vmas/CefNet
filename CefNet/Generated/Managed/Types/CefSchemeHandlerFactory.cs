@@ -59,7 +59,7 @@ namespace CefNet
 		/// example, if the request came from cef_urlrequest_t). The |request| object
 		/// passed to this function cannot be modified.
 		/// </summary>
-		public unsafe virtual CefResourceHandler Create(CefBrowser browser, CefFrame frame, string schemeName, CefRequest request)
+		protected internal unsafe virtual CefResourceHandler Create(CefBrowser browser, CefFrame frame, string schemeName, CefRequest request)
 		{
 			return default;
 		}

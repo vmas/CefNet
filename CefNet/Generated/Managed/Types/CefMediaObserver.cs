@@ -64,7 +64,7 @@ namespace CefNet
 		/// The list of available media sinks has changed or
 		/// cef_media_router_t::NotifyCurrentSinks was called.
 		/// </summary>
-		public unsafe virtual void OnSinks(CefMediaSink[] sinks)
+		protected internal unsafe virtual void OnSinks(CefMediaSink[] sinks)
 		{
 		}
 
@@ -96,7 +96,7 @@ namespace CefNet
 		/// The list of available media routes has changed or
 		/// cef_media_router_t::NotifyCurrentRoutes was called.
 		/// </summary>
-		public unsafe virtual void OnRoutes(CefMediaRoute[] routes)
+		protected internal unsafe virtual void OnRoutes(CefMediaRoute[] routes)
 		{
 		}
 
@@ -127,7 +127,7 @@ namespace CefNet
 		/// <summary>
 		/// The connection state of |route| has changed.
 		/// </summary>
-		public unsafe virtual void OnRouteStateChanged(CefMediaRoute route, CefMediaRouteConnectionState state)
+		protected internal unsafe virtual void OnRouteStateChanged(CefMediaRoute route, CefMediaRouteConnectionState state)
 		{
 		}
 
@@ -153,7 +153,7 @@ namespace CefNet
 		/// A message was recieved over |route|. |message| is only valid for the scope
 		/// of this callback and should be copied if necessary.
 		/// </summary>
-		public unsafe virtual void OnRouteMessageReceived(CefMediaRoute route, IntPtr message, long messageSize)
+		protected internal unsafe virtual void OnRouteMessageReceived(CefMediaRoute route, IntPtr message, long messageSize)
 		{
 		}
 

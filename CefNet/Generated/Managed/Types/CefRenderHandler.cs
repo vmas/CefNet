@@ -96,7 +96,7 @@ namespace CefNet
 		/// Return the handler for accessibility notifications. If no handler is
 		/// provided the default implementation will be used.
 		/// </summary>
-		public unsafe virtual CefAccessibilityHandler GetAccessibilityHandler()
+		protected internal unsafe virtual CefAccessibilityHandler GetAccessibilityHandler()
 		{
 			return default;
 		}
@@ -126,7 +126,7 @@ namespace CefNet
 		/// true (1) if the rectangle was provided. If this function returns false (0)
 		/// the rectangle from GetViewRect will be used.
 		/// </summary>
-		public unsafe virtual bool GetRootScreenRect(CefBrowser browser, ref CefRect rect)
+		protected internal unsafe virtual bool GetRootScreenRect(CefBrowser browser, ref CefRect rect)
 		{
 			return default;
 		}
@@ -153,7 +153,7 @@ namespace CefNet
 		/// Called to retrieve the view rectangle which is relative to screen
 		/// coordinates. This function must always provide a non-NULL rectangle.
 		/// </summary>
-		public unsafe virtual void GetViewRect(CefBrowser browser, ref CefRect rect)
+		protected internal unsafe virtual void GetViewRect(CefBrowser browser, ref CefRect rect)
 		{
 		}
 
@@ -179,7 +179,7 @@ namespace CefNet
 		/// Called to retrieve the translation from view coordinates to actual screen
 		/// coordinates. Return true (1) if the screen coordinates were provided.
 		/// </summary>
-		public unsafe virtual bool GetScreenPoint(CefBrowser browser, int viewX, int viewY, ref int screenX, ref int screenY)
+		protected internal unsafe virtual bool GetScreenPoint(CefBrowser browser, int viewX, int viewY, ref int screenX, ref int screenY)
 		{
 			return default;
 		}
@@ -210,7 +210,7 @@ namespace CefNet
 		/// will be used. If the rectangle is still NULL or invalid popups may not be
 		/// drawn correctly.
 		/// </summary>
-		public unsafe virtual bool GetScreenInfo(CefBrowser browser, ref CefScreenInfo screenInfo)
+		protected internal unsafe virtual bool GetScreenInfo(CefBrowser browser, ref CefScreenInfo screenInfo)
 		{
 			return default;
 		}
@@ -237,7 +237,7 @@ namespace CefNet
 		/// Called when the browser wants to show or hide the popup widget. The popup
 		/// should be shown if |show| is true (1) and hidden if |show| is false (0).
 		/// </summary>
-		public unsafe virtual void OnPopupShow(CefBrowser browser, bool show)
+		protected internal unsafe virtual void OnPopupShow(CefBrowser browser, bool show)
 		{
 		}
 
@@ -263,7 +263,7 @@ namespace CefNet
 		/// Called when the browser wants to move or resize the popup widget. |rect|
 		/// contains the new location and size in view coordinates.
 		/// </summary>
-		public unsafe virtual void OnPopupSize(CefBrowser browser, CefRect rect)
+		protected internal unsafe virtual void OnPopupSize(CefBrowser browser, CefRect rect)
 		{
 		}
 
@@ -296,7 +296,7 @@ namespace CefNet
 		/// upper-left origin. This function is only called when
 		/// cef_window_tInfo::shared_texture_enabled is set to false (0).
 		/// </summary>
-		public unsafe virtual void OnPaint(CefBrowser browser, CefPaintElementType type, CefRect[] dirtyRects, IntPtr buffer, int width, int height)
+		protected internal unsafe virtual void OnPaint(CefBrowser browser, CefPaintElementType type, CefRect[] dirtyRects, IntPtr buffer, int width, int height)
 		{
 		}
 
@@ -332,7 +332,7 @@ namespace CefNet
 		/// This function is only called when cef_window_tInfo::shared_texture_enabled
 		/// is set to true (1), and is currently only supported on Windows.
 		/// </summary>
-		public unsafe virtual void OnAcceleratedPaint(CefBrowser browser, CefPaintElementType type, CefRect[] dirtyRects, IntPtr sharedHandle)
+		protected internal unsafe virtual void OnAcceleratedPaint(CefBrowser browser, CefPaintElementType type, CefRect[] dirtyRects, IntPtr sharedHandle)
 		{
 		}
 
@@ -363,7 +363,7 @@ namespace CefNet
 		/// Called when the browser&apos;s cursor has changed. If |type| is CT_CUSTOM then
 		/// |custom_cursor_info| will be populated with the custom cursor information.
 		/// </summary>
-		public unsafe virtual void OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
+		protected internal unsafe virtual void OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
 		{
 		}
 
@@ -397,7 +397,7 @@ namespace CefNet
 		/// synchronously or asynchronously to inform the web view that the drag
 		/// operation has ended.
 		/// </summary>
-		public unsafe virtual bool StartDragging(CefBrowser browser, CefDragData dragData, CefDragOperationsMask allowedOps, int x, int y)
+		protected internal unsafe virtual bool StartDragging(CefBrowser browser, CefDragData dragData, CefDragOperationsMask allowedOps, int x, int y)
 		{
 			return default;
 		}
@@ -427,7 +427,7 @@ namespace CefNet
 		/// drop operation. |operation| describes the allowed operation (none, move,
 		/// copy, link).
 		/// </summary>
-		public unsafe virtual void UpdateDragCursor(CefBrowser browser, CefDragOperationsMask operation)
+		protected internal unsafe virtual void UpdateDragCursor(CefBrowser browser, CefDragOperationsMask operation)
 		{
 		}
 
@@ -452,7 +452,7 @@ namespace CefNet
 		/// <summary>
 		/// Called when the scroll offset has changed.
 		/// </summary>
-		public unsafe virtual void OnScrollOffsetChanged(CefBrowser browser, double x, double y)
+		protected internal unsafe virtual void OnScrollOffsetChanged(CefBrowser browser, double x, double y)
 		{
 		}
 
@@ -479,7 +479,7 @@ namespace CefNet
 		/// range of characters that have been selected. |character_bounds| is the
 		/// bounds of each character in view coordinates.
 		/// </summary>
-		public unsafe virtual void OnImeCompositionRangeChanged(CefBrowser browser, CefRange selectedRange, CefRect[] characterBounds)
+		protected internal unsafe virtual void OnImeCompositionRangeChanged(CefBrowser browser, CefRange selectedRange, CefRect[] characterBounds)
 		{
 		}
 
@@ -511,7 +511,7 @@ namespace CefNet
 		/// |selected_text| is the currently selected text and |selected_range| is the
 		/// character range.
 		/// </summary>
-		public unsafe virtual void OnTextSelectionChanged(CefBrowser browser, string selectedText, CefRange selectedRange)
+		protected internal unsafe virtual void OnTextSelectionChanged(CefBrowser browser, string selectedText, CefRange selectedRange)
 		{
 		}
 
@@ -539,7 +539,7 @@ namespace CefNet
 		/// opened. If |input_mode| is CEF_TEXT_INPUT_MODE_NONE, any existing keyboard
 		/// for this browser should be hidden.
 		/// </summary>
-		public unsafe virtual void OnVirtualKeyboardRequested(CefBrowser browser, CefTextInputMode inputMode)
+		protected internal unsafe virtual void OnVirtualKeyboardRequested(CefBrowser browser, CefTextInputMode inputMode)
 		{
 		}
 

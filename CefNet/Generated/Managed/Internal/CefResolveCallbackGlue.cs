@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnResolveCompleted();
 		}
 
-		public override void OnResolveCompleted(CefErrorCode result, CefStringList resolvedIps)
+		protected internal unsafe override void OnResolveCompleted(CefErrorCode result, CefStringList resolvedIps)
 		{
 			_implementation.OnResolveCompleted(result, resolvedIps);
 		}

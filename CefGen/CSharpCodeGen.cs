@@ -76,17 +76,21 @@ namespace CefGen
 			{
 				Output.Write("public ");
 			}
-			else if (attributes.HasFlag(CodeAttributes.Private))
+			else if (attributes.HasFlag(CodeAttributes.Protected))
 			{
-				Output.Write("private ");
+				Output.Write("protected ");
+				if (attributes.HasFlag(CodeAttributes.Internal))
+					Output.Write("internal ");
+				else if (attributes.HasFlag(CodeAttributes.Private))
+					Output.Write("private ");
 			}
 			else if (attributes.HasFlag(CodeAttributes.Internal))
 			{
 				Output.Write("internal ");
 			}
-			else if (attributes.HasFlag(CodeAttributes.Protected))
+			else if (attributes.HasFlag(CodeAttributes.Private))
 			{
-				Output.Write("protected ");
+				Output.Write("private ");
 			}
 
 			if (attributes.HasFlag(CodeAttributes.Static))

@@ -59,7 +59,7 @@ namespace CefNet
 		/// operation. Return false (0) for default drag handling behavior or true (1)
 		/// to cancel the drag event.
 		/// </summary>
-		public unsafe virtual bool OnDragEnter(CefBrowser browser, CefDragData dragData, CefDragOperationsMask mask)
+		protected internal unsafe virtual bool OnDragEnter(CefBrowser browser, CefDragData dragData, CefDragOperationsMask mask)
 		{
 			return default;
 		}
@@ -90,7 +90,7 @@ namespace CefNet
 		/// never be called. If the last draggable region is removed from a document
 		/// this function will be called with an NULL vector.
 		/// </summary>
-		public unsafe virtual void OnDraggableRegionsChanged(CefBrowser browser, CefFrame frame, CefDraggableRegion[] regions)
+		protected internal unsafe virtual void OnDraggableRegionsChanged(CefBrowser browser, CefFrame frame, CefDraggableRegion[] regions)
 		{
 		}
 

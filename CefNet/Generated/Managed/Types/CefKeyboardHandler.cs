@@ -60,7 +60,7 @@ namespace CefNet
 		/// (0) otherwise. If the event will be handled in on_key_event() as a keyboard
 		/// shortcut set |is_keyboard_shortcut| to true (1) and return false (0).
 		/// </summary>
-		public unsafe virtual bool OnPreKeyEvent(CefBrowser browser, CefKeyEvent @event, CefEventHandle osEvent, ref int isKeyboardShortcut)
+		protected internal unsafe virtual bool OnPreKeyEvent(CefBrowser browser, CefKeyEvent @event, CefEventHandle osEvent, ref int isKeyboardShortcut)
 		{
 			return default;
 		}
@@ -89,7 +89,7 @@ namespace CefNet
 		/// |os_event| is the operating system event message, if any. Return true (1)
 		/// if the keyboard event was handled or false (0) otherwise.
 		/// </summary>
-		public unsafe virtual bool OnKeyEvent(CefBrowser browser, CefKeyEvent @event, CefEventHandle osEvent)
+		protected internal unsafe virtual bool OnKeyEvent(CefBrowser browser, CefKeyEvent @event, CefEventHandle osEvent)
 		{
 			return default;
 		}

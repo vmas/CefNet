@@ -89,7 +89,7 @@ namespace CefNet
 		/// Return the handler for context menus. If no handler is provided the default
 		/// implementation will be used.
 		/// </summary>
-		public unsafe virtual CefContextMenuHandler GetContextMenuHandler()
+		protected internal unsafe virtual CefContextMenuHandler GetContextMenuHandler()
 		{
 			return default;
 		}
@@ -115,7 +115,7 @@ namespace CefNet
 		/// Return the handler for dialogs. If no handler is provided the default
 		/// implementation will be used.
 		/// </summary>
-		public unsafe virtual CefDialogHandler GetDialogHandler()
+		protected internal unsafe virtual CefDialogHandler GetDialogHandler()
 		{
 			return default;
 		}
@@ -140,7 +140,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for browser display state events.
 		/// </summary>
-		public unsafe virtual CefDisplayHandler GetDisplayHandler()
+		protected internal unsafe virtual CefDisplayHandler GetDisplayHandler()
 		{
 			return default;
 		}
@@ -166,7 +166,7 @@ namespace CefNet
 		/// Return the handler for download events. If no handler is returned downloads
 		/// will not be allowed.
 		/// </summary>
-		public unsafe virtual CefDownloadHandler GetDownloadHandler()
+		protected internal unsafe virtual CefDownloadHandler GetDownloadHandler()
 		{
 			return default;
 		}
@@ -191,7 +191,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for drag events.
 		/// </summary>
-		public unsafe virtual CefDragHandler GetDragHandler()
+		protected internal unsafe virtual CefDragHandler GetDragHandler()
 		{
 			return default;
 		}
@@ -216,7 +216,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for find result events.
 		/// </summary>
-		public unsafe virtual CefFindHandler GetFindHandler()
+		protected internal unsafe virtual CefFindHandler GetFindHandler()
 		{
 			return default;
 		}
@@ -241,7 +241,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for focus events.
 		/// </summary>
-		public unsafe virtual CefFocusHandler GetFocusHandler()
+		protected internal unsafe virtual CefFocusHandler GetFocusHandler()
 		{
 			return default;
 		}
@@ -267,7 +267,7 @@ namespace CefNet
 		/// Return the handler for JavaScript dialogs. If no handler is provided the
 		/// default implementation will be used.
 		/// </summary>
-		public unsafe virtual CefJSDialogHandler GetJSDialogHandler()
+		protected internal unsafe virtual CefJSDialogHandler GetJSDialogHandler()
 		{
 			return default;
 		}
@@ -292,7 +292,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for keyboard events.
 		/// </summary>
-		public unsafe virtual CefKeyboardHandler GetKeyboardHandler()
+		protected internal unsafe virtual CefKeyboardHandler GetKeyboardHandler()
 		{
 			return default;
 		}
@@ -317,7 +317,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for browser life span events.
 		/// </summary>
-		public unsafe virtual CefLifeSpanHandler GetLifeSpanHandler()
+		protected internal unsafe virtual CefLifeSpanHandler GetLifeSpanHandler()
 		{
 			return default;
 		}
@@ -342,7 +342,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for browser load status events.
 		/// </summary>
-		public unsafe virtual CefLoadHandler GetLoadHandler()
+		protected internal unsafe virtual CefLoadHandler GetLoadHandler()
 		{
 			return default;
 		}
@@ -367,7 +367,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for off-screen rendering events.
 		/// </summary>
-		public unsafe virtual CefRenderHandler GetRenderHandler()
+		protected internal unsafe virtual CefRenderHandler GetRenderHandler()
 		{
 			return default;
 		}
@@ -392,7 +392,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for browser request events.
 		/// </summary>
-		public unsafe virtual CefRequestHandler GetRequestHandler()
+		protected internal unsafe virtual CefRequestHandler GetRequestHandler()
 		{
 			return default;
 		}
@@ -422,7 +422,7 @@ namespace CefNet
 		/// (1) if the message was handled or false (0) otherwise. Do not keep a
 		/// reference to or attempt to access the message outside of this callback.
 		/// </summary>
-		public unsafe virtual bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
+		protected internal unsafe virtual bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
 		{
 			return default;
 		}

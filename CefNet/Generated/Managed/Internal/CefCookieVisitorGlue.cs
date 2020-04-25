@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidVisit();
 		}
 
-		public override bool Visit(CefCookie cookie, int count, int total, ref int deleteCookie)
+		protected internal unsafe override bool Visit(CefCookie cookie, int count, int total, ref int deleteCookie)
 		{
 			return _implementation.Visit(cookie, count, total, ref deleteCookie);
 		}

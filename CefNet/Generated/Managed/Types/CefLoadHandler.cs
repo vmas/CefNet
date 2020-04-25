@@ -67,7 +67,7 @@ namespace CefNet
 		/// of failure. It will be called before any calls to OnLoadStart and after all
 		/// calls to OnLoadError and/or OnLoadEnd.
 		/// </summary>
-		public unsafe virtual void OnLoadingStateChange(CefBrowser browser, bool isLoading, bool canGoBack, bool canGoForward)
+		protected internal unsafe virtual void OnLoadingStateChange(CefBrowser browser, bool isLoading, bool canGoBack, bool canGoForward)
 		{
 		}
 
@@ -101,7 +101,7 @@ namespace CefNet
 		/// navigations that fail or are canceled before commit. For notification of
 		/// overall browser load status use OnLoadingStateChange instead.
 		/// </summary>
-		public unsafe virtual void OnLoadStart(CefBrowser browser, CefFrame frame, CefTransitionType transitionType)
+		protected internal unsafe virtual void OnLoadStart(CefBrowser browser, CefFrame frame, CefTransitionType transitionType)
 		{
 		}
 
@@ -134,7 +134,7 @@ namespace CefNet
 		/// For notification of overall browser load status use OnLoadingStateChange
 		/// instead.
 		/// </summary>
-		public unsafe virtual void OnLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode)
+		protected internal unsafe virtual void OnLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode)
 		{
 		}
 
@@ -164,7 +164,7 @@ namespace CefNet
 		/// error text and |failedUrl| is the URL that failed to load. See
 		/// net@base @net _error_list.h for complete descriptions of the error codes.
 		/// </summary>
-		public unsafe virtual void OnLoadError(CefBrowser browser, CefFrame frame, CefErrorCode errorCode, string errorText, string failedUrl)
+		protected internal unsafe virtual void OnLoadError(CefBrowser browser, CefFrame frame, CefErrorCode errorCode, string errorText, string failedUrl)
 		{
 		}
 

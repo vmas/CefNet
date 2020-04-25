@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnPdfPrintFinished();
 		}
 
-		public override void OnPdfPrintFinished(string path, bool ok)
+		protected internal unsafe override void OnPdfPrintFinished(string path, bool ok)
 		{
 			_implementation.OnPdfPrintFinished(path, ok);
 		}

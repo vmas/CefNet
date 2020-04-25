@@ -57,7 +57,7 @@ namespace CefNet
 		/// keep references to or attempt to access any DOM objects outside the scope
 		/// of this function.
 		/// </summary>
-		public unsafe virtual void Visit(CefDOMDocument document)
+		protected internal unsafe virtual void Visit(CefDOMDocument document)
 		{
 		}
 

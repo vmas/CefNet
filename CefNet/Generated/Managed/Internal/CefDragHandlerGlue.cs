@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnDragEnter();
 		}
 
-		public override bool OnDragEnter(CefBrowser browser, CefDragData dragData, CefDragOperationsMask mask)
+		protected internal unsafe override bool OnDragEnter(CefBrowser browser, CefDragData dragData, CefDragOperationsMask mask)
 		{
 			return _implementation.OnDragEnter(browser, dragData, mask);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnDraggableRegionsChanged();
 		}
 
-		public override void OnDraggableRegionsChanged(CefBrowser browser, CefFrame frame, CefDraggableRegion[] regions)
+		protected internal unsafe override void OnDraggableRegionsChanged(CefBrowser browser, CefFrame frame, CefDraggableRegion[] regions)
 		{
 			_implementation.OnDraggableRegionsChanged(browser, frame, regions);
 		}

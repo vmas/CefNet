@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnPreKeyEvent();
 		}
 
-		public override bool OnPreKeyEvent(CefBrowser browser, CefKeyEvent @event, CefEventHandle osEvent, ref int isKeyboardShortcut)
+		protected internal unsafe override bool OnPreKeyEvent(CefBrowser browser, CefKeyEvent @event, CefEventHandle osEvent, ref int isKeyboardShortcut)
 		{
 			return _implementation.OnPreKeyEvent(browser, @event, osEvent, ref isKeyboardShortcut);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnKeyEvent();
 		}
 
-		public override bool OnKeyEvent(CefBrowser browser, CefKeyEvent @event, CefEventHandle osEvent)
+		protected internal unsafe override bool OnKeyEvent(CefBrowser browser, CefKeyEvent @event, CefEventHandle osEvent)
 		{
 			return _implementation.OnKeyEvent(browser, @event, osEvent);
 		}

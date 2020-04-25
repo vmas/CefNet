@@ -76,7 +76,7 @@ namespace CefNet
 		/// the application must execute |callback| once the custom dialog is
 		/// dismissed.
 		/// </summary>
-		public unsafe virtual bool OnJSDialog(CefBrowser browser, string originUrl, CefJSDialogType dialogType, string messageText, string defaultPromptText, CefJSDialogCallback callback, ref int suppressMessage)
+		protected internal unsafe virtual bool OnJSDialog(CefBrowser browser, string originUrl, CefJSDialogType dialogType, string messageText, string defaultPromptText, CefJSDialogCallback callback, ref int suppressMessage)
 		{
 			return default;
 		}
@@ -108,7 +108,7 @@ namespace CefNet
 		/// dialog is used the application must execute |callback| once the custom
 		/// dialog is dismissed.
 		/// </summary>
-		public unsafe virtual bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback)
+		protected internal unsafe virtual bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback)
 		{
 			return default;
 		}
@@ -137,7 +137,7 @@ namespace CefNet
 		/// be called due to events like page navigation irregardless of whether any
 		/// dialogs are currently pending.
 		/// </summary>
-		public unsafe virtual void OnResetDialogState(CefBrowser browser)
+		protected internal unsafe virtual void OnResetDialogState(CefBrowser browser)
 		{
 		}
 
@@ -162,7 +162,7 @@ namespace CefNet
 		/// <summary>
 		/// Called when the default implementation dialog is closed.
 		/// </summary>
-		public unsafe virtual void OnDialogClosed(CefBrowser browser)
+		protected internal unsafe virtual void OnDialogClosed(CefBrowser browser)
 		{
 		}
 

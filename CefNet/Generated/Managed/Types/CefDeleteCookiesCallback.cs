@@ -54,7 +54,7 @@ namespace CefNet
 		/// Method that will be called upon completion. |num_deleted| will be the
 		/// number of cookies that were deleted.
 		/// </summary>
-		public unsafe virtual void OnComplete(int numDeleted)
+		protected internal unsafe virtual void OnComplete(int numDeleted)
 		{
 		}
 

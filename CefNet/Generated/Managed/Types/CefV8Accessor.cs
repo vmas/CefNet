@@ -62,7 +62,7 @@ namespace CefNet
 		/// exception that will be thrown. Return true (1) if accessor retrieval was
 		/// handled.
 		/// </summary>
-		public unsafe virtual bool Get(string name, CefV8Value @object, ref CefV8Value retval, ref string exception)
+		protected internal unsafe virtual bool Get(string name, CefV8Value @object, ref CefV8Value retval, ref string exception)
 		{
 			return default;
 		}
@@ -99,7 +99,7 @@ namespace CefNet
 		/// exception that will be thrown. Return true (1) if accessor assignment was
 		/// handled.
 		/// </summary>
-		public unsafe virtual bool Set(string name, CefV8Value @object, CefV8Value value, ref string exception)
+		protected internal unsafe virtual bool Set(string name, CefV8Value @object, CefV8Value value, ref string exception)
 		{
 			return default;
 		}

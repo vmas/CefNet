@@ -78,7 +78,7 @@ namespace CefNet
 		/// compatibility set |handle_request| to false (0) and return false (0) and
 		/// the ProcessRequest function will be called.
 		/// </summary>
-		public unsafe virtual bool Open(CefRequest request, ref int handleRequest, CefCallback callback)
+		protected internal unsafe virtual bool Open(CefRequest request, ref int handleRequest, CefCallback callback)
 		{
 			return default;
 		}
@@ -110,7 +110,7 @@ namespace CefNet
 		/// request return false (0).
 		/// WARNING: This function is deprecated. Use Open instead.
 		/// </summary>
-		public unsafe virtual bool ProcessRequest(CefRequest request, CefCallback callback)
+		protected internal unsafe virtual bool ProcessRequest(CefRequest request, CefCallback callback)
 		{
 			return default;
 		}
@@ -149,7 +149,7 @@ namespace CefNet
 		/// error occured while setting up the request you can call set_error() on
 		/// |response| to indicate the error condition.
 		/// </summary>
-		public unsafe virtual void GetResponseHeaders(CefResponse response, ref long responseLength, ref string redirectUrl)
+		protected internal unsafe virtual void GetResponseHeaders(CefResponse response, ref long responseLength, ref string redirectUrl)
 		{
 		}
 
@@ -184,7 +184,7 @@ namespace CefNet
 		/// 0 (e.g. -2 for ERR_FAILED) and return false (0). This
 		/// function will be called in sequence but not from a dedicated thread.
 		/// </summary>
-		public unsafe virtual bool Skip(long bytesToSkip, ref long bytesSkipped, CefResourceSkipCallback callback)
+		protected internal unsafe virtual bool Skip(long bytesToSkip, ref long bytesSkipped, CefResourceSkipCallback callback)
 		{
 			return default;
 		}
@@ -222,7 +222,7 @@ namespace CefNet
 		/// set |bytes_read| to -1 and return false (0) and the ReadResponse function
 		/// will be called.
 		/// </summary>
-		public unsafe virtual bool Read(IntPtr dataOut, int bytesToRead, ref int bytesRead, CefResourceReadCallback callback)
+		protected internal unsafe virtual bool Read(IntPtr dataOut, int bytesToRead, ref int bytesRead, CefResourceReadCallback callback)
 		{
 			return default;
 		}
@@ -253,7 +253,7 @@ namespace CefNet
 		/// data is available. To indicate response completion return false (0).
 		/// WARNING: This function is deprecated. Use Skip and Read instead.
 		/// </summary>
-		public unsafe virtual bool ReadResponse(IntPtr dataOut, int bytesToRead, ref int bytesRead, CefCallback callback)
+		protected internal unsafe virtual bool ReadResponse(IntPtr dataOut, int bytesToRead, ref int bytesRead, CefCallback callback)
 		{
 			return default;
 		}
@@ -276,7 +276,7 @@ namespace CefNet
 		/// <summary>
 		/// Request processing has been canceled.
 		/// </summary>
-		public unsafe virtual void Cancel()
+		protected internal unsafe virtual void Cancel()
 		{
 		}
 

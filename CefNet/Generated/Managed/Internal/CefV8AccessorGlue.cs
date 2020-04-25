@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGet();
 		}
 
-		public override bool Get(string name, CefV8Value @object, ref CefV8Value retval, ref string exception)
+		protected internal unsafe override bool Get(string name, CefV8Value @object, ref CefV8Value retval, ref string exception)
 		{
 			return _implementation.Get(name, @object, ref retval, ref exception);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidSet();
 		}
 
-		public override bool Set(string name, CefV8Value @object, CefV8Value value, ref string exception)
+		protected internal unsafe override bool Set(string name, CefV8Value @object, CefV8Value value, ref string exception)
 		{
 			return _implementation.Set(name, @object, value, ref exception);
 		}

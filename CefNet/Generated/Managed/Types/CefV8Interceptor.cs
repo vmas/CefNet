@@ -72,7 +72,7 @@ namespace CefNet
 		/// accessor, it will be called only if you don&apos;t set |retval|. Return true (1)
 		/// if interceptor retrieval was handled, false (0) otherwise.
 		/// </summary>
-		public unsafe virtual bool GetByName(string name, CefV8Value @object, ref CefV8Value retval, ref string exception)
+		protected internal unsafe virtual bool GetByName(string name, CefV8Value @object, ref CefV8Value retval, ref string exception)
 		{
 			return default;
 		}
@@ -110,7 +110,7 @@ namespace CefNet
 		/// |exception| to the exception that will be thrown. Return true (1) if
 		/// interceptor retrieval was handled, false (0) otherwise.
 		/// </summary>
-		public unsafe virtual bool GetByIndex(int index, CefV8Value @object, ref CefV8Value retval, ref string exception)
+		protected internal unsafe virtual bool GetByIndex(int index, CefV8Value @object, ref CefV8Value retval, ref string exception)
 		{
 			return default;
 		}
@@ -148,7 +148,7 @@ namespace CefNet
 		/// be called, even when the property has an associated accessor. Return true
 		/// (1) if interceptor assignment was handled, false (0) otherwise.
 		/// </summary>
-		public unsafe virtual bool SetByName(string name, CefV8Value @object, CefV8Value value, ref string exception)
+		protected internal unsafe virtual bool SetByName(string name, CefV8Value @object, CefV8Value value, ref string exception)
 		{
 			return default;
 		}
@@ -184,7 +184,7 @@ namespace CefNet
 		/// |exception| to the exception that will be thrown. Return true (1) if
 		/// interceptor assignment was handled, false (0) otherwise.
 		/// </summary>
-		public unsafe virtual bool SetByIndex(int index, CefV8Value @object, CefV8Value value, ref string exception)
+		protected internal unsafe virtual bool SetByIndex(int index, CefV8Value @object, CefV8Value value, ref string exception)
 		{
 			return default;
 		}

@@ -58,7 +58,7 @@ namespace CefNet
 		/// Called after renderer process sends accessibility tree changes to the
 		/// browser process.
 		/// </summary>
-		public unsafe virtual void OnAccessibilityTreeChange(CefValue value)
+		protected internal unsafe virtual void OnAccessibilityTreeChange(CefValue value)
 		{
 		}
 
@@ -84,7 +84,7 @@ namespace CefNet
 		/// Called after renderer process sends accessibility location changes to the
 		/// browser process.
 		/// </summary>
-		public unsafe virtual void OnAccessibilityLocationChange(CefValue value)
+		protected internal unsafe virtual void OnAccessibilityLocationChange(CefValue value)
 		{
 		}
 

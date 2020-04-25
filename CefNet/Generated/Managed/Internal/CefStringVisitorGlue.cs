@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidVisit();
 		}
 
-		public override void Visit(string @string)
+		protected internal unsafe override void Visit(string @string)
 		{
 			_implementation.Visit(@string);
 		}

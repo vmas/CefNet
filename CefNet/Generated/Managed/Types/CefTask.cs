@@ -54,7 +54,7 @@ namespace CefNet
 		/// <summary>
 		/// Method that will be executed on the target thread.
 		/// </summary>
-		public unsafe virtual void Execute()
+		protected internal unsafe virtual void Execute()
 		{
 		}
 

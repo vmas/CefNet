@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOpen();
 		}
 
-		public override bool Open(CefRequest request, ref int handleRequest, CefCallback callback)
+		protected internal unsafe override bool Open(CefRequest request, ref int handleRequest, CefCallback callback)
 		{
 			return _implementation.Open(request, ref handleRequest, callback);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidProcessRequest();
 		}
 
-		public override bool ProcessRequest(CefRequest request, CefCallback callback)
+		protected internal unsafe override bool ProcessRequest(CefRequest request, CefCallback callback)
 		{
 			return _implementation.ProcessRequest(request, callback);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetResponseHeaders();
 		}
 
-		public override void GetResponseHeaders(CefResponse response, ref long responseLength, ref string redirectUrl)
+		protected internal unsafe override void GetResponseHeaders(CefResponse response, ref long responseLength, ref string redirectUrl)
 		{
 			_implementation.GetResponseHeaders(response, ref responseLength, ref redirectUrl);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidSkip();
 		}
 
-		public override bool Skip(long bytesToSkip, ref long bytesSkipped, CefResourceSkipCallback callback)
+		protected internal unsafe override bool Skip(long bytesToSkip, ref long bytesSkipped, CefResourceSkipCallback callback)
 		{
 			return _implementation.Skip(bytesToSkip, ref bytesSkipped, callback);
 		}
@@ -74,7 +74,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidRead();
 		}
 
-		public override bool Read(IntPtr dataOut, int bytesToRead, ref int bytesRead, CefResourceReadCallback callback)
+		protected internal unsafe override bool Read(IntPtr dataOut, int bytesToRead, ref int bytesRead, CefResourceReadCallback callback)
 		{
 			return _implementation.Read(dataOut, bytesToRead, ref bytesRead, callback);
 		}
@@ -84,12 +84,12 @@ namespace CefNet.Internal
 			return _implementation.AvoidReadResponse();
 		}
 
-		public override bool ReadResponse(IntPtr dataOut, int bytesToRead, ref int bytesRead, CefCallback callback)
+		protected internal unsafe override bool ReadResponse(IntPtr dataOut, int bytesToRead, ref int bytesRead, CefCallback callback)
 		{
 			return _implementation.ReadResponse(dataOut, bytesToRead, ref bytesRead, callback);
 		}
 
-		public override void Cancel()
+		protected internal unsafe override void Cancel()
 		{
 			_implementation.Cancel();
 		}

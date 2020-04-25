@@ -368,7 +368,7 @@ namespace CefNet
 		/// Returns a handler for functionality specific to the render process.
 		/// </summary>
 		/// <returns>A handler for functionality specific to the render process.</returns>
-		public override CefRenderProcessHandler GetRenderProcessHandler()
+		protected internal override CefRenderProcessHandler GetRenderProcessHandler()
 		{
 			return AppGlue.RenderProcessGlue;
 		}
@@ -378,7 +378,7 @@ namespace CefNet
 		/// This function is called on multiple threads in the browser process.
 		/// </summary>
 		/// <returns>A handler for functionality specific to the browser process.</returns>
-		public override CefBrowserProcessHandler GetBrowserProcessHandler()
+		protected internal override CefBrowserProcessHandler GetBrowserProcessHandler()
 		{
 			return AppGlue.BrowserProcessGlue;
 		}

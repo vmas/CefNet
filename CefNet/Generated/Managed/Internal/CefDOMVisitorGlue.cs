@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidVisit();
 		}
 
-		public override void Visit(CefDOMDocument document)
+		protected internal unsafe override void Visit(CefDOMDocument document)
 		{
 			_implementation.Visit(document);
 		}

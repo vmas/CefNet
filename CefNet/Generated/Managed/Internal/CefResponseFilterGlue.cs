@@ -29,7 +29,7 @@ namespace CefNet.Internal
 			_implementation = impl;
 		}
 
-		public override bool InitFilter()
+		protected internal unsafe override bool InitFilter()
 		{
 			return _implementation.InitFilter();
 		}
@@ -39,7 +39,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidFilter();
 		}
 
-		public override CefResponseFilterStatus Filter(IntPtr dataIn, long dataInSize, ref long dataInRead, IntPtr dataOut, long dataOutSize, ref long dataOutWritten)
+		protected internal unsafe override CefResponseFilterStatus Filter(IntPtr dataIn, long dataInSize, ref long dataInRead, IntPtr dataOut, long dataOutSize, ref long dataOutWritten)
 		{
 			return _implementation.Filter(dataIn, dataInSize, ref dataInRead, dataOut, dataOutSize, ref dataOutWritten);
 		}

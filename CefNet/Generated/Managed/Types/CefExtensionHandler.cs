@@ -76,7 +76,7 @@ namespace CefNet
 		/// Called if the cef_request_context_t::LoadExtension request fails. |result|
 		/// will be the error code.
 		/// </summary>
-		public unsafe virtual void OnExtensionLoadFailed(CefErrorCode result)
+		protected internal unsafe virtual void OnExtensionLoadFailed(CefErrorCode result)
 		{
 		}
 
@@ -101,7 +101,7 @@ namespace CefNet
 		/// Called if the cef_request_context_t::LoadExtension request succeeds.
 		/// |extension| is the loaded extension.
 		/// </summary>
-		public unsafe virtual void OnExtensionLoaded(CefExtension extension)
+		protected internal unsafe virtual void OnExtensionLoaded(CefExtension extension)
 		{
 		}
 
@@ -126,7 +126,7 @@ namespace CefNet
 		/// <summary>
 		/// Called after the cef_extension_t::Unload request has completed.
 		/// </summary>
-		public unsafe virtual void OnExtensionUnloaded(CefExtension extension)
+		protected internal unsafe virtual void OnExtensionUnloaded(CefExtension extension)
 		{
 		}
 
@@ -165,7 +165,7 @@ namespace CefNet
 		/// browser. See https://developer.chrome.com/extensions/event_pages for more
 		/// information about extension background script usage.
 		/// </summary>
-		public unsafe virtual bool OnBeforeBackgroundBrowser(CefExtension extension, string url, ref CefClient client, CefBrowserSettings settings)
+		protected internal unsafe virtual bool OnBeforeBackgroundBrowser(CefExtension extension, string url, ref CefClient client, CefBrowserSettings settings)
 		{
 			return default;
 		}
@@ -206,7 +206,7 @@ namespace CefNet
 		/// modifications to |windowInfo| will be ignored if |active_browser| is
 		/// wrapped in a cef_browser_view_t.
 		/// </summary>
-		public unsafe virtual bool OnBeforeBrowser(CefExtension extension, CefBrowser browser, CefBrowser activeBrowser, int index, string url, bool active, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings)
+		protected internal unsafe virtual bool OnBeforeBrowser(CefExtension extension, CefBrowser browser, CefBrowser activeBrowser, int index, string url, bool active, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings)
 		{
 			return default;
 		}
@@ -243,7 +243,7 @@ namespace CefNet
 		/// be considered unless the source extension has incognito access enabled, in
 		/// which case |include_incognito| will be true (1).
 		/// </summary>
-		public unsafe virtual CefBrowser GetActiveBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito)
+		protected internal unsafe virtual CefBrowser GetActiveBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito)
 		{
 			return default;
 		}
@@ -278,7 +278,7 @@ namespace CefNet
 		/// should not be allowed unless the source extension has incognito access
 		/// enabled, in which case |include_incognito| will be true (1).
 		/// </summary>
-		public unsafe virtual bool CanAccessBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito, CefBrowser targetBrowser)
+		protected internal unsafe virtual bool CanAccessBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito, CefBrowser targetBrowser)
 		{
 			return default;
 		}
@@ -313,7 +313,7 @@ namespace CefNet
 		/// on disk return false (0). Localization substitutions will not be applied to
 		/// resources handled via this function.
 		/// </summary>
-		public unsafe virtual bool GetExtensionResource(CefExtension extension, CefBrowser browser, string file, CefGetExtensionResourceCallback callback)
+		protected internal unsafe virtual bool GetExtensionResource(CefExtension extension, CefBrowser browser, string file, CefGetExtensionResourceCallback callback)
 		{
 			return default;
 		}

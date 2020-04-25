@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidReleaseBuffer();
 		}
 
-		public override void ReleaseBuffer(IntPtr buffer)
+		protected internal unsafe override void ReleaseBuffer(IntPtr buffer)
 		{
 			_implementation.ReleaseBuffer(buffer);
 		}

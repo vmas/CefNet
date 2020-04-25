@@ -85,7 +85,7 @@ namespace CefNet
 		/// specific to the created popup browser that will be passed to
 		/// cef_render_process_handler_t::on_browser_created() in the render process.
 		/// </summary>
-		public unsafe virtual bool OnBeforePopup(CefBrowser browser, CefFrame frame, string targetUrl, string targetFrameName, CefWindowOpenDisposition targetDisposition, bool userGesture, CefPopupFeatures popupFeatures, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings, ref CefDictionaryValue extraInfo, ref int noJavascriptAccess)
+		protected internal unsafe virtual bool OnBeforePopup(CefBrowser browser, CefFrame frame, string targetUrl, string targetFrameName, CefWindowOpenDisposition targetDisposition, bool userGesture, CefPopupFeatures popupFeatures, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings, ref CefDictionaryValue extraInfo, ref int noJavascriptAccess)
 		{
 			return default;
 		}
@@ -118,7 +118,7 @@ namespace CefNet
 		/// Called after a new browser is created. This callback will be the first
 		/// notification that references |browser|.
 		/// </summary>
-		public unsafe virtual void OnAfterCreated(CefBrowser browser)
+		protected internal unsafe virtual void OnAfterCreated(CefBrowser browser)
 		{
 		}
 
@@ -221,7 +221,7 @@ namespace CefNet
 		/// browsers
 		/// exist.
 		/// </summary>
-		public unsafe virtual bool DoClose(CefBrowser browser)
+		protected internal unsafe virtual bool DoClose(CefBrowser browser)
 		{
 			return default;
 		}
@@ -255,7 +255,7 @@ namespace CefNet
 		/// still arrive on the IO thread after this function is called. See do_close()
 		/// documentation for additional usage information.
 		/// </summary>
-		public unsafe virtual void OnBeforeClose(CefBrowser browser)
+		protected internal unsafe virtual void OnBeforeClose(CefBrowser browser)
 		{
 		}
 

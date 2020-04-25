@@ -57,7 +57,7 @@ namespace CefNet
 		/// Otherwise, |result| and |error_message| will contain additional information
 		/// about why registration failed.
 		/// </summary>
-		public unsafe virtual void OnCDMRegistrationComplete(CefCDMRegistrationError result, string errorMessage)
+		protected internal unsafe virtual void OnCDMRegistrationComplete(CefCDMRegistrationError result, string errorMessage)
 		{
 		}
 

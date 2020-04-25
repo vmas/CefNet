@@ -82,7 +82,7 @@ namespace CefNet
 		/// OnServerDestroyed will be called. If the server failed to start then
 		/// OnServerDestroyed will be called immediately after this function returns.
 		/// </summary>
-		public unsafe virtual void OnServerCreated(CefServer server)
+		protected internal unsafe virtual void OnServerCreated(CefServer server)
 		{
 		}
 
@@ -110,7 +110,7 @@ namespace CefNet
 		/// when this function is called. See OnServerCreated documentation for a
 		/// description of server lifespan.
 		/// </summary>
-		public unsafe virtual void OnServerDestroyed(CefServer server)
+		protected internal unsafe virtual void OnServerDestroyed(CefServer server)
 		{
 		}
 
@@ -137,7 +137,7 @@ namespace CefNet
 		/// identifies the connection. Each call to this function will have a matching
 		/// call to OnClientDisconnected.
 		/// </summary>
-		public unsafe virtual void OnClientConnected(CefServer server, int connectionId)
+		protected internal unsafe virtual void OnClientConnected(CefServer server, int connectionId)
 		{
 		}
 
@@ -168,7 +168,7 @@ namespace CefNet
 		/// will disconnect automatically after a cef_server_t::SendHttpXXXResponse
 		/// function is called.
 		/// </summary>
-		public unsafe virtual void OnClientDisconnected(CefServer server, int connectionId)
+		protected internal unsafe virtual void OnClientDisconnected(CefServer server, int connectionId)
 		{
 		}
 
@@ -197,7 +197,7 @@ namespace CefNet
 		/// contents (URL, function, headers and optional POST data). Call cef_server_t
 		/// functions either synchronously or asynchronusly to send a response.
 		/// </summary>
-		public unsafe virtual void OnHttpRequest(CefServer server, int connectionId, string clientAddress, CefRequest request)
+		protected internal unsafe virtual void OnHttpRequest(CefServer server, int connectionId, string clientAddress, CefRequest request)
 		{
 		}
 
@@ -234,7 +234,7 @@ namespace CefNet
 		/// receiving the OnWebSocketConnected callback to respond with WebSocket
 		/// messages.
 		/// </summary>
-		public unsafe virtual void OnWebSocketRequest(CefServer server, int connectionId, string clientAddress, CefRequest request, CefCallback callback)
+		protected internal unsafe virtual void OnWebSocketRequest(CefServer server, int connectionId, string clientAddress, CefRequest request, CefCallback callback)
 		{
 		}
 
@@ -263,7 +263,7 @@ namespace CefNet
 		/// and |connection_id| via the OnWebSocketRequest callback. See
 		/// OnWebSocketRequest documentation for intended usage.
 		/// </summary>
-		public unsafe virtual void OnWebSocketConnected(CefServer server, int connectionId)
+		protected internal unsafe virtual void OnWebSocketConnected(CefServer server, int connectionId)
 		{
 		}
 
@@ -292,7 +292,7 @@ namespace CefNet
 		/// |data| outside of this function. See OnWebSocketRequest documentation for
 		/// intended usage.
 		/// </summary>
-		public unsafe virtual void OnWebSocketMessage(CefServer server, int connectionId, IntPtr data, long dataSize)
+		protected internal unsafe virtual void OnWebSocketMessage(CefServer server, int connectionId, IntPtr data, long dataSize)
 		{
 		}
 

@@ -29,7 +29,7 @@ namespace CefNet.Internal
 			_implementation = impl;
 		}
 
-		public override void OnContextInitialized()
+		protected internal unsafe override void OnContextInitialized()
 		{
 			_implementation.OnContextInitialized();
 		}
@@ -39,7 +39,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnBeforeChildProcessLaunch();
 		}
 
-		public override void OnBeforeChildProcessLaunch(CefCommandLine commandLine)
+		protected internal unsafe override void OnBeforeChildProcessLaunch(CefCommandLine commandLine)
 		{
 			_implementation.OnBeforeChildProcessLaunch(commandLine);
 		}
@@ -49,12 +49,12 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnRenderProcessThreadCreated();
 		}
 
-		public override void OnRenderProcessThreadCreated(CefListValue extraInfo)
+		protected internal unsafe override void OnRenderProcessThreadCreated(CefListValue extraInfo)
 		{
 			_implementation.OnRenderProcessThreadCreated(extraInfo);
 		}
 
-		public override CefPrintHandler GetPrintHandler()
+		protected internal unsafe override CefPrintHandler GetPrintHandler()
 		{
 			return _implementation.GetPrintHandler();
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnScheduleMessagePumpWork();
 		}
 
-		public override void OnScheduleMessagePumpWork(long delayMs)
+		protected internal unsafe override void OnScheduleMessagePumpWork(long delayMs)
 		{
 			_implementation.OnScheduleMessagePumpWork(delayMs);
 		}

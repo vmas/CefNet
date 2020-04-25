@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnDownloadImageFinished();
 		}
 
-		public override void OnDownloadImageFinished(string imageUrl, int httpStatusCode, CefImage image)
+		protected internal unsafe override void OnDownloadImageFinished(string imageUrl, int httpStatusCode, CefImage image)
 		{
 			_implementation.OnDownloadImageFinished(imageUrl, httpStatusCode, image);
 		}

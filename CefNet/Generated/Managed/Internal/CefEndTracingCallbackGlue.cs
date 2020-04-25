@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnEndTracingComplete();
 		}
 
-		public override void OnEndTracingComplete(string tracingFile)
+		protected internal unsafe override void OnEndTracingComplete(string tracingFile)
 		{
 			_implementation.OnEndTracingComplete(tracingFile);
 		}

@@ -56,7 +56,7 @@ namespace CefNet
 		/// description of the error if the route creation failed. |route| is the
 		/// resulting route, or NULL if the route creation failed.
 		/// </summary>
-		public unsafe virtual void OnMediaRouteCreateFinished(CefMediaRouteCreateResult result, string error, CefMediaRoute route)
+		protected internal unsafe virtual void OnMediaRouteCreateFinished(CefMediaRouteCreateResult result, string error, CefMediaRoute route)
 		{
 		}
 

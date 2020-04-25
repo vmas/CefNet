@@ -89,7 +89,7 @@ namespace CefNet
 		/// navigated via explicit user gesture (e.g. clicking a link) or false (0) if
 		/// it navigated automatically (e.g. via the DomContentLoaded event).
 		/// </summary>
-		public unsafe virtual bool OnBeforeBrowse(CefBrowser browser, CefFrame frame, CefRequest request, bool userGesture, bool isRedirect)
+		protected internal unsafe virtual bool OnBeforeBrowse(CefBrowser browser, CefFrame frame, CefRequest request, bool userGesture, bool isRedirect)
 		{
 			return default;
 		}
@@ -130,7 +130,7 @@ namespace CefNet
 		/// true (1) to cancel the navigation or false (0) to allow the navigation to
 		/// proceed in the source browser&apos;s top-level frame.
 		/// </summary>
-		public unsafe virtual bool OnOpenUrlFromTab(CefBrowser browser, CefFrame frame, string targetUrl, CefWindowOpenDisposition targetDisposition, bool userGesture)
+		protected internal unsafe virtual bool OnOpenUrlFromTab(CefBrowser browser, CefFrame frame, string targetUrl, CefWindowOpenDisposition targetDisposition, bool userGesture)
 		{
 			return default;
 		}
@@ -170,7 +170,7 @@ namespace CefNet
 		/// same function will be called on the associated
 		/// cef_request_context_handler_t, if any.
 		/// </summary>
-		public unsafe virtual CefResourceRequestHandler GetResourceRequestHandler(CefBrowser browser, CefFrame frame, CefRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref int disableDefaultHandling)
+		protected internal unsafe virtual CefResourceRequestHandler GetResourceRequestHandler(CefBrowser browser, CefFrame frame, CefRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref int disableDefaultHandling)
 		{
 			return default;
 		}
@@ -210,7 +210,7 @@ namespace CefNet
 		/// the authentication information is available. Return false (0) to cancel the
 		/// request immediately.
 		/// </summary>
-		public unsafe virtual bool GetAuthCredentials(CefBrowser browser, string originUrl, bool isProxy, string host, int port, string realm, string scheme, CefAuthCallback callback)
+		protected internal unsafe virtual bool GetAuthCredentials(CefBrowser browser, string originUrl, bool isProxy, string host, int port, string realm, string scheme, CefAuthCallback callback)
 		{
 			return default;
 		}
@@ -243,7 +243,7 @@ namespace CefNet
 		/// to grant or deny the request. Return false (0) to cancel the request
 		/// immediately.
 		/// </summary>
-		public unsafe virtual bool OnQuotaRequest(CefBrowser browser, string originUrl, long newSize, CefRequestCallback callback)
+		protected internal unsafe virtual bool OnQuotaRequest(CefBrowser browser, string originUrl, long newSize, CefRequestCallback callback)
 		{
 			return default;
 		}
@@ -275,7 +275,7 @@ namespace CefNet
 		/// CefSettings.ignore_certificate_errors is set all invalid certificates will
 		/// be accepted without calling this function.
 		/// </summary>
-		public unsafe virtual bool OnCertificateError(CefBrowser browser, CefErrorCode certError, string requestUrl, CefSSLInfo sSLInfo, CefRequestCallback callback)
+		protected internal unsafe virtual bool OnCertificateError(CefBrowser browser, CefErrorCode certError, string requestUrl, CefSSLInfo sSLInfo, CefRequestCallback callback)
 		{
 			return default;
 		}
@@ -313,7 +313,7 @@ namespace CefNet
 		/// pruned by Chromium so that it only contains certificates from issuers that
 		/// the server trusts.
 		/// </summary>
-		public unsafe virtual bool OnSelectClientCertificate(CefBrowser browser, bool isProxy, string host, int port, CefX509Certificate[] certificates, CefSelectClientCertificateCallback callback)
+		protected internal unsafe virtual bool OnSelectClientCertificate(CefBrowser browser, bool isProxy, string host, int port, CefX509Certificate[] certificates, CefSelectClientCertificateCallback callback)
 		{
 			return default;
 		}
@@ -348,7 +348,7 @@ namespace CefNet
 		/// Called on the browser process UI thread when a plugin has crashed.
 		/// |plugin_path| is the path of the plugin that crashed.
 		/// </summary>
-		public unsafe virtual void OnPluginCrashed(CefBrowser browser, string pluginPath)
+		protected internal unsafe virtual void OnPluginCrashed(CefBrowser browser, string pluginPath)
 		{
 		}
 
@@ -375,7 +375,7 @@ namespace CefNet
 		/// with |browser| is ready to receive/handle IPC messages in the render
 		/// process.
 		/// </summary>
-		public unsafe virtual void OnRenderViewReady(CefBrowser browser)
+		protected internal unsafe virtual void OnRenderViewReady(CefBrowser browser)
 		{
 		}
 
@@ -401,7 +401,7 @@ namespace CefNet
 		/// Called on the browser process UI thread when the render process terminates
 		/// unexpectedly. |status| indicates how the process terminated.
 		/// </summary>
-		public unsafe virtual void OnRenderProcessTerminated(CefBrowser browser, CefTerminationStatus status)
+		protected internal unsafe virtual void OnRenderProcessTerminated(CefBrowser browser, CefTerminationStatus status)
 		{
 		}
 

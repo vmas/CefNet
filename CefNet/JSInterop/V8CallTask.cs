@@ -30,7 +30,7 @@ namespace CefNet.JSInterop
 			_method = action;
 		}
 
-		public override void Execute()
+		protected internal override void Execute()
 		{
 			if (_method is Func<object> func)
 			{

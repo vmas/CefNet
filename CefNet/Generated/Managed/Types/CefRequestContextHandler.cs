@@ -61,7 +61,7 @@ namespace CefNet
 		/// Called on the browser process UI thread immediately after the request
 		/// context has been initialized.
 		/// </summary>
-		public unsafe virtual void OnRequestContextInitialized(CefRequestContext requestContext)
+		protected internal unsafe virtual void OnRequestContextInitialized(CefRequestContext requestContext)
 		{
 		}
 
@@ -102,7 +102,7 @@ namespace CefNet
 		/// trigger new calls to this function call
 		/// cef_request_context_t::PurgePluginListCache.
 		/// </summary>
-		public unsafe virtual bool OnBeforePluginLoad(string mimeType, string pluginUrl, bool isMainFrame, string topOriginUrl, CefWebPluginInfo pluginInfo, ref CefPluginPolicy pluginPolicy)
+		protected internal unsafe virtual bool OnBeforePluginLoad(string mimeType, string pluginUrl, bool isMainFrame, string topOriginUrl, CefWebPluginInfo pluginInfo, ref CefPluginPolicy pluginPolicy)
 		{
 			return default;
 		}
@@ -143,7 +143,7 @@ namespace CefNet
 		/// cef_request_handler_t::GetResourceRequestHandler for the same request
 		/// (identified by cef_request_t::GetIdentifier).
 		/// </summary>
-		public unsafe virtual CefResourceRequestHandler GetResourceRequestHandler(CefBrowser browser, CefFrame frame, CefRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref int disableDefaultHandling)
+		protected internal unsafe virtual CefResourceRequestHandler GetResourceRequestHandler(CefBrowser browser, CefFrame frame, CefRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref int disableDefaultHandling)
 		{
 			return default;
 		}

@@ -57,7 +57,7 @@ namespace CefNet
 		/// |file_paths| will be a single value or a list of values depending on the
 		/// dialog mode. If the selection was cancelled |file_paths| will be NULL.
 		/// </summary>
-		public unsafe virtual void OnFileDialogDismissed(bool selectedAcceptFilter, CefStringList filePaths)
+		protected internal unsafe virtual void OnFileDialogDismissed(bool selectedAcceptFilter, CefStringList filePaths)
 		{
 		}
 

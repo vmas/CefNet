@@ -30,7 +30,7 @@ namespace CefNet
 
 		public UIntPtr Length { get; }
 
-		public override void ReleaseBuffer(IntPtr buffer)
+		protected internal override void ReleaseBuffer(IntPtr buffer)
 		{
 			ArrayBuffer instance;
 			lock (Root)

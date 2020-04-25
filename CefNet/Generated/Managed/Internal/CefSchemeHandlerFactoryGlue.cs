@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidCreate();
 		}
 
-		public override CefResourceHandler Create(CefBrowser browser, CefFrame frame, string schemeName, CefRequest request)
+		protected internal unsafe override CefResourceHandler Create(CefBrowser browser, CefFrame frame, string schemeName, CefRequest request)
 		{
 			return _implementation.Create(browser, frame, schemeName, request);
 		}

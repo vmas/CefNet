@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnSinks();
 		}
 
-		public override void OnSinks(CefMediaSink[] sinks)
+		protected internal unsafe override void OnSinks(CefMediaSink[] sinks)
 		{
 			_implementation.OnSinks(sinks);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnRoutes();
 		}
 
-		public override void OnRoutes(CefMediaRoute[] routes)
+		protected internal unsafe override void OnRoutes(CefMediaRoute[] routes)
 		{
 			_implementation.OnRoutes(routes);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnRouteStateChanged();
 		}
 
-		public override void OnRouteStateChanged(CefMediaRoute route, CefMediaRouteConnectionState state)
+		protected internal unsafe override void OnRouteStateChanged(CefMediaRoute route, CefMediaRouteConnectionState state)
 		{
 			_implementation.OnRouteStateChanged(route, state);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnRouteMessageReceived();
 		}
 
-		public override void OnRouteMessageReceived(CefMediaRoute route, IntPtr message, long messageSize)
+		protected internal unsafe override void OnRouteMessageReceived(CefMediaRoute route, IntPtr message, long messageSize)
 		{
 			_implementation.OnRouteMessageReceived(route, message, messageSize);
 		}

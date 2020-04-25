@@ -65,7 +65,7 @@ namespace CefNet
 		/// return true (1) and execute |callback| either inline or at a later time. To
 		/// display the default dialog return false (0).
 		/// </summary>
-		public unsafe virtual bool OnFileDialog(CefBrowser browser, CefFileDialogMode mode, string title, string defaultFilePath, CefStringList acceptFilters, bool selectedAcceptFilter, CefFileDialogCallback callback)
+		protected internal unsafe virtual bool OnFileDialog(CefBrowser browser, CefFileDialogMode mode, string title, string defaultFilePath, CefStringList acceptFilters, bool selectedAcceptFilter, CefFileDialogCallback callback)
 		{
 			return default;
 		}

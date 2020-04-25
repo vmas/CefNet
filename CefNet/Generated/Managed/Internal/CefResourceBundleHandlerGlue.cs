@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetLocalizedString();
 		}
 
-		public override bool GetLocalizedString(int stringId, ref string @string)
+		protected internal unsafe override bool GetLocalizedString(int stringId, ref string @string)
 		{
 			return _implementation.GetLocalizedString(stringId, ref @string);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetDataResource();
 		}
 
-		public override bool GetDataResource(int resourceId, ref IntPtr data, ref long dataSize)
+		protected internal unsafe override bool GetDataResource(int resourceId, ref IntPtr data, ref long dataSize)
 		{
 			return _implementation.GetDataResource(resourceId, ref data, ref dataSize);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetDataResourceForScale();
 		}
 
-		public override bool GetDataResourceForScale(int resourceId, CefScaleFactor scaleFactor, ref IntPtr data, ref long dataSize)
+		protected internal unsafe override bool GetDataResourceForScale(int resourceId, CefScaleFactor scaleFactor, ref IntPtr data, ref long dataSize)
 		{
 			return _implementation.GetDataResourceForScale(resourceId, scaleFactor, ref data, ref dataSize);
 		}

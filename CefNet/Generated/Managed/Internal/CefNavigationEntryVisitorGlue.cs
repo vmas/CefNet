@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidVisit();
 		}
 
-		public override bool Visit(CefNavigationEntry entry, bool current, int index, int total)
+		protected internal unsafe override bool Visit(CefNavigationEntry entry, bool current, int index, int total)
 		{
 			return _implementation.Visit(entry, current, index, total);
 		}

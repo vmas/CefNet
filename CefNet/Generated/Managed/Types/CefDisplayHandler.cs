@@ -77,7 +77,7 @@ namespace CefNet
 		/// <summary>
 		/// Called when a frame&apos;s address has changed.
 		/// </summary>
-		public unsafe virtual void OnAddressChange(CefBrowser browser, CefFrame frame, string url)
+		protected internal unsafe virtual void OnAddressChange(CefBrowser browser, CefFrame frame, string url)
 		{
 		}
 
@@ -103,7 +103,7 @@ namespace CefNet
 		/// <summary>
 		/// Called when the page title changes.
 		/// </summary>
-		public unsafe virtual void OnTitleChange(CefBrowser browser, string title)
+		protected internal unsafe virtual void OnTitleChange(CefBrowser browser, string title)
 		{
 		}
 
@@ -128,7 +128,7 @@ namespace CefNet
 		/// <summary>
 		/// Called when the page icon changes.
 		/// </summary>
-		public unsafe virtual void OnFaviconUrlChange(CefBrowser browser, CefStringList iconUrls)
+		protected internal unsafe virtual void OnFaviconUrlChange(CefBrowser browser, CefStringList iconUrls)
 		{
 		}
 
@@ -157,7 +157,7 @@ namespace CefNet
 		/// automatically return to its original size and position. The client is
 		/// responsible for resizing the browser if desired.
 		/// </summary>
-		public unsafe virtual void OnFullscreenModeChange(CefBrowser browser, bool fullscreen)
+		protected internal unsafe virtual void OnFullscreenModeChange(CefBrowser browser, bool fullscreen)
 		{
 		}
 
@@ -187,7 +187,7 @@ namespace CefNet
 		/// tooltip. When window rendering is disabled the application is responsible
 		/// for drawing tooltips and the return value is ignored.
 		/// </summary>
-		public unsafe virtual bool OnTooltip(CefBrowser browser, ref string text)
+		protected internal unsafe virtual bool OnTooltip(CefBrowser browser, ref string text)
 		{
 			return default;
 		}
@@ -219,7 +219,7 @@ namespace CefNet
 		/// Called when the browser receives a status message. |value| contains the
 		/// text that will be displayed in the status message.
 		/// </summary>
-		public unsafe virtual void OnStatusMessage(CefBrowser browser, string value)
+		protected internal unsafe virtual void OnStatusMessage(CefBrowser browser, string value)
 		{
 		}
 
@@ -245,7 +245,7 @@ namespace CefNet
 		/// Called to display a console message. Return true (1) to stop the message
 		/// from being output to the console.
 		/// </summary>
-		public unsafe virtual bool OnConsoleMessage(CefBrowser browser, CefLogSeverity level, string message, string source, int line)
+		protected internal unsafe virtual bool OnConsoleMessage(CefBrowser browser, CefLogSeverity level, string message, string source, int line)
 		{
 			return default;
 		}
@@ -274,7 +274,7 @@ namespace CefNet
 		/// resized. |new_size| will be the desired size in view coordinates. Return
 		/// true (1) if the resize was handled or false (0) for default handling.
 		/// </summary>
-		public unsafe virtual bool OnAutoResize(CefBrowser browser, CefSize newSize)
+		protected internal unsafe virtual bool OnAutoResize(CefBrowser browser, CefSize newSize)
 		{
 			return default;
 		}
@@ -301,7 +301,7 @@ namespace CefNet
 		/// Called when the overall page loading progress has changed. |progress|
 		/// ranges from 0.0 to 1.0.
 		/// </summary>
-		public unsafe virtual void OnLoadingProgressChange(CefBrowser browser, double progress)
+		protected internal unsafe virtual void OnLoadingProgressChange(CefBrowser browser, double progress)
 		{
 		}
 

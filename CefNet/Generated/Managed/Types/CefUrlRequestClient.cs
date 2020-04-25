@@ -68,7 +68,7 @@ namespace CefNet
 		/// cef_urlrequest_t::GetRequestStatus function to determine if the request was
 		/// successful or not.
 		/// </summary>
-		public unsafe virtual void OnRequestComplete(CefUrlRequest request)
+		protected internal unsafe virtual void OnRequestComplete(CefUrlRequest request)
 		{
 		}
 
@@ -96,7 +96,7 @@ namespace CefNet
 		/// chunked upload is enabled). This function will only be called if the
 		/// UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
 		/// </summary>
-		public unsafe virtual void OnUploadProgress(CefUrlRequest request, long current, long total)
+		protected internal unsafe virtual void OnUploadProgress(CefUrlRequest request, long current, long total)
 		{
 		}
 
@@ -123,7 +123,7 @@ namespace CefNet
 		/// bytes received up to the call and |total| is the expected total size of the
 		/// response (or -1 if not determined).
 		/// </summary>
-		public unsafe virtual void OnDownloadProgress(CefUrlRequest request, long current, long total)
+		protected internal unsafe virtual void OnDownloadProgress(CefUrlRequest request, long current, long total)
 		{
 		}
 
@@ -150,7 +150,7 @@ namespace CefNet
 		/// bytes received since the last call. This function will not be called if the
 		/// UR_FLAG_NO_DOWNLOAD_DATA flag is set on the request.
 		/// </summary>
-		public unsafe virtual void OnDownloadData(CefUrlRequest request, IntPtr data, long dataLength)
+		protected internal unsafe virtual void OnDownloadData(CefUrlRequest request, IntPtr data, long dataLength)
 		{
 		}
 
@@ -183,7 +183,7 @@ namespace CefNet
 		/// returning false (0) will cancel the request immediately. This function will
 		/// only be called for requests initiated from the browser process.
 		/// </summary>
-		public unsafe virtual bool GetAuthCredentials(bool isProxy, string host, int port, string realm, string scheme, CefAuthCallback callback)
+		protected internal unsafe virtual bool GetAuthCredentials(bool isProxy, string host, int port, string realm, string scheme, CefAuthCallback callback)
 		{
 			return default;
 		}

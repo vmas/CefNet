@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnBeforeContextMenu();
 		}
 
-		public override void OnBeforeContextMenu(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, CefMenuModel model)
+		protected internal unsafe override void OnBeforeContextMenu(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, CefMenuModel model)
 		{
 			_implementation.OnBeforeContextMenu(browser, frame, @params, model);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidRunContextMenu();
 		}
 
-		public override bool RunContextMenu(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, CefMenuModel model, CefRunContextMenuCallback callback)
+		protected internal unsafe override bool RunContextMenu(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, CefMenuModel model, CefRunContextMenuCallback callback)
 		{
 			return _implementation.RunContextMenu(browser, frame, @params, model, callback);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnContextMenuCommand();
 		}
 
-		public override bool OnContextMenuCommand(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, int commandId, CefEventFlags eventFlags)
+		protected internal unsafe override bool OnContextMenuCommand(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, int commandId, CefEventFlags eventFlags)
 		{
 			return _implementation.OnContextMenuCommand(browser, frame, @params, commandId, eventFlags);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnContextMenuDismissed();
 		}
 
-		public override void OnContextMenuDismissed(CefBrowser browser, CefFrame frame)
+		protected internal unsafe override void OnContextMenuDismissed(CefBrowser browser, CefFrame frame)
 		{
 			_implementation.OnContextMenuDismissed(browser, frame);
 		}

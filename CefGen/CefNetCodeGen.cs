@@ -185,7 +185,8 @@ namespace CefGen
 					WriteIndent();
 					if (!isAvoidMethod)
 					{
-						Output.Write("public override ");
+						Output.Write(methodNode.Modifiers.ToString().Replace("virtual", "override"));
+						Output.Write(" ");
 					}
 					else
 					{

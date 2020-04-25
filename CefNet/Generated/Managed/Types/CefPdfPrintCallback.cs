@@ -55,7 +55,7 @@ namespace CefNet
 		/// the output path. |ok| will be true (1) if the printing completed
 		/// successfully or false (0) otherwise.
 		/// </summary>
-		public unsafe virtual void OnPdfPrintFinished(string path, bool ok)
+		protected internal unsafe virtual void OnPdfPrintFinished(string path, bool ok)
 		{
 		}
 

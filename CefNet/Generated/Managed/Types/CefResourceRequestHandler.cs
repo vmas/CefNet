@@ -80,7 +80,7 @@ namespace CefNet
 		/// cef_cookie_access_filter_t object. The |request| object cannot not be
 		/// modified in this callback.
 		/// </summary>
-		public unsafe virtual CefCookieAccessFilter GetCookieAccessFilter(CefBrowser browser, CefFrame frame, CefRequest request)
+		protected internal unsafe virtual CefCookieAccessFilter GetCookieAccessFilter(CefBrowser browser, CefFrame frame, CefRequest request)
 		{
 			return default;
 		}
@@ -118,7 +118,7 @@ namespace CefNet
 		/// cef_request_callback_t:: cont() at a later time to continue or cancel the
 		/// request asynchronously. Return RV_CANCEL to cancel the request immediately.
 		/// </summary>
-		public unsafe virtual CefReturnValue OnBeforeResourceLoad(CefBrowser browser, CefFrame frame, CefRequest request, CefRequestCallback callback)
+		protected internal unsafe virtual CefReturnValue OnBeforeResourceLoad(CefBrowser browser, CefFrame frame, CefRequest request, CefRequestCallback callback)
 		{
 			return default;
 		}
@@ -152,7 +152,7 @@ namespace CefNet
 		/// handler for the resource return a cef_resource_handler_t object. The
 		/// |request| object cannot not be modified in this callback.
 		/// </summary>
-		public unsafe virtual CefResourceHandler GetResourceHandler(CefBrowser browser, CefFrame frame, CefRequest request)
+		protected internal unsafe virtual CefResourceHandler GetResourceHandler(CefBrowser browser, CefFrame frame, CefRequest request)
 		{
 			return default;
 		}
@@ -190,7 +190,7 @@ namespace CefNet
 		/// and can be changed if desired. The |request| and |response| objects cannot
 		/// be modified in this callback.
 		/// </summary>
-		public unsafe virtual void OnResourceRedirect(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, ref string newUrl)
+		protected internal unsafe virtual void OnResourceRedirect(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, ref string newUrl)
 		{
 		}
 
@@ -229,7 +229,7 @@ namespace CefNet
 		/// WARNING: Redirecting using this function is deprecated. Use
 		/// OnBeforeResourceLoad or GetResourceHandler to perform redirects.
 		/// </summary>
-		public unsafe virtual bool OnResourceResponse(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response)
+		protected internal unsafe virtual bool OnResourceResponse(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response)
 		{
 			return default;
 		}
@@ -262,7 +262,7 @@ namespace CefNet
 		/// |request| and |response| represent the request and response respectively
 		/// and cannot be modified in this callback.
 		/// </summary>
-		public unsafe virtual CefResponseFilter GetResourceResponseFilter(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response)
+		protected internal unsafe virtual CefResponseFilter GetResourceResponseFilter(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response)
 		{
 			return default;
 		}
@@ -307,7 +307,7 @@ namespace CefNet
 		/// functions that modify state (like LoadURL, SendProcessMessage, etc.) if the
 		/// frame is invalid.
 		/// </summary>
-		public unsafe virtual void OnResourceLoadComplete(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, CefUrlRequestStatus status, long receivedContentLength)
+		protected internal unsafe virtual void OnResourceLoadComplete(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, CefUrlRequestStatus status, long receivedContentLength)
 		{
 		}
 
@@ -342,7 +342,7 @@ namespace CefNet
 		/// THIS METHOD TO ENFORCE RESTRICTIONS BASED ON SCHEME, HOST OR OTHER URL
 		/// ANALYSIS BEFORE ALLOWING OS EXECUTION.
 		/// </summary>
-		public unsafe virtual void OnProtocolExecution(CefBrowser browser, CefFrame frame, CefRequest request, ref int allowOsExecution)
+		protected internal unsafe virtual void OnProtocolExecution(CefBrowser browser, CefFrame frame, CefRequest request, ref int allowOsExecution)
 		{
 		}
 

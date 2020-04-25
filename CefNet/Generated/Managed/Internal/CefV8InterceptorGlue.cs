@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetByName();
 		}
 
-		public override bool GetByName(string name, CefV8Value @object, ref CefV8Value retval, ref string exception)
+		protected internal unsafe override bool GetByName(string name, CefV8Value @object, ref CefV8Value retval, ref string exception)
 		{
 			return _implementation.GetByName(name, @object, ref retval, ref exception);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetByIndex();
 		}
 
-		public override bool GetByIndex(int index, CefV8Value @object, ref CefV8Value retval, ref string exception)
+		protected internal unsafe override bool GetByIndex(int index, CefV8Value @object, ref CefV8Value retval, ref string exception)
 		{
 			return _implementation.GetByIndex(index, @object, ref retval, ref exception);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidSetByName();
 		}
 
-		public override bool SetByName(string name, CefV8Value @object, CefV8Value value, ref string exception)
+		protected internal unsafe override bool SetByName(string name, CefV8Value @object, CefV8Value value, ref string exception)
 		{
 			return _implementation.SetByName(name, @object, value, ref exception);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidSetByIndex();
 		}
 
-		public override bool SetByIndex(int index, CefV8Value @object, CefV8Value value, ref string exception)
+		protected internal unsafe override bool SetByIndex(int index, CefV8Value @object, CefV8Value value, ref string exception)
 		{
 			return _implementation.SetByIndex(index, @object, value, ref exception);
 		}

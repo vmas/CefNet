@@ -57,7 +57,7 @@ namespace CefNet
 		/// navigation entry. |index| is the 0-based index of this entry and |total| is
 		/// the total number of entries.
 		/// </summary>
-		public unsafe virtual bool Visit(CefNavigationEntry entry, bool current, int index, int total)
+		protected internal unsafe virtual bool Visit(CefNavigationEntry entry, bool current, int index, int total)
 		{
 			return default;
 		}

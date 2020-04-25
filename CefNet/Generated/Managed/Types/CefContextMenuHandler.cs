@@ -66,7 +66,7 @@ namespace CefNet
 		/// modified to show a custom menu. Do not keep references to |params| or
 		/// |model| outside of this callback.
 		/// </summary>
-		public unsafe virtual void OnBeforeContextMenu(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, CefMenuModel model)
+		protected internal unsafe virtual void OnBeforeContextMenu(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, CefMenuModel model)
 		{
 		}
 
@@ -99,7 +99,7 @@ namespace CefNet
 		/// selected command ID. For default display return false (0). Do not keep
 		/// references to |params| or |model| outside of this callback.
 		/// </summary>
-		public unsafe virtual bool RunContextMenu(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, CefMenuModel model, CefRunContextMenuCallback callback)
+		protected internal unsafe virtual bool RunContextMenu(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, CefMenuModel model, CefRunContextMenuCallback callback)
 		{
 			return default;
 		}
@@ -135,7 +135,7 @@ namespace CefNet
 		/// on_before_context_menu(). Do not keep a reference to |params| outside of
 		/// this callback.
 		/// </summary>
-		public unsafe virtual bool OnContextMenuCommand(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, int commandId, CefEventFlags eventFlags)
+		protected internal unsafe virtual bool OnContextMenuCommand(CefBrowser browser, CefFrame frame, CefContextMenuParams @params, int commandId, CefEventFlags eventFlags)
 		{
 			return default;
 		}
@@ -164,7 +164,7 @@ namespace CefNet
 		/// Called when the context menu is dismissed irregardless of whether the menu
 		/// was NULL or a command was selected.
 		/// </summary>
-		public unsafe virtual void OnContextMenuDismissed(CefBrowser browser, CefFrame frame)
+		protected internal unsafe virtual void OnContextMenuDismissed(CefBrowser browser, CefFrame frame)
 		{
 		}
 

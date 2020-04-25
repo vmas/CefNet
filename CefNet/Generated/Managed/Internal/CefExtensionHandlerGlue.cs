@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnExtensionLoadFailed();
 		}
 
-		public override void OnExtensionLoadFailed(CefErrorCode result)
+		protected internal unsafe override void OnExtensionLoadFailed(CefErrorCode result)
 		{
 			_implementation.OnExtensionLoadFailed(result);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnExtensionLoaded();
 		}
 
-		public override void OnExtensionLoaded(CefExtension extension)
+		protected internal unsafe override void OnExtensionLoaded(CefExtension extension)
 		{
 			_implementation.OnExtensionLoaded(extension);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnExtensionUnloaded();
 		}
 
-		public override void OnExtensionUnloaded(CefExtension extension)
+		protected internal unsafe override void OnExtensionUnloaded(CefExtension extension)
 		{
 			_implementation.OnExtensionUnloaded(extension);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnBeforeBackgroundBrowser();
 		}
 
-		public override bool OnBeforeBackgroundBrowser(CefExtension extension, string url, ref CefClient client, CefBrowserSettings settings)
+		protected internal unsafe override bool OnBeforeBackgroundBrowser(CefExtension extension, string url, ref CefClient client, CefBrowserSettings settings)
 		{
 			return _implementation.OnBeforeBackgroundBrowser(extension, url, ref client, settings);
 		}
@@ -74,7 +74,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnBeforeBrowser();
 		}
 
-		public override bool OnBeforeBrowser(CefExtension extension, CefBrowser browser, CefBrowser activeBrowser, int index, string url, bool active, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings)
+		protected internal unsafe override bool OnBeforeBrowser(CefExtension extension, CefBrowser browser, CefBrowser activeBrowser, int index, string url, bool active, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings)
 		{
 			return _implementation.OnBeforeBrowser(extension, browser, activeBrowser, index, url, active, windowInfo, ref client, settings);
 		}
@@ -84,7 +84,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetActiveBrowser();
 		}
 
-		public override CefBrowser GetActiveBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito)
+		protected internal unsafe override CefBrowser GetActiveBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito)
 		{
 			return _implementation.GetActiveBrowser(extension, browser, includeIncognito);
 		}
@@ -94,7 +94,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidCanAccessBrowser();
 		}
 
-		public override bool CanAccessBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito, CefBrowser targetBrowser)
+		protected internal unsafe override bool CanAccessBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito, CefBrowser targetBrowser)
 		{
 			return _implementation.CanAccessBrowser(extension, browser, includeIncognito, targetBrowser);
 		}
@@ -104,7 +104,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetExtensionResource();
 		}
 
-		public override bool GetExtensionResource(CefExtension extension, CefBrowser browser, string file, CefGetExtensionResourceCallback callback)
+		protected internal unsafe override bool GetExtensionResource(CefExtension extension, CefBrowser browser, string file, CefGetExtensionResourceCallback callback)
 		{
 			return _implementation.GetExtensionResource(extension, browser, file, callback);
 		}

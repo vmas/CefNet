@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnBeforePopup();
 		}
 
-		public override bool OnBeforePopup(CefBrowser browser, CefFrame frame, string targetUrl, string targetFrameName, CefWindowOpenDisposition targetDisposition, bool userGesture, CefPopupFeatures popupFeatures, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings, ref CefDictionaryValue extraInfo, ref int noJavascriptAccess)
+		protected internal unsafe override bool OnBeforePopup(CefBrowser browser, CefFrame frame, string targetUrl, string targetFrameName, CefWindowOpenDisposition targetDisposition, bool userGesture, CefPopupFeatures popupFeatures, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings, ref CefDictionaryValue extraInfo, ref int noJavascriptAccess)
 		{
 			return _implementation.OnBeforePopup(browser, frame, targetUrl, targetFrameName, targetDisposition, userGesture, popupFeatures, windowInfo, ref client, settings, ref extraInfo, ref noJavascriptAccess);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnAfterCreated();
 		}
 
-		public override void OnAfterCreated(CefBrowser browser)
+		protected internal unsafe override void OnAfterCreated(CefBrowser browser)
 		{
 			_implementation.OnAfterCreated(browser);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidDoClose();
 		}
 
-		public override bool DoClose(CefBrowser browser)
+		protected internal unsafe override bool DoClose(CefBrowser browser)
 		{
 			return _implementation.DoClose(browser);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnBeforeClose();
 		}
 
-		public override void OnBeforeClose(CefBrowser browser)
+		protected internal unsafe override void OnBeforeClose(CefBrowser browser)
 		{
 			_implementation.OnBeforeClose(browser);
 		}

@@ -15,7 +15,7 @@ namespace CefNet.Internal
 			_action = action;
 		}
 
-		public override void Execute()
+		protected internal override void Execute()
 		{
 			_action();
 		}

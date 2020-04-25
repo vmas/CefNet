@@ -29,7 +29,7 @@ namespace CefNet.Internal
 			_implementation = impl;
 		}
 
-		public override void OnComplete()
+		protected internal unsafe override void OnComplete()
 		{
 			_implementation.OnComplete();
 		}

@@ -62,7 +62,7 @@ namespace CefNet
 		/// will be true (1) if the browser is giving focus to the next component and
 		/// false (0) if the browser is giving focus to the previous component.
 		/// </summary>
-		public unsafe virtual void OnTakeFocus(CefBrowser browser, bool next)
+		protected internal unsafe virtual void OnTakeFocus(CefBrowser browser, bool next)
 		{
 		}
 
@@ -89,7 +89,7 @@ namespace CefNet
 		/// where the focus request is originating from. Return false (0) to allow the
 		/// focus to be set or true (1) to cancel setting the focus.
 		/// </summary>
-		public unsafe virtual bool OnSetFocus(CefBrowser browser, CefFocusSource source)
+		protected internal unsafe virtual bool OnSetFocus(CefBrowser browser, CefFocusSource source)
 		{
 			return default;
 		}
@@ -115,7 +115,7 @@ namespace CefNet
 		/// <summary>
 		/// Called when the browser component has received focus.
 		/// </summary>
-		public unsafe virtual void OnGotFocus(CefBrowser browser)
+		protected internal unsafe virtual void OnGotFocus(CefBrowser browser)
 		{
 		}
 

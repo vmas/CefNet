@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnLoadingStateChange();
 		}
 
-		public override void OnLoadingStateChange(CefBrowser browser, bool isLoading, bool canGoBack, bool canGoForward)
+		protected internal unsafe override void OnLoadingStateChange(CefBrowser browser, bool isLoading, bool canGoBack, bool canGoForward)
 		{
 			_implementation.OnLoadingStateChange(browser, isLoading, canGoBack, canGoForward);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnLoadStart();
 		}
 
-		public override void OnLoadStart(CefBrowser browser, CefFrame frame, CefTransitionType transitionType)
+		protected internal unsafe override void OnLoadStart(CefBrowser browser, CefFrame frame, CefTransitionType transitionType)
 		{
 			_implementation.OnLoadStart(browser, frame, transitionType);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnLoadEnd();
 		}
 
-		public override void OnLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode)
+		protected internal unsafe override void OnLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode)
 		{
 			_implementation.OnLoadEnd(browser, frame, httpStatusCode);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnLoadError();
 		}
 
-		public override void OnLoadError(CefBrowser browser, CefFrame frame, CefErrorCode errorCode, string errorText, string failedUrl)
+		protected internal unsafe override void OnLoadError(CefBrowser browser, CefFrame frame, CefErrorCode errorCode, string errorText, string failedUrl)
 		{
 			_implementation.OnLoadError(browser, frame, errorCode, errorText, failedUrl);
 		}

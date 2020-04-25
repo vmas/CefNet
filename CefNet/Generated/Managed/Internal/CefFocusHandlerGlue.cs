@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnTakeFocus();
 		}
 
-		public override void OnTakeFocus(CefBrowser browser, bool next)
+		protected internal unsafe override void OnTakeFocus(CefBrowser browser, bool next)
 		{
 			_implementation.OnTakeFocus(browser, next);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnSetFocus();
 		}
 
-		public override bool OnSetFocus(CefBrowser browser, CefFocusSource source)
+		protected internal unsafe override bool OnSetFocus(CefBrowser browser, CefFocusSource source)
 		{
 			return _implementation.OnSetFocus(browser, source);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnGotFocus();
 		}
 
-		public override void OnGotFocus(CefBrowser browser)
+		protected internal unsafe override void OnGotFocus(CefBrowser browser)
 		{
 			_implementation.OnGotFocus(browser);
 		}

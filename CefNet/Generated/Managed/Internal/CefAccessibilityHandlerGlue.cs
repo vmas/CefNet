@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnAccessibilityTreeChange();
 		}
 
-		public override void OnAccessibilityTreeChange(CefValue value)
+		protected internal unsafe override void OnAccessibilityTreeChange(CefValue value)
 		{
 			_implementation.OnAccessibilityTreeChange(value);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnAccessibilityLocationChange();
 		}
 
-		public override void OnAccessibilityLocationChange(CefValue value)
+		protected internal unsafe override void OnAccessibilityLocationChange(CefValue value)
 		{
 			_implementation.OnAccessibilityLocationChange(value);
 		}

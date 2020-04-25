@@ -54,7 +54,7 @@ namespace CefNet
 		/// Method that will be called upon completion. |success| will be true (1) if
 		/// the cookie was set successfully.
 		/// </summary>
-		public unsafe virtual void OnComplete(bool success)
+		protected internal unsafe virtual void OnComplete(bool success)
 		{
 		}
 

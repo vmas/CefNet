@@ -72,7 +72,7 @@ namespace CefNet
 		/// how printing was initiated (e.g. cef_browser_host_t::print(), JavaScript
 		/// window.print() or PDF extension print button).
 		/// </summary>
-		public unsafe virtual void OnPrintStart(CefBrowser browser)
+		protected internal unsafe virtual void OnPrintStart(CefBrowser browser)
 		{
 		}
 
@@ -99,7 +99,7 @@ namespace CefNet
 		/// then populate |settings| with the default print settings. Do not keep a
 		/// reference to |settings| outside of this callback.
 		/// </summary>
-		public unsafe virtual void OnPrintSettings(CefBrowser browser, CefPrintSettings settings, bool getDefaults)
+		protected internal unsafe virtual void OnPrintSettings(CefBrowser browser, CefPrintSettings settings, bool getDefaults)
 		{
 		}
 
@@ -127,7 +127,7 @@ namespace CefNet
 		/// Return true (1) if the dialog will be displayed or false (0) to cancel the
 		/// printing immediately.
 		/// </summary>
-		public unsafe virtual bool OnPrintDialog(CefBrowser browser, bool hasSelection, CefPrintDialogCallback callback)
+		protected internal unsafe virtual bool OnPrintDialog(CefBrowser browser, bool hasSelection, CefPrintDialogCallback callback)
 		{
 			return default;
 		}
@@ -156,7 +156,7 @@ namespace CefNet
 		/// completed. Return true (1) if the job will proceed or false (0) to cancel
 		/// the job immediately.
 		/// </summary>
-		public unsafe virtual bool OnPrintJob(CefBrowser browser, string documentName, string pdfFilePath, CefPrintJobCallback callback)
+		protected internal unsafe virtual bool OnPrintJob(CefBrowser browser, string documentName, string pdfFilePath, CefPrintJobCallback callback)
 		{
 			return default;
 		}
@@ -183,7 +183,7 @@ namespace CefNet
 		/// <summary>
 		/// Reset client state related to printing.
 		/// </summary>
-		public unsafe virtual void OnPrintReset(CefBrowser browser)
+		protected internal unsafe virtual void OnPrintReset(CefBrowser browser)
 		{
 		}
 
@@ -209,7 +209,7 @@ namespace CefNet
 		/// Return the PDF paper size in device units. Used in combination with
 		/// cef_browser_host_t::print_to_pdf().
 		/// </summary>
-		public unsafe virtual CefSize GetPdfPaperSize(int deviceUnitsPerInch)
+		protected internal unsafe virtual CefSize GetPdfPaperSize(int deviceUnitsPerInch)
 		{
 			return default;
 		}

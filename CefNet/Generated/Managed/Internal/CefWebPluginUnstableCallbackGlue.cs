@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidIsUnstable();
 		}
 
-		public override void IsUnstable(string path, bool unstable)
+		protected internal unsafe override void IsUnstable(string path, bool unstable)
 		{
 			_implementation.IsUnstable(path, unstable);
 		}

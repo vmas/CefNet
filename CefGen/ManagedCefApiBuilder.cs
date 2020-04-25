@@ -844,7 +844,7 @@ namespace CefGen
 		private List<CefParameterInfo> GenerateManagedCallback(IMethodSymbol method)
 		{
 			var callback = new CodeMethod(method.Name);
-			callback.Attributes = CodeAttributes.Public | CodeAttributes.Virtual | CodeAttributes.Unsafe;
+			callback.Attributes = CodeAttributes.Protected | CodeAttributes.Internal | CodeAttributes.Virtual | CodeAttributes.Unsafe;
 			callback.HasThisArg = true;
 
 			callback.Comments.AddSymbolComment(method);

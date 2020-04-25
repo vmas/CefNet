@@ -65,7 +65,7 @@ namespace CefNet
 		/// <summary>
 		/// Read raw binary data.
 		/// </summary>
-		public unsafe virtual long Read(IntPtr ptr, long size, long n)
+		protected internal unsafe virtual long Read(IntPtr ptr, long size, long n)
 		{
 			return default;
 		}
@@ -91,7 +91,7 @@ namespace CefNet
 		/// Seek to the specified offset position. |whence| may be any one of SEEK_CUR,
 		/// SEEK_END or SEEK_SET. Return zero on success and non-zero on failure.
 		/// </summary>
-		public unsafe virtual int Seek(long offset, int whence)
+		protected internal unsafe virtual int Seek(long offset, int whence)
 		{
 			return default;
 		}
@@ -113,7 +113,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the current offset position.
 		/// </summary>
-		public unsafe virtual long Tell()
+		protected internal unsafe virtual long Tell()
 		{
 			return default;
 		}
@@ -135,7 +135,7 @@ namespace CefNet
 		/// <summary>
 		/// Return non-zero if at end of file.
 		/// </summary>
-		public unsafe virtual int Eof()
+		protected internal unsafe virtual int Eof()
 		{
 			return default;
 		}
@@ -159,7 +159,7 @@ namespace CefNet
 		/// system which may block. Used as a hint for determining the thread to access
 		/// the handler from.
 		/// </summary>
-		public unsafe virtual bool MayBlock()
+		protected internal unsafe virtual bool MayBlock()
 		{
 			return default;
 		}

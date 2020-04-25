@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnAddressChange();
 		}
 
-		public override void OnAddressChange(CefBrowser browser, CefFrame frame, string url)
+		protected internal unsafe override void OnAddressChange(CefBrowser browser, CefFrame frame, string url)
 		{
 			_implementation.OnAddressChange(browser, frame, url);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnTitleChange();
 		}
 
-		public override void OnTitleChange(CefBrowser browser, string title)
+		protected internal unsafe override void OnTitleChange(CefBrowser browser, string title)
 		{
 			_implementation.OnTitleChange(browser, title);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnFaviconUrlChange();
 		}
 
-		public override void OnFaviconUrlChange(CefBrowser browser, CefStringList iconUrls)
+		protected internal unsafe override void OnFaviconUrlChange(CefBrowser browser, CefStringList iconUrls)
 		{
 			_implementation.OnFaviconUrlChange(browser, iconUrls);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnFullscreenModeChange();
 		}
 
-		public override void OnFullscreenModeChange(CefBrowser browser, bool fullscreen)
+		protected internal unsafe override void OnFullscreenModeChange(CefBrowser browser, bool fullscreen)
 		{
 			_implementation.OnFullscreenModeChange(browser, fullscreen);
 		}
@@ -74,7 +74,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnTooltip();
 		}
 
-		public override bool OnTooltip(CefBrowser browser, ref string text)
+		protected internal unsafe override bool OnTooltip(CefBrowser browser, ref string text)
 		{
 			return _implementation.OnTooltip(browser, ref text);
 		}
@@ -84,7 +84,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnStatusMessage();
 		}
 
-		public override void OnStatusMessage(CefBrowser browser, string value)
+		protected internal unsafe override void OnStatusMessage(CefBrowser browser, string value)
 		{
 			_implementation.OnStatusMessage(browser, value);
 		}
@@ -94,7 +94,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnConsoleMessage();
 		}
 
-		public override bool OnConsoleMessage(CefBrowser browser, CefLogSeverity level, string message, string source, int line)
+		protected internal unsafe override bool OnConsoleMessage(CefBrowser browser, CefLogSeverity level, string message, string source, int line)
 		{
 			return _implementation.OnConsoleMessage(browser, level, message, source, line);
 		}
@@ -104,7 +104,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnAutoResize();
 		}
 
-		public override bool OnAutoResize(CefBrowser browser, CefSize newSize)
+		protected internal unsafe override bool OnAutoResize(CefBrowser browser, CefSize newSize)
 		{
 			return _implementation.OnAutoResize(browser, newSize);
 		}
@@ -114,7 +114,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnLoadingProgressChange();
 		}
 
-		public override void OnLoadingProgressChange(CefBrowser browser, double progress)
+		protected internal unsafe override void OnLoadingProgressChange(CefBrowser browser, double progress)
 		{
 			_implementation.OnLoadingProgressChange(browser, progress);
 		}

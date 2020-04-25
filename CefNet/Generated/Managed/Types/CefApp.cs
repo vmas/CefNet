@@ -73,7 +73,7 @@ namespace CefNet
 		/// modify command-line arguments for non-browser processes as this may result
 		/// in undefined behavior including crashes.
 		/// </summary>
-		public unsafe virtual void OnBeforeCommandLineProcessing(string processType, CefCommandLine commandLine)
+		protected internal unsafe virtual void OnBeforeCommandLineProcessing(string processType, CefCommandLine commandLine)
 		{
 		}
 
@@ -101,7 +101,7 @@ namespace CefNet
 		/// each process and the registered schemes should be the same across all
 		/// processes.
 		/// </summary>
-		public unsafe virtual void OnRegisterCustomSchemes(CefSchemeRegistrar registrar)
+		protected internal unsafe virtual void OnRegisterCustomSchemes(CefSchemeRegistrar registrar)
 		{
 		}
 
@@ -125,7 +125,7 @@ namespace CefNet
 		/// If no handler is returned resources will be loaded from pack files. This
 		/// function is called by the browser and render processes on multiple threads.
 		/// </summary>
-		public unsafe virtual CefResourceBundleHandler GetResourceBundleHandler()
+		protected internal unsafe virtual CefResourceBundleHandler GetResourceBundleHandler()
 		{
 			return default;
 		}
@@ -151,7 +151,7 @@ namespace CefNet
 		/// Return the handler for functionality specific to the browser process. This
 		/// function is called on multiple threads in the browser process.
 		/// </summary>
-		public unsafe virtual CefBrowserProcessHandler GetBrowserProcessHandler()
+		protected internal unsafe virtual CefBrowserProcessHandler GetBrowserProcessHandler()
 		{
 			return default;
 		}
@@ -177,7 +177,7 @@ namespace CefNet
 		/// Return the handler for functionality specific to the render process. This
 		/// function is called on the render process main thread.
 		/// </summary>
-		public unsafe virtual CefRenderProcessHandler GetRenderProcessHandler()
+		protected internal unsafe virtual CefRenderProcessHandler GetRenderProcessHandler()
 		{
 			return default;
 		}

@@ -54,7 +54,7 @@ namespace CefNet
 		/// collected. |buffer| is the value that was passed to CreateArrayBuffer along
 		/// with this object.
 		/// </summary>
-		public unsafe virtual void ReleaseBuffer(IntPtr buffer)
+		protected internal unsafe virtual void ReleaseBuffer(IntPtr buffer)
 		{
 		}
 

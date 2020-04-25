@@ -55,7 +55,7 @@ namespace CefNet
 		/// true (1) if the plugin has reached the crash count threshold of 3 times in
 		/// 120 seconds.
 		/// </summary>
-		public unsafe virtual void IsUnstable(string path, bool unstable)
+		protected internal unsafe virtual void IsUnstable(string path, bool unstable)
 		{
 		}
 

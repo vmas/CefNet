@@ -58,7 +58,7 @@ namespace CefNet
 		/// current position in the search results, and |finalUpdate| is true (1) if
 		/// this is the last find notification.
 		/// </summary>
-		public unsafe virtual void OnFindResult(CefBrowser browser, int identifier, int count, CefRect selectionRect, int activeMatchOrdinal, bool finalUpdate)
+		protected internal unsafe virtual void OnFindResult(CefBrowser browser, int identifier, int count, CefRect selectionRect, int activeMatchOrdinal, bool finalUpdate)
 		{
 		}
 

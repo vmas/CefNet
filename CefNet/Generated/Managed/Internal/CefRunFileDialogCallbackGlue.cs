@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnFileDialogDismissed();
 		}
 
-		public override void OnFileDialogDismissed(bool selectedAcceptFilter, CefStringList filePaths)
+		protected internal unsafe override void OnFileDialogDismissed(bool selectedAcceptFilter, CefStringList filePaths)
 		{
 			_implementation.OnFileDialogDismissed(selectedAcceptFilter, filePaths);
 		}

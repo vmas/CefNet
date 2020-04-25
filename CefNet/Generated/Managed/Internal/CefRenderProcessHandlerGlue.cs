@@ -34,12 +34,12 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnRenderThreadCreated();
 		}
 
-		public override void OnRenderThreadCreated(CefListValue extraInfo)
+		protected internal unsafe override void OnRenderThreadCreated(CefListValue extraInfo)
 		{
 			_implementation.OnRenderThreadCreated(extraInfo);
 		}
 
-		public override void OnWebKitInitialized()
+		protected internal unsafe override void OnWebKitInitialized()
 		{
 			_implementation.OnWebKitInitialized();
 		}
@@ -49,7 +49,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnBrowserCreated();
 		}
 
-		public override void OnBrowserCreated(CefBrowser browser, CefDictionaryValue extraInfo)
+		protected internal unsafe override void OnBrowserCreated(CefBrowser browser, CefDictionaryValue extraInfo)
 		{
 			_implementation.OnBrowserCreated(browser, extraInfo);
 		}
@@ -59,12 +59,12 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnBrowserDestroyed();
 		}
 
-		public override void OnBrowserDestroyed(CefBrowser browser)
+		protected internal unsafe override void OnBrowserDestroyed(CefBrowser browser)
 		{
 			_implementation.OnBrowserDestroyed(browser);
 		}
 
-		public override CefLoadHandler GetLoadHandler()
+		protected internal unsafe override CefLoadHandler GetLoadHandler()
 		{
 			return _implementation.GetLoadHandler();
 		}
@@ -74,7 +74,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnContextCreated();
 		}
 
-		public override void OnContextCreated(CefBrowser browser, CefFrame frame, CefV8Context context)
+		protected internal unsafe override void OnContextCreated(CefBrowser browser, CefFrame frame, CefV8Context context)
 		{
 			_implementation.OnContextCreated(browser, frame, context);
 		}
@@ -84,7 +84,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnContextReleased();
 		}
 
-		public override void OnContextReleased(CefBrowser browser, CefFrame frame, CefV8Context context)
+		protected internal unsafe override void OnContextReleased(CefBrowser browser, CefFrame frame, CefV8Context context)
 		{
 			_implementation.OnContextReleased(browser, frame, context);
 		}
@@ -94,7 +94,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnUncaughtException();
 		}
 
-		public override void OnUncaughtException(CefBrowser browser, CefFrame frame, CefV8Context context, CefV8Exception exception, CefV8StackTrace stackTrace)
+		protected internal unsafe override void OnUncaughtException(CefBrowser browser, CefFrame frame, CefV8Context context, CefV8Exception exception, CefV8StackTrace stackTrace)
 		{
 			_implementation.OnUncaughtException(browser, frame, context, exception, stackTrace);
 		}
@@ -104,7 +104,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnFocusedNodeChanged();
 		}
 
-		public override void OnFocusedNodeChanged(CefBrowser browser, CefFrame frame, CefDOMNode node)
+		protected internal unsafe override void OnFocusedNodeChanged(CefBrowser browser, CefFrame frame, CefDOMNode node)
 		{
 			_implementation.OnFocusedNodeChanged(browser, frame, node);
 		}
@@ -114,7 +114,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnProcessMessageReceived();
 		}
 
-		public override bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
+		protected internal unsafe override bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
 		{
 			return _implementation.OnProcessMessageReceived(browser, frame, sourceProcess, message);
 		}

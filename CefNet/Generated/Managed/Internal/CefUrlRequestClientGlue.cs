@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnRequestComplete();
 		}
 
-		public override void OnRequestComplete(CefUrlRequest request)
+		protected internal unsafe override void OnRequestComplete(CefUrlRequest request)
 		{
 			_implementation.OnRequestComplete(request);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnUploadProgress();
 		}
 
-		public override void OnUploadProgress(CefUrlRequest request, long current, long total)
+		protected internal unsafe override void OnUploadProgress(CefUrlRequest request, long current, long total)
 		{
 			_implementation.OnUploadProgress(request, current, total);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnDownloadProgress();
 		}
 
-		public override void OnDownloadProgress(CefUrlRequest request, long current, long total)
+		protected internal unsafe override void OnDownloadProgress(CefUrlRequest request, long current, long total)
 		{
 			_implementation.OnDownloadProgress(request, current, total);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnDownloadData();
 		}
 
-		public override void OnDownloadData(CefUrlRequest request, IntPtr data, long dataLength)
+		protected internal unsafe override void OnDownloadData(CefUrlRequest request, IntPtr data, long dataLength)
 		{
 			_implementation.OnDownloadData(request, data, dataLength);
 		}
@@ -74,7 +74,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetAuthCredentials();
 		}
 
-		public override bool GetAuthCredentials(bool isProxy, string host, int port, string realm, string scheme, CefAuthCallback callback)
+		protected internal unsafe override bool GetAuthCredentials(bool isProxy, string host, int port, string realm, string scheme, CefAuthCallback callback)
 		{
 			return _implementation.GetAuthCredentials(isProxy, host, port, realm, scheme, callback);
 		}

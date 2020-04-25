@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnPrintStart();
 		}
 
-		public override void OnPrintStart(CefBrowser browser)
+		protected internal unsafe override void OnPrintStart(CefBrowser browser)
 		{
 			_implementation.OnPrintStart(browser);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnPrintSettings();
 		}
 
-		public override void OnPrintSettings(CefBrowser browser, CefPrintSettings settings, bool getDefaults)
+		protected internal unsafe override void OnPrintSettings(CefBrowser browser, CefPrintSettings settings, bool getDefaults)
 		{
 			_implementation.OnPrintSettings(browser, settings, getDefaults);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnPrintDialog();
 		}
 
-		public override bool OnPrintDialog(CefBrowser browser, bool hasSelection, CefPrintDialogCallback callback)
+		protected internal unsafe override bool OnPrintDialog(CefBrowser browser, bool hasSelection, CefPrintDialogCallback callback)
 		{
 			return _implementation.OnPrintDialog(browser, hasSelection, callback);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnPrintJob();
 		}
 
-		public override bool OnPrintJob(CefBrowser browser, string documentName, string pdfFilePath, CefPrintJobCallback callback)
+		protected internal unsafe override bool OnPrintJob(CefBrowser browser, string documentName, string pdfFilePath, CefPrintJobCallback callback)
 		{
 			return _implementation.OnPrintJob(browser, documentName, pdfFilePath, callback);
 		}
@@ -74,7 +74,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnPrintReset();
 		}
 
-		public override void OnPrintReset(CefBrowser browser)
+		protected internal unsafe override void OnPrintReset(CefBrowser browser)
 		{
 			_implementation.OnPrintReset(browser);
 		}
@@ -84,7 +84,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetPdfPaperSize();
 		}
 
-		public override CefSize GetPdfPaperSize(int deviceUnitsPerInch)
+		protected internal unsafe override CefSize GetPdfPaperSize(int deviceUnitsPerInch)
 		{
 			return _implementation.GetPdfPaperSize(deviceUnitsPerInch);
 		}

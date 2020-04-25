@@ -58,7 +58,7 @@ namespace CefNet
 		/// function return value. If execution fails set |exception| to the exception
 		/// that will be thrown. Return true (1) if execution was handled.
 		/// </summary>
-		public unsafe virtual bool Execute(string name, CefV8Value @object, CefV8Value[] arguments, ref CefV8Value retval, ref string exception)
+		protected internal unsafe virtual bool Execute(string name, CefV8Value @object, CefV8Value[] arguments, ref CefV8Value retval, ref string exception)
 		{
 			return default;
 		}

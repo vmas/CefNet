@@ -54,7 +54,7 @@ namespace CefNet
 		/// Initialize the response filter. Will only be called a single time. The
 		/// filter will not be installed if this function returns false (0).
 		/// </summary>
-		public unsafe virtual bool InitFilter()
+		protected internal unsafe virtual bool InitFilter()
 		{
 			return default;
 		}
@@ -102,7 +102,7 @@ namespace CefNet
 		/// B. The user returns RESPONSE_FILTER_ERROR to indicate an error.
 		/// Do not keep a reference to the buffers passed to this function.
 		/// </summary>
-		public unsafe virtual CefResponseFilterStatus Filter(IntPtr dataIn, long dataInSize, ref long dataInRead, IntPtr dataOut, long dataOutSize, ref long dataOutWritten)
+		protected internal unsafe virtual CefResponseFilterStatus Filter(IntPtr dataIn, long dataInSize, ref long dataInRead, IntPtr dataOut, long dataOutSize, ref long dataOutWritten)
 		{
 			return default;
 		}

@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidExecute();
 		}
 
-		public override bool Execute(string name, CefV8Value @object, CefV8Value[] arguments, ref CefV8Value retval, ref string exception)
+		protected internal unsafe override bool Execute(string name, CefV8Value @object, CefV8Value[] arguments, ref CefV8Value retval, ref string exception)
 		{
 			return _implementation.Execute(name, @object, arguments, ref retval, ref exception);
 		}

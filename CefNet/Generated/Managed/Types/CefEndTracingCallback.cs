@@ -56,7 +56,7 @@ namespace CefNet
 		/// the path at which tracing data was written. The client is responsible for
 		/// deleting |tracing_file|.
 		/// </summary>
-		public unsafe virtual void OnEndTracingComplete(string tracingFile)
+		protected internal unsafe virtual void OnEndTracingComplete(string tracingFile)
 		{
 		}
 

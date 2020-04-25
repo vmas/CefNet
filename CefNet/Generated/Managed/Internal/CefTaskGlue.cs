@@ -29,7 +29,7 @@ namespace CefNet.Internal
 			_implementation = impl;
 		}
 
-		public override void Execute()
+		protected internal unsafe override void Execute()
 		{
 			_implementation.Execute();
 		}

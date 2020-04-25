@@ -64,7 +64,7 @@ namespace CefNet
 		/// Called on the browser process UI thread immediately after the CEF context
 		/// has been initialized.
 		/// </summary>
-		public unsafe virtual void OnContextInitialized()
+		protected internal unsafe virtual void OnContextInitialized()
 		{
 		}
 
@@ -92,7 +92,7 @@ namespace CefNet
 		/// opportunity to modify the child process command line. Do not keep a
 		/// reference to |command_line| outside of this function.
 		/// </summary>
-		public unsafe virtual void OnBeforeChildProcessLaunch(CefCommandLine commandLine)
+		protected internal unsafe virtual void OnBeforeChildProcessLaunch(CefCommandLine commandLine)
 		{
 		}
 
@@ -121,7 +121,7 @@ namespace CefNet
 		/// cef_render_process_handler_t::on_render_thread_created() in the render
 		/// process. Do not keep a reference to |extra_info| outside of this function.
 		/// </summary>
-		public unsafe virtual void OnRenderProcessThreadCreated(CefListValue extraInfo)
+		protected internal unsafe virtual void OnRenderProcessThreadCreated(CefListValue extraInfo)
 		{
 		}
 
@@ -144,7 +144,7 @@ namespace CefNet
 		/// Return the handler for printing on Linux. If a print handler is not
 		/// provided then printing will not be supported on the Linux platform.
 		/// </summary>
-		public unsafe virtual CefPrintHandler GetPrintHandler()
+		protected internal unsafe virtual CefPrintHandler GetPrintHandler()
 		{
 			return default;
 		}
@@ -184,7 +184,7 @@ namespace CefNet
 		/// specified delay and any currently pending scheduled call should be
 		/// cancelled.
 		/// </summary>
-		public unsafe virtual void OnScheduleMessagePumpWork(long delayMs)
+		protected internal unsafe virtual void OnScheduleMessagePumpWork(long delayMs)
 		{
 		}
 

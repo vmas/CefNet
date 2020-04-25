@@ -60,7 +60,7 @@ namespace CefNet
 		/// download if desired. Do not keep a reference to |download_item| outside of
 		/// this function.
 		/// </summary>
-		public unsafe virtual void OnBeforeDownload(CefBrowser browser, CefDownloadItem downloadItem, string suggestedName, CefBeforeDownloadCallback callback)
+		protected internal unsafe virtual void OnBeforeDownload(CefBrowser browser, CefDownloadItem downloadItem, string suggestedName, CefBeforeDownloadCallback callback)
 		{
 		}
 
@@ -91,7 +91,7 @@ namespace CefNet
 		/// download if desired. Do not keep a reference to |download_item| outside of
 		/// this function.
 		/// </summary>
-		public unsafe virtual void OnDownloadUpdated(CefBrowser browser, CefDownloadItem downloadItem, CefDownloadItemCallback callback)
+		protected internal unsafe virtual void OnDownloadUpdated(CefBrowser browser, CefDownloadItem downloadItem, CefDownloadItemCallback callback)
 		{
 		}
 

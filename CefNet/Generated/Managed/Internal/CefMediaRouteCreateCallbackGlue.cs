@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnMediaRouteCreateFinished();
 		}
 
-		public override void OnMediaRouteCreateFinished(CefMediaRouteCreateResult result, string error, CefMediaRoute route)
+		protected internal unsafe override void OnMediaRouteCreateFinished(CefMediaRouteCreateResult result, string error, CefMediaRoute route)
 		{
 			_implementation.OnMediaRouteCreateFinished(result, error, route);
 		}

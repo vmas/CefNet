@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnComplete();
 		}
 
-		public override void OnComplete(int numDeleted)
+		protected internal unsafe override void OnComplete(int numDeleted)
 		{
 			_implementation.OnComplete(numDeleted);
 		}

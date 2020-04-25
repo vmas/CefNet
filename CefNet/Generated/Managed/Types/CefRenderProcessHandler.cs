@@ -84,7 +84,7 @@ namespace CefNet
 		/// cef_browser_process_handler_t::on_render_process_thread_created(). Do not
 		/// keep a reference to |extra_info| outside of this function.
 		/// </summary>
-		public unsafe virtual void OnRenderThreadCreated(CefListValue extraInfo)
+		protected internal unsafe virtual void OnRenderThreadCreated(CefListValue extraInfo)
 		{
 		}
 
@@ -106,7 +106,7 @@ namespace CefNet
 		/// <summary>
 		/// Called after WebKit has been initialized.
 		/// </summary>
-		public unsafe virtual void OnWebKitInitialized()
+		protected internal unsafe virtual void OnWebKitInitialized()
 		{
 		}
 
@@ -136,7 +136,7 @@ namespace CefNet
 		/// cef_life_span_handler_t::on_before_popup() or
 		/// cef_browser_view_t::cef_browser_view_create().
 		/// </summary>
-		public unsafe virtual void OnBrowserCreated(CefBrowser browser, CefDictionaryValue extraInfo)
+		protected internal unsafe virtual void OnBrowserCreated(CefBrowser browser, CefDictionaryValue extraInfo)
 		{
 		}
 
@@ -162,7 +162,7 @@ namespace CefNet
 		/// <summary>
 		/// Called before a browser is destroyed.
 		/// </summary>
-		public unsafe virtual void OnBrowserDestroyed(CefBrowser browser)
+		protected internal unsafe virtual void OnBrowserDestroyed(CefBrowser browser)
 		{
 		}
 
@@ -184,7 +184,7 @@ namespace CefNet
 		/// <summary>
 		/// Return the handler for browser load status events.
 		/// </summary>
-		public unsafe virtual CefLoadHandler GetLoadHandler()
+		protected internal unsafe virtual CefLoadHandler GetLoadHandler()
 		{
 			return default;
 		}
@@ -217,7 +217,7 @@ namespace CefNet
 		/// on the associated thread can be retrieved via the
 		/// cef_v8context_t::get_task_runner() function.
 		/// </summary>
-		public unsafe virtual void OnContextCreated(CefBrowser browser, CefFrame frame, CefV8Context context)
+		protected internal unsafe virtual void OnContextCreated(CefBrowser browser, CefFrame frame, CefV8Context context)
 		{
 		}
 
@@ -245,7 +245,7 @@ namespace CefNet
 		/// Called immediately before the V8 context for a frame is released. No
 		/// references to the context should be kept after this function is called.
 		/// </summary>
-		public unsafe virtual void OnContextReleased(CefBrowser browser, CefFrame frame, CefV8Context context)
+		protected internal unsafe virtual void OnContextReleased(CefBrowser browser, CefFrame frame, CefV8Context context)
 		{
 		}
 
@@ -274,7 +274,7 @@ namespace CefNet
 		/// callback is disabled by default. To enable set
 		/// CefSettings.uncaught_exception_stack_size &gt; 0.
 		/// </summary>
-		public unsafe virtual void OnUncaughtException(CefBrowser browser, CefFrame frame, CefV8Context context, CefV8Exception exception, CefV8StackTrace stackTrace)
+		protected internal unsafe virtual void OnUncaughtException(CefBrowser browser, CefFrame frame, CefV8Context context, CefV8Exception exception, CefV8StackTrace stackTrace)
 		{
 		}
 
@@ -308,7 +308,7 @@ namespace CefNet
 		/// keep references to or attempt to access any DOM objects outside the scope
 		/// of this function.
 		/// </summary>
-		public unsafe virtual void OnFocusedNodeChanged(CefBrowser browser, CefFrame frame, CefDOMNode node)
+		protected internal unsafe virtual void OnFocusedNodeChanged(CefBrowser browser, CefFrame frame, CefDOMNode node)
 		{
 		}
 
@@ -337,7 +337,7 @@ namespace CefNet
 		/// (1) if the message was handled or false (0) otherwise. Do not keep a
 		/// reference to or attempt to access the message outside of this callback.
 		/// </summary>
-		public unsafe virtual bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
+		protected internal unsafe virtual bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
 		{
 			return default;
 		}

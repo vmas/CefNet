@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnComplete();
 		}
 
-		public override void OnComplete(bool success)
+		protected internal unsafe override void OnComplete(bool success)
 		{
 			_implementation.OnComplete(success);
 		}

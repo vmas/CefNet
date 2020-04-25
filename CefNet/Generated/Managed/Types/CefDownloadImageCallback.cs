@@ -56,7 +56,7 @@ namespace CefNet
 		/// resulting HTTP status code. |image| is the resulting image, possibly at
 		/// multiple scale factors, or NULL if the download failed.
 		/// </summary>
-		public unsafe virtual void OnDownloadImageFinished(string imageUrl, int httpStatusCode, CefImage image)
+		protected internal unsafe virtual void OnDownloadImageFinished(string imageUrl, int httpStatusCode, CefImage image)
 		{
 		}
 

@@ -61,7 +61,7 @@ namespace CefNet
 		/// cannot be modified in this callback. Return true (1) if the specified
 		/// cookie can be sent with the request or false (0) otherwise.
 		/// </summary>
-		public unsafe virtual bool CanSendCookie(CefBrowser browser, CefFrame frame, CefRequest request, CefCookie cookie)
+		protected internal unsafe virtual bool CanSendCookie(CefBrowser browser, CefFrame frame, CefRequest request, CefCookie cookie)
 		{
 			return default;
 		}
@@ -94,7 +94,7 @@ namespace CefNet
 		/// specified cookie returned with the response can be saved or false (0)
 		/// otherwise.
 		/// </summary>
-		public unsafe virtual bool CanSaveCookie(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, CefCookie cookie)
+		protected internal unsafe virtual bool CanSaveCookie(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, CefCookie cookie)
 		{
 			return default;
 		}

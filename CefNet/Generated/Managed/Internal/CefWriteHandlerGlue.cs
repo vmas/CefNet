@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidWrite();
 		}
 
-		public override long Write(IntPtr ptr, long size, long n)
+		protected internal unsafe override long Write(IntPtr ptr, long size, long n)
 		{
 			return _implementation.Write(ptr, size, n);
 		}
@@ -44,22 +44,22 @@ namespace CefNet.Internal
 			return _implementation.AvoidSeek();
 		}
 
-		public override int Seek(long offset, int whence)
+		protected internal unsafe override int Seek(long offset, int whence)
 		{
 			return _implementation.Seek(offset, whence);
 		}
 
-		public override long Tell()
+		protected internal unsafe override long Tell()
 		{
 			return _implementation.Tell();
 		}
 
-		public override int Flush()
+		protected internal unsafe override int Flush()
 		{
 			return _implementation.Flush();
 		}
 
-		public override bool MayBlock()
+		protected internal unsafe override bool MayBlock()
 		{
 			return _implementation.MayBlock();
 		}

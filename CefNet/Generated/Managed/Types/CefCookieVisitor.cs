@@ -57,7 +57,7 @@ namespace CefNet
 		/// Return false (0) to stop visiting cookies. This function may never be
 		/// called if no cookies are found.
 		/// </summary>
-		public unsafe virtual bool Visit(CefCookie cookie, int count, int total, ref int deleteCookie)
+		protected internal unsafe virtual bool Visit(CefCookie cookie, int count, int total, ref int deleteCookie)
 		{
 			return default;
 		}

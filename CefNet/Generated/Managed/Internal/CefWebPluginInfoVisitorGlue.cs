@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidVisit();
 		}
 
-		public override bool Visit(CefWebPluginInfo info, int count, int total)
+		protected internal unsafe override bool Visit(CefWebPluginInfo info, int count, int total)
 		{
 			return _implementation.Visit(info, count, total);
 		}

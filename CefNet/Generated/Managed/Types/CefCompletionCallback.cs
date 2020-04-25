@@ -49,7 +49,7 @@ namespace CefNet
 		/// <summary>
 		/// Method that will be called once the task is complete.
 		/// </summary>
-		public unsafe virtual void OnComplete()
+		protected internal unsafe virtual void OnComplete()
 		{
 		}
 

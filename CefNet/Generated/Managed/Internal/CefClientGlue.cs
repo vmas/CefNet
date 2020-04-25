@@ -29,67 +29,67 @@ namespace CefNet.Internal
 			_implementation = impl;
 		}
 
-		public override CefContextMenuHandler GetContextMenuHandler()
+		protected internal unsafe override CefContextMenuHandler GetContextMenuHandler()
 		{
 			return _implementation.GetContextMenuHandler();
 		}
 
-		public override CefDialogHandler GetDialogHandler()
+		protected internal unsafe override CefDialogHandler GetDialogHandler()
 		{
 			return _implementation.GetDialogHandler();
 		}
 
-		public override CefDisplayHandler GetDisplayHandler()
+		protected internal unsafe override CefDisplayHandler GetDisplayHandler()
 		{
 			return _implementation.GetDisplayHandler();
 		}
 
-		public override CefDownloadHandler GetDownloadHandler()
+		protected internal unsafe override CefDownloadHandler GetDownloadHandler()
 		{
 			return _implementation.GetDownloadHandler();
 		}
 
-		public override CefDragHandler GetDragHandler()
+		protected internal unsafe override CefDragHandler GetDragHandler()
 		{
 			return _implementation.GetDragHandler();
 		}
 
-		public override CefFindHandler GetFindHandler()
+		protected internal unsafe override CefFindHandler GetFindHandler()
 		{
 			return _implementation.GetFindHandler();
 		}
 
-		public override CefFocusHandler GetFocusHandler()
+		protected internal unsafe override CefFocusHandler GetFocusHandler()
 		{
 			return _implementation.GetFocusHandler();
 		}
 
-		public override CefJSDialogHandler GetJSDialogHandler()
+		protected internal unsafe override CefJSDialogHandler GetJSDialogHandler()
 		{
 			return _implementation.GetJSDialogHandler();
 		}
 
-		public override CefKeyboardHandler GetKeyboardHandler()
+		protected internal unsafe override CefKeyboardHandler GetKeyboardHandler()
 		{
 			return _implementation.GetKeyboardHandler();
 		}
 
-		public override CefLifeSpanHandler GetLifeSpanHandler()
+		protected internal unsafe override CefLifeSpanHandler GetLifeSpanHandler()
 		{
 			return _implementation.GetLifeSpanHandler();
 		}
 
-		public override CefLoadHandler GetLoadHandler()
+		protected internal unsafe override CefLoadHandler GetLoadHandler()
 		{
 			return _implementation.GetLoadHandler();
 		}
 
-		public override CefRenderHandler GetRenderHandler()
+		protected internal unsafe override CefRenderHandler GetRenderHandler()
 		{
 			return _implementation.GetRenderHandler();
 		}
 
-		public override CefRequestHandler GetRequestHandler()
+		protected internal unsafe override CefRequestHandler GetRequestHandler()
 		{
 			return _implementation.GetRequestHandler();
 		}
@@ -99,7 +99,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnProcessMessageReceived();
 		}
 
-		public override bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
+		protected internal unsafe override bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess, CefProcessMessage message)
 		{
 			return _implementation.OnProcessMessageReceived(browser, frame, sourceProcess, message);
 		}

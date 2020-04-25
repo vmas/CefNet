@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnCDMRegistrationComplete();
 		}
 
-		public override void OnCDMRegistrationComplete(CefCDMRegistrationError result, string errorMessage)
+		protected internal unsafe override void OnCDMRegistrationComplete(CefCDMRegistrationError result, string errorMessage)
 		{
 			_implementation.OnCDMRegistrationComplete(result, errorMessage);
 		}

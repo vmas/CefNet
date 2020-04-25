@@ -54,7 +54,7 @@ namespace CefNet
 		/// |result| will be the result code. |resolved_ips| will be the list of
 		/// resolved IP addresses or NULL if the resolution failed.
 		/// </summary>
-		public unsafe virtual void OnResolveCompleted(CefErrorCode result, CefStringList resolvedIps)
+		protected internal unsafe virtual void OnResolveCompleted(CefErrorCode result, CefStringList resolvedIps)
 		{
 		}
 

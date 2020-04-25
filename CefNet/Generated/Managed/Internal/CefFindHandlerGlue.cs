@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnFindResult();
 		}
 
-		public override void OnFindResult(CefBrowser browser, int identifier, int count, CefRect selectionRect, int activeMatchOrdinal, bool finalUpdate)
+		protected internal unsafe override void OnFindResult(CefBrowser browser, int identifier, int count, CefRect selectionRect, int activeMatchOrdinal, bool finalUpdate)
 		{
 			_implementation.OnFindResult(browser, identifier, count, selectionRect, activeMatchOrdinal, finalUpdate);
 		}

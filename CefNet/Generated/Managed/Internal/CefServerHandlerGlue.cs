@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnServerCreated();
 		}
 
-		public override void OnServerCreated(CefServer server)
+		protected internal unsafe override void OnServerCreated(CefServer server)
 		{
 			_implementation.OnServerCreated(server);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnServerDestroyed();
 		}
 
-		public override void OnServerDestroyed(CefServer server)
+		protected internal unsafe override void OnServerDestroyed(CefServer server)
 		{
 			_implementation.OnServerDestroyed(server);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnClientConnected();
 		}
 
-		public override void OnClientConnected(CefServer server, int connectionId)
+		protected internal unsafe override void OnClientConnected(CefServer server, int connectionId)
 		{
 			_implementation.OnClientConnected(server, connectionId);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnClientDisconnected();
 		}
 
-		public override void OnClientDisconnected(CefServer server, int connectionId)
+		protected internal unsafe override void OnClientDisconnected(CefServer server, int connectionId)
 		{
 			_implementation.OnClientDisconnected(server, connectionId);
 		}
@@ -74,7 +74,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnHttpRequest();
 		}
 
-		public override void OnHttpRequest(CefServer server, int connectionId, string clientAddress, CefRequest request)
+		protected internal unsafe override void OnHttpRequest(CefServer server, int connectionId, string clientAddress, CefRequest request)
 		{
 			_implementation.OnHttpRequest(server, connectionId, clientAddress, request);
 		}
@@ -84,7 +84,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnWebSocketRequest();
 		}
 
-		public override void OnWebSocketRequest(CefServer server, int connectionId, string clientAddress, CefRequest request, CefCallback callback)
+		protected internal unsafe override void OnWebSocketRequest(CefServer server, int connectionId, string clientAddress, CefRequest request, CefCallback callback)
 		{
 			_implementation.OnWebSocketRequest(server, connectionId, clientAddress, request, callback);
 		}
@@ -94,7 +94,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnWebSocketConnected();
 		}
 
-		public override void OnWebSocketConnected(CefServer server, int connectionId)
+		protected internal unsafe override void OnWebSocketConnected(CefServer server, int connectionId)
 		{
 			_implementation.OnWebSocketConnected(server, connectionId);
 		}
@@ -104,7 +104,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidOnWebSocketMessage();
 		}
 
-		public override void OnWebSocketMessage(CefServer server, int connectionId, IntPtr data, long dataSize)
+		protected internal unsafe override void OnWebSocketMessage(CefServer server, int connectionId, IntPtr data, long dataSize)
 		{
 			_implementation.OnWebSocketMessage(server, connectionId, data, dataSize);
 		}

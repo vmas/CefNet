@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidCanSendCookie();
 		}
 
-		public override bool CanSendCookie(CefBrowser browser, CefFrame frame, CefRequest request, CefCookie cookie)
+		protected internal unsafe override bool CanSendCookie(CefBrowser browser, CefFrame frame, CefRequest request, CefCookie cookie)
 		{
 			return _implementation.CanSendCookie(browser, frame, request, cookie);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidCanSaveCookie();
 		}
 
-		public override bool CanSaveCookie(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, CefCookie cookie)
+		protected internal unsafe override bool CanSaveCookie(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, CefCookie cookie)
 		{
 			return _implementation.CanSaveCookie(browser, frame, request, response, cookie);
 		}

@@ -6,7 +6,7 @@ namespace WinFormsCoreApp
 {
 	class CefAppImpl : CefNetApplication
 	{
-		public override void OnBeforeCommandLineProcessing(string processType, CefCommandLine commandLine)
+		protected override void OnBeforeCommandLineProcessing(string processType, CefCommandLine commandLine)
 		{
 			base.OnBeforeCommandLineProcessing(processType, commandLine);
 

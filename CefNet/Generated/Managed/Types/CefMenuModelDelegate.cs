@@ -73,7 +73,7 @@ namespace CefNet
 		/// Perform the action associated with the specified |command_id| and optional
 		/// |event_flags|.
 		/// </summary>
-		public unsafe virtual void ExecuteCommand(CefMenuModel menuModel, int commandId, CefEventFlags eventFlags)
+		protected internal unsafe virtual void ExecuteCommand(CefMenuModel menuModel, int commandId, CefEventFlags eventFlags)
 		{
 		}
 
@@ -99,7 +99,7 @@ namespace CefNet
 		/// Called when the user moves the mouse outside the menu and over the owning
 		/// window.
 		/// </summary>
-		public unsafe virtual void MouseOutsideMenu(CefMenuModel menuModel, CefPoint screenPoint)
+		protected internal unsafe virtual void MouseOutsideMenu(CefMenuModel menuModel, CefPoint screenPoint)
 		{
 		}
 
@@ -125,7 +125,7 @@ namespace CefNet
 		/// Called on unhandled open submenu keyboard commands. |is_rtl| will be true
 		/// (1) if the menu is displaying a right-to-left language.
 		/// </summary>
-		public unsafe virtual void UnhandledOpenSubmenu(CefMenuModel menuModel, bool isRtl)
+		protected internal unsafe virtual void UnhandledOpenSubmenu(CefMenuModel menuModel, bool isRtl)
 		{
 		}
 
@@ -151,7 +151,7 @@ namespace CefNet
 		/// Called on unhandled close submenu keyboard commands. |is_rtl| will be true
 		/// (1) if the menu is displaying a right-to-left language.
 		/// </summary>
-		public unsafe virtual void UnhandledCloseSubmenu(CefMenuModel menuModel, bool isRtl)
+		protected internal unsafe virtual void UnhandledCloseSubmenu(CefMenuModel menuModel, bool isRtl)
 		{
 		}
 
@@ -176,7 +176,7 @@ namespace CefNet
 		/// <summary>
 		/// The menu is about to show.
 		/// </summary>
-		public unsafe virtual void MenuWillShow(CefMenuModel menuModel)
+		protected internal unsafe virtual void MenuWillShow(CefMenuModel menuModel)
 		{
 		}
 
@@ -201,7 +201,7 @@ namespace CefNet
 		/// <summary>
 		/// The menu has closed.
 		/// </summary>
-		public unsafe virtual void MenuClosed(CefMenuModel menuModel)
+		protected internal unsafe virtual void MenuClosed(CefMenuModel menuModel)
 		{
 		}
 
@@ -227,7 +227,7 @@ namespace CefNet
 		/// Optionally modify a menu item label. Return true (1) if |label| was
 		/// modified.
 		/// </summary>
-		public unsafe virtual bool FormatLabel(CefMenuModel menuModel, ref string label)
+		protected internal unsafe virtual bool FormatLabel(CefMenuModel menuModel, ref string label)
 		{
 			return default;
 		}

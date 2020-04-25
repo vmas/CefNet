@@ -34,7 +34,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidExecuteCommand();
 		}
 
-		public override void ExecuteCommand(CefMenuModel menuModel, int commandId, CefEventFlags eventFlags)
+		protected internal unsafe override void ExecuteCommand(CefMenuModel menuModel, int commandId, CefEventFlags eventFlags)
 		{
 			_implementation.ExecuteCommand(menuModel, commandId, eventFlags);
 		}
@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidMouseOutsideMenu();
 		}
 
-		public override void MouseOutsideMenu(CefMenuModel menuModel, CefPoint screenPoint)
+		protected internal unsafe override void MouseOutsideMenu(CefMenuModel menuModel, CefPoint screenPoint)
 		{
 			_implementation.MouseOutsideMenu(menuModel, screenPoint);
 		}
@@ -54,7 +54,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidUnhandledOpenSubmenu();
 		}
 
-		public override void UnhandledOpenSubmenu(CefMenuModel menuModel, bool isRtl)
+		protected internal unsafe override void UnhandledOpenSubmenu(CefMenuModel menuModel, bool isRtl)
 		{
 			_implementation.UnhandledOpenSubmenu(menuModel, isRtl);
 		}
@@ -64,7 +64,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidUnhandledCloseSubmenu();
 		}
 
-		public override void UnhandledCloseSubmenu(CefMenuModel menuModel, bool isRtl)
+		protected internal unsafe override void UnhandledCloseSubmenu(CefMenuModel menuModel, bool isRtl)
 		{
 			_implementation.UnhandledCloseSubmenu(menuModel, isRtl);
 		}
@@ -74,7 +74,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidMenuWillShow();
 		}
 
-		public override void MenuWillShow(CefMenuModel menuModel)
+		protected internal unsafe override void MenuWillShow(CefMenuModel menuModel)
 		{
 			_implementation.MenuWillShow(menuModel);
 		}
@@ -84,7 +84,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidMenuClosed();
 		}
 
-		public override void MenuClosed(CefMenuModel menuModel)
+		protected internal unsafe override void MenuClosed(CefMenuModel menuModel)
 		{
 			_implementation.MenuClosed(menuModel);
 		}
@@ -94,7 +94,7 @@ namespace CefNet.Internal
 			return _implementation.AvoidFormatLabel();
 		}
 
-		public override bool FormatLabel(CefMenuModel menuModel, ref string label)
+		protected internal unsafe override bool FormatLabel(CefMenuModel menuModel, ref string label)
 		{
 			return _implementation.FormatLabel(menuModel, ref label);
 		}

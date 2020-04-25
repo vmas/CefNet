@@ -52,7 +52,7 @@ namespace CefNet
 		/// <summary>
 		/// Method that will be executed.
 		/// </summary>
-		public unsafe virtual void Visit(string @string)
+		protected internal unsafe virtual void Visit(string @string)
 		{
 		}
 

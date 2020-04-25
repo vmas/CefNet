@@ -63,7 +63,7 @@ namespace CefNet
 		/// return true (1). To use the default translation return false (0). Include
 		/// cef_pack_strings.h for a listing of valid string ID values.
 		/// </summary>
-		public unsafe virtual bool GetLocalizedString(int stringId, ref string @string)
+		protected internal unsafe virtual bool GetLocalizedString(int stringId, ref string @string)
 		{
 			return default;
 		}
@@ -98,7 +98,7 @@ namespace CefNet
 		/// resident in memory. Include cef_pack_resources.h for a listing of valid
 		/// resource ID values.
 		/// </summary>
-		public unsafe virtual bool GetDataResource(int resourceId, ref IntPtr data, ref long dataSize)
+		protected internal unsafe virtual bool GetDataResource(int resourceId, ref IntPtr data, ref long dataSize)
 		{
 			return default;
 		}
@@ -131,7 +131,7 @@ namespace CefNet
 		/// not be copied and must remain resident in memory. Include
 		/// cef_pack_resources.h for a listing of valid resource ID values.
 		/// </summary>
-		public unsafe virtual bool GetDataResourceForScale(int resourceId, CefScaleFactor scaleFactor, ref IntPtr data, ref long dataSize)
+		protected internal unsafe virtual bool GetDataResourceForScale(int resourceId, CefScaleFactor scaleFactor, ref IntPtr data, ref long dataSize)
 		{
 			return default;
 		}

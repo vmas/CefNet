@@ -56,7 +56,7 @@ namespace CefNet
 		/// Return false (0) to stop visiting plugins. This function may never be
 		/// called if no plugins are found.
 		/// </summary>
-		public unsafe virtual bool Visit(CefWebPluginInfo info, int count, int total)
+		protected internal unsafe virtual bool Visit(CefWebPluginInfo info, int count, int total)
 		{
 			return default;
 		}
