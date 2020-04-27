@@ -55,7 +55,6 @@ namespace CefGen
 			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(File.ReadAllText(Path.Combine(_basePath, "..", "CefTypes", "CefBaseScoped.cs")))));
 			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(File.ReadAllText(Path.Combine(_basePath, "..", "CefTypes", "CefColor.cs")))));
 			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(File.ReadAllText(Path.Combine(_basePath, "..", "CefTypes", "CefStringList.cs")))));
-			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(File.ReadAllText(Path.Combine(_basePath, "..", "CefTypes", "CefStringMultimap.cs")))));
 			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(File.ReadAllText(Path.Combine(_basePath, "..", "CefTypes", "CefStringMap.cs")))));
 			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(File.ReadAllText(Path.Combine(_basePath, "..", "CefString.cs")))));
 			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From(File.ReadAllText(Path.Combine(_basePath, "..", "CefStructure.cs")))));
@@ -66,6 +65,7 @@ namespace CefGen
 			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From("using CefNet.CApi; namespace CefNet { public unsafe class CefWindowInfo { public cef_window_info_t* GetNativeInstance() { return null; } public static CefWindowInfo Wrap(cef_window_info_t* p) { return null; } } }")));
 			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From("namespace CefNet { public class InvalidCefObjectException : System.Exception { } }")));
 			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From("namespace CefNet { public class CefApi { public static bool UseUnsafeImplementation; } }")));
+			syntaxTrees.Add(SyntaxFactory.ParseSyntaxTree(SourceText.From("using CefNet.CApi; namespace CefNet { public class CefStringMultimap { cef_string_multimap_t a; public static implicit operator cef_string_multimap_t(CefStringMultimap a) { return a.a; } } }")));
 
 			compilation = compilation.AddSyntaxTrees(syntaxTrees);
 
