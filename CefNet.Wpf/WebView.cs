@@ -227,6 +227,21 @@ namespace CefNet.Wpf
 			}
 		}
 
+		private int _fixResizeGlitchesFlag;
+		/// <summary>
+		/// Fixes resize glitches when maximizing or restoring the parent window if a static page is displayed.
+		/// </summary>
+		private void FixResizeGlitches()
+		{
+			// We must force the browser to be redrawn so that the new size is applied.
+			// See for CEF implementation details:
+			// https://bitbucket.org/chromiumembedded/cef/issues/2733/viz-osr-might-be-causing-some-graphic#comment-56271100
+
+			if (Interlocked.Exchange(ref _fixResizeGlitchesFlag, 0) != 1)
+				return;
+			BrowserObject?.Host.Invalidate(CefPaintElementType.View);
+		}
+
 		protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
 		{
 			if (_allowResizeNotifications)
@@ -236,6 +251,10 @@ namespace CefNet.Wpf
 				{
 					OffscreenGraphics.DpiScale = VisualTreeHelper.GetDpi(this);
 					BrowserObject?.Host.WasResized();
+
+					if (Interlocked.Exchange(ref _fixResizeGlitchesFlag, 1) != 0)
+						return;
+					CefNetApi.Post(CefThreadId.UI, FixResizeGlitches, 30);
 				}
 			}
 

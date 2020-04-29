@@ -301,6 +301,21 @@ namespace CefNet.Avalonia
 			}
 		}
 
+		private int _fixResizeGlitchesFlag;
+		/// <summary>
+		/// Fixes resize glitches when maximizing or restoring the parent window if a static page is displayed.
+		/// </summary>
+		private void FixResizeGlitches()
+		{
+			// We must force the browser to be redrawn so that the new size is applied.
+			// See for CEF implementation details:
+			// https://bitbucket.org/chromiumembedded/cef/issues/2733/viz-osr-might-be-causing-some-graphic#comment-56271100
+
+			if (Interlocked.Exchange(ref _fixResizeGlitchesFlag, 0) != 1)
+				return;
+			BrowserObject?.Host.Invalidate(CefPaintElementType.View);
+		}
+
 		protected virtual void OnBoundsChanged(EventArgs e)
 		{
 			if (_allowResizeNotifications)
@@ -314,6 +329,10 @@ namespace CefNet.Avalonia
 						double scaling = this.VisualRoot?.RenderScaling ?? 1.0;
 						OffscreenGraphics.DpiScale = new DpiScale(scaling, scaling);
 						BrowserObject?.Host.WasResized();
+
+						if (Interlocked.Exchange(ref _fixResizeGlitchesFlag, 1) != 0)
+							return;
+						CefNetApi.Post(CefThreadId.UI, FixResizeGlitches, 30);
 					}
 				}
 			}
