@@ -23,6 +23,9 @@ namespace CefNet
 			return new CefWindowInfo(instance);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CefWindowInfo"/>.
+		/// </summary>
 		public CefWindowInfo()
 		{
 			int size;
@@ -46,6 +49,7 @@ namespace CefNet
 			GC.SuppressFinalize(this);
 		}
 
+#pragma warning disable CS1591 // Missing comments
 		~CefWindowInfo()
 		{
 			Dispose();
@@ -61,6 +65,7 @@ namespace CefNet
 				GC.SuppressFinalize(this);
 			}
 		}
+#pragma warning restore CS1591 // Missing comments
 
 		private cef_window_info_windows_t* WindowsInstance
 		{
@@ -92,6 +97,10 @@ namespace CefNet
 			}
 		}
 
+		/// <summary>
+		/// Returns an unsafe pointer to the <see cref="cef_window_info_t"/> struct.
+		/// </summary>
+		/// <returns>A pointer to the <see cref="cef_window_info_t"/> struct.</returns>
 		public cef_window_info_t* GetNativeInstance()
 		{
 			if (_instance == null)
@@ -100,7 +109,7 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// The extended window style of the window being created (Windows only).
+		/// Gets or sets the extended window style of the window being created (Windows only).
 		/// See CreateWindowEx() for more information.
 		/// </summary>
 		public uint ExStyle
@@ -240,7 +249,7 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Pointer for the parent window/view.
+		/// Gets or sets the pointer for the parent window/view.
 		/// </summary>
 		public IntPtr ParentWindow
 		{
@@ -264,7 +273,7 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Pointer for the new browser window/view. Only used with windowed rendering.
+		/// Gets or sets the pointer for the new browser window/view. Only used with windowed rendering.
 		/// </summary>
 		public IntPtr Window
 		{
@@ -288,7 +297,7 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// A handle to a menu, or specifies a child-window identifier, depending on the
+		/// Gets or sets a handle to a menu, or specifies a child-window identifier, depending on the
 		/// window style (Windows only). See CreateWindowEx() for more information.
 		/// </summary>
 		public IntPtr Menu
@@ -445,6 +454,16 @@ namespace CefNet
 			WindowlessRenderingEnabled = true;
 		}
 
+		/// <summary>
+		/// Compares two <see cref="CefWindowInfo"/> instances for reference equality.
+		/// </summary>
+		/// <param name="obj">
+		/// The <see cref="CefWindowInfo"/> instance to compare with the current instance.
+		/// </param>
+		/// <returns>
+		/// A <see cref="Boolean"/> value that is true if the two instances are equal;
+		/// otherwise, false.
+		/// </returns>
 		public override bool Equals(object obj)
 		{
 			if (obj is CefWindowInfo windowInfo)
@@ -452,6 +471,10 @@ namespace CefNet
 			return false;
 		}
 
+		/// <summary>
+		/// Gets the hash code for the <see cref="CefWindowInfo"/>.
+		/// </summary>
+		/// <returns>An <see cref="Int32"/> containing the hash value.</returns>
 		public override int GetHashCode()
 		{
 			return new IntPtr(_instance).GetHashCode();
