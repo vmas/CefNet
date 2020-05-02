@@ -83,6 +83,18 @@ namespace CefNet.CApi
 		public unsafe extern cef_string_userfree_t GetDescription();
 
 		/// <summary>
+		/// cef_media_sink_icon_type_t (*)(_cef_media_sink_t* self)*
+		/// </summary>
+		public void* get_icon_type;
+
+		/// <summary>
+		/// Returns the icon type for this sink.
+		/// </summary>
+		[NativeName("get_icon_type")]
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		public unsafe extern CefMediaSinkIconType GetIconType();
+
+		/// <summary>
 		/// int (*)(_cef_media_sink_t* self)*
 		/// </summary>
 		public void* is_cast_sink;

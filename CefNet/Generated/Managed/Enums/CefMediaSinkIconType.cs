@@ -19,33 +19,31 @@ using CefNet.WinApi;
 namespace CefNet
 {
 	/// <summary>
-	/// Result codes for CefMediaRouter::CreateRoute. Should be kept in sync with
-	/// Chromium&apos;s media_router::RouteRequestResult::ResultCode type.
+	/// Icon types for a MediaSink object. Should be kept in sync with Chromium&apos;s
+	/// media_router::SinkIconType type.
 	/// </summary>
-	public enum CefMediaRouteCreateResult
+	public enum CefMediaSinkIconType
 	{
-		UnknownError = 0,
+		Cast = 0,
 
-		Ok = 1,
+		CastAudioGroup = 1,
 
-		TimedOut = 2,
+		CastAudio = 2,
 
-		RouteNotFound = 3,
+		Meeting = 3,
 
-		SinkNotFound = 4,
+		Hangout = 4,
 
-		InvalidOrigin = 5,
+		Education = 5,
 
-		NoSupportedProvider = 7,
+		WiredDisplay = 6,
 
-		Cancelled = 8,
-
-		RouteAlreadyExists = 9,
+		Generic = 7,
 
 		/// <summary>
 		/// The total number of values.
 		/// </summary>
-		TotalCount = 11,
+		TotalCount = 8,
 	}
 }
 

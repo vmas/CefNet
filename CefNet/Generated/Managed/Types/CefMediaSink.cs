@@ -88,6 +88,17 @@ namespace CefNet
 		}
 
 		/// <summary>
+		/// Gets the icon type for this sink.
+		/// </summary>
+		public unsafe virtual CefMediaSinkIconType IconType
+		{
+			get
+			{
+				return SafeCall(NativeInstance->GetIconType());
+			}
+		}
+
+		/// <summary>
 		/// Gets a value indicating whether this sink accepts content via Cast.
 		/// </summary>
 		public unsafe virtual bool IsCastSink

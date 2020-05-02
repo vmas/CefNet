@@ -82,6 +82,23 @@
 			ret
 		}
 
+		// cef_media_sink_icon_type_t (*)(_cef_media_sink_t* self)*
+		.method public hidebysig valuetype CefNet.CefMediaSinkIconType GetIconType()
+		{
+			.maxstack 2
+			ldarg.0
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_media_sink_t::get_icon_type
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				valuetype CefNet.CefMediaSinkIconType(valuetype CefNet.CApi.cef_media_sink_t*)
+			ret
+		}
+
 		// int (*)(_cef_media_sink_t* self)*
 		.method public hidebysig int32 IsCastSink()
 		{
