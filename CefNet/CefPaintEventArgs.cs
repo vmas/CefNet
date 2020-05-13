@@ -15,7 +15,7 @@ namespace CefNet
 		/// <param name="browser">The <see cref="CefBrowser"/> that triggered the event.</param>
 		/// <param name="type">A paint element type.</param>
 		/// <param name="dirtyRects">Specifies areas of the bitmap that changed.</param>
-		/// <param name="buffer">The pointer to an array of bytes that contains the BRGA pixel data.</param>
+		/// <param name="buffer">The pointer to an array of bytes that contains the BGRA pixel data.</param>
 		/// <param name="width">The width, in pixels, of the bitmap.</param>
 		/// <param name="height">The height, in pixels, of the bitmap.</param>
 		public CefPaintEventArgs(CefBrowser browser, CefPaintElementType type, CefRect[] dirtyRects, IntPtr buffer, int width, int height)
@@ -44,7 +44,7 @@ namespace CefNet
 		public CefRect[] DirtyRects { get; }
 
 		/// <summary>
-		/// Gets the address of the first pixel data in the BRGA bitmap.
+		/// Gets the address of the first pixel data in the BGRA bitmap.
 		/// </summary>
 		public IntPtr Buffer { get; }
 
