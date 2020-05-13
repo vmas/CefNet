@@ -1,16 +1,6 @@
-﻿//using CefNet.DOM;
-using CefNet.Internal;
-//using CefNet.JSInterop;
-
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
+using CefNet.Internal;
 
 namespace CefNet
 {
@@ -226,66 +216,6 @@ namespace CefNet
 		{
 			LoadingStateChange?.Invoke(this, e);
 		}
-
-		//#region RenderHandler
-
-		////protected virtual void GetViewRect(object sender, CfxGetViewRectEventArgs e)
-		////{
-		////	CfxRect r = e.Rect;
-		////	r.X = X;
-		////	r.Y = Y;
-		////	r.Width = _rlWidth > 0 ? _rlWidth : Width;
-		////	r.Height = _rlHeight > 0 ? _rlHeight : Height;
-		////	System.Diagnostics.Debug.WriteLine("w = {0}; h = {1}", r.Width, r.Height);
-		////}
-
-		//private int _rlWidth;
-		//private int _rlHeight;
-
-
-		//public void SetRenderLayoutSize(int width, int height)
-		//{
-		//	_rlWidth = width;
-		//	_rlHeight =height;
-		//	BrowserObject?.GetHost().Invalidate(CefPaintElementType.View);
-		//}
-
-		//private TaskCompletionSource<bool> _screenshotTask;
-		//public async Task CreateScreenshot(int width, int height)
-		//{
-		//	var tcs = new TaskCompletionSource<bool>();
-		//	if (Interlocked.CompareExchange(ref _screenshotTask, tcs, default) != null)
-		//		throw new InvalidOperationException();
-
-		//	SetRenderLayoutSize(width, height);
-		//	await tcs.Task;
-		//	Volatile.Write(ref _screenshotTask, null);
-
-		//	//Interlocked.Exchange(ref _screenshotTask, null);
-		//	//SetRenderLayoutSize(0, 0);
-		//}
-
-		////protected virtual void GetScreenPoint(object sender, CfxGetScreenPointEventArgs e)
-		////{
-		////	e.ScreenX = e.ViewX + X;
-		////	e.ScreenY = e.ViewY + Y;
-		////	e.Handled = true;
-		////}
-
-
-		////protected virtual void GetRootScreenRect(object sender, CfxGetRootScreenRectEventArgs e) { }
-
-		//#endregion RenderHandler
-
-
-
-		//		internal protected virtual void OnAfterCreated(CefBrowser browser)
-		//		{
-		//			this.BrowserObject = browser;
-		//#if USERAGENTOVERRIDE
-		//			OnSetUserAgentInNewTab();
-		//#endif
-		//		}
 
 		protected virtual CefPoint PointToViewport(CefPoint point)
 		{
