@@ -45,7 +45,7 @@ namespace CefNet
 
 			using (var windowInfo = new CefWindowInfo())
 			{
-				Initialize(windowInfo);
+				InitializeInternal(windowInfo);
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace CefNet
 			try
 			{
 				windowInfo = new CefWindowInfo();
-				Initialize(windowInfo);
+				InitializeInternal(windowInfo);
 				if (!CefApi.CreateBrowser(windowInfo, ViewGlue.Client, url ?? "about:blank", settings ?? DefaultBrowserSettings, extraInfo, requestContext))
 					throw new InvalidOperationException();
 			}
