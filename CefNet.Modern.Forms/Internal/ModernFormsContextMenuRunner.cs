@@ -169,7 +169,7 @@ namespace CefNet.Internal
 						continue;
 				}
 				menuItem.Text = model.GetLabelAt(i).Replace("&", "");
-				//menuItem.Click += Menu_ItemClicked;
+				menuItem.Click += Menu_ItemClicked;
 				menuItem.Enabled = model.IsEnabledAt(i);
 				//menuItem.Tag = model.GetCommandIdAt(i);
 				MenuItemsTags.Add(menuItem, model.GetCommandIdAt(i));
