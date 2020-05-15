@@ -1,11 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 
+#if MODERNFORMS
+using Modern.Forms;
+#else
+using System.Windows.Forms;
+#endif
+
+#if MODERNFORMS
+namespace CefNet.Modern.Forms
+#else
 namespace CefNet.Windows.Forms
+#endif
 {
-	public class CursorChangeEventArgs : EventArgs
+public class CursorChangeEventArgs : EventArgs
 	{
 		public CursorChangeEventArgs(Cursor cursor, CefCursorType cursorType)
 		{

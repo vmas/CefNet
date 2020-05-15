@@ -1,6 +1,10 @@
 ﻿using System.ComponentModel;
 
+#if MODERNFORMS
+namespace CefNet.Modern.Forms
+#else
 namespace CefNet.Windows.Forms
+#endif
 {
 	/// <summary>
 	/// Provides data for the <see cref="WebView.StartDragging"/> event.

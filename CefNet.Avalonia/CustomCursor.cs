@@ -1,7 +1,12 @@
-﻿using Avalonia;
+﻿#if MODERNFORMS
+using Modern.Forms;
+#else
+using Avalonia;
 using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+#endif
+
 using CefNet.Internal;
 using System;
 using System.Collections.Generic;
@@ -9,7 +14,11 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
+#if MODERNFORMS
+namespace CefNet.Modern.Forms
+#else
 namespace CefNet.Avalonia
+#endif
 {
 	public sealed class CustomCursor
 	{

@@ -1,12 +1,16 @@
 ﻿using CefNet;
 using CefNet.Internal;
-using CefNet.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+#if MODERNFORMS
+using CefNet.Modern.Forms;
+#else
+using CefNet.Windows.Forms;
+#endif
 
 namespace WinFormsCoreApp
 {

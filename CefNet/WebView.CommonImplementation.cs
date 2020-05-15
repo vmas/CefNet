@@ -20,6 +20,8 @@ namespace CefNet.Wpf
 namespace CefNet.Windows.Forms
 #elif AVALONIA
 namespace CefNet.Avalonia
+#elif MODERNFORMS
+namespace CefNet.Modern.Forms
 #else
 namespace CefNet
 #endif

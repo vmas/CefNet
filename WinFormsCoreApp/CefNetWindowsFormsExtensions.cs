@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿#if MODERNFORMS
+using Modern.Forms;
+#else
 using System.Windows.Forms;
-using System.IO;
-using CefNet.WinApi;
+#endif
 
 namespace CefNet
 {

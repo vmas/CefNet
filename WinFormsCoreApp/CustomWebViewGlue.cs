@@ -10,7 +10,12 @@ using System.Threading.Tasks;
 
 namespace WinFormsCoreApp
 {
-	sealed class CustomWebViewGlue : WinFormsWebViewGlue
+	sealed class CustomWebViewGlue :
+#if MODERNFORMS
+		ModernFormsWebViewGlue
+#else
+		WinFormsWebViewGlue
+#endif
 	{
 		private const int SHOW_DEV_TOOLS = (int)CefMenuId.UserFirst + 0;
 		private const int INSPECT_ELEMENT = (int)CefMenuId.UserFirst + 1;
