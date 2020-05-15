@@ -54,6 +54,11 @@ namespace CefNet
 		/// </summary>
 		public event EventHandler<RenderThreadCreatedEventArgs> RenderThreadCreated;
 
+		/// <summary>
+		/// Occurs after loading the CEF library, but before the CEF process is initialized.
+		/// </summary>
+		public event EventHandler BeforeInitialize;
+
 		private static IntPtr _cefLibHandle;
 		private static ProcessType? _ProcessType;
 		private int _initThreadId;
@@ -219,6 +224,8 @@ namespace CefNet
 
 			AssertApiVersion();
 
+			OnBeforeInitalize(EventArgs.Empty);
+
 			Interlocked.Exchange(ref _initThreadId, Thread.CurrentThread.ManagedThreadId);
 			Instance = this;
 
@@ -281,6 +288,29 @@ namespace CefNet
 		}
 
 		/// <summary>
+		/// Checks that the current thread is the main application thread.
+		/// </summary>
+		/// <returns>
+		/// true if the calling thread is the main application thread; otherwise, false.
+		/// </returns>
+		public bool CheckAccess()
+		{
+			return _initThreadId == Thread.CurrentThread.ManagedThreadId;
+		}
+
+		/// <summary>
+		/// Checks that the current thread is the main application thread and throws if not.
+		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// The current thread is not the UI thread.
+		/// </exception>
+		public void AssertAccess()
+		{
+			if (!CheckAccess())
+				throw new InvalidOperationException("Cross-thread operation not valid.");
+		}
+
+		/// <summary>
 		/// Begins running a standard application message loop on the current thread.<para/>
 		/// This function should only be called on the main application thread and only if
 		/// <see cref="Initialize"/> is called with a <see cref="CefSettings.MultiThreadedMessageLoop"/>
@@ -292,6 +322,8 @@ namespace CefNet
 		/// </remarks>
 		public static void Run()
 		{
+			if (Instance is null || !Instance.CheckAccess())
+				throw new InvalidOperationException("Cross-thread operation not valid.");
 			CefApi.RunMessageLoop();
 		}
 
@@ -310,9 +342,7 @@ namespace CefNet
 		/// </summary>
 		public void Shutdown()
 		{
-			if (_initThreadId != Thread.CurrentThread.ManagedThreadId)
-				throw new InvalidOperationException();
-
+			AssertAccess();
 			CefApi.Shutdown();
 		}
 
@@ -362,6 +392,17 @@ namespace CefNet
 				}
 				return _ProcessType.Value;
 			}
+		}
+
+		/// <summary>
+		/// Raises the <see cref="BeforeInitialize"/> event.
+		/// </summary>
+		/// <param name="e">
+		/// The <see cref="EventArgs"/> object that contains the event data.
+		/// </param>
+		protected virtual void OnBeforeInitalize(EventArgs e)
+		{
+			BeforeInitialize?.Invoke(this, e);
 		}
 
 		/// <summary>
