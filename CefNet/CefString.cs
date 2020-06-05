@@ -105,6 +105,9 @@ namespace CefNet
 		/// <param name="str">The pointer to the CEF string.</param>
 		public static void Free(cef_string_t* str)
 		{
+			if (str == null)
+				return;
+
 			cef_string_utf16_t* s = (cef_string_utf16_t*)str;
 			if (s->dtor != null)
 			{
@@ -121,6 +124,9 @@ namespace CefNet
 		/// <param name="str">The pointer to the CEF string.</param>
 		public static void Free(cef_string_userfree_t str)
 		{
+			if (str.Base.Base == null)
+				return;
+
 			CefNativeApi.cef_string_userfree_utf16_free(str.Base);
 		}
 
@@ -132,6 +138,9 @@ namespace CefNet
 		/// <remarks>This method frees memory allocated for the old string.</remarks>
 		public static void Replace(cef_string_t* str, string value)
 		{
+			if (str == null)
+				throw new ArgumentNullException(nameof(str));
+
 			unchecked
 			{
 				cef_string_utf16_t* s = (cef_string_utf16_t*)str;
