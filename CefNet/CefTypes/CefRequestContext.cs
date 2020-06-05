@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using CefNet.CApi;
 
 namespace CefNet
@@ -128,6 +129,73 @@ namespace CefNet
 		}
 
 #endif // USESAFECACHE
+
+		/// <summary>
+		/// Sets the <paramref name="value"/> associated with preference <paramref name="name"/>.
+		/// </summary>
+		/// <param name="name">The name of the preference.</param>
+		/// <param name="value">
+		/// If <paramref name="value"/> is NULL the preference will be restored to its default value.
+		/// </param>
+		/// <param name="cancellationToken"></param>
+		/// <exception cref="InvalidOperationException">Setting the preference fails.</exception>
+		public Task SetPreferenceAsync(string name, CefValue value)
+		{
+			if (CefApi.CurrentlyOn(CefThreadId.UI))
+			{
+				SetPreferenceInternal(name, value, null);
+#if NET45
+				return Task.FromResult(true);
+#else
+				return Task.CompletedTask;
+#endif
+			}
+
+			var tcs = new TaskCompletionSource<bool>();
+			CefNetApi.Post(CefThreadId.UI, () => SetPreferenceInternal(name, value, tcs));
+			return tcs.Task;
+		}
+
+		/// <summary>
+		/// Sets the <paramref name="value"/> associated with preference <paramref name="name"/>.
+		/// </summary>
+		/// <param name="name">The name of the preference.</param>
+		/// <param name="value">
+		/// If <paramref name="value"/> is NULL the preference will be restored to its default value.
+		/// </param>
+		/// <param name="cancellationToken"></param>
+		/// <exception cref="InvalidOperationException">Setting the preference fails.</exception>
+		/// <remarks>This function must be called on the browser process UI thread.</remarks>
+		public void SetPreference(string name, CefValue value)
+		{
+			if (!CefApi.CurrentlyOn(CefThreadId.UI))
+				throw new InvalidOperationException("This function must be called on the browser process UI thread.");
+
+			SetPreferenceInternal(name, value, null);
+		}
+
+		private unsafe void SetPreferenceInternal(string name, CefValue value, TaskCompletionSource<bool> taskCompletion)
+		{
+			int retval;
+			string errorMsg;
+			fixed (char* s0 = name)
+			{
+				cef_string_t error;
+				cef_string_t cstr0 = new cef_string_t { Str = s0, Length = name.Length };
+				retval = NativeInstance->SetPreference(&cstr0, value is null ? null : value.GetNativeInstance(), &error);
+				GC.KeepAlive(this);
+				errorMsg = CefString.ReadAndFree(&error);
+			}
+			if (retval != 0)
+			{
+				taskCompletion?.TrySetResult(true);
+				return;
+			}
+			Exception exception = errorMsg is null ? new InvalidOperationException() : new InvalidOperationException(errorMsg);
+			if (taskCompletion is null)
+				throw exception;
+			taskCompletion.TrySetException(exception);
+		}
 
 	}
 }
