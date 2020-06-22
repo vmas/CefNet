@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CefNet.Net;
 #if MODERNFORMS
 using CefNet.Modern.Forms;
 #else
@@ -70,6 +71,14 @@ namespace WinFormsCoreApp
 			}
 
 			base.OnSizeChanged(e);
+		}
+
+		public void AddSource(Guid sourceKey, CefResourceHandler source)
+		{
+			if (source == null)
+				throw new ArgumentNullException(nameof(source));
+
+			((CustomWebViewGlue)ViewGlue).AddSource(sourceKey, source);
 		}
 
 	}

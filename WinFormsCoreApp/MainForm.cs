@@ -1,5 +1,6 @@
 ﻿using CefNet;
 using CefNet.JSInterop;
+using CefNet.Net;
 using CefNet.Unsafe;
 using CefNet.Windows.Forms;
 using System;
@@ -46,6 +47,7 @@ namespace WinFormsCoreApp
 				new ToolStripMenuItem("Add Tab (new context)", null, HandleAddTab) { Tag = false },
 				new ToolStripMenuItem("Show Device Simulator", null, HandleShowSimulator),
 				new ToolStripMenuItem("Print to PDF", null, HandlePrintToPdf),
+				new ToolStripMenuItem("Load from String", null, HandleLoadFromString),
 				new ToolStripMenuItem("Test2", null, Button2_Click),
 				new ToolStripMenuItem("Main Process", null, new ToolStripItem[] {
 					new ToolStripMenuItem("Test ScriptableObject", null, async (s,e) => await ScriptableObjectTests.ScriptableObjectTestAsync(SelectedView.GetMainFrame())),
@@ -129,6 +131,21 @@ namespace WinFormsCoreApp
 					settings.Dispose();
 				}
 			}
+		}
+
+		private void HandleLoadFromString(object sender, EventArgs e)
+		{
+			var view = SelectedView as CustomWebView;
+			if (view is null)
+				return;
+
+			Guid sourceKey = Guid.NewGuid();
+			view.AddSource(sourceKey, new StringSource("Hello, world!", "text/html"));
+			var request = new CefRequest();
+			request.Url = "http://example.com";
+			request.SetReferrer("https://www.google.com/", CefReferrerPolicy.NeverClearReferrer);
+			request.SetHeaderByName("CefNet-Source", sourceKey.ToString(), false); // see CustomWebViewGlue.GetResourceHandler()
+			SelectedView?.GetMainFrame().LoadRequest(request);
 		}
 
 		private void HandleShowSimulator(object sender, EventArgs e)

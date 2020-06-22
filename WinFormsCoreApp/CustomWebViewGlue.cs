@@ -20,6 +20,8 @@ namespace WinFormsCoreApp
 		private const int SHOW_DEV_TOOLS = (int)CefMenuId.UserFirst + 0;
 		private const int INSPECT_ELEMENT = (int)CefMenuId.UserFirst + 1;
 
+		private Dictionary<Guid, CefResourceHandler> _customSources = new Dictionary<Guid, CefResourceHandler>();
+
 		public CustomWebViewGlue(CustomWebView view)
 			: base(view)
 		{
@@ -73,6 +75,21 @@ namespace WinFormsCoreApp
 		{
 			Debug.Print("[{0}]: {1} ({2}, line: {3})", level, message, source, line);
 			return false;
+		}
+
+		internal void AddSource(Guid sourceKey, CefResourceHandler source)
+		{
+			_customSources.Add(sourceKey, source);
+		}
+
+		protected override CefResourceHandler GetResourceHandler(CefBrowser browser, CefFrame frame, CefRequest request)
+		{
+			if (Guid.TryParse(request.GetHeaderByName("CefNet-Source"), out Guid sourceKey)
+				&& _customSources.Remove(sourceKey, out CefResourceHandler resourceHandler))
+			{
+				return resourceHandler;
+			}
+			return base.GetResourceHandler(browser, frame, request);
 		}
 	}
 }
