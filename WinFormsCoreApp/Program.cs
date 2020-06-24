@@ -87,7 +87,7 @@ namespace WinFormsCoreApp
 			ShowUnhandledException(e.Exception, "Application::ThreadException");
 		}
 
-		private static void ShowUnhandledException(Exception exception, string from)
+		internal static void ShowUnhandledException(Exception exception, string from)
 		{
 			if (exception == null)
 				return;

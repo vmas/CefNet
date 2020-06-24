@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -48,6 +49,7 @@ namespace WinFormsCoreApp
 				new ToolStripMenuItem("Show Device Simulator", null, HandleShowSimulator),
 				new ToolStripMenuItem("Print to PDF", null, HandlePrintToPdf),
 				new ToolStripMenuItem("Load from String", null, HandleLoadFromString),
+				new ToolStripMenuItem("Load to file", null, HandleLoadToFile),
 				new ToolStripMenuItem("Test2", null, Button2_Click),
 				new ToolStripMenuItem("Main Process", null, new ToolStripItem[] {
 					new ToolStripMenuItem("Test ScriptableObject", null, async (s,e) => await ScriptableObjectTests.ScriptableObjectTestAsync(SelectedView.GetMainFrame())),
@@ -146,6 +148,35 @@ namespace WinFormsCoreApp
 			request.SetReferrer("https://www.google.com/", CefReferrerPolicy.NeverClearReferrer);
 			request.SetHeaderByName("CefNet-Source", sourceKey.ToString(), false); // see CustomWebViewGlue.GetResourceHandler()
 			SelectedView?.GetMainFrame().LoadRequest(request);
+		}
+
+		private async void HandleLoadToFile(object sender, EventArgs e)
+		{
+			CefUrlRequestStatus status = CefUrlRequestStatus.Unknown;
+			string url = "https://speed.hetzner.de/100MB.bin";
+			using (var dlg = new SaveFileDialog())
+			{
+				dlg.FileName = Path.GetFileName(url);
+				dlg.Filter = "All Files (*.*)|*.*";
+				if (dlg.ShowDialog() == DialogResult.OK)
+				{
+					var r = new CustomWebRequest();
+					r.IgnoreSize = MessageBox.Show("Download 100MB file?", "Download file...", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+					try
+					{
+						await r.DownloadFileAsync(new CefRequest { Url = url }, null, dlg.FileName, CancellationToken.None);
+					}
+					catch(Exception ex)
+					{
+						Program.ShowUnhandledException(ex, "MainForm");
+					}
+					finally
+					{
+						status = r.RequestStatus;
+					}
+				}
+			}
+			MessageBox.Show($"Complete ({status})!");
 		}
 
 		private void HandleShowSimulator(object sender, EventArgs e)

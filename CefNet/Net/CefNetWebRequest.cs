@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ namespace CefNet.Net
 		private CefUrlRequestStatus _requestStatus;
 		private Stream _stream;
 		private RequestOperation _activeOperation;
+		private volatile Exception _exception;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CefNetWebRequest"/> class.
@@ -47,6 +49,13 @@ namespace CefNet.Net
 		{
 			_activeOperation = null;
 			_authentication = authentication;
+		}
+
+		/// <inheritdoc />
+		protected override void Dispose(bool disposing)
+		{
+			_stream?.Dispose();
+			base.Dispose(disposing);
 		}
 
 		/// <summary>
@@ -103,9 +112,17 @@ namespace CefNet.Net
 		/// <param name="total">The expected total size of the response (or -1 if not determined).</param>
 		protected internal override void OnDownloadProgress(CefUrlRequest request, long current, long total)
 		{
-			if (_stream is MemoryStream mem && mem.Capacity < total)
+			try
 			{
-				mem.Capacity = (int)total;
+				if (_stream is MemoryStream mem && mem.Capacity < total)
+				{
+					mem.Capacity = (int)total;
+				}
+			}
+			catch (Exception e)
+			{
+				SetException(e);
+				request.Cancel();
 			}
 		}
 
@@ -118,25 +135,40 @@ namespace CefNet.Net
 		/// <param name="dataLength">The size of the data buffer in bytes.</param>
 		protected internal override void OnDownloadData(CefUrlRequest request, IntPtr data, long dataLength)
 		{
-			if (_stream is null)
-				_stream = new MemoryStream((int)dataLength);
-
-			if (_stream is MemoryStream mem)
+			try
 			{
-				long startPos = _stream.Position;
-				long endPos = startPos + dataLength;
-				if (endPos < mem.Capacity)
+				if (_stream is null)
 				{
-					Marshal.Copy(data, mem.GetBuffer(), (int)startPos, (int)dataLength);
-					mem.SetLength(endPos);
-					mem.Position = endPos;
-					return;
+					_stream = CreateResourceStream((int)dataLength);
+					if (_stream is null)
+					{
+						request.Cancel();
+						return;
+					}
 				}
-			}
 
-			var buffer = new byte[dataLength];
-			Marshal.Copy(data, buffer, 0, buffer.Length);
-			_stream.Write(buffer, 0, buffer.Length);
+				if (_stream is MemoryStream mem)
+				{
+					long startPos = _stream.Position;
+					long endPos = startPos + dataLength;
+					if (endPos < mem.Capacity)
+					{
+						Marshal.Copy(data, mem.GetBuffer(), (int)startPos, (int)dataLength);
+						mem.SetLength(endPos);
+						mem.Position = endPos;
+						return;
+					}
+				}
+
+				var buffer = new byte[dataLength];
+				Marshal.Copy(data, buffer, 0, buffer.Length);
+				_stream.Write(buffer, 0, buffer.Length);
+			}
+			catch (Exception e)
+			{
+				SetException(e);
+				request.Cancel();
+			}
 		}
 
 		/// <summary>
@@ -149,8 +181,19 @@ namespace CefNet.Net
 		/// </remarks>
 		protected internal override void OnRequestComplete(CefUrlRequest request)
 		{
-			if (_stream != null && _stream.CanSeek)
-				_stream.Seek(0, SeekOrigin.Begin);
+			if (_stream != null)
+			{
+				try
+				{
+					_stream.Flush();
+					if (_stream.CanSeek)
+						_stream.Seek(0, SeekOrigin.Begin);
+				}
+				catch (IOException ioe)
+				{
+					SetException(ioe);
+				}
+			}
 
 			_request = request.Request;
 			_response = request.Response;
@@ -299,7 +342,12 @@ namespace CefNet.Net
 
 			_request = request;
 			_response = null;
-			_stream = null;
+			_exception = null;
+			if (_stream != null)
+			{
+				_stream.Dispose();
+				_stream = null;
+			}
 			_requestStatus = CefUrlRequestStatus.Unknown;
 			this.RequestError = CefErrorCode.None;
 			this.ResponseWasCached = false;
@@ -317,6 +365,11 @@ namespace CefNet.Net
 			{
 				Interlocked.Exchange(ref _activeOperation, null);
 			}
+
+			if (_exception is null)
+				return;
+
+			ExceptionDispatchInfo.Capture(_exception).Throw();
 		}
 
 		private Task<CefUrlRequest> CreateUrlRequest(CefRequest request, CefRequestContext context, CancellationToken cancellationToken)
@@ -362,6 +415,26 @@ namespace CefNet.Net
 
 			return _stream;
 		}
+
+		/// <summary>
+		/// Marks the current request as failed and binds the specified exception to the request.
+		/// </summary>
+		/// <param name="exception">The exception to bind to the request.</param>
+		protected void SetException(Exception exception)
+		{
+			_exception = exception;
+		}
+
+		/// <summary>
+		/// Creates a <see cref="Stream"/> into which downloaded data will be written.
+		/// </summary>
+		/// <param name="initialCapacity">The size of the initial portion of data to write to the stream.</param>
+		/// <returns>The <see cref="Stream"/> in which the response body will be written.</returns>
+		protected virtual Stream CreateResourceStream(int initialCapacity)
+		{
+			return new MemoryStream(initialCapacity);
+		}
+
 	}
 
 }
