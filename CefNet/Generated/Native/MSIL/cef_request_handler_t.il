@@ -229,6 +229,24 @@
 				void(valuetype CefNet.CApi.cef_request_handler_t*, valuetype CefNet.CApi.cef_browser_t*, valuetype CefNet.CefTerminationStatus)
 			ret
 		}
+
+		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser)*
+		.method public hidebysig void OnDocumentAvailableInMainFrame(valuetype CefNet.CApi.cef_browser_t* browser)
+		{
+			.maxstack 3
+			ldarg.0
+			ldarg.1
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_request_handler_t::on_document_available_in_main_frame
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				void(valuetype CefNet.CApi.cef_request_handler_t*, valuetype CefNet.CApi.cef_browser_t*)
+			ret
+		}
 	}
 }
 

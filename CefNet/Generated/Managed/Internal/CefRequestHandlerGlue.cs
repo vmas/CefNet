@@ -129,5 +129,15 @@ namespace CefNet.Internal
 			_implementation.OnRenderProcessTerminated(browser, status);
 		}
 
+		bool ICefRequestHandlerPrivate.AvoidOnDocumentAvailableInMainFrame()
+		{
+			return _implementation.AvoidOnDocumentAvailableInMainFrame();
+		}
+
+		protected internal unsafe override void OnDocumentAvailableInMainFrame(CefBrowser browser)
+		{
+			_implementation.OnDocumentAvailableInMainFrame(browser);
+		}
+
 	}
 }

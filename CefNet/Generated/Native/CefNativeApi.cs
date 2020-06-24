@@ -20,7 +20,7 @@ namespace CefNet.CApi
 {
 	public static partial class CefNativeApi
 	{
-		public static readonly string ApiHash = "a48c939496261acf27f45293484f2c9e4065ca6f";
+		public static readonly string ApiHash = "eb44c98407c9286a64b8d872f49c772b3fa3eb63";
 
 		/// <summary>
 		/// Add an entry to the cross-origin access whitelist.
@@ -733,6 +733,18 @@ namespace CefNet.CApi
 		/// </remarks>
 		[DllImport("libcef", CallingConvention = CallingConvention.Cdecl)]
 		public static unsafe extern cef_value_t* cef_parse_json(cef_string_t* json_string, CefJsonParserOptions options);
+
+		/// <summary>
+		/// Parses the specified UTF8-encoded |json| buffer of size |json_size| and
+		/// returns a dictionary or list representation. If JSON parsing fails this
+		/// function returns NULL.
+		/// </summary>
+		/// <remarks>
+		/// Defined in include/capi/cef_parser_capi.h as
+		/// _cef_value_t* cef_parse_json_buffer(const void* json, size_t json_size, cef_json_parser_options_t options)
+		/// </remarks>
+		[DllImport("libcef", CallingConvention = CallingConvention.Cdecl)]
+		public static unsafe extern cef_value_t* cef_parse_json_buffer(void* json, UIntPtr json_size, CefJsonParserOptions options);
 
 		/// <summary>
 		/// Parses the specified |json_string| and returns a dictionary or list

@@ -347,6 +347,83 @@ namespace CefNet.CApi
 		public unsafe extern int HasDevTools();
 
 		/// <summary>
+		/// int (*)(_cef_browser_host_t* self, const void* message, size_t message_size)*
+		/// </summary>
+		public void* send_dev_tools_message;
+
+		/// <summary>
+		/// Send a function call message over the DevTools protocol. |message| must be
+		/// a UTF8-encoded JSON dictionary that contains &quot;id&quot; (int), &quot;function&quot;
+		/// (string) and &quot;params&quot; (dictionary, optional) values. See the DevTools
+		/// protocol documentation at https://chromedevtools.github.io/devtools-
+		/// protocol/ for details of supported functions and the expected &quot;params&quot;
+		/// dictionary contents. |message| will be copied if necessary. This function
+		/// will return true (1) if called on the UI thread and the message was
+		/// successfully submitted for validation, otherwise false (0). Validation will
+		/// be applied asynchronously and any messages that fail due to formatting
+		/// errors or missing parameters may be discarded without notification. Prefer
+		/// ExecuteDevToolsMethod if a more structured approach to message formatting
+		/// is desired.
+		/// Every valid function call will result in an asynchronous function result or
+		/// error message that references the sent message &quot;id&quot;. Event messages are
+		/// received while notifications are enabled (for example, between function
+		/// calls for &quot;Page.enable&quot; and &quot;Page.disable&quot;). All received messages will be
+		/// delivered to the observer(s) registered with AddDevToolsMessageObserver.
+		/// See cef_dev_tools_message_observer_t::OnDevToolsMessage documentation for
+		/// details of received message contents.
+		/// Usage of the SendDevToolsMessage, ExecuteDevToolsMethod and
+		/// AddDevToolsMessageObserver functions does not require an active DevTools
+		/// front-end or remote-debugging session. Other active DevTools sessions will
+		/// continue to function independently. However, any modification of global
+		/// browser state by one session may not be reflected in the UI of other
+		/// sessions.
+		/// Communication with the DevTools front-end (when displayed) can be logged
+		/// for development purposes by passing the `--devtools-protocol-log-
+		/// file=
+		/// &lt;path
+		/// &gt;` command-line flag.
+		/// </summary>
+		[NativeName("send_dev_tools_message")]
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		public unsafe extern int SendDevToolsMessage([Immutable]void* message, UIntPtr message_size);
+
+		/// <summary>
+		/// int (*)(_cef_browser_host_t* self, int message_id, const cef_string_t* method, _cef_dictionary_value_t* params)*
+		/// </summary>
+		public void* execute_dev_tools_method;
+
+		/// <summary>
+		/// Execute a function call over the DevTools protocol. This is a more
+		/// structured version of SendDevToolsMessage. |message_id| is an incremental
+		/// number that uniquely identifies the message (pass 0 to have the next number
+		/// assigned automatically based on previous values). |function| is the
+		/// function name. |params| are the function parameters, which may be NULL. See
+		/// the DevTools protocol documentation (linked above) for details of supported
+		/// functions and the expected |params| dictionary contents. This function will
+		/// return the assigned message ID if called on the UI thread and the message
+		/// was successfully submitted for validation, otherwise 0. See the
+		/// SendDevToolsMessage documentation for additional usage information.
+		/// </summary>
+		[NativeName("execute_dev_tools_method")]
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		public unsafe extern int ExecuteDevToolsMethod(int message_id, [Immutable]cef_string_t* method, cef_dictionary_value_t* @params);
+
+		/// <summary>
+		/// _cef_registration_t* (*)(_cef_browser_host_t* self, _cef_dev_tools_message_observer_t* observer)*
+		/// </summary>
+		public void* add_dev_tools_message_observer;
+
+		/// <summary>
+		/// Add an observer for DevTools protocol messages (function results and
+		/// events). The observer will remain registered until the returned
+		/// Registration object is destroyed. See the SendDevToolsMessage documentation
+		/// for additional usage information.
+		/// </summary>
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		[NativeName("add_dev_tools_message_observer")]
+		public unsafe extern cef_registration_t* AddDevToolsMessageObserver(cef_dev_tools_message_observer_t* observer);
+
+		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, _cef_navigation_entry_visitor_t* visitor, int current_only)*
 		/// </summary>
 		public void* get_navigation_entries;

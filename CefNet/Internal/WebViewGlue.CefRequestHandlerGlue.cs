@@ -107,5 +107,20 @@ namespace CefNet.Internal
 		{
 
 		}
+
+		internal bool AvoidOnDocumentAvailableInMainFrame()
+		{
+			return false;
+		}
+
+		/// <summary>
+		/// Called on the browser process UI thread when the window.document object of
+		/// the main frame has been created.
+		/// </summary>
+		internal protected virtual void OnDocumentAvailableInMainFrame(CefBrowser browser)
+		{
+
+		}
+
 	}
 }

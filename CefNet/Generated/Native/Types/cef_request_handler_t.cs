@@ -218,6 +218,19 @@ namespace CefNet.CApi
 		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_render_process_terminated")]
 		public unsafe extern void OnRenderProcessTerminated(cef_browser_t* browser, CefTerminationStatus status);
+
+		/// <summary>
+		/// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser)*
+		/// </summary>
+		public void* on_document_available_in_main_frame;
+
+		/// <summary>
+		/// Called on the browser process UI thread when the window.document object of
+		/// the main frame has been created.
+		/// </summary>
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		[NativeName("on_document_available_in_main_frame")]
+		public unsafe extern void OnDocumentAvailableInMainFrame(cef_browser_t* browser);
 	}
 }
 

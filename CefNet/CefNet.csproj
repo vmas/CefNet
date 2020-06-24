@@ -66,6 +66,7 @@
     <Compile Remove="Generated\Managed\Internal\CefCompletionCallbackGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefCookieVisitorGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefDeleteCookiesCallbackGlue.cs" />
+    <Compile Remove="Generated\Managed\Internal\CefDevToolsMessageObserverGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefDOMVisitorGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefDownloadImageCallbackGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefEndTracingCallbackGlue.cs" />

@@ -399,6 +399,63 @@
 			ret
 		}
 
+		// int (*)(_cef_browser_host_t* self, const void* message, size_t message_size)*
+		.method public hidebysig int32 SendDevToolsMessage(void* message, native uint message_size)
+		{
+			.maxstack 4
+			ldarg.0
+			ldarg.1
+			ldarg.2
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_browser_host_t::send_dev_tools_message
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				int32(valuetype CefNet.CApi.cef_browser_host_t*, void*, native uint)
+			ret
+		}
+
+		// int (*)(_cef_browser_host_t* self, int message_id, const cef_string_t* method, _cef_dictionary_value_t* params)*
+		.method public hidebysig int32 ExecuteDevToolsMethod(int32 message_id, valuetype CefNet.CApi.cef_string_t* 'method', valuetype CefNet.CApi.cef_dictionary_value_t* @params)
+		{
+			.maxstack 5
+			ldarg.0
+			ldarg.1
+			ldarg.2
+			ldarg.3
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_browser_host_t::execute_dev_tools_method
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				int32(valuetype CefNet.CApi.cef_browser_host_t*, int32, valuetype CefNet.CApi.cef_string_t*, valuetype CefNet.CApi.cef_dictionary_value_t*)
+			ret
+		}
+
+		// _cef_registration_t* (*)(_cef_browser_host_t* self, _cef_dev_tools_message_observer_t* observer)*
+		.method public hidebysig valuetype CefNet.CApi.cef_registration_t* AddDevToolsMessageObserver(valuetype CefNet.CApi.cef_dev_tools_message_observer_t* observer)
+		{
+			.maxstack 3
+			ldarg.0
+			ldarg.1
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_browser_host_t::add_dev_tools_message_observer
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				valuetype CefNet.CApi.cef_registration_t*(valuetype CefNet.CApi.cef_browser_host_t*, valuetype CefNet.CApi.cef_dev_tools_message_observer_t*)
+			ret
+		}
+
 		// void (*)(_cef_browser_host_t* self, _cef_navigation_entry_visitor_t* visitor, int current_only)*
 		.method public hidebysig void GetNavigationEntries(valuetype CefNet.CApi.cef_navigation_entry_visitor_t* visitor, int32 current_only)
 		{

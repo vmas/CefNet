@@ -49,6 +49,8 @@ namespace CefNet
 
 		private static readonly OnRenderProcessTerminatedDelegate fnOnRenderProcessTerminated = OnRenderProcessTerminatedImpl;
 
+		private static readonly OnDocumentAvailableInMainFrameDelegate fnOnDocumentAvailableInMainFrame = OnDocumentAvailableInMainFrameImpl;
+
 		internal static unsafe CefRequestHandler Create(IntPtr instance)
 		{
 			return new CefRequestHandler((cef_request_handler_t*)instance);
@@ -67,6 +69,7 @@ namespace CefNet
 			self->on_plugin_crashed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPluginCrashed);
 			self->on_render_view_ready = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRenderViewReady);
 			self->on_render_process_terminated = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRenderProcessTerminated);
+			self->on_document_available_in_main_frame = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDocumentAvailableInMainFrame);
 		}
 
 		public CefRequestHandler(cef_request_handler_t* instance)
@@ -418,6 +421,32 @@ namespace CefNet
 				return;
 			}
 			instance.OnRenderProcessTerminated(CefBrowser.Wrap(CefBrowser.Create, browser), status);
+		}
+
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		extern bool ICefRequestHandlerPrivate.AvoidOnDocumentAvailableInMainFrame();
+
+		/// <summary>
+		/// Called on the browser process UI thread when the window.document object of
+		/// the main frame has been created.
+		/// </summary>
+		protected internal unsafe virtual void OnDocumentAvailableInMainFrame(CefBrowser browser)
+		{
+		}
+
+		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		private unsafe delegate void OnDocumentAvailableInMainFrameDelegate(cef_request_handler_t* self, cef_browser_t* browser);
+
+		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser)*
+		private static unsafe void OnDocumentAvailableInMainFrameImpl(cef_request_handler_t* self, cef_browser_t* browser)
+		{
+			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
+			if (instance == null || ((ICefRequestHandlerPrivate)instance).AvoidOnDocumentAvailableInMainFrame())
+			{
+				ReleaseIfNonNull((cef_base_ref_counted_t*)browser);
+				return;
+			}
+			instance.OnDocumentAvailableInMainFrame(CefBrowser.Wrap(CefBrowser.Create, browser));
 		}
 	}
 }
