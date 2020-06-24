@@ -14,6 +14,23 @@
 {
 	.class public cef_client_t
 	{
+		// _cef_audio_handler_t* (*)(_cef_client_t* self)*
+		.method public hidebysig valuetype CefNet.CApi.cef_audio_handler_t* GetAudioHandler()
+		{
+			.maxstack 2
+			ldarg.0
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_client_t::get_audio_handler
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				valuetype CefNet.CApi.cef_audio_handler_t*(valuetype CefNet.CApi.cef_client_t*)
+			ret
+		}
+
 		// _cef_context_menu_handler_t* (*)(_cef_client_t* self)*
 		.method public hidebysig valuetype CefNet.CApi.cef_context_menu_handler_t* GetContextMenuHandler()
 		{

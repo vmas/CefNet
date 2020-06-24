@@ -29,6 +29,11 @@ namespace CefNet.Internal
 			_implementation = impl;
 		}
 
+		protected internal unsafe override CefAudioHandler GetAudioHandler()
+		{
+			return _implementation.GetAudioHandler();
+		}
+
 		protected internal unsafe override CefContextMenuHandler GetContextMenuHandler()
 		{
 			return _implementation.GetContextMenuHandler();

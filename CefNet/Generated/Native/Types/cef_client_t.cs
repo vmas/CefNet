@@ -30,6 +30,18 @@ namespace CefNet.CApi
 		public cef_base_ref_counted_t @base;
 
 		/// <summary>
+		/// _cef_audio_handler_t* (*)(_cef_client_t* self)*
+		/// </summary>
+		public void* get_audio_handler;
+
+		/// <summary>
+		/// Return the handler for audio rendering events.
+		/// </summary>
+		[NativeName("get_audio_handler")]
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		public unsafe extern cef_audio_handler_t* GetAudioHandler();
+
+		/// <summary>
 		/// _cef_context_menu_handler_t* (*)(_cef_client_t* self)*
 		/// </summary>
 		public void* get_context_menu_handler;

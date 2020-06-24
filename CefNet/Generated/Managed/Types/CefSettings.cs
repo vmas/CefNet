@@ -106,8 +106,8 @@ namespace CefNet
 		/// &lt;app
 		/// &gt; Helper&quot;
 		/// in the top-level app bundle. See the comments on CefExecuteProcess() for
-		/// details. Also configurable using the &quot;browser-subprocess-path&quot; command-line
-		/// switch.
+		/// details. If this value is non-empty then it must be an absolute path. Also
+		/// configurable using the &quot;browser-subprocess-path&quot; command-line switch.
 		/// </summary>
 		public string BrowserSubprocessPath
 		{
@@ -124,8 +124,9 @@ namespace CefNet
 		/// <summary>
 		/// The path to the CEF framework directory on macOS. If this value is empty
 		/// then the framework must exist at &quot;Contents/Frameworks/Chromium Embedded
-		/// Framework.framework&quot; in the top-level app bundle. Also configurable using
-		/// the &quot;framework-dir-path&quot; command-line switch.
+		/// Framework.framework&quot; in the top-level app bundle. If this value is
+		/// non-empty then it must be an absolute path. Also configurable using the
+		/// &quot;framework-dir-path&quot; command-line switch.
 		/// </summary>
 		public string FrameworkDirPath
 		{
@@ -141,8 +142,9 @@ namespace CefNet
 
 		/// <summary>
 		/// The path to the main bundle on macOS. If this value is empty then it
-		/// defaults to the top-level app bundle. Also configurable using
-		/// the &quot;main-bundle-path&quot; command-line switch.
+		/// defaults to the top-level app bundle. If this value is non-empty then it
+		/// must be an absolute path. Also configurable using the &quot;main-bundle-path&quot;
+		/// command-line switch.
 		/// </summary>
 		public string MainBundlePath
 		{
@@ -233,13 +235,13 @@ namespace CefNet
 
 		/// <summary>
 		/// The location where data for the global browser cache will be stored on
-		/// disk. If non-empty this must be either equal to or a child directory of
-		/// CefSettings.root_cache_path. If empty then browsers will be created in
-		/// &quot;incognito mode&quot; where in-memory caches are used for storage and no data is
-		/// persisted to disk. HTML5 databases such as localStorage will only persist
-		/// across sessions if a cache path is specified. Can be overridden for
-		/// individual CefRequestContext instances via the
-		/// CefRequestContextSettings.cache_path value.
+		/// disk. If this value is non-empty then it must be an absolute path that is
+		/// either equal to or a child directory of CefSettings.root_cache_path. If
+		/// this value is empty then browsers will be created in &quot;incognito mode&quot; where
+		/// in-memory caches are used for storage and no data is persisted to disk.
+		/// HTML5 databases such as localStorage will only persist across sessions if a
+		/// cache path is specified. Can be overridden for individual CefRequestContext
+		/// instances via the CefRequestContextSettings.cache_path value.
 		/// </summary>
 		public string CachePath
 		{
@@ -256,10 +258,11 @@ namespace CefNet
 		/// <summary>
 		/// The root directory that all CefSettings.cache_path and
 		/// CefRequestContextSettings.cache_path values must have in common. If this
-		/// value is empty and CefSettings.cache_path is non-empty then this value will
-		/// default to the CefSettings.cache_path value. Failure to set this value
-		/// correctly may result in the sandbox blocking read/write access to the
-		/// cache_path directory.
+		/// value is empty and CefSettings.cache_path is non-empty then it will
+		/// default to the CefSettings.cache_path value. If this value is non-empty
+		/// then it must be an absolute path. Failure to set this value correctly may
+		/// result in the sandbox blocking read/write access to the cache_path
+		/// directory.
 		/// </summary>
 		public string RootCachePath
 		{
@@ -275,11 +278,12 @@ namespace CefNet
 
 		/// <summary>
 		/// The location where user data such as spell checking dictionary files will
-		/// be stored on disk. If empty then the default platform-specific user data
-		/// directory will be used (&quot;~/.cef_user_data&quot; directory on Linux,
-		/// &quot;~/Library/Application Support/CEF/User Data&quot; directory on Mac OS X,
-		/// &quot;Local Settings@Application Data@CEF @User Data&quot; directory under the user
-		/// profile directory on Windows).
+		/// be stored on disk. If this value is empty then the default
+		/// platform-specific user data directory will be used (&quot;~/.cef_user_data&quot;
+		/// directory on Linux, &quot;~/Library/Application Support/CEF/User Data&quot; directory
+		/// on Mac OS X, &quot;Local Settings@Application Data@CEF @User Data&quot; directory
+		/// under the user profile directory on Windows). If this value is non-empty
+		/// then it must be an absolute path.
 		/// </summary>
 		public string UserDataPath
 		{
@@ -453,8 +457,8 @@ namespace CefNet
 		/// The fully qualified path for the resources directory. If this value is
 		/// empty the cef.pak and/or devtools_resources.pak files must be located in
 		/// the module directory on Windows/Linux or the app bundle Resources directory
-		/// on Mac OS X. Also configurable using the &quot;resources-dir-path&quot; command-line
-		/// switch.
+		/// on Mac OS X. If this value is non-empty then it must be an absolute path.
+		/// Also configurable using the &quot;resources-dir-path&quot; command-line switch.
 		/// </summary>
 		public string ResourcesDirPath
 		{
@@ -470,9 +474,10 @@ namespace CefNet
 
 		/// <summary>
 		/// The fully qualified path for the locales directory. If this value is empty
-		/// the locales directory must be located in the module directory. This value
-		/// is ignored on Mac OS X where pack files are always loaded from the app
-		/// bundle Resources directory. Also configurable using the &quot;locales-dir-path&quot;
+		/// the locales directory must be located in the module directory. If this
+		/// value is non-empty then it must be an absolute path. This value is ignored
+		/// on Mac OS X where pack files are always loaded from the app bundle
+		/// Resources directory. Also configurable using the &quot;locales-dir-path&quot;
 		/// command-line switch.
 		/// </summary>
 		public string LocalesDirPath

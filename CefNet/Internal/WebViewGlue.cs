@@ -26,6 +26,9 @@ namespace CefNet.Internal
 		private CefJSDialogHandlerGlue _jsDialogGlue;
 		private bool _avoidJsDialogGlue;
 
+		private bool _isAudioGlueInitialized;
+		private CefAudioHandlerGlue _audioGlue;
+		private bool _avoidAudioGlue;
 
 		protected IChromiumWebViewPrivate WebView { get; private set; }
 
@@ -64,6 +67,9 @@ namespace CefNet.Internal
 
 			_avoidJsDialogGlue = AvoidOnJSDialog() && AvoidOnBeforeUnloadDialog() && AvoidOnResetDialogState()
 				&& AvoidOnDialogClosed();
+
+			_avoidAudioGlue = AvoidGetAudioParameters() && AvoidOnAudioStreamStarted() && AvoidOnAudioStreamPacket()
+				&& AvoidOnAudioStreamStopped() && AvoidOnAudioStreamError();
 		}
 
 
@@ -192,6 +198,27 @@ namespace CefNet.Internal
 
 				_isJSDialogGlueInitialized = true;
 				return _jsDialogGlue;
+			}
+		}
+
+		private CefAudioHandlerGlue AudioGlue
+		{
+			get
+			{
+				if (_isAudioGlueInitialized)
+					return _audioGlue;
+
+				if (_avoidAudioGlue)
+				{
+					_audioGlue = null;
+				}
+				else
+				{
+					_audioGlue = new CefAudioHandlerGlue(this);
+				}
+
+				_isAudioGlueInitialized = true;
+				return _audioGlue;
 			}
 		}
 

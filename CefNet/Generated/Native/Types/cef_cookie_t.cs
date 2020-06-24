@@ -75,6 +75,16 @@ namespace CefNet.CApi
 		public int has_expires;
 
 		public cef_time_t expires;
+
+		/// <summary>
+		/// Same site.
+		/// </summary>
+		public CefCookieSameSite same_site;
+
+		/// <summary>
+		/// Priority.
+		/// </summary>
+		public CefCookiePriority priority;
 	}
 }
 

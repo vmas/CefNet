@@ -206,6 +206,36 @@ namespace CefNet
 			}
 		}
 
+		/// <summary>
+		/// Same site.
+		/// </summary>
+		public CefCookieSameSite SameSite
+		{
+			get
+			{
+				return _instance.same_site;
+			}
+			set
+			{
+				_instance.same_site = value;
+			}
+		}
+
+		/// <summary>
+		/// Priority.
+		/// </summary>
+		public CefCookiePriority Priority
+		{
+			get
+			{
+				return _instance.priority;
+			}
+			set
+			{
+				_instance.priority = value;
+			}
+		}
+
 		public void Dispose()
 		{
 			Name = null;

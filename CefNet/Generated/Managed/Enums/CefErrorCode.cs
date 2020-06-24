@@ -422,6 +422,10 @@ namespace CefNet
 
 		InvalidWebBundle = -505,
 
+		TrustTokenOperationFailed = -506,
+
+		TrustTokenOperationCacheHit = -507,
+
 		FtpFailed = -601,
 
 		FtpServiceUnavailable = -602,

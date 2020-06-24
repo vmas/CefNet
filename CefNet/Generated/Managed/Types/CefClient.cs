@@ -28,6 +28,8 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefClient : CefBaseRefCounted<cef_client_t>, ICefClientPrivate
 	{
+		private static readonly GetAudioHandlerDelegate fnGetAudioHandler = GetAudioHandlerImpl;
+
 		private static readonly GetContextMenuHandlerDelegate fnGetContextMenuHandler = GetContextMenuHandlerImpl;
 
 		private static readonly GetDialogHandlerDelegate fnGetDialogHandler = GetDialogHandlerImpl;
@@ -64,6 +66,7 @@ namespace CefNet
 		public CefClient()
 		{
 			cef_client_t* self = this.NativeInstance;
+			self->get_audio_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetAudioHandler);
 			self->get_context_menu_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetContextMenuHandler);
 			self->get_dialog_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetDialogHandler);
 			self->get_display_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetDisplayHandler);
@@ -83,6 +86,31 @@ namespace CefNet
 		public CefClient(cef_client_t* instance)
 			: base((cef_base_ref_counted_t*)instance)
 		{
+		}
+
+		/// <summary>
+		/// Return the handler for audio rendering events.
+		/// </summary>
+		protected internal unsafe virtual CefAudioHandler GetAudioHandler()
+		{
+			return default;
+		}
+
+		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		private unsafe delegate cef_audio_handler_t* GetAudioHandlerDelegate(cef_client_t* self);
+
+		// _cef_audio_handler_t* (*)(_cef_client_t* self)*
+		private static unsafe cef_audio_handler_t* GetAudioHandlerImpl(cef_client_t* self)
+		{
+			var instance = GetInstance((IntPtr)self) as CefClient;
+			if (instance == null)
+			{
+				return default;
+			}
+			CefAudioHandler rv = instance.GetAudioHandler();
+			if (rv == null)
+				return null;
+			return (rv != null) ? rv.GetNativeInstance() : null;
 		}
 
 		/// <summary>

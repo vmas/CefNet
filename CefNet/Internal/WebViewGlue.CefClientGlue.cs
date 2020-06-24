@@ -11,6 +11,11 @@ namespace CefNet.Internal
 			return ContextMenuGlue;
 		}
 
+		internal CefAudioHandler GetAudioHandler()
+		{
+			return AudioGlue;
+		}
+
 		internal CefDialogHandler GetDialogHandler()
 		{
 			return DialogGlue;

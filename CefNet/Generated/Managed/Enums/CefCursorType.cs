@@ -109,11 +109,19 @@ namespace CefNet
 
 		Grabbing = 42,
 
-		Middlepanningvertical = 43,
+		MiddlePanningVertical = 43,
 
-		Middlepanninghorizontal = 44,
+		MiddlePanningHorizontal = 44,
 
 		Custom = 45,
+
+		DndNone = 46,
+
+		DndMove = 47,
+
+		DndCopy = 48,
+
+		DndLink = 49,
 	}
 }
 

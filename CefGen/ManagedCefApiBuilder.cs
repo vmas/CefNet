@@ -875,6 +875,11 @@ namespace CefGen
 					{
 						paramDecl.Type = "IntPtr";
 					}
+					else if (paramDecl.Type == "float")
+					{
+						paramDecl.Direction = CodeMethodParameterDirection.Default;
+						paramDecl.Type = "IntPtr";
+					}
 				}
 				else if (symbolInfo.IsPointedType)
 				{
