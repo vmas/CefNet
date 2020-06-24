@@ -35,7 +35,7 @@ namespace WinFormsCoreApp
 			_total += dataLength;
 			try
 			{
-				ThrowIfMoreThan5MB(request, dataLength);
+				ThrowIfMoreThan5MB(request, _total);
 				base.OnDownloadData(request, data, dataLength);
 			}
 			catch (Exception e)
