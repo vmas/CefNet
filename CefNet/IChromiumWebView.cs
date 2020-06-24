@@ -148,6 +148,23 @@ namespace CefNet
 		CefClient Client { get; }
 
 		/// <summary>
+		/// Gets the rectangle that represents the bounds of the WebView control.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="CefRect"/> representing the bounds within which the WebView control is scaled.
+		/// </returns>
+		CefRect GetBounds();
+
+		/// <summary>
+		/// Sets the bounds of the control to the specified location and size.
+		/// </summary>
+		/// <param name="x">The new Left property value of the control.</param>
+		/// <param name="y">The new Top property value of the control.</param>
+		/// <param name="width">The new Width property value of the control.</param>
+		/// <param name="height">The new Height property value of the control.</param>
+		void SetBounds(int x, int y, int width, int height);
+
+		/// <summary>
 		/// Navigates the WebView control to the previous page in the navigation history, if one is available.
 		/// </summary>
 		/// <returns>

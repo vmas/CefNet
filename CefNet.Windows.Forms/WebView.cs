@@ -323,6 +323,18 @@ namespace CefNet.Windows.Forms
 			}
 		}
 
+		/// <inheritdoc />
+		public CefRect GetBounds()
+		{
+			OffscreenGraphics offscreenGraphics = this.OffscreenGraphics;
+			if (offscreenGraphics is null)
+			{
+				var r = this.DisplayRectangle;
+				return new CefRect(r.X, r.Y, r.Width, r.Height);
+			}
+			return offscreenGraphics.GetBounds();
+		}
+
 		internal void ResizeBrowserWindow()
 		{
 			const uint SWP_NOSIZE = 0x0001;

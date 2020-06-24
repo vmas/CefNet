@@ -315,6 +315,34 @@ namespace CefNet
 
 		private void UpdateOffscreenViewLocation() { }
 
+		/// <summary>
+		/// Gets the rectangle that represents the bounds of the WebView control.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="CefRect"/> representing the bounds within which the WebView control is scaled.
+		/// </returns>
+		public CefRect GetBounds()
+		{
+			return _bounds;
+		}
+
+		/// <summary>
+		/// Sets the bounds of the control to the specified location and size.
+		/// </summary>
+		/// <param name="x">The new <see cref="X"/> property value of the control.</param>
+		/// <param name="y">The new <see cref="Y"/> property value of the control.</param>
+		/// <param name="width">The new <see cref="Width"/> property value of the control.</param>
+		/// <param name="height">The new <see cref="Height"/> property value of the control.</param>
+		public void SetBounds(int x, int y, int width, int height)
+		{
+			if (width <= 0)
+				throw new ArgumentOutOfRangeException(nameof(width));
+			if (height <= 0)
+				throw new ArgumentOutOfRangeException(nameof(height));
+
+			_bounds = new CefRect(x, y, width, height);
+			PerformLayout(false);
+		}
 
 	}
 }

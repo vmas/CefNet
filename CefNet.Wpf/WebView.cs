@@ -347,6 +347,37 @@ namespace CefNet.Wpf
 			return arrangeBounds;
 		}
 
+		/// <summary>
+		/// Gets the rectangle that represents the bounds of the WebView control.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="CefRect"/> representing the bounds within which the WebView control is scaled.
+		/// </returns>
+		public CefRect GetBounds()
+		{
+			if (OffscreenGraphics is null)
+				return new CefRect(0,0, (int)this.ActualWidth, (int)this.ActualHeight);
+			return OffscreenGraphics.GetBounds();
+		}
+
+		/// <summary>
+		/// Sets the bounds of the control to the specified location and size.
+		/// </summary>
+		/// <param name="x">The new <see cref="X"/> property value of the control.</param>
+		/// <param name="y">The new <see cref="Y"/> property value of the control.</param>
+		/// <param name="width">The new <see cref="Width"/> property value of the control.</param>
+		/// <param name="height">The new <see cref="Height"/> property value of the control.</param>
+		public void SetBounds(int x, int y, int width, int height)
+		{
+			if (width <= 0)
+				throw new ArgumentOutOfRangeException(nameof(width));
+			if (height <= 0)
+				throw new ArgumentOutOfRangeException(nameof(height));
+
+			Width = width;
+			Height = height;
+		}
+
 		protected virtual void RaiseCrossThreadEvent<TEventArgs>(Action<TEventArgs> raiseEvent, TEventArgs e, bool synchronous)
 			where TEventArgs : class
 		{
