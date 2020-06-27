@@ -55,6 +55,7 @@ namespace CefNet
 			if (_instance.Base == null)
 				return;
 
+			CefNativeApi.cef_string_multimap_clear(_instance);
 			CefNativeApi.cef_string_multimap_free(_instance);
 			_instance = default;
 		}
