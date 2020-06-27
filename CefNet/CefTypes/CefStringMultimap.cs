@@ -20,9 +20,8 @@ namespace CefNet
 		/// Initializes a new instance of the <see cref="CefStringMultimap"/> class.
 		/// </summary>
 		public CefStringMultimap()
-			: this(CefNativeApi.cef_string_multimap_alloc())
 		{
-
+			_instance = CefNativeApi.cef_string_multimap_alloc();
 		}
 
 		/// <summary>
@@ -32,6 +31,7 @@ namespace CefNet
 		public CefStringMultimap(cef_string_multimap_t instance)
 		{
 			_instance = instance;
+			GC.SuppressFinalize(this);
 		}
 
 		/// <summary>
