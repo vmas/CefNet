@@ -14,6 +14,9 @@ namespace CefNet
 	public sealed unsafe class CefStringMap : IDisposable, IDictionary<string, string>
 	{
 		private cef_string_map_t _instance;
+#if DEBUG
+		private readonly bool _finalizable;
+#endif
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CefStringMap"/> class.
@@ -21,6 +24,9 @@ namespace CefNet
 		public CefStringMap()
 		{
 			_instance = CefNativeApi.cef_string_map_alloc();
+#if DEBUG
+			_finalizable = true;
+#endif
 		}
 
 		/// <summary>
