@@ -30,7 +30,7 @@ namespace CefNet.Internal
 		private CefAudioHandlerGlue _audioGlue;
 		private bool _avoidAudioGlue;
 
-		protected IChromiumWebViewPrivate WebView { get; private set; }
+		protected internal IChromiumWebViewPrivate WebView { get; private set; }
 
 		public CefBrowser BrowserObject { get; protected set; }
 
