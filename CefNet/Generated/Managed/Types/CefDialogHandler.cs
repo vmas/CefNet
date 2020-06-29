@@ -65,7 +65,7 @@ namespace CefNet
 		/// return true (1) and execute |callback| either inline or at a later time. To
 		/// display the default dialog return false (0).
 		/// </summary>
-		protected internal unsafe virtual bool OnFileDialog(CefBrowser browser, CefFileDialogMode mode, string title, string defaultFilePath, CefStringList acceptFilters, bool selectedAcceptFilter, CefFileDialogCallback callback)
+		protected internal unsafe virtual bool OnFileDialog(CefBrowser browser, CefFileDialogMode mode, string title, string defaultFilePath, CefStringList acceptFilters, int selectedAcceptFilter, CefFileDialogCallback callback)
 		{
 			return default;
 		}
@@ -83,7 +83,7 @@ namespace CefNet
 				ReleaseIfNonNull((cef_base_ref_counted_t*)callback);
 				return default;
 			}
-			return instance.OnFileDialog(CefBrowser.Wrap(CefBrowser.Create, browser), mode, CefString.Read(title), CefString.Read(default_file_path), CefStringList.Wrap(accept_filters), selected_accept_filter != 0, CefFileDialogCallback.Wrap(CefFileDialogCallback.Create, callback)) ? 1 : 0;
+			return instance.OnFileDialog(CefBrowser.Wrap(CefBrowser.Create, browser), mode, CefString.Read(title), CefString.Read(default_file_path), CefStringList.Wrap(accept_filters), selected_accept_filter, CefFileDialogCallback.Wrap(CefFileDialogCallback.Create, callback)) ? 1 : 0;
 		}
 	}
 }

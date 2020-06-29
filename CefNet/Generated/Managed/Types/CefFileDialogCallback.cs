@@ -45,9 +45,9 @@ namespace CefNet
 		/// or a list of values depending on the dialog mode. An NULL |file_paths|
 		/// value is treated the same as calling cancel().
 		/// </summary>
-		public unsafe virtual void Continue(bool selectedAcceptFilter, CefStringList filePaths)
+		public unsafe virtual void Continue(int selectedAcceptFilter, CefStringList filePaths)
 		{
-			NativeInstance->Continue(selectedAcceptFilter ? 1 : 0, filePaths.GetNativeInstance());
+			NativeInstance->Continue(selectedAcceptFilter, filePaths.GetNativeInstance());
 			GC.KeepAlive(this);
 		}
 
