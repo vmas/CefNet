@@ -864,7 +864,7 @@ namespace CefNet
 		/// Parses the specified <paramref name="json"/> string.
 		/// </summary>
 		/// <param name="json">The JSON string to parse.</param>
-		/// <param name="options"></param>
+		/// <param name="options">Options to control the behavior during parsing.</param>
 		/// <returns>
 		/// Returns a dictionary or list representation. If JSON parsing fails this function returns NULL.
 		/// </returns>
@@ -881,10 +881,27 @@ namespace CefNet
 		}
 
 		/// <summary>
+		/// Parses the specified UTF8-encoded JSON buffer.
+		/// </summary>
+		/// <param name="json">The UTF8-encoded JSON buffer to parse.</param>
+		/// <param name="options">Options to control the behavior during parsing.</param>
+		/// <returns>On success, a dictionary or list representation. If JSON parsing fails this function returns null.</returns>
+		public static CefValue CefParseJSONBuffer(byte[] json, CefJsonParserOptions options)
+		{
+			if (json == null)
+				return null;
+
+			fixed (byte* buf = json)
+			{
+				return CefValue.Wrap(CefValue.Create, CefNativeApi.cef_parse_json_buffer(buf, new UIntPtr((uint)json.Length), options));
+			}
+		}
+
+		/// <summary>
 		/// Parses the specified <paramref name="json"/> string.
 		/// </summary>
 		/// <param name="json">The JSON string to parse.</param>
-		/// <param name="options"></param>
+		/// <param name="options">Options to control the behavior during parsing.</param>
 		/// <param name="errorCode">The error code.</param>
 		/// <param name="errorMessage">The error message.</param>
 		/// <returns>
@@ -916,7 +933,7 @@ namespace CefNet
 		/// Generates a JSON string from the specified root <paramref name="node"/>.
 		/// </summary>
 		/// <param name="node">A dictionary or list value.</param>
-		/// <param name="options"></param>
+		/// <param name="options">Options to control serialization behavior.</param>
 		/// <returns>
 		/// Returns a JSON encoded string on success or null on failure.
 		/// </returns>
