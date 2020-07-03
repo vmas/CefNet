@@ -26,6 +26,11 @@ namespace CefNet
 			get { return _waitTasks; }
 		}
 
+		public void Close()
+		{
+			_registration.Dispose();
+		}
+
 		public int IncrementMessageId()
 		{
 			int id;

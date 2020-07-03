@@ -44,6 +44,18 @@ namespace CefNet
 			return client;
 		}
 
+		internal static void ReleaseProtocolClient(long browserId)
+		{
+			DevToolsProtocolClient protocolClient;
+			lock (_Clients)
+			{
+				_Clients.Remove(browserId, out protocolClient);
+			}
+			if (protocolClient is null)
+				return;
+			protocolClient.Close();
+		}
+
 		/// <summary>
 		/// Executes a method call over the DevTools protocol.
 		/// </summary>

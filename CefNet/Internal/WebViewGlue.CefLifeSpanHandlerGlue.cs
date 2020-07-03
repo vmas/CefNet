@@ -140,6 +140,7 @@ namespace CefNet.Internal
 			finally
 			{
 				this.BrowserObject = null;
+				DevToolsExtensions.ReleaseProtocolClient(browser.Identifier);
 				CefNetApplication.Instance.OnBrowserDestroyed(browser);
 			}
 		}
