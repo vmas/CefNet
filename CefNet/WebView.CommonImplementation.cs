@@ -127,9 +127,14 @@ namespace CefNet
 			remove { RemoveHandler(in StatusTextChangedEvent, value); }
 		}
 
+		/// <summary>
+		/// Occurs when a DevTools protocol event is available.
+		/// </summary>
+		public event EventHandler<DevToolsProtocolEventAvailableEventArgs> DevToolsProtocolEventAvailable;
+
 
 		private static CefBrowserSettings _DefaultBrowserSettings;
-		
+
 		//private LifeSpanGlue lifeSpanHandler;
 		//private CefRequestHandler requestHandler;
 		//private CefDisplayHandler _displayHandler;
@@ -911,6 +916,21 @@ namespace CefNet
 		protected virtual void OnStatusTextChanged(EventArgs e)
 		{
 			StatusTextChangedEvent?.Invoke(this, e);
+		}
+
+
+		void IChromiumWebViewPrivate.RaiseDevToolsEventAvailable(DevToolsProtocolEventAvailableEventArgs e)
+		{
+			RaiseCrossThreadEvent(OnDevToolsProtocolEventAvailable, e, false);
+		}
+
+		/// <summary>
+		/// Raises the <see cref="DevToolsProtocolEventAvailable"/> event.
+		/// </summary>
+		/// <param name="e">A <see cref="DevToolsProtocolEventAvailableEventArgs"/> that contains the event data.</param>
+		protected virtual void OnDevToolsProtocolEventAvailable(DevToolsProtocolEventAvailableEventArgs e)
+		{
+			DevToolsProtocolEventAvailable?.Invoke(this, e);
 		}
 
 		private void InitMouseEvent(int x, int y, CefEventFlags modifiers)

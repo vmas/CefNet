@@ -95,6 +95,11 @@ namespace CefNet
 		event EventHandler<IPdfPrintFinishedEventArgs> PdfPrintFinished;
 
 		/// <summary>
+		/// Occurs when a DevTools protocol event is available.
+		/// </summary>
+		event EventHandler<DevToolsProtocolEventAvailableEventArgs> DevToolsProtocolEventAvailable;
+
+		/// <summary>
 		/// Gets and sets a default URL.
 		/// </summary>
 		/// <remarks>

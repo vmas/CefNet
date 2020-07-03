@@ -50,6 +50,7 @@ namespace WinFormsCoreApp
 				new ToolStripMenuItem("Print to PDF", null, HandlePrintToPdf),
 				new ToolStripMenuItem("Load from String", null, HandleLoadFromString),
 				new ToolStripMenuItem("Load to file", null, HandleLoadToFile),
+				new ToolStripMenuItem("Capture screenshot", null, HandleCaptureScreenshot),
 				new ToolStripMenuItem("Test2", null, Button2_Click),
 				new ToolStripMenuItem("Main Process", null, new ToolStripItem[] {
 					new ToolStripMenuItem("Test ScriptableObject", null, async (s,e) => await ScriptableObjectTests.ScriptableObjectTestAsync(SelectedView.GetMainFrame())),
@@ -177,6 +178,23 @@ namespace WinFormsCoreApp
 				}
 			}
 			MessageBox.Show($"Complete ({status})!");
+		}
+
+		private async void HandleCaptureScreenshot(object sender, EventArgs e)
+		{
+			string rv = await SelectedView.ExecuteDevToolsMethodAsync("Page.captureScreenshot");
+			if (rv != null && rv.StartsWith("{\"data\":\""))
+			{
+				using (var dlg = new SaveFileDialog())
+				{
+					dlg.Filter = "Image (*.png)|*.png";
+					if (dlg.ShowDialog() == DialogResult.OK)
+					{
+						File.WriteAllBytes(dlg.FileName, Convert.FromBase64String(rv.Substring(9, rv.Length - 11)));
+					}
+				}
+			}
+			rv = null;
 		}
 
 		private void HandleShowSimulator(object sender, EventArgs e)
