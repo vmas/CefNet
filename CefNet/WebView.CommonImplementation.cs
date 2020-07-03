@@ -1263,5 +1263,17 @@ namespace CefNet
 			this.BrowserObject?.Host?.SendKeyEvent(k);
 		}
 
+		/// <summary>
+		/// Causes the calling thread to yield execution to the specified CEF thread.
+		/// </summary>
+		/// <param name="threadId">The CEF thread identifier to switch to.</param>
+		/// <returns>
+		/// An object that is notified when the switch to the CEF thread operation is finished.
+		/// </returns>
+		protected CefNetSynchronizationContextAwaiter SwitchToCefThread(CefThreadId threadId)
+		{
+			return CefNetSynchronizationContextAwaiter.GetForThread(threadId);
+		}
+
 	}
 }
