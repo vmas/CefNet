@@ -362,5 +362,37 @@ namespace CefNet
 			}
 		}
 
+		/// <summary>
+		/// Clears browser cache.
+		/// </summary>
+		/// <param name="webview">The WebView control.</param>
+		/// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+		/// <returns>The task object representing the asynchronous operation.</returns>
+		public static async Task ClearBrowserCacheAsync(this IChromiumWebView webview, CancellationToken cancellationToken)
+		{
+			if (webview is null)
+				throw new ArgumentNullException(nameof(webview));
+
+			byte[] rv = await ExecuteDevToolsMethodInternalAsync(webview, "Network.clearBrowserCache", null, cancellationToken);
+			if (rv is null || rv.Length != 2 || rv[0] != '{' || rv[1] != '}')
+				throw new InvalidOperationException();
+		}
+
+		/// <summary>
+		/// Clears browser cookies.
+		/// </summary>
+		/// <param name="webview">The WebView control.</param>
+		/// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+		/// <returns>The task object representing the asynchronous operation.</returns>
+		public static async Task ClearBrowserCookiesAsync(this IChromiumWebView webview, CancellationToken cancellationToken)
+		{
+			if (webview is null)
+				throw new ArgumentNullException(nameof(webview));
+
+			byte[] rv = await ExecuteDevToolsMethodInternalAsync(webview, "Network.clearBrowserCookies", null, cancellationToken);
+			if (rv is null || rv.Length != 2 || rv[0] != '{' || rv[1] != '}')
+				throw new InvalidOperationException();
+		}
+
 	}
 }
