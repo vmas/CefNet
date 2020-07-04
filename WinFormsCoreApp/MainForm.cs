@@ -182,19 +182,17 @@ namespace WinFormsCoreApp
 
 		private async void HandleCaptureScreenshot(object sender, EventArgs e)
 		{
-			string rv = await SelectedView.ExecuteDevToolsMethodAsync("Page.captureScreenshot");
-			if (rv != null && rv.StartsWith("{\"data\":\""))
+			using (var dlg = new SaveFileDialog())
 			{
-				using (var dlg = new SaveFileDialog())
+				dlg.Filter = "Image (*.png)|*.png";
+				if (dlg.ShowDialog() == DialogResult.OK)
 				{
-					dlg.Filter = "Image (*.png)|*.png";
-					if (dlg.ShowDialog() == DialogResult.OK)
+					using (var f = File.Open(dlg.FileName, FileMode.Create, FileAccess.Write))
 					{
-						File.WriteAllBytes(dlg.FileName, Convert.FromBase64String(rv.Substring(9, rv.Length - 11)));
+						await SelectedView.CaptureScreenshotAsync(null, f, CancellationToken.None);
 					}
 				}
 			}
-			rv = null;
 		}
 
 		private void HandleShowSimulator(object sender, EventArgs e)
