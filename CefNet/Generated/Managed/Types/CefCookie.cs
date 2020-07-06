@@ -135,7 +135,7 @@ namespace CefNet
 		/// <summary>
 		/// If |httponly| is true the cookie will only be sent for HTTP requests.
 		/// </summary>
-		public bool Httponly
+		public bool HttpOnly
 		{
 			get
 			{
