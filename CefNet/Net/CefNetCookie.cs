@@ -202,6 +202,30 @@ namespace CefNet.Net
 		public CefCookiePriority Priority { get; set; }
 
 		/// <summary>
+		/// Creates a <see cref="CefCookie"/> structure.
+		/// </summary>
+		/// <returns>The new <see cref="CefCookie"/> that this method creates.</returns>
+		/// <remarks>The <see cref="CefCookie"/> structure should be disposed after use.</remarks>
+		public CefCookie ToCefCookie()
+		{
+			return new CefCookie
+			{
+				Name = this.Name,
+				Value = this.Value,
+				Path = this.Path,
+				Domain = this.Domain,
+				Secure = this.Secure,
+				HttpOnly = this.HttpOnly,
+				Creation = CefTime.FromDateTime(this.TimeStamp),
+				LastAccess = CefTime.FromDateTime(this.LastAccess),
+				SameSite = this.SameSite,
+				Priority = this.Priority,
+				HasExpires = this.Expires.HasValue,
+				Expires = this.Expires.HasValue ? CefTime.FromDateTime(this.Expires.Value) : default
+			};
+		}
+
+		/// <summary>
 		/// Returns a string representation of this <see cref="CefNetCookie"/> object.
 		/// </summary>
 		/// <returns>
