@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 
 namespace CefNet
 {
+	internal interface ICriticalRefCounted : IDisposable { }
+
 	sealed class RefCountedReference
 	{
 		public RefCountedReference(WeakReference<CefBaseRefCounted> weakRef)
@@ -70,14 +72,17 @@ namespace CefNet
 		public int Release()
 		{
 			int count;
-			lock(this)
+			ICriticalRefCounted critical = null;
+			lock (this)
 			{
 				count = --_count;
 				if (count == 0)
 				{
+					critical = Root as ICriticalRefCounted;
 					Root = null;
 				}
 			}
+			critical?.Dispose();
 			return count;
 		}
 	}
