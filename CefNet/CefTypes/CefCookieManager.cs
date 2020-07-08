@@ -140,5 +140,26 @@ namespace CefNet
 			}
 			throw new ArgumentOutOfRangeException(nameof(url));
 		}
+
+		/// <summary>
+		/// Deletes all cookies that match the specified parameters.
+		/// </summary>
+		/// <param name="domain">The host or the domain that the cookie is available to.</param>
+		/// <param name="name">The name of the cookie to delete; or null to delete all host cookies.</param>
+		/// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+		/// <returns>
+		/// The task object representing the asynchronous operation.
+		/// The result of the task is the number of cookies that were deleted.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">The <paramref name="domain"/> is null.</exception>
+		/// <exception cref="InvalidOperationException">Cookies cannot be accessed.</exception>
+		public Task<int> DeleteCookiesAsync(string domain, string name, CancellationToken cancellationToken)
+		{
+			var deleteCookieVisitor = new DeleteCookieVisitor(domain, name, cancellationToken);
+			if (!VisitAllCookies(deleteCookieVisitor))
+				throw new InvalidOperationException();
+			return deleteCookieVisitor.CompletionTask;
+		}
+
 	}
 }
