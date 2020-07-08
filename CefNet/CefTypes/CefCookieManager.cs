@@ -96,5 +96,49 @@ namespace CefNet
 			throw new ArgumentOutOfRangeException(nameof(url));
 		}
 
+		/// <summary>
+		/// Sets a cookie given a valid URL and explicit user-provided cookie
+		/// attributes.
+		/// </summary>
+		/// <param name="url">The cookie URL.</param>
+		/// <param name="cookie">The cookie.</param>
+		/// <param name="callback">
+		/// If <paramref name="callback"/> is non-NULL it will be executed
+		/// asnychronously on the CEF UI thread after the cookie has been set.
+		/// </param>
+		/// <returns>
+		/// true if the operation is completed successfully; false if cookies cannot be accessed.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">The <paramref name="url"/> is null or the <paramref name="cookie"/> is null.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">An invalid URL is specified.</exception>
+		public unsafe bool SetCookie(string url, CefNetCookie cookie, CefSetCookieCallback callback)
+		{
+			if (url is null)
+				throw new ArgumentNullException(nameof(url));
+			if (cookie is null)
+				throw new ArgumentNullException(nameof(cookie));
+
+			if (Uri.TryCreate(url, UriKind.Absolute, out Uri uri)
+				&& (Uri.UriSchemeHttp.Equals(uri.Scheme, StringComparison.Ordinal) || Uri.UriSchemeHttps.Equals(uri.Scheme, StringComparison.Ordinal)))
+			{
+				CefCookie aCookie = cookie.ToCefCookie();
+				try
+				{
+					if (cookie.Domain != null && !cookie.Domain.StartsWith("."))
+						aCookie.Domain = null;
+
+					fixed (char* s0 = url)
+					{
+						var cstr0 = new cef_string_t { Str = s0, Length = url.Length };
+						return SafeCall(NativeInstance->SetCookie(&cstr0, (cef_cookie_t*)&aCookie, (callback != null) ? callback.GetNativeInstance() : null) != 0);
+					}
+				}
+				finally
+				{
+					aCookie.Dispose();
+				}
+			}
+			throw new ArgumentOutOfRangeException(nameof(url));
+		}
 	}
 }
