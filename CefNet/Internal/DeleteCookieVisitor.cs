@@ -27,7 +27,7 @@ namespace CefNet.Internal
 #else
 			_completion = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 #endif
-			cancellationToken.Register(Cancel, new WeakReference<DeleteCookieVisitor>(this));
+			_cancellation = cancellationToken.Register(Cancel, new WeakReference<DeleteCookieVisitor>(this));
 		}
 
 		public Task<int> CompletionTask
