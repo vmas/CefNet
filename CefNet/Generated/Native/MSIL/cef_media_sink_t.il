@@ -99,6 +99,24 @@
 			ret
 		}
 
+		// void (*)(_cef_media_sink_t* self, _cef_media_sink_device_info_callback_t* callback)*
+		.method public hidebysig void GetDeviceInfo(valuetype CefNet.CApi.cef_media_sink_device_info_callback_t* callback)
+		{
+			.maxstack 3
+			ldarg.0
+			ldarg.1
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_media_sink_t::get_device_info
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				void(valuetype CefNet.CApi.cef_media_sink_t*, valuetype CefNet.CApi.cef_media_sink_device_info_callback_t*)
+			ret
+		}
+
 		// int (*)(_cef_media_sink_t* self)*
 		.method public hidebysig int32 IsCastSink()
 		{

@@ -121,6 +121,15 @@ namespace CefNet
 		}
 
 		/// <summary>
+		/// Asynchronously retrieves device info.
+		/// </summary>
+		public unsafe virtual void GetDeviceInfo(CefMediaSinkDeviceInfoCallback callback)
+		{
+			NativeInstance->GetDeviceInfo((callback != null) ? callback.GetNativeInstance() : null);
+			GC.KeepAlive(this);
+		}
+
+		/// <summary>
 		/// Returns true (1) if this sink is compatible with |source|.
 		/// </summary>
 		public unsafe virtual bool IsCompatibleWith(CefMediaSource source)

@@ -95,6 +95,18 @@ namespace CefNet.CApi
 		public unsafe extern CefMediaSinkIconType GetIconType();
 
 		/// <summary>
+		/// void (*)(_cef_media_sink_t* self, _cef_media_sink_device_info_callback_t* callback)*
+		/// </summary>
+		public void* get_device_info;
+
+		/// <summary>
+		/// Asynchronously retrieves device info.
+		/// </summary>
+		[NativeName("get_device_info")]
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		public unsafe extern void GetDeviceInfo(cef_media_sink_device_info_callback_t* callback);
+
+		/// <summary>
 		/// int (*)(_cef_media_sink_t* self)*
 		/// </summary>
 		public void* is_cast_sink;
