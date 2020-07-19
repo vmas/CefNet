@@ -22,9 +22,14 @@ namespace CefNet.Internal
 
 		protected override void OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
 		{
-			WebView.RaiseCefCursorChange(
-				new CursorChangeEventArgs(type != CefCursorType.Custom ? new Cursor(cursorHandle) : CustomCursor.Create(ref customCursorInfo), type)
-			);
+			Cursor cursor;
+			if (type == CefCursorType.Custom)
+				cursor = CustomCursor.Create(ref customCursorInfo);
+			else if (cursorHandle == IntPtr.Zero)
+				cursor = null;
+			else
+				cursor = new Cursor(cursorHandle);
+			WebView.RaiseCefCursorChange(new CursorChangeEventArgs(cursor, type));
 		}
 
 		protected override bool OnTooltip(CefBrowser browser, ref string text)
