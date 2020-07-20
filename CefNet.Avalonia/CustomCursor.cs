@@ -24,9 +24,6 @@ namespace CefNet.Avalonia
 	{
 		public unsafe static Cursor Create(ref CefCursorInfo cursorInfo)
 		{
-			if (cursorInfo.Buffer == IntPtr.Zero)
-				throw new ArgumentOutOfRangeException(nameof(cursorInfo));
-
 			return Cursor.Default; // Not supported
 
 			/*

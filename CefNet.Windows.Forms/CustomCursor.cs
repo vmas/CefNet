@@ -8,23 +8,31 @@ using System.Windows.Forms;
 
 namespace CefNet.Windows.Forms
 {
+	/// <summary>
+	/// Represents the image used to paint the mouse pointer.
+	/// </summary>
 	public sealed class CustomCursor
 	{
 		private readonly IntPtr _cursorHandle;
 		private Cursor _cursor;
 
+		/// <summary>
+		/// Creates new instance of the <see cref="Cursor"/> class.
+		/// </summary>
+		/// <param name="cursorInfo">The cursor information.</param>
+		/// <returns>A new <see cref="Cursor"/> that this method creates.</returns>
 		public static Cursor Create(ref CefCursorInfo cursorInfo)
 		{
-			if (cursorInfo.Buffer == IntPtr.Zero)
-				throw new ArgumentOutOfRangeException(nameof(cursorInfo));
-
 			CefSize size = cursorInfo.Size;
-			using (var bitmap = new Bitmap(size.Width, size.Height, 4 * size.Width, System.Drawing.Imaging.PixelFormat.Format32bppArgb, cursorInfo.Buffer))
+			Bitmap bitmap = null;
+			IntPtr iconHandle = IntPtr.Zero;
+			try
 			{
-				IntPtr iconHandle = bitmap.GetHicon();
-				try
+				if (size.Width > 0 && size.Height > 0 && cursorInfo.Buffer != IntPtr.Zero)
 				{
-					if (NativeMethods.GetIconInfo(iconHandle, out ICONINFO iconInfo))
+					bitmap = new Bitmap(size.Width, size.Height, 4 * size.Width, System.Drawing.Imaging.PixelFormat.Format32bppArgb, cursorInfo.Buffer);
+					iconHandle = bitmap.GetHicon();
+					if (iconHandle != IntPtr.Zero && NativeMethods.GetIconInfo(iconHandle, out ICONINFO iconInfo))
 					{
 						iconInfo.Hotspot = cursorInfo.Hotspot;
 						iconInfo.IsIcon = false;
@@ -34,16 +42,17 @@ namespace CefNet.Windows.Forms
 
 						return new CustomCursor(cursorHandle)._cursor;
 					}
-					else
-					{
-						return Cursors.Default;
-					}
-				}
-				finally
-				{
-					NativeMethods.DestroyIcon(iconHandle);
 				}
 			}
+			catch (AccessViolationException) { throw; }
+			catch { }
+			finally
+			{
+				if (iconHandle != IntPtr.Zero)
+					NativeMethods.DestroyIcon(iconHandle);
+				bitmap?.Dispose();
+			}
+			return Cursors.Default;
 		}
 
 		private CustomCursor(IntPtr cursorHandle)

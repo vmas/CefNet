@@ -15,48 +15,53 @@ namespace CefNet.Wpf
 	{
 		public unsafe static Cursor Create(ref CefCursorInfo cursorInfo)
 		{
-			if (cursorInfo.Buffer == IntPtr.Zero)
-				throw new ArgumentOutOfRangeException(nameof(cursorInfo));
-
 			CefSize size = cursorInfo.Size;
-
-			var bufferSize = size.Width * size.Height * 4;
-			int ICON_HEADER_SIZE = sizeof(ICONDIR);
-			var stream = new MemoryStream(bufferSize);
+			if (size.Width > 0 && size.Height > 0 && cursorInfo.Buffer != IntPtr.Zero)
 			{
-				DpiScale dpi = OffscreenGraphics.DpiScale;
-				var source = BitmapSource.Create(size.Width, size.Height, dpi.PixelsPerInchX, dpi.PixelsPerInchY, PixelFormats.Bgra32, null, cursorInfo.Buffer, bufferSize, size.Width << 2);
-				if (stream.Seek(ICON_HEADER_SIZE, SeekOrigin.Begin) != ICON_HEADER_SIZE)
+				try
 				{
-					stream.Seek(0, SeekOrigin.Begin);
-					stream.Write(new byte[ICON_HEADER_SIZE], 0, ICON_HEADER_SIZE);
+					var bufferSize = size.Width * size.Height * 4;
+					int ICON_HEADER_SIZE = sizeof(ICONDIR);
+					var stream = new MemoryStream(bufferSize);
+					{
+						DpiScale dpi = OffscreenGraphics.DpiScale;
+						var source = BitmapSource.Create(size.Width, size.Height, dpi.PixelsPerInchX, dpi.PixelsPerInchY, PixelFormats.Bgra32, null, cursorInfo.Buffer, bufferSize, size.Width << 2);
+						if (stream.Seek(ICON_HEADER_SIZE, SeekOrigin.Begin) != ICON_HEADER_SIZE)
+						{
+							stream.Seek(0, SeekOrigin.Begin);
+							stream.Write(new byte[ICON_HEADER_SIZE], 0, ICON_HEADER_SIZE);
+						}
+
+						var png = new PngBitmapEncoder();
+						png.Frames.Add(BitmapFrame.Create(source));
+						png.Save(stream);
+						stream.Seek(0, SeekOrigin.Begin);
+					}
+
+					CefPoint hotSpot = cursorInfo.Hotspot;
+
+					var icon = new ICONDIR();
+					icon.IconType = 2;
+					icon.ImagesCount = 1;
+					icon.Width = (byte)size.Width;
+					icon.Height = (byte)size.Height;
+					icon.HotSpotX = (short)hotSpot.X;
+					icon.HotSpotY = (short)hotSpot.Y;
+					icon.BytesInRes = (int)stream.Length - ICON_HEADER_SIZE;
+					icon.ImageOffset = ICON_HEADER_SIZE;
+
+					using (var iconHead = new UnmanagedMemoryStream(icon._data, ICON_HEADER_SIZE))
+					{
+						iconHead.CopyTo(stream);
+						stream.Seek(0, SeekOrigin.Begin);
+					}
+
+					return new Cursor(stream);
 				}
-
-				var png = new PngBitmapEncoder();
-				png.Frames.Add(BitmapFrame.Create(source));
-				png.Save(stream);
-				stream.Seek(0, SeekOrigin.Begin);
+				catch (AccessViolationException) { throw; }
+				catch { }
 			}
-
-			CefPoint hotSpot = cursorInfo.Hotspot;
-
-			var icon = new ICONDIR();
-			icon.IconType = 2;
-			icon.ImagesCount = 1;
-			icon.Width = (byte)size.Width;
-			icon.Height = (byte)size.Height;
-			icon.HotSpotX = (short)hotSpot.X;
-			icon.HotSpotY = (short)hotSpot.Y;
-			icon.BytesInRes = (int)stream.Length - ICON_HEADER_SIZE;
-			icon.ImageOffset = ICON_HEADER_SIZE;
-
-			using (var iconHead = new UnmanagedMemoryStream(icon._data, ICON_HEADER_SIZE))
-			{
-				iconHead.CopyTo(stream);
-				stream.Seek(0, SeekOrigin.Begin);
-			}
-
-			return new Cursor(stream);
+			return Cursors.Arrow;
 		}
 
 		[StructLayout(LayoutKind.Explicit, Pack = 1, Size = 22)]
