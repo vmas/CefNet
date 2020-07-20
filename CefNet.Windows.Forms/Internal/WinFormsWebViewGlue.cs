@@ -26,7 +26,7 @@ namespace CefNet.Internal
 			if (type == CefCursorType.Custom)
 				cursor = CustomCursor.Create(ref customCursorInfo);
 			else if (cursorHandle == IntPtr.Zero)
-				cursor = null;
+				cursor = CustomCursor.None;
 			else
 				cursor = new Cursor(cursorHandle);
 			WebView.RaiseCefCursorChange(new CursorChangeEventArgs(cursor, type));
