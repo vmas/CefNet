@@ -753,7 +753,7 @@ namespace CefNet.Windows.Forms
 					{
 						var e = new CefKeyEvent();
 						e.WindowsKeyCode = unchecked((int)m.WParam);
-						e.NativeKeyCode = (int)((ulong)m.LParam & 0xFFFFFFFFUL);
+						e.NativeKeyCode = CefNetApi.GetWindowsScanCodeFromLParam(m.LParam);
 						e.IsSystemKey = (m.Msg == WM_SYSKEYDOWN);
 						e.Type = CefKeyEventType.RawKeyDown;
 						e.Modifiers = (uint)GetCefKeyboardModifiers((Keys)m.WParam.ToInt64(), m.LParam);
@@ -765,7 +765,7 @@ namespace CefNet.Windows.Forms
 			return base.ProcessCmdKey(ref m, keyData);
 		}
 
-		protected override bool ProcessKeyEventArgs(ref Message m)
+		protected unsafe override bool ProcessKeyEventArgs(ref Message m)
 		{
 			const int WM_KEYDOWN = 0x0100;
 			const int WM_KEYUP = 0x0101;
@@ -777,7 +777,7 @@ namespace CefNet.Windows.Forms
 			{
 				var k = new CefKeyEvent();
 				k.WindowsKeyCode = unchecked((int)m.WParam);
-				k.NativeKeyCode = unchecked((int)((ulong)m.LParam & 0xFFFFFFFFUL));
+				k.NativeKeyCode = CefNetApi.GetWindowsScanCodeFromLParam(m.LParam);
 				k.IsSystemKey = m.Msg >= WM_SYSKEYDOWN && m.Msg <= WM_SYSCHAR;
 				
 				CefEventFlags modifiers;
@@ -800,7 +800,7 @@ namespace CefNet.Windows.Forms
 				else
 				{
 					k.Type = CefKeyEventType.Char;
-					modifiers = GetCefKeyboardModifiers((Keys)NativeMethods.MapVirtualKey((uint)(m.LParam.ToInt64() >> 16) & 0xFFU, MapVirtualKeyType.MAPVK_VSC_TO_VK_EX), m.LParam);
+					modifiers = GetCefKeyboardModifiers((Keys)NativeMethods.MapVirtualKey(((uint)m.LParam.ToPointer() >> 16) & 0xFFU, MapVirtualKeyType.MAPVK_VSC_TO_VK_EX), m.LParam);
 				}
 				k.Modifiers = (uint)modifiers;
 
@@ -822,7 +822,7 @@ namespace CefNet.Windows.Forms
 			return modifiers;
 		}
 
-		protected CefEventFlags GetCefKeyboardModifiers(Keys key, IntPtr lparam)
+		protected unsafe CefEventFlags GetCefKeyboardModifiers(Keys key, IntPtr lparam)
 		{
 			const int KF_EXTENDED = 0x100;
 
@@ -836,7 +836,7 @@ namespace CefNet.Windows.Forms
 			switch (key)
 			{
 				case Keys.Return:
-					if (((lparam.ToInt64() >> 16) & KF_EXTENDED) != 0)
+					if ((((uint)lparam.ToPointer() >> 16) & KF_EXTENDED) != 0)
 						modifiers |= CefEventFlags.IsKeyPad;
 					break;
 				case Keys.Insert:
@@ -849,7 +849,7 @@ namespace CefNet.Windows.Forms
 				case Keys.Down:
 				case Keys.Left:
 				case Keys.Right:
-					if (((lparam.ToInt64() >> 16) & KF_EXTENDED) == 0)
+					if ((((uint)lparam.ToPointer() >> 16) & KF_EXTENDED) == 0)
 						modifiers |= CefEventFlags.IsKeyPad;
 					break;
 				case Keys.NumLock:
@@ -902,7 +902,7 @@ namespace CefNet.Windows.Forms
 						modifiers |= CefEventFlags.IsLeft;
 					break;
 				default:
-					if (((lparam.ToInt64() >> 16) & KF_EXTENDED) != 0)
+					if ((((uint)lparam.ToPointer() >> 16) & KF_EXTENDED) != 0)
 						modifiers |= CefEventFlags.IsKeyPad;
 					break;
 			}

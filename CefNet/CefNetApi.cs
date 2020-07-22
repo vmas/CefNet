@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using CefNet.MacOS;
+using System.Runtime.CompilerServices;
 
 namespace CefNet
 {
@@ -26,7 +27,7 @@ namespace CefNet
 		public static int GetNativeKeyCode(CefKeyEventType eventType, int repeatCount, VirtualKeys key, CefEventFlags modifiers, bool isExtended)
 		{
 			if (PlatformInfo.IsWindows)
-				return GetWindowsNativeKeyCode(eventType, repeatCount, (byte)NativeMethods.MapVirtualKey((uint)key, MapVirtualKeyType.MAPVK_VK_TO_VSC), modifiers.HasFlag(CefEventFlags.AltDown), isExtended);
+				return (byte)NativeMethods.MapVirtualKey((uint)key, MapVirtualKeyType.MAPVK_VK_TO_VSC);
 			if (PlatformInfo.IsLinux)
 				return GetLinuxNativeKeyCode(key, modifiers.HasFlag(CefEventFlags.ShiftDown));
 			if (PlatformInfo.IsMacOS)
@@ -39,7 +40,7 @@ namespace CefNet
 		/// </summary>
 		/// <param name="key">Specifies the virtual key.</param>
 		/// <param name="extended">The extended key flag.</param>
-		/// <returns>A native key code.</returns>
+		/// <returns>A XKB scan code.</returns>
 		public static int GetMacOSNativeKeyCode(VirtualKeys key, bool extended)
 		{
 			MacOSVirtualKey vkcode = MacOS.KeyInterop.WindowsKeyToMacOSKey(key, extended);
@@ -52,6 +53,7 @@ namespace CefNet
 		/// Converts the value of a UTF-16 encoded character into a native key code.
 		/// </summary>
 		/// <param name="c">The character to be converted.</param>
+		/// <returns>A XKB scan code.</returns>
 		public static int GetMacOSNativeKeyCode(char c)
 		{
 			XKeySym keysym = Linux.KeyInterop.CharToXKeySym(c);
@@ -61,30 +63,44 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Translates a virtual key to the corresponding native key code for the current keyboard.
+		/// Translates the specified <paramref name="lParam"/> to a Windows OEM scan code.
 		/// </summary>
-		/// <param name="eventType">The key event type.</param>
+		/// <param name="lParam">The lParam field of a keyboard input notification message.</param>
+		/// <returns>The scan code contained in <paramref name="lParam"/>.</returns>
+		public static unsafe int GetWindowsScanCodeFromLParam(IntPtr lParam)
+		{
+			uint value = unchecked((uint)lParam.ToPointer());
+			uint scan_code = (value >> 16) & 0x00FFU;
+			if ((value & (1 << 24)) != 0) // KF_EXTENDED
+				scan_code |= 0xE000U;
+			return (int)scan_code;
+		}
+
+		/// <summary>
+		/// Translates the specified Windows OEM scan code to a lParam value.
+		/// </summary>
+		/// <param name="eventType">The key event type of a message.</param>
 		/// <param name="repeatCount">The repeat count for a message.</param>
 		/// <param name="scanCode">The scan code for a key.</param>
 		/// <param name="isSystemKey">The system key flag.</param>
 		/// <param name="isExtended">The extended key flag.</param>
-		/// <returns>A native key code for the current keyboard.</returns>
-		public static int GetWindowsNativeKeyCode(CefKeyEventType eventType, int repeatCount, byte scanCode, bool isSystemKey, bool isExtended)
+		/// <returns>A lParam to the specified event type message.</returns>
+		public static unsafe IntPtr GetLParamFromWindowsScanCode(CefKeyEventType eventType, int repeatCount, byte scanCode, bool isSystemKey, bool isExtended)
 		{
 			if (repeatCount < 0)
 				throw new ArgumentOutOfRangeException(nameof(repeatCount));
 
-			//const int KF_MENUMODE = 0x1000; // 28 bit
-			//const int KF_DLGMODE = 0x0800; // 27 bit
+			//const uint KF_MENUMODE = 0x1000; // 28 bit
+			//const uint KF_DLGMODE = 0x0800; // 27 bit
 			//0x400 not used 26 bit
 			//0x200 not used 25 bit
 
-			const int KF_EXTENDED = 0x100; // 24 bit
-			const int KF_ALTDOWN = 0x2000; // 29 bit
-			const int KF_UP = 0x8000; // 31 bit
-			const int KF_REPEAT = 0x4000; // 30 bit
+			const uint KF_EXTENDED = 0x100; // 24 bit
+			const uint KF_ALTDOWN = 0x2000; // 29 bit
+			const uint KF_UP = 0x8000; // 31 bit
+			const uint KF_REPEAT = 0x4000; // 30 bit
 
-			int keyInfo = scanCode;
+			uint keyInfo = scanCode;
 
 			if (eventType == CefKeyEventType.KeyUp)
 			{
@@ -102,7 +118,7 @@ namespace CefNet
 			if (isExtended)
 				keyInfo |= KF_EXTENDED;
 
-			return (keyInfo << 16) | (repeatCount & 0xFFFF);
+			return new IntPtr((void*)((keyInfo << 16) | ((uint)repeatCount & 0xFFFFU)));
 		}
 
 		/// <summary>
@@ -217,11 +233,7 @@ namespace CefNet
 		public static int GetNativeKeyCode(char c, int repeatCount, CefEventFlags modifiers, bool isExtended)
 		{
 			if (PlatformInfo.IsWindows)
-			{
-				return GetWindowsNativeKeyCode(CefKeyEventType.Char, repeatCount,
-					(byte)(WinApi.NativeMethods.VkKeyScan(c) & 0xFF),
-					modifiers.HasFlag(CefEventFlags.AltDown), isExtended);
-			}
+				return GetNativeKeyCode(CefKeyEventType.Char, repeatCount, (VirtualKeys)(WinApi.NativeMethods.VkKeyScan(c) & 0xFF), modifiers, isExtended);
 
 			if (PlatformInfo.IsLinux)
 				return GetLinuxNativeKeyCode(c);
