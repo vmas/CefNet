@@ -1,4 +1,5 @@
-﻿using CefNet.Internal;
+﻿using CefNet.Input;
+using CefNet.Internal;
 using CefNet.WinApi;
 using System;
 using System.Collections;
@@ -673,7 +674,7 @@ namespace CefNet.Wpf
 			k.Modifiers = (uint)modifiers;
 			k.IsSystemKey = (key == Key.System);
 			k.WindowsKeyCode = (int)virtualKey;
-			k.NativeKeyCode = virtualKey.ToNativeKeyCode(eventType, e.IsRepeat, modifiers, _lastKeydownIsExtendedKey);
+			k.NativeKeyCode = KeycodeConverter.VirtualKeyToNativeKeyCode(virtualKey, modifiers, _lastKeydownIsExtendedKey);
 			this.BrowserObject?.Host.SendKeyEvent(k);
 
 			if (k.IsSystemKey)
@@ -708,7 +709,7 @@ namespace CefNet.Wpf
 			foreach (char symbol in e.Text)
 			{
 				CefEventFlags modifiers = GetCefKeyboardModifiers();
-				if (CefNetApi.IsShiftRequired(symbol))
+				if (CefNet.Input.KeycodeConverter.IsShiftRequired(symbol))
 					modifiers |= CefEventFlags.ShiftDown;
 				if (_lastKeydownIsExtendedKey)
 					modifiers |= CefEventFlags.IsKeyPad;
@@ -716,7 +717,7 @@ namespace CefNet.Wpf
 				var k = new CefKeyEvent();
 				k.Type = CefKeyEventType.Char;
 				k.WindowsKeyCode = symbol;
-				k.NativeKeyCode = CefNetApi.GetNativeKeyCode(symbol, 0, modifiers, _lastKeydownIsExtendedKey);
+				k.NativeKeyCode = KeycodeConverter.VirtualKeyToNativeKeyCode(KeycodeConverter.CharacterToVirtualKey(symbol), modifiers, _lastKeydownIsExtendedKey);
 				k.Modifiers = (uint)modifiers;
 				this.BrowserObject?.Host.SendKeyEvent(k);
 			}

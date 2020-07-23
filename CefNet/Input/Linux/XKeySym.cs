@@ -1,5 +1,5 @@
-
-namespace CefNet.Linux
+﻿
+namespace CefNet.Input.Linux
 {
 	/// <summary>
 	/// Specifies the values for X KeySyms.

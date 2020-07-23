@@ -7,6 +7,7 @@ using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using CefNet.Input;
 using CefNet.Internal;
 using CefNet.WinApi;
 using System;
@@ -794,11 +795,11 @@ namespace CefNet.Avalonia
 				k.Modifiers = (uint)modifiers;
 				k.IsSystemKey = isSystemKey;
 				k.WindowsKeyCode = (int)virtualKey;
-				k.NativeKeyCode = virtualKey.ToNativeKeyCode(eventType, false, modifiers, false);
+				k.NativeKeyCode = KeycodeConverter.VirtualKeyToNativeKeyCode(virtualKey, modifiers, false);
 				if (PlatformInfo.IsMacOS)
 				{
-					k.UnmodifiedCharacter = char.ToUpperInvariant(CefNetApi.TranslateVirtualKey(virtualKey, CefEventFlags.None));
-					k.Character = CefNetApi.TranslateVirtualKey(virtualKey, modifiers);
+					k.UnmodifiedCharacter = char.ToUpperInvariant(CefNet.Input.KeycodeConverter.TranslateVirtualKey(virtualKey, CefEventFlags.None));
+					k.Character = CefNet.Input.KeycodeConverter.TranslateVirtualKey(virtualKey, modifiers);
 				}
 				this.BrowserObject?.Host.SendKeyEvent(k);
 
@@ -852,15 +853,17 @@ namespace CefNet.Avalonia
 		{
 			foreach (char symbol in e.Text)
 			{
-				CefEventFlags modifiers = CefNetApi.IsShiftRequired(symbol) ? CefEventFlags.ShiftDown : CefEventFlags.None;
-				
+				CefEventFlags modifiers = CefNet.Input.KeycodeConverter.IsShiftRequired(symbol) ? CefEventFlags.ShiftDown : CefEventFlags.None;
+
+				VirtualKeys key = KeycodeConverter.CharacterToVirtualKey(symbol);
+
 				var k = new CefKeyEvent();
 				k.Type = CefKeyEventType.Char;
-				k.WindowsKeyCode = PlatformInfo.IsLinux ? (int)CefNetApi.GetVirtualKey(symbol) : symbol;
+				k.WindowsKeyCode = PlatformInfo.IsLinux ? (int)key : symbol;
 				k.Character = symbol;
 				k.UnmodifiedCharacter = symbol;
 				k.Modifiers = (uint)modifiers;
-				k.NativeKeyCode = CefNetApi.GetNativeKeyCode(symbol, 0, modifiers, false);
+				k.NativeKeyCode = KeycodeConverter.VirtualKeyToNativeKeyCode(key, modifiers, false);
 				this.BrowserObject?.Host.SendKeyEvent(k);
 			}
 			e.Handled = true;

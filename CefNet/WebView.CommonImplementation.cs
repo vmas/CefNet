@@ -1,7 +1,5 @@
-﻿//using CefNet.DOM;
+﻿using CefNet.Input;
 using CefNet.Internal;
-using CefNet.WinApi;
-//using CefNet.JSInterop;
 
 
 using System;
@@ -688,6 +686,15 @@ namespace CefNet
 			}
 		}
 
+		/// <summary>
+		/// Gets 
+		/// </summary>
+		[Browsable(false)]
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		protected virtual KeycodeConverter KeycodeConverter
+		{
+			get { return KeycodeConverter.Default; }
+		}
 
 		//private ScriptableObjectProvider _provider;
 
@@ -1170,9 +1177,9 @@ namespace CefNet
 				return;
 
 			CefEventFlags modifiers = CefEventFlags.None;
-			if (CefNetApi.IsShiftRequired(c))
+			if (KeycodeConverter.IsShiftRequired(c))
 				shiftKey = !shiftKey;
-			VirtualKeys key = CefNetApi.GetVirtualKey(c);
+			VirtualKeys key = KeycodeConverter.CharacterToVirtualKey(c);
 
 			if (shiftKey)
 				modifiers |= CefEventFlags.ShiftDown;
@@ -1188,7 +1195,7 @@ namespace CefNet
 			k.Modifiers = (uint)modifiers;
 			k.IsSystemKey = altKey;
 			k.WindowsKeyCode = (int)key;
-			k.NativeKeyCode = CefNetApi.GetNativeKeyCode(eventType, repeatCount, key, modifiers, extendedKey);
+			k.NativeKeyCode = KeycodeConverter.VirtualKeyToNativeKeyCode(key, modifiers, extendedKey);
 			k.Character = c;
 			k.UnmodifiedCharacter = c;
 			this.BrowserObject?.Host?.SendKeyEvent(k);
@@ -1219,7 +1226,7 @@ namespace CefNet
 			k.Modifiers = (uint)modifiers;
 			k.IsSystemKey = altKey;
 			k.WindowsKeyCode = (int)key;
-			k.NativeKeyCode = CefNetApi.GetNativeKeyCode(eventType, repeatCount, key, modifiers, extendedKey);
+			k.NativeKeyCode = KeycodeConverter.VirtualKeyToNativeKeyCode(key, modifiers, extendedKey);
 			k.Character = (char)key;
 			k.UnmodifiedCharacter = (char)key;
 			this.BrowserObject?.Host?.SendKeyEvent(k);
@@ -1241,7 +1248,7 @@ namespace CefNet
 				return;
 
 			CefEventFlags modifiers = CefEventFlags.None;
-			if (CefNetApi.IsShiftRequired(c))
+			if (KeycodeConverter.IsShiftRequired(c))
 				shiftKey = !shiftKey;
 			if (shiftKey)
 				modifiers |= CefEventFlags.ShiftDown;
@@ -1252,12 +1259,14 @@ namespace CefNet
 			if (metaKey)
 				modifiers |= CefEventFlags.CommandDown;
 
+			VirtualKeys key = KeycodeConverter.CharacterToVirtualKey(c);
+
 			var k = new CefKeyEvent();
 			k.Type = CefKeyEventType.Char;
 			k.Modifiers = (uint)modifiers;
 			k.IsSystemKey = altKey;
-			k.WindowsKeyCode = PlatformInfo.IsLinux ? (int)CefNetApi.GetVirtualKey(c) : c;
-			k.NativeKeyCode = CefNetApi.GetNativeKeyCode(c, 0, modifiers, extendedKey);
+			k.WindowsKeyCode = PlatformInfo.IsLinux ? (int)key : c;
+			k.NativeKeyCode = KeycodeConverter.VirtualKeyToNativeKeyCode(key, modifiers, extendedKey);
 			k.Character = c;
 			k.UnmodifiedCharacter = c;
 			this.BrowserObject?.Host?.SendKeyEvent(k);

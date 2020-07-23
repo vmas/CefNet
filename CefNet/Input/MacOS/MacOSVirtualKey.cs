@@ -1,6 +1,6 @@
 ﻿// Source: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h
 
-namespace CefNet.MacOS
+namespace CefNet.Input.MacOS
 {
 	/// <summary>
 	/// Specifies macOS virtual keycodes.

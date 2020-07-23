@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CefNet.WinApi
+﻿namespace CefNet.Input
 {
 	/// <summary>
 	/// Specifies virtual key codes.

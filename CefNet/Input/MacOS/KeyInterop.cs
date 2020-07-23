@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CefNet.WinApi;
-
-namespace CefNet.MacOS
+﻿namespace CefNet.Input.MacOS
 {
 	/// <summary>
 	/// Provides static methods to convert keys.

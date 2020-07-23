@@ -1,7 +1,7 @@
 ﻿using CefNet.WinApi;
 using System.Diagnostics;
 
-namespace CefNet.Linux
+namespace CefNet.Input.Linux
 {
 	public static class KeyInterop
 	{

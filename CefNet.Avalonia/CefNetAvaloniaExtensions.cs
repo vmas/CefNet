@@ -1,8 +1,8 @@
 ﻿using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using CefNet.Input;
 using CefNet.Internal;
-using CefNet.WinApi;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,6 +23,11 @@ namespace CefNet.Avalonia
 		}
 #pragma warning restore IDE0060
 
+		/// <summary>
+		/// Converts the specified <see cref="Key"/> into a virtual key.
+		/// </summary>
+		/// <param name="key">The key code.</param>
+		/// <returns>The virtual key code.</returns>
 		public static VirtualKeys ToVirtualKey(this Key key)
 		{
 			if (key >= Key.LeftShift && key <= Key.RightAlt)
@@ -30,16 +35,6 @@ namespace CefNet.Avalonia
 			if (key == Key.System)
 				return VirtualKeys.Menu; // VK_MENU
 			return (VirtualKeys)KeyInterop.VirtualKeyFromKey(key);
-		}
-
-		public static int ToNativeKeyCode(this VirtualKeys key, CefKeyEventType eventType, bool isRepeat, CefEventFlags modifiers, bool isExtended)
-		{
-			return CefNetApi.GetNativeKeyCode(eventType, isRepeat ? 1 : 0, key, modifiers, isExtended);
-		}
-
-		public static int ToNativeKeyCode(this Key key, CefKeyEventType eventType, bool isRepeat, CefEventFlags modifiers, bool isExtended)
-		{
-			return CefNetApi.GetNativeKeyCode(eventType, isRepeat ? 1 : 0, ToVirtualKey(key), modifiers, isExtended);
 		}
 
 		public static Color ToColor(this CefColor color)

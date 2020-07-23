@@ -1,4 +1,5 @@
-﻿using CefNet.Internal;
+﻿using CefNet.Input;
+using CefNet.Internal;
 using CefNet.WinApi;
 using System;
 using System.Collections.Generic;
@@ -753,7 +754,7 @@ namespace CefNet.Windows.Forms
 					{
 						var e = new CefKeyEvent();
 						e.WindowsKeyCode = unchecked((int)m.WParam);
-						e.NativeKeyCode = CefNetApi.GetWindowsScanCodeFromLParam(m.LParam);
+						e.NativeKeyCode = CefNet.Input.KeycodeConverter.GetWindowsScanCodeFromLParam(m.LParam);
 						e.IsSystemKey = (m.Msg == WM_SYSKEYDOWN);
 						e.Type = CefKeyEventType.RawKeyDown;
 						e.Modifiers = (uint)GetCefKeyboardModifiers((Keys)m.WParam.ToInt64(), m.LParam);
@@ -777,7 +778,7 @@ namespace CefNet.Windows.Forms
 			{
 				var k = new CefKeyEvent();
 				k.WindowsKeyCode = unchecked((int)m.WParam);
-				k.NativeKeyCode = CefNetApi.GetWindowsScanCodeFromLParam(m.LParam);
+				k.NativeKeyCode = CefNet.Input.KeycodeConverter.GetWindowsScanCodeFromLParam(m.LParam);
 				k.IsSystemKey = m.Msg >= WM_SYSKEYDOWN && m.Msg <= WM_SYSCHAR;
 				
 				CefEventFlags modifiers;

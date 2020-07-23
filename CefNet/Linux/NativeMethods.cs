@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
+using CefNet.Input.Linux;
 
 namespace CefNet.Linux
 {

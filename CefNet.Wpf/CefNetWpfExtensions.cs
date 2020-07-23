@@ -1,4 +1,4 @@
-﻿using CefNet.WinApi;
+﻿using CefNet.Input;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,7 +45,7 @@ namespace CefNet.Wpf
 		}
 #pragma warning restore IDE0060
 
-			public static void Union(this ref Int32Rect self, CefRect rect)
+		public static void Union(this ref Int32Rect self, CefRect rect)
 		{
 			int x = Math.Min(self.X, rect.X);
 			int right = Math.Max(self.X + self.Width, rect.X + rect.Width);
@@ -61,16 +61,6 @@ namespace CefNet.Wpf
 			if (key == Key.System)
 				return VirtualKeys.Menu; // VK_MENU
 			return (VirtualKeys)KeyInterop.VirtualKeyFromKey(key);
-		}
-
-		public static int ToNativeKeyCode(this VirtualKeys key, CefKeyEventType eventType, bool isRepeat, CefEventFlags modifiers, bool isExtended)
-		{
-			return CefNetApi.GetNativeKeyCode(eventType, isRepeat ? 1 : 0, key, modifiers, isExtended);
-		}
-
-		public static int ToNativeKeyCode(this Key key, CefKeyEventType eventType, bool isRepeat, CefEventFlags modifiers, bool isExtended)
-		{
-			return CefNetApi.GetNativeKeyCode(eventType, isRepeat ? 1 : 0, ToVirtualKey(key), modifiers, isExtended);
 		}
 
 		public static bool IsExtendedKey(this KeyEventArgs e)
