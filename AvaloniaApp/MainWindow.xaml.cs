@@ -26,10 +26,6 @@ namespace AvaloniaApp
 
 			this.Opened += MainWindow_Opened;
 			CustomWebView.FullscreenEvent.AddClassHandler(typeof(WebView), HandleFullscreenEvent);
-
-#if DEBUG
-			this.AttachDevTools();
-#endif
 		}
 
 		private void InitializeComponent()

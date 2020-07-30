@@ -50,7 +50,8 @@ namespace AvaloniaApp
 					this.FormattedText = new ColoredFormattedText
 					{
 						Text = value,
-						Typeface = new Typeface(FontFamily, FontSize, FontStyle, FontWeight),
+						Typeface = new Typeface(FontFamily, FontStyle, FontWeight),
+						FontSize = FontSize,
 						Brush = Brushes.Black,
 					};
 					this.InvalidateMeasure();
@@ -68,7 +69,8 @@ namespace AvaloniaApp
 						_xButton = new ColoredFormattedText
 						{
 							Text = "x",
-							Typeface = new Typeface(FontFamily, FontSize, FontStyle, FontWeight.Bold),
+							Typeface = new Typeface(FontFamily, FontStyle, FontWeight.Bold),
+							FontSize = FontSize,
 							Brush = Brushes.Gray,
 						};
 					}
