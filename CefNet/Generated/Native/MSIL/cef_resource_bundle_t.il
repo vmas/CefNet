@@ -32,14 +32,12 @@
 			ret
 		}
 
-		// int (*)(_cef_resource_bundle_t* self, int resource_id, void** data, size_t* data_size)*
-		.method public hidebysig int32 GetDataResource(int32 resource_id, void** data, native uint* data_size)
+		// _cef_binary_value_t* (*)(_cef_resource_bundle_t* self, int resource_id)*
+		.method public hidebysig valuetype CefNet.CApi.cef_binary_value_t* GetDataResource(int32 resource_id)
 		{
-			.maxstack 5
+			.maxstack 3
 			ldarg.0
 			ldarg.1
-			ldarg.2
-			ldarg.3
 			ldarg.0
 			ldfld void* CefNet.CApi.cef_resource_bundle_t::get_data_resource
 			calli explicit unmanaged
@@ -48,19 +46,17 @@
 #else
 				cdecl
 #endif
-				int32(valuetype CefNet.CApi.cef_resource_bundle_t*, int32, void**, native uint*)
+				valuetype CefNet.CApi.cef_binary_value_t*(valuetype CefNet.CApi.cef_resource_bundle_t*, int32)
 			ret
 		}
 
-		// int (*)(_cef_resource_bundle_t* self, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size)*
-		.method public hidebysig int32 GetDataResourceForScale(int32 resource_id, valuetype CefNet.CefScaleFactor scale_factor, void** data, native uint* data_size)
+		// _cef_binary_value_t* (*)(_cef_resource_bundle_t* self, int resource_id, cef_scale_factor_t scale_factor)*
+		.method public hidebysig valuetype CefNet.CApi.cef_binary_value_t* GetDataResourceForScale(int32 resource_id, valuetype CefNet.CefScaleFactor scale_factor)
 		{
-			.maxstack 6
+			.maxstack 4
 			ldarg.0
 			ldarg.1
 			ldarg.2
-			ldarg.3
-			ldarg.s 4
 			ldarg.0
 			ldfld void* CefNet.CApi.cef_resource_bundle_t::get_data_resource_for_scale
 			calli explicit unmanaged
@@ -69,7 +65,7 @@
 #else
 				cdecl
 #endif
-				int32(valuetype CefNet.CApi.cef_resource_bundle_t*, int32, valuetype CefNet.CefScaleFactor, void**, native uint*)
+				valuetype CefNet.CApi.cef_binary_value_t*(valuetype CefNet.CApi.cef_resource_bundle_t*, int32, valuetype CefNet.CefScaleFactor)
 			ret
 		}
 	}

@@ -54,45 +54,25 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Retrieves the contents of the specified scale independent |resource_id|. If
-		/// the value is found then |data| and |data_size| will be populated and this
-		/// function will return true (1). If the value is not found then this function
-		/// will return false (0). The returned |data| pointer will remain resident in
-		/// memory and should not be freed. Include cef_pack_resources.h for a listing
-		/// of valid resource ID values.
+		/// Returns a cef_binary_value_t containing the decompressed contents of the
+		/// specified scale independent |resource_id| or NULL if not found. Include
+		/// cef_pack_resources.h for a listing of valid resource ID values.
 		/// </summary>
-		public unsafe virtual bool GetDataResource(int resourceId, ref IntPtr data, ref long dataSize)
+		public unsafe virtual CefBinaryValue GetDataResource(int resourceId)
 		{
-			fixed (IntPtr* p1 = &data)
-			{
-				UIntPtr c2 = new UIntPtr((ulong)dataSize);
-				var rv = NativeInstance->GetDataResource(resourceId, (void**)p1, &c2) != 0;
-				dataSize = (long)c2;
-				GC.KeepAlive(this);
-				return rv;
-			}
+			return SafeCall(CefBinaryValue.Wrap(CefBinaryValue.Create, NativeInstance->GetDataResource(resourceId)));
 		}
 
 		/// <summary>
-		/// Retrieves the contents of the specified |resource_id| nearest the scale
-		/// factor |scale_factor|. Use a |scale_factor| value of SCALE_FACTOR_NONE for
-		/// scale independent resources or call GetDataResource instead. If the value
-		/// is found then |data| and |data_size| will be populated and this function
-		/// will return true (1). If the value is not found then this function will
-		/// return false (0). The returned |data| pointer will remain resident in
-		/// memory and should not be freed. Include cef_pack_resources.h for a listing
-		/// of valid resource ID values.
+		/// Returns a cef_binary_value_t containing the decompressed contents of the
+		/// specified |resource_id| nearest the scale factor |scale_factor| or NULL if
+		/// not found. Use a |scale_factor| value of SCALE_FACTOR_NONE for scale
+		/// independent resources or call GetDataResource instead.Include
+		/// cef_pack_resources.h for a listing of valid resource ID values.
 		/// </summary>
-		public unsafe virtual bool GetDataResourceForScale(int resourceId, CefScaleFactor scaleFactor, ref IntPtr data, ref long dataSize)
+		public unsafe virtual CefBinaryValue GetDataResourceForScale(int resourceId, CefScaleFactor scaleFactor)
 		{
-			fixed (IntPtr* p2 = &data)
-			{
-				UIntPtr c3 = new UIntPtr((ulong)dataSize);
-				var rv = NativeInstance->GetDataResourceForScale(resourceId, scaleFactor, (void**)p2, &c3) != 0;
-				dataSize = (long)c3;
-				GC.KeepAlive(this);
-				return rv;
-			}
+			return SafeCall(CefBinaryValue.Wrap(CefBinaryValue.Create, NativeInstance->GetDataResourceForScale(resourceId, scaleFactor)));
 		}
 	}
 }
