@@ -16,8 +16,19 @@ namespace CefNet.WinApi
 		[DllImport("user32.dll", EntryPoint = "VkKeyScanW", CharSet = CharSet.Unicode, SetLastError = true)]
 		public static extern ushort VkKeyScan(char ch);
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-		public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+		public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+		{
+			if (IntPtr.Size == 8)
+				return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
+			else
+				return new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong.ToInt32()));
+		}
+
+		[DllImport("user32.dll", EntryPoint = "SetWindowLong", CharSet = CharSet.Auto, SetLastError = true)]
+		private static extern int SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
+
+		[DllImport("user32.dll", EntryPoint = "SetWindowLongPtr", CharSet = CharSet.Auto, SetLastError = true)]
+		private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);

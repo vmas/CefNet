@@ -28,7 +28,7 @@ namespace CefNet.Internal
 				throw new Win32Exception(Marshal.GetLastWin32Error());
 
 			var source = new WindowsHwndSource(hwnd);
-			source.hWndProcHook = NativeMethods.SetWindowLongPtr(hwnd, GWLP_WNDPROC, Marshal.GetFunctionPointerForDelegate(source.fnWndProcHook));
+			source.hWndProcHook = NativeMethods.SetWindowLong(hwnd, GWLP_WNDPROC, Marshal.GetFunctionPointerForDelegate(source.fnWndProcHook));
 			if (source.hWndProcHook == IntPtr.Zero)
 				throw new Win32Exception(Marshal.GetLastWin32Error());
 
@@ -55,7 +55,7 @@ namespace CefNet.Internal
 			if (hWndProcHook != IntPtr.Zero)
 			{
 				const int GWLP_WNDPROC = -4;
-				NativeMethods.SetWindowLongPtr(this.Handle, GWLP_WNDPROC, hWndProcHook);
+				NativeMethods.SetWindowLong(this.Handle, GWLP_WNDPROC, hWndProcHook);
 			}
 			_disposed = true;
 		}
