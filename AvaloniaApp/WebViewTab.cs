@@ -157,6 +157,7 @@ namespace AvaloniaApp
 			webview.DocumentTitleChanged += HandleDocumentTitleChanged;
 			this.WebView = webview;
 			this.Header = new WebViewTabTitle(this);
+			this.Content = webview;
 		}
 
 		Type IStyleable.StyleKey
@@ -174,12 +175,6 @@ namespace AvaloniaApp
 			{
 				((WebViewTabTitle)this.Header).Text = value;
 			}
-		}
-
-		protected override void OnInitialized()
-		{
-			base.OnInitialized();
-			this.Content = this.WebView;
 		}
 
 		public void Close()
