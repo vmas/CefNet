@@ -53,17 +53,6 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether this sink is valid.
-		/// </summary>
-		public unsafe virtual bool IsValid
-		{
-			get
-			{
-				return SafeCall(NativeInstance->IsValid() != 0);
-			}
-		}
-
-		/// <summary>
 		/// Gets the name of this sink.
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>

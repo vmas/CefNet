@@ -54,17 +54,6 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether this source is valid.
-		/// </summary>
-		public unsafe virtual bool IsValid
-		{
-			get
-			{
-				return SafeCall(NativeInstance->IsValid() != 0);
-			}
-		}
-
-		/// <summary>
 		/// Gets a value indicating whether this source outputs its content via Cast.
 		/// </summary>
 		public unsafe virtual bool IsCastSource

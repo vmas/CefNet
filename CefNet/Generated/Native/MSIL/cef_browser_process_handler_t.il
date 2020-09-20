@@ -49,24 +49,6 @@
 			ret
 		}
 
-		// void (*)(_cef_browser_process_handler_t* self, _cef_list_value_t* extra_info)*
-		.method public hidebysig void OnRenderProcessThreadCreated(valuetype CefNet.CApi.cef_list_value_t* extra_info)
-		{
-			.maxstack 3
-			ldarg.0
-			ldarg.1
-			ldarg.0
-			ldfld void* CefNet.CApi.cef_browser_process_handler_t::on_render_process_thread_created
-			calli explicit unmanaged
-#ifdef WINDOWS
-				stdcall
-#else
-				cdecl
-#endif
-				void(valuetype CefNet.CApi.cef_browser_process_handler_t*, valuetype CefNet.CApi.cef_list_value_t*)
-			ret
-		}
-
 		// _cef_print_handler_t* (*)(_cef_browser_process_handler_t* self)*
 		.method public hidebysig valuetype CefNet.CApi.cef_print_handler_t* GetPrintHandler()
 		{

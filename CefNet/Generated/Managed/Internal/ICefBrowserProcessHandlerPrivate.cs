@@ -23,7 +23,6 @@ namespace CefNet.Internal
 	public interface ICefBrowserProcessHandlerPrivate
 	{
 		bool AvoidOnBeforeChildProcessLaunch();
-		bool AvoidOnRenderProcessThreadCreated();
 		bool AvoidOnScheduleMessagePumpWork();
 	}
 }

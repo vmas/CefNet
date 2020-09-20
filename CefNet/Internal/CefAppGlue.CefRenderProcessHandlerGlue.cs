@@ -7,14 +7,6 @@ namespace CefNet.Internal
 {
 	partial class CefAppGlue
 	{
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		internal extern bool AvoidOnRenderThreadCreated();
-
-		public void OnRenderThreadCreated(CefListValue extraInfo)
-		{
-			_application.OnRenderThreadCreated(new RenderThreadCreatedEventArgs(extraInfo));
-		}
-
 		public void OnWebKitInitialized()
 		{
 			_application.OnWebKitInitialized();

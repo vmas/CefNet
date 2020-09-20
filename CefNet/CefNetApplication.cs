@@ -50,11 +50,6 @@ namespace CefNet
 		public event EventHandler<EventArgs> BeforeChildProcessLaunch;
 
 		/// <summary>
-		/// Occurs after the render process main thread has been created.
-		/// </summary>
-		public event EventHandler<RenderThreadCreatedEventArgs> RenderThreadCreated;
-
-		/// <summary>
 		/// Occurs after loading the CEF library, but before the CEF process is initialized.
 		/// </summary>
 		public event EventHandler BeforeInitialize;
@@ -555,17 +550,7 @@ namespace CefNet
 		}
 
 
-		#region CefRenderProcessHandler 
-
-		/// <summary>
-		/// Raises the <see cref="RenderThreadCreated"/> event.<para/>
-		/// Called after the render process main thread has been created. In the browser process called on the IO thread.
-		/// </summary>
-		/// <param name="e">A <see cref="RenderThreadCreatedEventArgs"/> that contains the event data.</param>
-		protected internal virtual void OnRenderThreadCreated(RenderThreadCreatedEventArgs e)
-		{
-			RenderThreadCreated?.Invoke(this, e);
-		}
+		#region CefRenderProcessHandler
 
 		/// <summary>
 		/// Raises the <see cref="WebKitInitialized"/> event.

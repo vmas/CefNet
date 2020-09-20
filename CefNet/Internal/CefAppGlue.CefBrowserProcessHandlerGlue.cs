@@ -21,16 +21,6 @@ namespace CefNet.Internal
 			_application.OnBeforeChildProcessLaunch(new BeforeChildProcessLaunchEventArgs(commandLine));
 		}
 
-		internal bool AvoidOnRenderProcessThreadCreated()
-		{
-			return false;
-		}
-
-		public void OnRenderProcessThreadCreated(CefListValue extraInfo)
-		{
-			_application.OnRenderThreadCreated(new RenderThreadCreatedEventArgs(extraInfo));
-		}
-
 		public CefPrintHandler GetPrintHandler()
 		{
 			return _application.GetPrintHandler();

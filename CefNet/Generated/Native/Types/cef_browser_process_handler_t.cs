@@ -61,22 +61,6 @@ namespace CefNet.CApi
 		public unsafe extern void OnBeforeChildProcessLaunch(cef_command_line_t* command_line);
 
 		/// <summary>
-		/// void (*)(_cef_browser_process_handler_t* self, _cef_list_value_t* extra_info)*
-		/// </summary>
-		public void* on_render_process_thread_created;
-
-		/// <summary>
-		/// Called on the browser process IO thread after the main thread has been
-		/// created for a new render process. Provides an opportunity to specify extra
-		/// information that will be passed to
-		/// cef_render_process_handler_t::on_render_thread_created() in the render
-		/// process. Do not keep a reference to |extra_info| outside of this function.
-		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		[NativeName("on_render_process_thread_created")]
-		public unsafe extern void OnRenderProcessThreadCreated(cef_list_value_t* extra_info);
-
-		/// <summary>
 		/// _cef_print_handler_t* (*)(_cef_browser_process_handler_t* self)*
 		/// </summary>
 		public void* get_print_handler;

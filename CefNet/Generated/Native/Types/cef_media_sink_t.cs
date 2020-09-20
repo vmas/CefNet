@@ -45,18 +45,6 @@ namespace CefNet.CApi
 		public unsafe extern cef_string_userfree_t GetId();
 
 		/// <summary>
-		/// int (*)(_cef_media_sink_t* self)*
-		/// </summary>
-		public void* is_valid;
-
-		/// <summary>
-		/// Returns true (1) if this sink is valid.
-		/// </summary>
-		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
-
-		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_media_sink_t* self)*
 		/// </summary>
 		public void* get_name;

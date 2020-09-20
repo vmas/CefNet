@@ -22,7 +22,6 @@ namespace CefNet.Internal
 {
 	public interface ICefRenderProcessHandlerPrivate
 	{
-		bool AvoidOnRenderThreadCreated();
 		bool AvoidOnBrowserCreated();
 		bool AvoidOnBrowserDestroyed();
 		bool AvoidOnContextCreated();
