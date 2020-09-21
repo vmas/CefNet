@@ -29,16 +29,6 @@ namespace CefNet.Internal
 			_implementation = impl;
 		}
 
-		bool ICefRenderProcessHandlerPrivate.AvoidOnRenderThreadCreated()
-		{
-			return _implementation.AvoidOnRenderThreadCreated();
-		}
-
-		protected internal unsafe override void OnRenderThreadCreated(CefListValue extraInfo)
-		{
-			_implementation.OnRenderThreadCreated(extraInfo);
-		}
-
 		protected internal unsafe override void OnWebKitInitialized()
 		{
 			_implementation.OnWebKitInitialized();

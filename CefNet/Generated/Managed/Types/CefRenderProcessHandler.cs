@@ -30,8 +30,6 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefRenderProcessHandler : CefBaseRefCounted<cef_render_process_handler_t>, ICefRenderProcessHandlerPrivate
 	{
-		private static readonly OnRenderThreadCreatedDelegate fnOnRenderThreadCreated = OnRenderThreadCreatedImpl;
-
 		private static readonly OnWebKitInitializedDelegate fnOnWebKitInitialized = OnWebKitInitializedImpl;
 
 		private static readonly OnBrowserCreatedDelegate fnOnBrowserCreated = OnBrowserCreatedImpl;
@@ -58,7 +56,6 @@ namespace CefNet
 		public CefRenderProcessHandler()
 		{
 			cef_render_process_handler_t* self = this.NativeInstance;
-			self->on_render_thread_created = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRenderThreadCreated);
 			self->on_web_kit_initialized = (void*)Marshal.GetFunctionPointerForDelegate(fnOnWebKitInitialized);
 			self->on_browser_created = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBrowserCreated);
 			self->on_browser_destroyed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBrowserDestroyed);
@@ -73,34 +70,6 @@ namespace CefNet
 		public CefRenderProcessHandler(cef_render_process_handler_t* instance)
 			: base((cef_base_ref_counted_t*)instance)
 		{
-		}
-
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		extern bool ICefRenderProcessHandlerPrivate.AvoidOnRenderThreadCreated();
-
-		/// <summary>
-		/// Called after the render process main thread has been created. |extra_info|
-		/// is a read-only value originating from
-		/// cef_browser_process_handler_t::on_render_process_thread_created(). Do not
-		/// keep a reference to |extra_info| outside of this function.
-		/// </summary>
-		protected internal unsafe virtual void OnRenderThreadCreated(CefListValue extraInfo)
-		{
-		}
-
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-		private unsafe delegate void OnRenderThreadCreatedDelegate(cef_render_process_handler_t* self, cef_list_value_t* extra_info);
-
-		// void (*)(_cef_render_process_handler_t* self, _cef_list_value_t* extra_info)*
-		private static unsafe void OnRenderThreadCreatedImpl(cef_render_process_handler_t* self, cef_list_value_t* extra_info)
-		{
-			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;
-			if (instance == null || ((ICefRenderProcessHandlerPrivate)instance).AvoidOnRenderThreadCreated())
-			{
-				ReleaseIfNonNull((cef_base_ref_counted_t*)extra_info);
-				return;
-			}
-			instance.OnRenderThreadCreated(CefListValue.Wrap(CefListValue.Create, extra_info));
 		}
 
 		/// <summary>

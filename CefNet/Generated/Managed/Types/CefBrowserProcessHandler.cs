@@ -34,8 +34,6 @@ namespace CefNet
 
 		private static readonly OnBeforeChildProcessLaunchDelegate fnOnBeforeChildProcessLaunch = OnBeforeChildProcessLaunchImpl;
 
-		private static readonly OnRenderProcessThreadCreatedDelegate fnOnRenderProcessThreadCreated = OnRenderProcessThreadCreatedImpl;
-
 		private static readonly GetPrintHandlerDelegate fnGetPrintHandler = GetPrintHandlerImpl;
 
 		private static readonly OnScheduleMessagePumpWorkDelegate fnOnScheduleMessagePumpWork = OnScheduleMessagePumpWorkImpl;
@@ -50,7 +48,6 @@ namespace CefNet
 			cef_browser_process_handler_t* self = this.NativeInstance;
 			self->on_context_initialized = (void*)Marshal.GetFunctionPointerForDelegate(fnOnContextInitialized);
 			self->on_before_child_process_launch = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforeChildProcessLaunch);
-			self->on_render_process_thread_created = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRenderProcessThreadCreated);
 			self->get_print_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetPrintHandler);
 			self->on_schedule_message_pump_work = (void*)Marshal.GetFunctionPointerForDelegate(fnOnScheduleMessagePumpWork);
 		}
@@ -109,35 +106,6 @@ namespace CefNet
 				return;
 			}
 			instance.OnBeforeChildProcessLaunch(CefCommandLine.Wrap(CefCommandLine.Create, command_line));
-		}
-
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		extern bool ICefBrowserProcessHandlerPrivate.AvoidOnRenderProcessThreadCreated();
-
-		/// <summary>
-		/// Called on the browser process IO thread after the main thread has been
-		/// created for a new render process. Provides an opportunity to specify extra
-		/// information that will be passed to
-		/// cef_render_process_handler_t::on_render_thread_created() in the render
-		/// process. Do not keep a reference to |extra_info| outside of this function.
-		/// </summary>
-		protected internal unsafe virtual void OnRenderProcessThreadCreated(CefListValue extraInfo)
-		{
-		}
-
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-		private unsafe delegate void OnRenderProcessThreadCreatedDelegate(cef_browser_process_handler_t* self, cef_list_value_t* extra_info);
-
-		// void (*)(_cef_browser_process_handler_t* self, _cef_list_value_t* extra_info)*
-		private static unsafe void OnRenderProcessThreadCreatedImpl(cef_browser_process_handler_t* self, cef_list_value_t* extra_info)
-		{
-			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
-			if (instance == null || ((ICefBrowserProcessHandlerPrivate)instance).AvoidOnRenderProcessThreadCreated())
-			{
-				ReleaseIfNonNull((cef_base_ref_counted_t*)extra_info);
-				return;
-			}
-			instance.OnRenderProcessThreadCreated(CefListValue.Wrap(CefListValue.Create, extra_info));
 		}
 
 		/// <summary>

@@ -32,23 +32,6 @@
 		}
 
 		// int (*)(_cef_media_source_t* self)*
-		.method public hidebysig int32 IsValid()
-		{
-			.maxstack 2
-			ldarg.0
-			ldarg.0
-			ldfld void* CefNet.CApi.cef_media_source_t::is_valid
-			calli explicit unmanaged
-#ifdef WINDOWS
-				stdcall
-#else
-				cdecl
-#endif
-				int32(valuetype CefNet.CApi.cef_media_source_t*)
-			ret
-		}
-
-		// int (*)(_cef_media_source_t* self)*
 		.method public hidebysig int32 IsCastSource()
 		{
 			.maxstack 2

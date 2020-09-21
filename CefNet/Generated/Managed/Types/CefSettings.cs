@@ -159,6 +159,23 @@ namespace CefNet
 		}
 
 		/// <summary>
+		/// Set to true (1) to enable use of the Chrome runtime in CEF. This feature is
+		/// considered experimental and is not recommended for most users at this time.
+		/// See issue #2969 for details.
+		/// </summary>
+		public bool ChromeRuntime
+		{
+			get
+			{
+				return _instance->chrome_runtime != 0;
+			}
+			set
+			{
+				_instance->chrome_runtime = value ? 1 : 0;
+			}
+		}
+
+		/// <summary>
 		/// Set to true (1) to have the browser process message loop run in a separate
 		/// thread. If false (0) than the CefDoMessageLoopWork() function must be
 		/// called from your application message loop. This option is only supported on

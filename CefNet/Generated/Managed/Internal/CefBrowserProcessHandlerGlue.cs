@@ -44,16 +44,6 @@ namespace CefNet.Internal
 			_implementation.OnBeforeChildProcessLaunch(commandLine);
 		}
 
-		bool ICefBrowserProcessHandlerPrivate.AvoidOnRenderProcessThreadCreated()
-		{
-			return _implementation.AvoidOnRenderProcessThreadCreated();
-		}
-
-		protected internal unsafe override void OnRenderProcessThreadCreated(CefListValue extraInfo)
-		{
-			_implementation.OnRenderProcessThreadCreated(extraInfo);
-		}
-
 		protected internal unsafe override CefPrintHandler GetPrintHandler()
 		{
 			return _implementation.GetPrintHandler();

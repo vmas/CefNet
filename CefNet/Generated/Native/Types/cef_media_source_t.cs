@@ -48,18 +48,6 @@ namespace CefNet.CApi
 		/// <summary>
 		/// int (*)(_cef_media_source_t* self)*
 		/// </summary>
-		public void* is_valid;
-
-		/// <summary>
-		/// Returns true (1) if this source is valid.
-		/// </summary>
-		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
-
-		/// <summary>
-		/// int (*)(_cef_media_source_t* self)*
-		/// </summary>
 		public void* is_cast_source;
 
 		/// <summary>

@@ -1,16 +1,5 @@
 ﻿.class CefNet.Internal.CefAppGlue
 {
-	.method assembly hidebysig instance bool AvoidOnRenderThreadCreated()
-	{
-		.maxstack 2
-		ldarg.0
-		ldfld class CefNet.CefNetApplication CefNet.Internal.CefAppGlue::_application
-		ldvirtftn instance void CefNet.CefNetApplication::OnRenderThreadCreated(class CefNet.RenderThreadCreatedEventArgs)
-		ldftn instance void CefNet.CefNetApplication::OnRenderThreadCreated(class CefNet.RenderThreadCreatedEventArgs)
-		ceq
-		ret
-	}
-
 	.method assembly hidebysig instance bool AvoidOnBrowserCreated()
 	{
 		.maxstack 2

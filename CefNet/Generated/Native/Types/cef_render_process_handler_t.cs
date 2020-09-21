@@ -32,21 +32,6 @@ namespace CefNet.CApi
 		public cef_base_ref_counted_t @base;
 
 		/// <summary>
-		/// void (*)(_cef_render_process_handler_t* self, _cef_list_value_t* extra_info)*
-		/// </summary>
-		public void* on_render_thread_created;
-
-		/// <summary>
-		/// Called after the render process main thread has been created. |extra_info|
-		/// is a read-only value originating from
-		/// cef_browser_process_handler_t::on_render_process_thread_created(). Do not
-		/// keep a reference to |extra_info| outside of this function.
-		/// </summary>
-		[NativeName("on_render_thread_created")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnRenderThreadCreated(cef_list_value_t* extra_info);
-
-		/// <summary>
 		/// void (*)(_cef_render_process_handler_t* self)*
 		/// </summary>
 		public void* on_web_kit_initialized;

@@ -14,17 +14,6 @@
 	.class public CefRenderProcessHandler
 	{
 
-		.method private final hidebysig newslot virtual instance bool CefNet.Internal.ICefRenderProcessHandlerPrivate.AvoidOnRenderThreadCreated()
-		{
-			.override method instance bool CefNet.Internal.ICefRenderProcessHandlerPrivate::AvoidOnRenderThreadCreated()
-			.maxstack 2
-			ldarg.0
-			ldvirtftn instance void CefNet.CefRenderProcessHandler::OnRenderThreadCreated(class CefNet.CefListValue)
-			ldftn instance void CefNet.CefRenderProcessHandler::OnRenderThreadCreated(class CefNet.CefListValue)
-			ceq
-			ret
-		}
-
 		.method private final hidebysig newslot virtual instance bool CefNet.Internal.ICefRenderProcessHandlerPrivate.AvoidOnBrowserCreated()
 		{
 			.override method instance bool CefNet.Internal.ICefRenderProcessHandlerPrivate::AvoidOnBrowserCreated()

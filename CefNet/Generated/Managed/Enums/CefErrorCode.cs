@@ -84,6 +84,10 @@ namespace CefNet
 
 		CleartextNotPermitted = -29,
 
+		BlockedByCsp = -30,
+
+		H2OrQuicRequired = -31,
+
 		ConnectionClosed = -100,
 
 		ConnectionReset = -101,
