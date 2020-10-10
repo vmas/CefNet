@@ -100,6 +100,20 @@
     <Compile Remove="Generated\Managed\Internal\CefWriteHandlerGlue.cs" />
   </ItemGroup>
 
+  <UsingTask TaskName="WriteUTF8TextToFile" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <File ParameterType="System.String" Required="True" />
+      <Text ParameterType="System.String" Required="True" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+          System.IO.File.WriteAllText(File, Text, System.Text.Encoding.UTF8);
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
   <Target Name="ProcessILAfterCompile" AfterTargets="Compile">
     <CallTarget Targets="InitializeIL; CoreDecompile; ConvertResources; CoreCompileIL" />
   </Target>
@@ -132,7 +146,7 @@
       <Pattern>\.method [^{}]+ cil managed forwardref[^}]+} // end of method (?&lt;method&gt;[^ \r\t\n]+)</Pattern>
       <ILSource>$([System.Text.RegularExpressions.Regex]::Replace($(ILSource), $(Pattern), $(Replacement)))</ILSource>
     </PropertyGroup>
-    <WriteLinesToFile File="$(ILFile)" Lines="$(ILSource)" Overwrite="true" />
+    <WriteUTF8TextToFile File="$(ILFile)" Text="$(ILSource)" />
     <PropertyGroup>
       <ILSource />
     </PropertyGroup>
