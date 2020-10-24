@@ -13,6 +13,9 @@ namespace CefNet.Net
 	/// <summary>
 	/// Provides an URL request that is not associated with a specific browser or frame.
 	/// </summary>
+	/// <remarks>
+	/// This class is only available in the browser process.
+	/// </remarks>
 	public class CefNetWebRequest : CefUrlRequestClient, INotifyCompletion
 	{
 		private sealed class RequestOperation

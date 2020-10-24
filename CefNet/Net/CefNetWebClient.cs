@@ -13,6 +13,9 @@ namespace CefNet.Net
 	/// <summary>
 	/// Provides a base class for sending HTTP requests and receiving HTTP responses from a resource identified by a URI.
 	/// </summary>
+	/// <remarks>
+	/// This class is only available in the browser process.
+	/// </remarks>
 	public class CefNetWebClient : ICefNetCredentialProvider
 	{
 		private readonly CefRequestContext _context;

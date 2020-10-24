@@ -7,9 +7,9 @@ namespace CefNet
 	public unsafe partial class CefUrlRequest
 	{
 		/// <summary>
-		/// Creates a new URL request that is not associated with a specific browser or
-		/// frame.<para/>
-		/// For requests originating from the browser process:
+		/// Creates a new URL request in the browser process that is not associated
+		/// with a specific browser or frame.<para/>
+		/// A request will be behave as follows:
 		/// <list type="bullet">
 		/// <item>
 		/// <description>
@@ -24,26 +24,12 @@ namespace CefNet
 		/// </description>
 		/// </item>
 		/// </list>
-		/// For requests originating from the render process:
-		/// <list type="bullet">
-		/// <item>
-		/// <description>
-		/// It cannot be intercepted by the client so only http(s) and blob schemes
-		/// are supported.
-		/// </description>
-		/// </item>
-		/// <item>
-		/// <description>
-		/// POST data may only contain a single element of type <see cref="CefPostDataElementType.Bytes"/>.
-		/// </description>
-		/// </item>
-		/// </list>
 		/// </summary>
 		/// <remarks>
 		/// Use <see cref="CefFrame.CreateUrlRequest"/> instead if you want the request to
 		/// have this association, in which case it may be handled differently (see
-		/// documentation on that function). Requests may originate from the both browser
-		/// process and the render process.
+		/// documentation on that function). Requests may only originate from the browser
+		/// process.
 		/// </remarks>
 		/// <param name="request">
 		/// The <see cref="CefRequest"/> object. It will be marked as read-only after calling
