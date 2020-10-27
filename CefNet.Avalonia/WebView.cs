@@ -297,7 +297,7 @@ namespace CefNet.Avalonia
 				drawingContext.DrawText(Brushes.Black, new Point(10, 10), new FormattedText
 				{
 					Text = this.GetType().Name,
-					Typeface = FontManager.Current.GetOrAddTypeface(FontFamily, FontStyle, FontWeight),
+					Typeface = new Typeface(FontFamily, FontStyle, FontWeight),
 					FontSize = FontSize,
 				});
 			}
