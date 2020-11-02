@@ -102,8 +102,9 @@ namespace CefNet.Net
 				NetworkCredential credential = (t.Status == TaskStatus.RanToCompletion) ? t.Result : null;
 				if (credential is null)
 					callback.Cancel();
-				callback.Continue(credential.UserName, credential.Password);
-			}).ConfigureAwait(false);
+				else
+					callback.Continue(credential.UserName, credential.Password);
+			}, op.cancellationToken, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.DenyChildAttach, TaskScheduler.Default);
 			return true;
 		}
 
