@@ -70,8 +70,8 @@ CEFFRAMEWORK_DIR="$(find $CEFBINARIES -name "Release")"
 
 if [ ! -d "$CEFFRAMEWORK_DIR" ]; then
     if [ ! -f "$CEFBINARIES/$CEFZIP" ]; then
-        echo "downloading cef binaries from http://opensource.spotify.com/cefbuilds/$CEFZIP"
-        curl -o "$CEFBINARIES/$CEFZIP" "http://opensource.spotify.com/cefbuilds/$CEFZIP"
+        echo "downloading cef binaries from https://cef-builds.spotifycdn.com/$CEFZIP"
+        curl -o "$CEFBINARIES/$CEFZIP" "https://cef-builds.spotifycdn.com/$CEFZIP"
     fi
     echo "unzipping cef binaries"
     tar -jxvf "$CEFBINARIES/$CEFZIP" --strip-components 1 -C "./$CEFBINARIES"
