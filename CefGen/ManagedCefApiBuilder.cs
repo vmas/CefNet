@@ -525,7 +525,7 @@ namespace CefGen
 						}
 					}
 				}
-				else if (!Equals(property.SetterType, property.GetterType))
+				else if (!SymbolEqualityComparer.Default.Equals(property.SetterType, property.GetterType))
 				{
 
 					if (property.GetterType.Name == "cef_string_userfree_t"
@@ -608,7 +608,7 @@ namespace CefGen
 			foreach (IParameterSymbol arg in method.Parameters)
 			{
 				index++;
-				CefParameterInfo managedInfo = managedArgs.First(cpi => Equals(cpi.Symbol, arg));
+				CefParameterInfo managedInfo = managedArgs.First(cpi => SymbolEqualityComparer.Default.Equals(cpi.Symbol, arg));
 				if (managedInfo.IsArraySize)
 					continue;
 

@@ -23,6 +23,7 @@ namespace CefGen
 			this.Enums = new CppContainerList<CppEnum>(this);
 			this.Classes = new CppContainerList<CppClass>(this);
 			this.Typedefs = new CppContainerList<CppTypedef>(this);
+			this.Attributes = new CppContainerList<CppAttribute>(this);
 		}
 
 		public string ApiHash { get; set; }
@@ -38,6 +39,8 @@ namespace CefGen
 		public CppContainerList<CppClass> Classes { get; set; }
 
 		public CppContainerList<CppTypedef> Typedefs { get; set; }
+
+		public CppContainerList<CppAttribute> Attributes { get; set; }
 
 		public string Name { get; set; }
 
