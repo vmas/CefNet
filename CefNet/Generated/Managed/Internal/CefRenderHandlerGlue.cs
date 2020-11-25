@@ -114,16 +114,6 @@ namespace CefNet.Internal
 			_implementation.OnAcceleratedPaint(browser, type, dirtyRects, sharedHandle);
 		}
 
-		bool ICefRenderHandlerPrivate.AvoidOnCursorChange()
-		{
-			return _implementation.AvoidOnCursorChange();
-		}
-
-		protected internal unsafe override void OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
-		{
-			_implementation.OnCursorChange(browser, cursor, type, customCursorInfo);
-		}
-
 		bool ICefRenderHandlerPrivate.AvoidStartDragging()
 		{
 			return _implementation.AvoidStartDragging();

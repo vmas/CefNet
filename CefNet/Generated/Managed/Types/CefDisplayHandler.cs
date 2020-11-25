@@ -47,6 +47,8 @@ namespace CefNet
 
 		private static readonly OnLoadingProgressChangeDelegate fnOnLoadingProgressChange = OnLoadingProgressChangeImpl;
 
+		private static readonly OnCursorChangeDelegate fnOnCursorChange = OnCursorChangeImpl;
+
 		internal static unsafe CefDisplayHandler Create(IntPtr instance)
 		{
 			return new CefDisplayHandler((cef_display_handler_t*)instance);
@@ -64,6 +66,7 @@ namespace CefNet
 			self->on_console_message = (void*)Marshal.GetFunctionPointerForDelegate(fnOnConsoleMessage);
 			self->on_auto_resize = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAutoResize);
 			self->on_loading_progress_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnLoadingProgressChange);
+			self->on_cursor_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnCursorChange);
 		}
 
 		public CefDisplayHandler(cef_display_handler_t* instance)
@@ -318,6 +321,35 @@ namespace CefNet
 				return;
 			}
 			instance.OnLoadingProgressChange(CefBrowser.Wrap(CefBrowser.Create, browser), progress);
+		}
+
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		extern bool ICefDisplayHandlerPrivate.AvoidOnCursorChange();
+
+		/// <summary>
+		/// Called when the browser&apos;s cursor has changed. If |type| is CT_CUSTOM then
+		/// |custom_cursor_info| will be populated with the custom cursor information.
+		/// Return true (1) if the cursor change was handled or false (0) for default
+		/// handling.
+		/// </summary>
+		protected internal unsafe virtual bool OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
+		{
+			return default;
+		}
+
+		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		private unsafe delegate int OnCursorChangeDelegate(cef_display_handler_t* self, cef_browser_t* browser, IntPtr cursor, CefCursorType type, cef_cursor_info_t* custom_cursor_info);
+
+		// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, HCURSOR cursor, cef_cursor_type_t type, const const _cef_cursor_info_t* custom_cursor_info)*
+		private static unsafe int OnCursorChangeImpl(cef_display_handler_t* self, cef_browser_t* browser, IntPtr cursor, CefCursorType type, cef_cursor_info_t* custom_cursor_info)
+		{
+			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
+			if (instance == null || ((ICefDisplayHandlerPrivate)instance).AvoidOnCursorChange())
+			{
+				ReleaseIfNonNull((cef_base_ref_counted_t*)browser);
+				return default;
+			}
+			return instance.OnCursorChange(CefBrowser.Wrap(CefBrowser.Create, browser), cursor, type, *(CefCursorInfo*)custom_cursor_info) ? 1 : 0;
 		}
 	}
 }

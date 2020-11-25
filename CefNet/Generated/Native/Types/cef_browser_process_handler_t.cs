@@ -32,6 +32,28 @@ namespace CefNet.CApi
 		public cef_base_ref_counted_t @base;
 
 		/// <summary>
+		/// void (*)(_cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)*
+		/// </summary>
+		public void* get_cookieable_schemes;
+
+		/// <summary>
+		/// Called on the browser process UI thread to retrieve the list of schemes
+		/// that should support cookies. If |include_defaults| is true (1) the default
+		/// schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;) will also be supported. Providing
+		/// an NULL |schemes| value and setting |include_defaults| to false (0) will
+		/// disable all loading and saving of cookies.
+		/// This state will apply to the cef_cookie_manager_t associated with the
+		/// global cef_request_context_t. It will also be used as the initial state for
+		/// any new cef_request_context_ts created by the client. After creating a new
+		/// cef_request_context_t the cef_cookie_manager_t::SetSupportedSchemes
+		/// function may be called on the associated cef_cookie_manager_t to futher
+		/// override these values.
+		/// </summary>
+		[NativeName("get_cookieable_schemes")]
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		public unsafe extern void GetCookieableSchemes(cef_string_list_t schemes, int* include_defaults);
+
+		/// <summary>
 		/// void (*)(_cef_browser_process_handler_t* self)*
 		/// </summary>
 		public void* on_context_initialized;
@@ -96,6 +118,22 @@ namespace CefNet.CApi
 		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_schedule_message_pump_work")]
 		public unsafe extern void OnScheduleMessagePumpWork(long delay_ms);
+
+		/// <summary>
+		/// _cef_client_t* (*)(_cef_browser_process_handler_t* self)*
+		/// </summary>
+		public void* get_default_client;
+
+		/// <summary>
+		/// Return the default client for use with a newly created browser window. If
+		/// null is returned the browser will be unmanaged (no callbacks will be
+		/// executed for that browser) and application shutdown will be blocked until
+		/// the browser window is closed manually. This function is currently only used
+		/// with the chrome runtime.
+		/// </summary>
+		[NativeName("get_default_client")]
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		public unsafe extern cef_client_t* GetDefaultClient();
 	}
 }
 

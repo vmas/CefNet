@@ -30,6 +30,8 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefBrowserProcessHandler : CefBaseRefCounted<cef_browser_process_handler_t>, ICefBrowserProcessHandlerPrivate
 	{
+		private static readonly GetCookieableSchemesDelegate fnGetCookieableSchemes = GetCookieableSchemesImpl;
+
 		private static readonly OnContextInitializedDelegate fnOnContextInitialized = OnContextInitializedImpl;
 
 		private static readonly OnBeforeChildProcessLaunchDelegate fnOnBeforeChildProcessLaunch = OnBeforeChildProcessLaunchImpl;
@@ -37,6 +39,8 @@ namespace CefNet
 		private static readonly GetPrintHandlerDelegate fnGetPrintHandler = GetPrintHandlerImpl;
 
 		private static readonly OnScheduleMessagePumpWorkDelegate fnOnScheduleMessagePumpWork = OnScheduleMessagePumpWorkImpl;
+
+		private static readonly GetDefaultClientDelegate fnGetDefaultClient = GetDefaultClientImpl;
 
 		internal static unsafe CefBrowserProcessHandler Create(IntPtr instance)
 		{
@@ -46,15 +50,51 @@ namespace CefNet
 		public CefBrowserProcessHandler()
 		{
 			cef_browser_process_handler_t* self = this.NativeInstance;
+			self->get_cookieable_schemes = (void*)Marshal.GetFunctionPointerForDelegate(fnGetCookieableSchemes);
 			self->on_context_initialized = (void*)Marshal.GetFunctionPointerForDelegate(fnOnContextInitialized);
 			self->on_before_child_process_launch = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforeChildProcessLaunch);
 			self->get_print_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetPrintHandler);
 			self->on_schedule_message_pump_work = (void*)Marshal.GetFunctionPointerForDelegate(fnOnScheduleMessagePumpWork);
+			self->get_default_client = (void*)Marshal.GetFunctionPointerForDelegate(fnGetDefaultClient);
 		}
 
 		public CefBrowserProcessHandler(cef_browser_process_handler_t* instance)
 			: base((cef_base_ref_counted_t*)instance)
 		{
+		}
+
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		extern bool ICefBrowserProcessHandlerPrivate.AvoidGetCookieableSchemes();
+
+		/// <summary>
+		/// Called on the browser process UI thread to retrieve the list of schemes
+		/// that should support cookies. If |include_defaults| is true (1) the default
+		/// schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;) will also be supported. Providing
+		/// an NULL |schemes| value and setting |include_defaults| to false (0) will
+		/// disable all loading and saving of cookies.
+		/// This state will apply to the cef_cookie_manager_t associated with the
+		/// global cef_request_context_t. It will also be used as the initial state for
+		/// any new cef_request_context_ts created by the client. After creating a new
+		/// cef_request_context_t the cef_cookie_manager_t::SetSupportedSchemes
+		/// function may be called on the associated cef_cookie_manager_t to futher
+		/// override these values.
+		/// </summary>
+		protected internal unsafe virtual void GetCookieableSchemes(CefStringList schemes, ref int includeDefaults)
+		{
+		}
+
+		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		private unsafe delegate void GetCookieableSchemesDelegate(cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults);
+
+		// void (*)(_cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)*
+		private static unsafe void GetCookieableSchemesImpl(cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)
+		{
+			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
+			if (instance == null || ((ICefBrowserProcessHandlerPrivate)instance).AvoidGetCookieableSchemes())
+			{
+				return;
+			}
+			instance.GetCookieableSchemes(CefStringList.Wrap(schemes), ref *include_defaults);
 		}
 
 		/// <summary>
@@ -168,6 +208,35 @@ namespace CefNet
 				return;
 			}
 			instance.OnScheduleMessagePumpWork(delay_ms);
+		}
+
+		/// <summary>
+		/// Return the default client for use with a newly created browser window. If
+		/// null is returned the browser will be unmanaged (no callbacks will be
+		/// executed for that browser) and application shutdown will be blocked until
+		/// the browser window is closed manually. This function is currently only used
+		/// with the chrome runtime.
+		/// </summary>
+		protected internal unsafe virtual CefClient GetDefaultClient()
+		{
+			return default;
+		}
+
+		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		private unsafe delegate cef_client_t* GetDefaultClientDelegate(cef_browser_process_handler_t* self);
+
+		// _cef_client_t* (*)(_cef_browser_process_handler_t* self)*
+		private static unsafe cef_client_t* GetDefaultClientImpl(cef_browser_process_handler_t* self)
+		{
+			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
+			if (instance == null)
+			{
+				return default;
+			}
+			CefClient rv = instance.GetDefaultClient();
+			if (rv == null)
+				return null;
+			return (rv != null) ? rv.GetNativeInstance() : null;
 		}
 	}
 }

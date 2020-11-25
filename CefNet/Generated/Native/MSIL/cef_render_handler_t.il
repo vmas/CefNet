@@ -194,27 +194,6 @@
 			ret
 		}
 
-		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, HCURSOR cursor, cef_cursor_type_t type, const const _cef_cursor_info_t* custom_cursor_info)*
-		.method public hidebysig void OnCursorChange(valuetype CefNet.CApi.cef_browser_t* browser, native int cursor, valuetype CefNet.CefCursorType 'type', valuetype CefNet.CApi.cef_cursor_info_t* custom_cursor_info)
-		{
-			.maxstack 6
-			ldarg.0
-			ldarg.1
-			ldarg.2
-			ldarg.3
-			ldarg.s 4
-			ldarg.0
-			ldfld void* CefNet.CApi.cef_render_handler_t::on_cursor_change
-			calli explicit unmanaged
-#ifdef WINDOWS
-				stdcall
-#else
-				cdecl
-#endif
-				void(valuetype CefNet.CApi.cef_render_handler_t*, valuetype CefNet.CApi.cef_browser_t*, native int, valuetype CefNet.CefCursorType, valuetype CefNet.CApi.cef_cursor_info_t*)
-			ret
-		}
-
 		// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, _cef_drag_data_t* drag_data, cef_drag_operations_mask_t allowed_ops, int x, int y)*
 		.method public hidebysig int32 StartDragging(valuetype CefNet.CApi.cef_browser_t* browser, valuetype CefNet.CApi.cef_drag_data_t* drag_data, valuetype CefNet.CefDragOperationsMask allowed_ops, int32 x, int32 y)
 		{

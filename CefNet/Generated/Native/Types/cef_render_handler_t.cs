@@ -165,19 +165,6 @@ namespace CefNet.CApi
 		public unsafe extern void OnAcceleratedPaint(cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, [Immutable]cef_rect_t* dirtyRects, void* shared_handle);
 
 		/// <summary>
-		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, HCURSOR cursor, cef_cursor_type_t type, const const _cef_cursor_info_t* custom_cursor_info)*
-		/// </summary>
-		public void* on_cursor_change;
-
-		/// <summary>
-		/// Called when the browser&apos;s cursor has changed. If |type| is CT_CUSTOM then
-		/// |custom_cursor_info| will be populated with the custom cursor information.
-		/// </summary>
-		[NativeName("on_cursor_change")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnCursorChange(cef_browser_t* browser, IntPtr cursor, CefCursorType type, [Immutable]cef_cursor_info_t* custom_cursor_info);
-
-		/// <summary>
 		/// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, _cef_drag_data_t* drag_data, cef_drag_operations_mask_t allowed_ops, int x, int y)*
 		/// </summary>
 		public void* start_dragging;

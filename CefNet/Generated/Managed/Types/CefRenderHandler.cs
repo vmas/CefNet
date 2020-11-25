@@ -47,8 +47,6 @@ namespace CefNet
 
 		private static readonly OnAcceleratedPaintDelegate fnOnAcceleratedPaint = OnAcceleratedPaintImpl;
 
-		private static readonly OnCursorChangeDelegate fnOnCursorChange = OnCursorChangeImpl;
-
 		private static readonly StartDraggingDelegate fnStartDragging = StartDraggingImpl;
 
 		private static readonly UpdateDragCursorDelegate fnUpdateDragCursor = UpdateDragCursorImpl;
@@ -78,7 +76,6 @@ namespace CefNet
 			self->on_popup_size = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPopupSize);
 			self->on_paint = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPaint);
 			self->on_accelerated_paint = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAcceleratedPaint);
-			self->on_cursor_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnCursorChange);
 			self->start_dragging = (void*)Marshal.GetFunctionPointerForDelegate(fnStartDragging);
 			self->update_drag_cursor = (void*)Marshal.GetFunctionPointerForDelegate(fnUpdateDragCursor);
 			self->on_scroll_offset_changed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnScrollOffsetChanged);
@@ -354,32 +351,6 @@ namespace CefNet
 				obj_dirtyRects[i] = *(CefRect*)(dirtyRects + i);
 			}
 			instance.OnAcceleratedPaint(CefBrowser.Wrap(CefBrowser.Create, browser), type, obj_dirtyRects, unchecked((IntPtr)shared_handle));
-		}
-
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		extern bool ICefRenderHandlerPrivate.AvoidOnCursorChange();
-
-		/// <summary>
-		/// Called when the browser&apos;s cursor has changed. If |type| is CT_CUSTOM then
-		/// |custom_cursor_info| will be populated with the custom cursor information.
-		/// </summary>
-		protected internal unsafe virtual void OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
-		{
-		}
-
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-		private unsafe delegate void OnCursorChangeDelegate(cef_render_handler_t* self, cef_browser_t* browser, IntPtr cursor, CefCursorType type, cef_cursor_info_t* custom_cursor_info);
-
-		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, HCURSOR cursor, cef_cursor_type_t type, const const _cef_cursor_info_t* custom_cursor_info)*
-		private static unsafe void OnCursorChangeImpl(cef_render_handler_t* self, cef_browser_t* browser, IntPtr cursor, CefCursorType type, cef_cursor_info_t* custom_cursor_info)
-		{
-			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
-			if (instance == null || ((ICefRenderHandlerPrivate)instance).AvoidOnCursorChange())
-			{
-				ReleaseIfNonNull((cef_base_ref_counted_t*)browser);
-				return;
-			}
-			instance.OnCursorChange(CefBrowser.Wrap(CefBrowser.Create, browser), cursor, type, *(CefCursorInfo*)custom_cursor_info);
 		}
 
 		[MethodImpl(MethodImplOptions.ForwardRef)]

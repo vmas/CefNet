@@ -6,6 +6,16 @@ namespace CefNet.Internal
 {
 	partial class CefAppGlue
 	{
+		internal bool AvoidGetCookieableSchemes()
+		{
+			return false;
+		}
+
+		public unsafe void GetCookieableSchemes(CefStringList schemes, ref int includeDefaults)
+		{
+			_application.GetCookieableSchemes(schemes, ref includeDefaults);
+		}
+
 		public void OnContextInitialized()
 		{
 			_application.OnContextInitialized();
@@ -35,5 +45,11 @@ namespace CefNet.Internal
 		{
 			_application.OnScheduleMessagePumpWork(delayMs);
 		}
+
+		public CefClient GetDefaultClient()
+		{
+			return _application.GetDefaultClient();
+		}
+
 	}
 }

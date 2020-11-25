@@ -188,6 +188,27 @@
 				void(valuetype CefNet.CApi.cef_display_handler_t*, valuetype CefNet.CApi.cef_browser_t*, float64)
 			ret
 		}
+
+		// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, HCURSOR cursor, cef_cursor_type_t type, const const _cef_cursor_info_t* custom_cursor_info)*
+		.method public hidebysig int32 OnCursorChange(valuetype CefNet.CApi.cef_browser_t* browser, native int cursor, valuetype CefNet.CefCursorType 'type', valuetype CefNet.CApi.cef_cursor_info_t* custom_cursor_info)
+		{
+			.maxstack 6
+			ldarg.0
+			ldarg.1
+			ldarg.2
+			ldarg.3
+			ldarg.s 4
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_display_handler_t::on_cursor_change
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				int32(valuetype CefNet.CApi.cef_display_handler_t*, valuetype CefNet.CApi.cef_browser_t*, native int, valuetype CefNet.CefCursorType, valuetype CefNet.CApi.cef_cursor_info_t*)
+			ret
+		}
 	}
 }
 

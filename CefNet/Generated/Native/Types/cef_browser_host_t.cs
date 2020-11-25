@@ -439,30 +439,6 @@ namespace CefNet.CApi
 		public unsafe extern void GetNavigationEntries(cef_navigation_entry_visitor_t* visitor, int current_only);
 
 		/// <summary>
-		/// void (*)(_cef_browser_host_t* self, int disabled)*
-		/// </summary>
-		public void* set_mouse_cursor_change_disabled;
-
-		/// <summary>
-		/// Set whether mouse cursor change is disabled.
-		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		[NativeName("set_mouse_cursor_change_disabled")]
-		public unsafe extern void SetMouseCursorChangeDisabled(int disabled);
-
-		/// <summary>
-		/// int (*)(_cef_browser_host_t* self)*
-		/// </summary>
-		public void* is_mouse_cursor_change_disabled;
-
-		/// <summary>
-		/// Returns true (1) if mouse cursor change is disabled.
-		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		[NativeName("is_mouse_cursor_change_disabled")]
-		public unsafe extern int IsMouseCursorChangeDisabled();
-
-		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const cef_string_t* word)*
 		/// </summary>
 		public void* replace_misspelling;

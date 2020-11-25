@@ -475,41 +475,6 @@
 			ret
 		}
 
-		// void (*)(_cef_browser_host_t* self, int disabled)*
-		.method public hidebysig void SetMouseCursorChangeDisabled(int32 disabled)
-		{
-			.maxstack 3
-			ldarg.0
-			ldarg.1
-			ldarg.0
-			ldfld void* CefNet.CApi.cef_browser_host_t::set_mouse_cursor_change_disabled
-			calli explicit unmanaged
-#ifdef WINDOWS
-				stdcall
-#else
-				cdecl
-#endif
-				void(valuetype CefNet.CApi.cef_browser_host_t*, int32)
-			ret
-		}
-
-		// int (*)(_cef_browser_host_t* self)*
-		.method public hidebysig int32 IsMouseCursorChangeDisabled()
-		{
-			.maxstack 2
-			ldarg.0
-			ldarg.0
-			ldfld void* CefNet.CApi.cef_browser_host_t::is_mouse_cursor_change_disabled
-			calli explicit unmanaged
-#ifdef WINDOWS
-				stdcall
-#else
-				cdecl
-#endif
-				int32(valuetype CefNet.CApi.cef_browser_host_t*)
-			ret
-		}
-
 		// void (*)(_cef_browser_host_t* self, const cef_string_t* word)*
 		.method public hidebysig void ReplaceMisspelling(valuetype CefNet.CApi.cef_string_t* word)
 		{

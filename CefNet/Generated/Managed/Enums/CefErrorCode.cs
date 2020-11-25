@@ -390,6 +390,8 @@ namespace CefNet
 
 		QuicCertRootNotKnown = -380,
 
+		QuicGoawayRequestCanBeRetried = -381,
+
 		CacheMiss = -400,
 
 		CacheReadFailure = -401,

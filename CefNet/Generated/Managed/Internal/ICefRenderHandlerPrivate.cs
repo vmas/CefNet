@@ -30,7 +30,6 @@ namespace CefNet.Internal
 		bool AvoidOnPopupSize();
 		bool AvoidOnPaint();
 		bool AvoidOnAcceleratedPaint();
-		bool AvoidOnCursorChange();
 		bool AvoidStartDragging();
 		bool AvoidUpdateDragCursor();
 		bool AvoidOnScrollOffsetChanged();

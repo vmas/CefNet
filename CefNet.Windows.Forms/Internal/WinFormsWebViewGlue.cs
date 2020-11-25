@@ -20,7 +20,7 @@ namespace CefNet.Internal
 			get { return (IWinFormsWebViewPrivate)base.WebView; }
 		}
 
-		protected override void OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
+		protected override bool OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
 		{
 			Cursor cursor;
 			if (type == CefCursorType.Custom)
@@ -29,7 +29,10 @@ namespace CefNet.Internal
 				cursor = CustomCursor.None;
 			else
 				cursor = new Cursor(cursorHandle);
-			WebView.RaiseCefCursorChange(new CursorChangeEventArgs(cursor, type));
+
+			var ea = new CursorChangeEventArgs(cursor, type);
+			WebView.RaiseCefCursorChange(ea);
+			return ea.Handled;
 		}
 
 		protected override bool OnTooltip(CefBrowser browser, ref string text)

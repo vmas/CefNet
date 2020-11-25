@@ -152,6 +152,21 @@ namespace CefNet.CApi
 		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_loading_progress_change")]
 		public unsafe extern void OnLoadingProgressChange(cef_browser_t* browser, double progress);
+
+		/// <summary>
+		/// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, HCURSOR cursor, cef_cursor_type_t type, const const _cef_cursor_info_t* custom_cursor_info)*
+		/// </summary>
+		public void* on_cursor_change;
+
+		/// <summary>
+		/// Called when the browser&apos;s cursor has changed. If |type| is CT_CUSTOM then
+		/// |custom_cursor_info| will be populated with the custom cursor information.
+		/// Return true (1) if the cursor change was handled or false (0) for default
+		/// handling.
+		/// </summary>
+		[NativeName("on_cursor_change")]
+		[MethodImpl(MethodImplOptions.ForwardRef)]
+		public unsafe extern int OnCursorChange(cef_browser_t* browser, IntPtr cursor, CefCursorType type, [Immutable]cef_cursor_info_t* custom_cursor_info);
 	}
 }
 

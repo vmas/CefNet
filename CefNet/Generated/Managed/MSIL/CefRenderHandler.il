@@ -102,17 +102,6 @@
 			ret
 		}
 
-		.method private final hidebysig newslot virtual instance bool CefNet.Internal.ICefRenderHandlerPrivate.AvoidOnCursorChange()
-		{
-			.override method instance bool CefNet.Internal.ICefRenderHandlerPrivate::AvoidOnCursorChange()
-			.maxstack 2
-			ldarg.0
-			ldvirtftn instance void CefNet.CefRenderHandler::OnCursorChange(class CefNet.CefBrowser, native int, valuetype CefNet.CefCursorType, valuetype CefNet.CefCursorInfo)
-			ldftn instance void CefNet.CefRenderHandler::OnCursorChange(class CefNet.CefBrowser, native int, valuetype CefNet.CefCursorType, valuetype CefNet.CefCursorInfo)
-			ceq
-			ret
-		}
-
 		.method private final hidebysig newslot virtual instance bool CefNet.Internal.ICefRenderHandlerPrivate.AvoidStartDragging()
 		{
 			.override method instance bool CefNet.Internal.ICefRenderHandlerPrivate::AvoidStartDragging()

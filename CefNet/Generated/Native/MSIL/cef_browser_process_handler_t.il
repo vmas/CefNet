@@ -14,6 +14,25 @@
 {
 	.class public cef_browser_process_handler_t
 	{
+		// void (*)(_cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)*
+		.method public hidebysig void GetCookieableSchemes(valuetype CefNet.CApi.cef_string_list_t schemes, int32* include_defaults)
+		{
+			.maxstack 4
+			ldarg.0
+			ldarg.1
+			ldarg.2
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_browser_process_handler_t::get_cookieable_schemes
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				void(valuetype CefNet.CApi.cef_browser_process_handler_t*, valuetype CefNet.CApi.cef_string_list_t, int32*)
+			ret
+		}
+
 		// void (*)(_cef_browser_process_handler_t* self)*
 		.method public hidebysig void OnContextInitialized()
 		{
@@ -81,6 +100,23 @@
 				cdecl
 #endif
 				void(valuetype CefNet.CApi.cef_browser_process_handler_t*, int64)
+			ret
+		}
+
+		// _cef_client_t* (*)(_cef_browser_process_handler_t* self)*
+		.method public hidebysig valuetype CefNet.CApi.cef_client_t* GetDefaultClient()
+		{
+			.maxstack 2
+			ldarg.0
+			ldarg.0
+			ldfld void* CefNet.CApi.cef_browser_process_handler_t::get_default_client
+			calli explicit unmanaged
+#ifdef WINDOWS
+				stdcall
+#else
+				cdecl
+#endif
+				valuetype CefNet.CApi.cef_client_t*(valuetype CefNet.CApi.cef_browser_process_handler_t*)
 			ret
 		}
 	}
