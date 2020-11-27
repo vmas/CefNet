@@ -255,11 +255,12 @@ namespace CefGen
 
 				string fileName = aliasResolver.ResolveNonFail(@class.Name);
 				using (var csfile = new StreamWriter(Path.Combine(outDirPath, "Native", "Types", fileName + ".cs"), false, Encoding.UTF8))
-				using (var ilfile = new StreamWriter(Path.Combine(outDirPath, "Native", "MSIL", fileName + ".il"), false, Encoding.UTF8))
+				//using (var ilfile = new StreamWriter(Path.Combine(outDirPath, "Native", "MSIL", fileName + ".il"), false, Encoding.UTF8))
 				{
-					nativeBuild.Format(@class, csfile, ilfile);
+					//nativeBuild.Format(@class, csfile, ilfile);
+					nativeBuild.Format(@class, csfile, null);
 					csfile.Flush();
-					ilfile.Flush();
+					//ilfile.Flush();
 				}
 			}
 

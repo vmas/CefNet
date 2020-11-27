@@ -304,8 +304,8 @@ namespace CefGen
 					throw new NotImplementedException(); // TODO: check it
 				}
 				caller.RetVal = rvtype;
-				caller.Attributes = CodeAttributes.Public | CodeAttributes.External | CodeAttributes.Unsafe;
-				caller.CustomAttributes.AddMethodImplForwardRefAttribute();
+				caller.Attributes = CodeAttributes.Public| CodeAttributes.Unsafe;
+				//caller.CustomAttributes.AddMethodImplForwardRefAttribute();
 				caller.CustomAttributes.Add(new CustomCodeAttribute("NativeName") { Parameters = { "\"" + field.Name + "\"" } });
 				caller.Comments.AddVSDocComment(field.Comment, "summary");
 				caller.Callee = fld;
@@ -343,6 +343,9 @@ namespace CefGen
 					param.Type = ResolveCefType(argType);
 					caller.Parameters.Add(param);
 				}
+
+				//fld.TypeName = GetNativeDelegate(caller, typeDecl);
+				caller.Body = GetNativeCallMehtodBody(caller, fld, typeDecl);
 			}
 			else
 			{
@@ -360,8 +363,47 @@ namespace CefGen
 			}
 		}
 
+		private string GetNativeDelegate(CodeMethod caller, CodeType typeDecl)
+		{
+			var sb = new StringBuilder();
+			sb.Append("delegate* unmanaged[Stdcall]<");
+			var args = new List<string>();
+			if (caller.HasThisArg)
+				args.Add(typeDecl.Name + "*");
+			args.AddRange(caller.Parameters.Select(arg => CSharpCodeGen.GetClrTypeName(arg.Type)));
+			args.Add(CSharpCodeGen.GetClrTypeName(caller.RetVal.Type));
+			sb.Append(string.Join(", ", args));
+			sb.Append(">");
+			return sb.ToString();
+		}
 
+		private string GetNativeCallMehtodBody(CodeMethod caller, CodeField field, CodeType typeDecl)
+		{
+			var sb = new StringBuilder();
+			sb.Append("fixed (").Append(typeDecl.Name).Append("* self = &this)\n{\n\t");
+			if (caller.RetVal.Type != "void")
+			{
+				sb.Append("return ");
+			}
 
+			var argTypes = new List<string>();
+			if (caller.HasThisArg)
+				argTypes.Add(typeDecl.Name + "*");
+			argTypes.AddRange(caller.Parameters.Select(arg => CSharpCodeGen.GetClrTypeName(arg.Type)));
+			argTypes.Add(CSharpCodeGen.GetClrTypeName(caller.RetVal.Type));
+
+			sb.Append("((delegate* unmanaged[Stdcall]<").Append(string.Join(", ", argTypes)).Append(">)");
+			sb.Append(field.Name).Append(")(");
+			var args = new List<string>();
+			if (caller.HasThisArg)
+				args.Add("self");
+			args.AddRange(caller.Parameters.Select(arg => arg.Name));
+			sb.Append(string.Join(", ", args));
+			sb.Append(");");
+			sb.Append("\n}");
+
+			return sb.ToString();
+		}
 
 	}
 

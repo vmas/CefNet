@@ -166,11 +166,32 @@ namespace CefGen
 
 			WriteBlockStart(CodeGenBlockType.Type);
 
+			var defines = new Stack<string>();
+
 			bool insertLine = false;
 			foreach (CodeTypeMember memberDecl in typeDecl.Members)
 			{
 				if (insertLine)
 					Output.WriteLine();
+
+				if (memberDecl.LegacyDefine is not null)
+				{
+					if (defines.Count == 0 || defines.Peek() != memberDecl.LegacyDefine)
+					{
+						if (defines.Count > 0)
+						{
+							Output.WriteLine("#endif // " + defines.Pop());
+						}
+
+						defines.Push(memberDecl.LegacyDefine);
+						Output.Write("#if ");
+						Output.WriteLine(memberDecl.LegacyDefine);
+					}
+				}
+				else if (defines.Count > 0)
+				{
+					Output.WriteLine("#endif // " + defines.Pop());
+				}
 
 				if (memberDecl is CodeType classDecl)
 				{
@@ -209,6 +230,11 @@ namespace CefGen
 					GenerateFinalizerCode(dtorDecl);
 				}
 				insertLine = true;
+			}
+
+			while (defines.Count > 0)
+			{
+				Output.WriteLine("#endif // " + defines.Pop());
 			}
 
 			WriteBlockEnd(CodeGenBlockType.Type);
@@ -475,7 +501,7 @@ namespace CefGen
 			}
 		}
 
-		private string GetClrTypeName(string type)
+		internal static string GetClrTypeName(string type)
 		{
 			switch (type)
 			{

@@ -58,18 +58,18 @@ namespace CefGen
 			}
 			langStream.WriteLine(sb.ToString());
 
-			sb.Clear();
+			//sb.Clear();
 
-			using (var w = new StringWriter(sb))
-			{
-				var codeGen = CreateMsilCodeGen();
-				codeGen.ResolveTypeName += CodeGen_ResolveTypeName;
-				codeGen.GenerateCode(codefile, w);
-				codeGen.ResolveTypeName -= CodeGen_ResolveTypeName;
+			//using (var w = new StringWriter(sb))
+			//{
+			//	var codeGen = CreateMsilCodeGen();
+			//	codeGen.ResolveTypeName += CodeGen_ResolveTypeName;
+			//	codeGen.GenerateCode(codefile, w);
+			//	codeGen.ResolveTypeName -= CodeGen_ResolveTypeName;
 
-				w.Flush();
-			}
-			msilStream.WriteLine(sb.ToString());
+			//	w.Flush();
+			//}
+			//msilStream.WriteLine(sb.ToString());
 
 		}
 
