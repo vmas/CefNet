@@ -17,8 +17,6 @@ namespace AvaloniaApp
 		private static CefAppImpl app;
 		private static Timer messagePump;
 		private const int messagePumpDelay = 10;
-		private static bool UseExtenalMessageLoop;
-
 
 		// Initialization code. Don't use any Avalonia, third-party APIs or any
 		// SynchronizationContext-reliant code before AppMain is called: things aren't initialized
@@ -72,7 +70,7 @@ namespace AvaloniaApp
 
 		private static void App_FrameworkInitialized(object sender, EventArgs e)
 		{
-			if (Environment.GetCommandLineArgs().Contains("--external-message-pump"))
+			if (PlatformInfo.IsMacOS || Environment.GetCommandLineArgs().Contains("--external-message-pump"))
 			{
 				messagePump = new Timer(_ => Dispatcher.UIThread.Post(CefApi.DoMessageLoopWork), null, messagePumpDelay, messagePumpDelay);
 			}
