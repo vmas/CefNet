@@ -242,6 +242,10 @@ namespace CefNet
 		/// <param name="libcefHandle">The Chromium Embedded Framework library handle.</param>
 		protected virtual bool TryInitializeDllImportResolver(IntPtr libcefHandle)
 		{
+#if NET
+			NativeLibrary.SetDllImportResolver(typeof(CefApi).Assembly, ResolveNativeLibrary);
+			return true;
+#else
 			Type nativeLibraryType = Type.GetType("System.Runtime.InteropServices.NativeLibrary");
 			if (nativeLibraryType is null)
 				return false;
@@ -260,6 +264,7 @@ namespace CefNet
 			});
 
 			return true;
+#endif
 		}
 
 		/// <summary>
@@ -550,7 +555,7 @@ namespace CefNet
 		}
 
 
-		#region CefRenderProcessHandler
+#region CefRenderProcessHandler
 
 		/// <summary>
 		/// Raises the <see cref="WebKitInitialized"/> event.
@@ -645,7 +650,7 @@ namespace CefNet
 			}
 		}
 
-		#endregion
+#endregion
 
 		/// <summary>
 		/// Called on the browser process UI thread to retrieve the list of schemes
