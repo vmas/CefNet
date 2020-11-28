@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netstandard2.0;net5.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);net45;net48</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>9.0</LangVersion>
     <NoWarn>$(NoWarn),IDE1006,IDE0017,IDE0016</NoWarn>
     <DefineConstants>$(DefineConstants);TRACE;WINDOWLESS</DefineConstants>
     <Configurations>Debug;Release;Nuget_Release</Configurations>
@@ -43,8 +44,12 @@
     <DefineConstants>$(DefineConstants);NETSTANDARD_2_0</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('net')) AND $([System.Char]::IsDigit($(TargetFramework), 3))">
-    <DefineConstants>$(DefineConstants);NETFRAMEWORK</DefineConstants>
+  <PropertyGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net\d+$'))">
+    <DefineConstants>$(DefineConstants);NETFRAMEWORK;NET_LESS_5_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(TargetFramework.StartsWith('netstandard')) OR $(TargetFramework.StartsWith('netcoreapp'))">
+    <DefineConstants>$(DefineConstants);NET_LESS_5_0</DefineConstants>
   </PropertyGroup>
   
   <ItemGroup>

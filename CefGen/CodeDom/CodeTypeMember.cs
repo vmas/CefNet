@@ -24,5 +24,7 @@ namespace CefGen.CodeDom
 		public List<CodeComment> Comments { get; } = new List<CodeComment>(0);
 
 		public List<CustomCodeAttribute> CustomAttributes { get; } = new List<CustomCodeAttribute>(0);
+
+		public string LegacyDefine { get; set; }
 	}
 }
