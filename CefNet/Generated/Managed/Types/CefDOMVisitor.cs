@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefDOMVisitor : CefBaseRefCounted<cef_domvisitor_t>, ICefDOMVisitorPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly VisitDelegate fnVisit = VisitImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefDOMVisitor Create(IntPtr instance)
 		{
 			return new CefDOMVisitor((cef_domvisitor_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefDOMVisitor()
 		{
 			cef_domvisitor_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->visit = (void*)Marshal.GetFunctionPointerForDelegate(fnVisit);
+			#else
+			self->visit = (delegate* unmanaged[Stdcall]<cef_domvisitor_t*, cef_domdocument_t*, void>)&VisitImpl;
+			#endif
 		}
 
 		public CefDOMVisitor(cef_domvisitor_t* instance)
@@ -61,10 +67,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void VisitDelegate(cef_domvisitor_t* self, cef_domdocument_t* document);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_domvisitor_t* self, _cef_domdocument_t* document)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void VisitImpl(cef_domvisitor_t* self, cef_domdocument_t* document)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDOMVisitor;

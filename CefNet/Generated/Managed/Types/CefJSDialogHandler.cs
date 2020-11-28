@@ -29,6 +29,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefJSDialogHandler : CefBaseRefCounted<cef_jsdialog_handler_t>, ICefJSDialogHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnJSDialogDelegate fnOnJSDialog = OnJSDialogImpl;
 
 		private static readonly OnBeforeUnloadDialogDelegate fnOnBeforeUnloadDialog = OnBeforeUnloadDialogImpl;
@@ -37,6 +38,7 @@ namespace CefNet
 
 		private static readonly OnDialogClosedDelegate fnOnDialogClosed = OnDialogClosedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefJSDialogHandler Create(IntPtr instance)
 		{
 			return new CefJSDialogHandler((cef_jsdialog_handler_t*)instance);
@@ -45,10 +47,17 @@ namespace CefNet
 		public CefJSDialogHandler()
 		{
 			cef_jsdialog_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_jsdialog = (void*)Marshal.GetFunctionPointerForDelegate(fnOnJSDialog);
 			self->on_before_unload_dialog = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforeUnloadDialog);
 			self->on_reset_dialog_state = (void*)Marshal.GetFunctionPointerForDelegate(fnOnResetDialogState);
 			self->on_dialog_closed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDialogClosed);
+			#else
+			self->on_jsdialog = (delegate* unmanaged[Stdcall]<cef_jsdialog_handler_t*, cef_browser_t*, cef_string_t*, CefJSDialogType, cef_string_t*, cef_string_t*, cef_jsdialog_callback_t*, int*, int>)&OnJSDialogImpl;
+			self->on_before_unload_dialog = (delegate* unmanaged[Stdcall]<cef_jsdialog_handler_t*, cef_browser_t*, cef_string_t*, int, cef_jsdialog_callback_t*, int>)&OnBeforeUnloadDialogImpl;
+			self->on_reset_dialog_state = (delegate* unmanaged[Stdcall]<cef_jsdialog_handler_t*, cef_browser_t*, void>)&OnResetDialogStateImpl;
+			self->on_dialog_closed = (delegate* unmanaged[Stdcall]<cef_jsdialog_handler_t*, cef_browser_t*, void>)&OnDialogClosedImpl;
+			#endif
 		}
 
 		public CefJSDialogHandler(cef_jsdialog_handler_t* instance)
@@ -81,10 +90,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnJSDialogDelegate(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, CefJSDialogType dialog_type, cef_string_t* message_text, cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser, const cef_string_t* origin_url, cef_jsdialog_type_t dialog_type, const cef_string_t* message_text, const cef_string_t* default_prompt_text, _cef_jsdialog_callback_t* callback, int* suppress_message)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnJSDialogImpl(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, CefJSDialogType dialog_type, cef_string_t* message_text, cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message)
 		{
 			var instance = GetInstance((IntPtr)self) as CefJSDialogHandler;
@@ -113,10 +125,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnBeforeUnloadDialogDelegate(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser, const cef_string_t* message_text, int is_reload, _cef_jsdialog_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnBeforeUnloadDialogImpl(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefJSDialogHandler;
@@ -141,10 +156,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnResetDialogStateDelegate(cef_jsdialog_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnResetDialogStateImpl(cef_jsdialog_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefJSDialogHandler;
@@ -166,10 +184,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDialogClosedDelegate(cef_jsdialog_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDialogClosedImpl(cef_jsdialog_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefJSDialogHandler;

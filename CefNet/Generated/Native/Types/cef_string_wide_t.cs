@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		public void* dtor;
 
 		[NativeName("dtor")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Dtor(char* str);
+		public unsafe void Dtor(char* str)
+		{
+			fixed (cef_string_wide_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<char*, void>)dtor)(str);
+			}
+		}
 	}
 }
 

@@ -29,6 +29,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefRequestHandler : CefBaseRefCounted<cef_request_handler_t>, ICefRequestHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnBeforeBrowseDelegate fnOnBeforeBrowse = OnBeforeBrowseImpl;
 
 		private static readonly OnOpenUrlFromTabDelegate fnOnOpenUrlFromTab = OnOpenUrlFromTabImpl;
@@ -51,6 +52,7 @@ namespace CefNet
 
 		private static readonly OnDocumentAvailableInMainFrameDelegate fnOnDocumentAvailableInMainFrame = OnDocumentAvailableInMainFrameImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefRequestHandler Create(IntPtr instance)
 		{
 			return new CefRequestHandler((cef_request_handler_t*)instance);
@@ -59,6 +61,7 @@ namespace CefNet
 		public CefRequestHandler()
 		{
 			cef_request_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_before_browse = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforeBrowse);
 			self->on_open_urlfrom_tab = (void*)Marshal.GetFunctionPointerForDelegate(fnOnOpenUrlFromTab);
 			self->get_resource_request_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetResourceRequestHandler);
@@ -70,6 +73,19 @@ namespace CefNet
 			self->on_render_view_ready = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRenderViewReady);
 			self->on_render_process_terminated = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRenderProcessTerminated);
 			self->on_document_available_in_main_frame = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDocumentAvailableInMainFrame);
+			#else
+			self->on_before_browse = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, int, int, int>)&OnBeforeBrowseImpl;
+			self->on_open_urlfrom_tab = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, CefWindowOpenDisposition, int, int>)&OnOpenUrlFromTabImpl;
+			self->get_resource_request_handler = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, int, int, cef_string_t*, int*, cef_resource_request_handler_t*>)&GetResourceRequestHandlerImpl;
+			self->get_auth_credentials = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_string_t*, int, cef_string_t*, int, cef_string_t*, cef_string_t*, cef_auth_callback_t*, int>)&GetAuthCredentialsImpl;
+			self->on_quota_request = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_string_t*, long, cef_request_callback_t*, int>)&OnQuotaRequestImpl;
+			self->on_certificate_error = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, CefErrorCode, cef_string_t*, cef_sslinfo_t*, cef_request_callback_t*, int>)&OnCertificateErrorImpl;
+			self->on_select_client_certificate = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, int, cef_string_t*, int, UIntPtr, cef_x509certificate_t**, cef_select_client_certificate_callback_t*, int>)&OnSelectClientCertificateImpl;
+			self->on_plugin_crashed = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_string_t*, void>)&OnPluginCrashedImpl;
+			self->on_render_view_ready = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, void>)&OnRenderViewReadyImpl;
+			self->on_render_process_terminated = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, CefTerminationStatus, void>)&OnRenderProcessTerminatedImpl;
+			self->on_document_available_in_main_frame = (delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, void>)&OnDocumentAvailableInMainFrameImpl;
+			#endif
 		}
 
 		public CefRequestHandler(cef_request_handler_t* instance)
@@ -97,10 +113,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnBeforeBrowseDelegate(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int user_gesture, int is_redirect);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, int user_gesture, int is_redirect)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnBeforeBrowseImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int user_gesture, int is_redirect)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -138,10 +157,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnOpenUrlFromTabDelegate(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, CefWindowOpenDisposition target_disposition, int user_gesture);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, const cef_string_t* target_url, cef_window_open_disposition_t target_disposition, int user_gesture)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnOpenUrlFromTabImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, CefWindowOpenDisposition target_disposition, int user_gesture)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -178,10 +200,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_resource_request_handler_t* GetResourceRequestHandlerDelegate(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, cef_string_t* request_initiator, int* disable_default_handling);
 
+#endif // NET_LESS_5_0
 		// _cef_resource_request_handler_t* (*)(_cef_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, int is_navigation, int is_download, const cef_string_t* request_initiator, int* disable_default_handling)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_resource_request_handler_t* GetResourceRequestHandlerImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, cef_string_t* request_initiator, int* disable_default_handling)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -218,10 +243,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetAuthCredentialsDelegate(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, const cef_string_t* origin_url, int isProxy, const cef_string_t* host, int port, const cef_string_t* realm, const cef_string_t* scheme, _cef_auth_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetAuthCredentialsImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -251,10 +279,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnQuotaRequestDelegate(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, long new_size, cef_request_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, const cef_string_t* origin_url, int64 new_size, _cef_request_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnQuotaRequestImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, long new_size, cef_request_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -283,10 +314,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnCertificateErrorDelegate(cef_request_handler_t* self, cef_browser_t* browser, CefErrorCode cert_error, cef_string_t* request_url, cef_sslinfo_t* ssl_info, cef_request_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, cef_errorcode_t cert_error, const cef_string_t* request_url, _cef_sslinfo_t* ssl_info, _cef_request_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnCertificateErrorImpl(cef_request_handler_t* self, cef_browser_t* browser, CefErrorCode cert_error, cef_string_t* request_url, cef_sslinfo_t* ssl_info, cef_request_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -321,10 +355,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnSelectClientCertificateDelegate(cef_request_handler_t* self, cef_browser_t* browser, int isProxy, cef_string_t* host, int port, UIntPtr certificatesCount, cef_x509certificate_t** certificates, cef_select_client_certificate_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, int isProxy, const cef_string_t* host, int port, size_t certificatesCount, const _cef_x509certificate_t** certificates, _cef_select_client_certificate_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnSelectClientCertificateImpl(cef_request_handler_t* self, cef_browser_t* browser, int isProxy, cef_string_t* host, int port, UIntPtr certificatesCount, cef_x509certificate_t** certificates, cef_select_client_certificate_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -355,10 +392,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnPluginCrashedDelegate(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* plugin_path);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser, const cef_string_t* plugin_path)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnPluginCrashedImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* plugin_path)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -382,10 +422,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnRenderViewReadyDelegate(cef_request_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnRenderViewReadyImpl(cef_request_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -408,10 +451,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnRenderProcessTerminatedDelegate(cef_request_handler_t* self, cef_browser_t* browser, CefTerminationStatus status);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser, cef_termination_status_t status)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnRenderProcessTerminatedImpl(cef_request_handler_t* self, cef_browser_t* browser, CefTerminationStatus status)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -434,10 +480,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDocumentAvailableInMainFrameDelegate(cef_request_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDocumentAvailableInMainFrameImpl(cef_request_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;

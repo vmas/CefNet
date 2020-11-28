@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_message")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetMessage();
+		public unsafe cef_string_userfree_t GetMessage()
+		{
+			fixed (cef_v8exception_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8exception_t*, cef_string_userfree_t>)get_message)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_v8exception_t* self)*
@@ -53,8 +58,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_source_line")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetSourceLine();
+		public unsafe cef_string_userfree_t GetSourceLine()
+		{
+			fixed (cef_v8exception_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8exception_t*, cef_string_userfree_t>)get_source_line)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_v8exception_t* self)*
@@ -67,8 +77,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_script_resource_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetScriptResourceName();
+		public unsafe cef_string_userfree_t GetScriptResourceName()
+		{
+			fixed (cef_v8exception_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8exception_t*, cef_string_userfree_t>)get_script_resource_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8exception_t* self)*
@@ -80,8 +95,13 @@ namespace CefNet.CApi
 		/// line number is unknown.
 		/// </summary>
 		[NativeName("get_line_number")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetLineNumber();
+		public unsafe int GetLineNumber()
+		{
+			fixed (cef_v8exception_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8exception_t*, int>)get_line_number)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8exception_t* self)*
@@ -93,8 +113,13 @@ namespace CefNet.CApi
 		/// occurred.
 		/// </summary>
 		[NativeName("get_start_position")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetStartPosition();
+		public unsafe int GetStartPosition()
+		{
+			fixed (cef_v8exception_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8exception_t*, int>)get_start_position)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8exception_t* self)*
@@ -106,8 +131,13 @@ namespace CefNet.CApi
 		/// occurred.
 		/// </summary>
 		[NativeName("get_end_position")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetEndPosition();
+		public unsafe int GetEndPosition()
+		{
+			fixed (cef_v8exception_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8exception_t*, int>)get_end_position)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8exception_t* self)*
@@ -119,8 +149,13 @@ namespace CefNet.CApi
 		/// occurred.
 		/// </summary>
 		[NativeName("get_start_column")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetStartColumn();
+		public unsafe int GetStartColumn()
+		{
+			fixed (cef_v8exception_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8exception_t*, int>)get_start_column)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8exception_t* self)*
@@ -132,8 +167,13 @@ namespace CefNet.CApi
 		/// occurred.
 		/// </summary>
 		[NativeName("get_end_column")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetEndColumn();
+		public unsafe int GetEndColumn()
+		{
+			fixed (cef_v8exception_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8exception_t*, int>)get_end_column)(self);
+			}
+		}
 	}
 }
 

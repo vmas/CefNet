@@ -30,6 +30,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefBrowserProcessHandler : CefBaseRefCounted<cef_browser_process_handler_t>, ICefBrowserProcessHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly GetCookieableSchemesDelegate fnGetCookieableSchemes = GetCookieableSchemesImpl;
 
 		private static readonly OnContextInitializedDelegate fnOnContextInitialized = OnContextInitializedImpl;
@@ -42,6 +43,7 @@ namespace CefNet
 
 		private static readonly GetDefaultClientDelegate fnGetDefaultClient = GetDefaultClientImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefBrowserProcessHandler Create(IntPtr instance)
 		{
 			return new CefBrowserProcessHandler((cef_browser_process_handler_t*)instance);
@@ -50,12 +52,21 @@ namespace CefNet
 		public CefBrowserProcessHandler()
 		{
 			cef_browser_process_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->get_cookieable_schemes = (void*)Marshal.GetFunctionPointerForDelegate(fnGetCookieableSchemes);
 			self->on_context_initialized = (void*)Marshal.GetFunctionPointerForDelegate(fnOnContextInitialized);
 			self->on_before_child_process_launch = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforeChildProcessLaunch);
 			self->get_print_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetPrintHandler);
 			self->on_schedule_message_pump_work = (void*)Marshal.GetFunctionPointerForDelegate(fnOnScheduleMessagePumpWork);
 			self->get_default_client = (void*)Marshal.GetFunctionPointerForDelegate(fnGetDefaultClient);
+			#else
+			self->get_cookieable_schemes = (delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_string_list_t, int*, void>)&GetCookieableSchemesImpl;
+			self->on_context_initialized = (delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, void>)&OnContextInitializedImpl;
+			self->on_before_child_process_launch = (delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_command_line_t*, void>)&OnBeforeChildProcessLaunchImpl;
+			self->get_print_handler = (delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_print_handler_t*>)&GetPrintHandlerImpl;
+			self->on_schedule_message_pump_work = (delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, long, void>)&OnScheduleMessagePumpWorkImpl;
+			self->get_default_client = (delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_client_t*>)&GetDefaultClientImpl;
+			#endif
 		}
 
 		public CefBrowserProcessHandler(cef_browser_process_handler_t* instance)
@@ -83,10 +94,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void GetCookieableSchemesDelegate(cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void GetCookieableSchemesImpl(cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -105,10 +119,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnContextInitializedDelegate(cef_browser_process_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_browser_process_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnContextInitializedImpl(cef_browser_process_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -133,10 +150,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnBeforeChildProcessLaunchDelegate(cef_browser_process_handler_t* self, cef_command_line_t* command_line);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_browser_process_handler_t* self, _cef_command_line_t* command_line)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnBeforeChildProcessLaunchImpl(cef_browser_process_handler_t* self, cef_command_line_t* command_line)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -157,10 +177,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_print_handler_t* GetPrintHandlerDelegate(cef_browser_process_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_print_handler_t* (*)(_cef_browser_process_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_print_handler_t* GetPrintHandlerImpl(cef_browser_process_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -196,10 +219,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnScheduleMessagePumpWorkDelegate(cef_browser_process_handler_t* self, long delay_ms);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_browser_process_handler_t* self, int64 delay_ms)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnScheduleMessagePumpWorkImpl(cef_browser_process_handler_t* self, long delay_ms)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -222,10 +248,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_client_t* GetDefaultClientDelegate(cef_browser_process_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_client_t* (*)(_cef_browser_process_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_client_t* GetDefaultClientImpl(cef_browser_process_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;

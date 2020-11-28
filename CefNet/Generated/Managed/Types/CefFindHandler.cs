@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefFindHandler : CefBaseRefCounted<cef_find_handler_t>, ICefFindHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnFindResultDelegate fnOnFindResult = OnFindResultImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefFindHandler Create(IntPtr instance)
 		{
 			return new CefFindHandler((cef_find_handler_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefFindHandler()
 		{
 			cef_find_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_find_result = (void*)Marshal.GetFunctionPointerForDelegate(fnOnFindResult);
+			#else
+			self->on_find_result = (delegate* unmanaged[Stdcall]<cef_find_handler_t*, cef_browser_t*, int, int, cef_rect_t*, int, int, void>)&OnFindResultImpl;
+			#endif
 		}
 
 		public CefFindHandler(cef_find_handler_t* instance)
@@ -62,10 +68,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnFindResultDelegate(cef_find_handler_t* self, cef_browser_t* browser, int identifier, int count, cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_find_handler_t* self, _cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnFindResultImpl(cef_find_handler_t* self, cef_browser_t* browser, int identifier, int count, cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate)
 		{
 			var instance = GetInstance((IntPtr)self) as CefFindHandler;

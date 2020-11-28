@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_id")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetId();
+		public unsafe cef_string_userfree_t GetId()
+		{
+			fixed (cef_media_source_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_source_t*, cef_string_userfree_t>)get_id)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_media_source_t* self)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this source outputs its content via Cast.
 		/// </summary>
 		[NativeName("is_cast_source")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsCastSource();
+		public unsafe int IsCastSource()
+		{
+			fixed (cef_media_source_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_source_t*, int>)is_cast_source)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_media_source_t* self)*
@@ -66,8 +76,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this source outputs its content via DIAL.
 		/// </summary>
 		[NativeName("is_dial_source")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsDialSource();
+		public unsafe int IsDialSource()
+		{
+			fixed (cef_media_source_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_source_t*, int>)is_dial_source)(self);
+			}
+		}
 	}
 }
 

@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// functions if this function returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this object is currently owned by another object.
 		/// </summary>
 		[NativeName("is_owned")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsOwned();
+		public unsafe int IsOwned()
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, int>)is_owned)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self)*
@@ -67,8 +77,13 @@ namespace CefNet.CApi
 		/// expose read-only objects.
 		/// </summary>
 		[NativeName("is_read_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsReadOnly();
+		public unsafe int IsReadOnly()
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, int>)is_read_only)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, _cef_dictionary_value_t* that)*
@@ -81,8 +96,13 @@ namespace CefNet.CApi
 		/// object and vice-versa.
 		/// </summary>
 		[NativeName("is_same")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSame(cef_dictionary_value_t* that);
+		public unsafe int IsSame(cef_dictionary_value_t* that)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_dictionary_value_t*, int>)is_same)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, _cef_dictionary_value_t* that)*
@@ -94,8 +114,13 @@ namespace CefNet.CApi
 		/// underlying value but are not necessarily the same object.
 		/// </summary>
 		[NativeName("is_equal")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsEqual(cef_dictionary_value_t* that);
+		public unsafe int IsEqual(cef_dictionary_value_t* that)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_dictionary_value_t*, int>)is_equal)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// _cef_dictionary_value_t* (*)(_cef_dictionary_value_t* self, int exclude_empty_children)*
@@ -107,8 +132,13 @@ namespace CefNet.CApi
 		/// (1) any NULL dictionaries or lists will be excluded from the copy.
 		/// </summary>
 		[NativeName("copy")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_dictionary_value_t* Copy(int exclude_empty_children);
+		public unsafe cef_dictionary_value_t* Copy(int exclude_empty_children)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, int, cef_dictionary_value_t*>)copy)(self, exclude_empty_children);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_dictionary_value_t* self)*
@@ -119,8 +149,13 @@ namespace CefNet.CApi
 		/// Returns the number of values.
 		/// </summary>
 		[NativeName("get_size")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetSize();
+		public unsafe UIntPtr GetSize()
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, UIntPtr>)get_size)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self)*
@@ -131,8 +166,13 @@ namespace CefNet.CApi
 		/// Removes all values. Returns true (1) on success.
 		/// </summary>
 		[NativeName("clear")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Clear();
+		public unsafe int Clear()
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, int>)clear)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -143,8 +183,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the current dictionary has a value for the given key.
 		/// </summary>
 		[NativeName("has_key")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasKey([Immutable]cef_string_t* key);
+		public unsafe int HasKey([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, int>)has_key)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, cef_string_list_t keys)*
@@ -155,8 +200,13 @@ namespace CefNet.CApi
 		/// Reads all keys for this dictionary into the specified vector.
 		/// </summary>
 		[NativeName("get_keys")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetKeys(cef_string_list_t keys);
+		public unsafe int GetKeys(cef_string_list_t keys)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_list_t, int>)get_keys)(self, keys);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -168,8 +218,13 @@ namespace CefNet.CApi
 		/// removed successfully.
 		/// </summary>
 		[NativeName("remove")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Remove([Immutable]cef_string_t* key);
+		public unsafe int Remove([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, int>)remove)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// cef_value_type_t (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -180,8 +235,13 @@ namespace CefNet.CApi
 		/// Returns the value type for the specified key.
 		/// </summary>
 		[NativeName("get_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefValueType GetType([Immutable]cef_string_t* key);
+		public unsafe CefValueType GetType([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, CefValueType>)get_type)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// _cef_value_t* (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -196,8 +256,13 @@ namespace CefNet.CApi
 		/// this object.
 		/// </summary>
 		[NativeName("get_value")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_value_t* GetValue([Immutable]cef_string_t* key);
+		public unsafe cef_value_t* GetValue([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_value_t*>)get_value)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -208,8 +273,13 @@ namespace CefNet.CApi
 		/// Returns the value at the specified key as type bool.
 		/// </summary>
 		[NativeName("get_bool")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetBool([Immutable]cef_string_t* key);
+		public unsafe int GetBool([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, int>)get_bool)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -220,8 +290,13 @@ namespace CefNet.CApi
 		/// Returns the value at the specified key as type int.
 		/// </summary>
 		[NativeName("get_int")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetInt([Immutable]cef_string_t* key);
+		public unsafe int GetInt([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, int>)get_int)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// double (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -232,8 +307,13 @@ namespace CefNet.CApi
 		/// Returns the value at the specified key as type double.
 		/// </summary>
 		[NativeName("get_double")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern double GetDouble([Immutable]cef_string_t* key);
+		public unsafe double GetDouble([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, double>)get_double)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -245,8 +325,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_string")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetString([Immutable]cef_string_t* key);
+		public unsafe cef_string_userfree_t GetString([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_string_userfree_t>)get_string)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// _cef_binary_value_t* (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -258,8 +343,13 @@ namespace CefNet.CApi
 		/// will reference existing data.
 		/// </summary>
 		[NativeName("get_binary")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_binary_value_t* GetBinary([Immutable]cef_string_t* key);
+		public unsafe cef_binary_value_t* GetBinary([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_binary_value_t*>)get_binary)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// _cef_dictionary_value_t* (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -272,8 +362,13 @@ namespace CefNet.CApi
 		/// modify this object.
 		/// </summary>
 		[NativeName("get_dictionary")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_dictionary_value_t* GetDictionary([Immutable]cef_string_t* key);
+		public unsafe cef_dictionary_value_t* GetDictionary([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_dictionary_value_t*>)get_dictionary)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// _cef_list_value_t* (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -286,8 +381,13 @@ namespace CefNet.CApi
 		/// this object.
 		/// </summary>
 		[NativeName("get_list")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_list_value_t* GetList([Immutable]cef_string_t* key);
+		public unsafe cef_list_value_t* GetList([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_list_value_t*>)get_list)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key, _cef_value_t* value)*
@@ -303,8 +403,13 @@ namespace CefNet.CApi
 		/// this object.
 		/// </summary>
 		[NativeName("set_value")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetValue([Immutable]cef_string_t* key, cef_value_t* value);
+		public unsafe int SetValue([Immutable]cef_string_t* key, cef_value_t* value)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_value_t*, int>)set_value)(self, key, value);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key)*
@@ -316,8 +421,13 @@ namespace CefNet.CApi
 		/// value was set successfully.
 		/// </summary>
 		[NativeName("set_null")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetNull([Immutable]cef_string_t* key);
+		public unsafe int SetNull([Immutable]cef_string_t* key)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, int>)set_null)(self, key);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key, int value)*
@@ -329,8 +439,13 @@ namespace CefNet.CApi
 		/// value was set successfully.
 		/// </summary>
 		[NativeName("set_bool")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetBool([Immutable]cef_string_t* key, int value);
+		public unsafe int SetBool([Immutable]cef_string_t* key, int value)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, int, int>)set_bool)(self, key, value);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key, int value)*
@@ -342,8 +457,13 @@ namespace CefNet.CApi
 		/// value was set successfully.
 		/// </summary>
 		[NativeName("set_int")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetInt([Immutable]cef_string_t* key, int value);
+		public unsafe int SetInt([Immutable]cef_string_t* key, int value)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, int, int>)set_int)(self, key, value);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key, double value)*
@@ -355,8 +475,13 @@ namespace CefNet.CApi
 		/// value was set successfully.
 		/// </summary>
 		[NativeName("set_double")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetDouble([Immutable]cef_string_t* key, double value);
+		public unsafe int SetDouble([Immutable]cef_string_t* key, double value)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, double, int>)set_double)(self, key, value);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key, const cef_string_t* value)*
@@ -368,8 +493,13 @@ namespace CefNet.CApi
 		/// value was set successfully.
 		/// </summary>
 		[NativeName("set_string")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetString([Immutable]cef_string_t* key, [Immutable]cef_string_t* value);
+		public unsafe int SetString([Immutable]cef_string_t* key, [Immutable]cef_string_t* value)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_string_t*, int>)set_string)(self, key, value);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key, _cef_binary_value_t* value)*
@@ -384,8 +514,13 @@ namespace CefNet.CApi
 		/// reference will be invalidated.
 		/// </summary>
 		[NativeName("set_binary")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetBinary([Immutable]cef_string_t* key, cef_binary_value_t* value);
+		public unsafe int SetBinary([Immutable]cef_string_t* key, cef_binary_value_t* value)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_binary_value_t*, int>)set_binary)(self, key, value);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key, _cef_dictionary_value_t* value)*
@@ -400,8 +535,13 @@ namespace CefNet.CApi
 		/// reference will be invalidated.
 		/// </summary>
 		[NativeName("set_dictionary")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetDictionary([Immutable]cef_string_t* key, cef_dictionary_value_t* value);
+		public unsafe int SetDictionary([Immutable]cef_string_t* key, cef_dictionary_value_t* value)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_dictionary_value_t*, int>)set_dictionary)(self, key, value);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_dictionary_value_t* self, const cef_string_t* key, _cef_list_value_t* value)*
@@ -416,8 +556,13 @@ namespace CefNet.CApi
 		/// reference will be invalidated.
 		/// </summary>
 		[NativeName("set_list")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetList([Immutable]cef_string_t* key, cef_list_value_t* value);
+		public unsafe int SetList([Immutable]cef_string_t* key, cef_list_value_t* value)
+		{
+			fixed (cef_dictionary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dictionary_value_t*, cef_string_t*, cef_list_value_t*, int>)set_list)(self, key, value);
+			}
+		}
 	}
 }
 

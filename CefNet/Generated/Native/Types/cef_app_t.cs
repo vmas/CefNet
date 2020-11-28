@@ -46,9 +46,14 @@ namespace CefNet.CApi
 		/// modify command-line arguments for non-browser processes as this may result
 		/// in undefined behavior including crashes.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_before_command_line_processing")]
-		public unsafe extern void OnBeforeCommandLineProcessing([Immutable]cef_string_t* process_type, cef_command_line_t* command_line);
+		public unsafe void OnBeforeCommandLineProcessing([Immutable]cef_string_t* process_type, cef_command_line_t* command_line)
+		{
+			fixed (cef_app_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_app_t*, cef_string_t*, cef_command_line_t*, void>)on_before_command_line_processing)(self, process_type, command_line);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_app_t* self, _cef_scheme_registrar_t* registrar)*
@@ -61,9 +66,14 @@ namespace CefNet.CApi
 		/// each process and the registered schemes should be the same across all
 		/// processes.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_register_custom_schemes")]
-		public unsafe extern void OnRegisterCustomSchemes(cef_scheme_registrar_t* registrar);
+		public unsafe void OnRegisterCustomSchemes(cef_scheme_registrar_t* registrar)
+		{
+			fixed (cef_app_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_app_t*, cef_scheme_registrar_t*, void>)on_register_custom_schemes)(self, registrar);
+			}
+		}
 
 		/// <summary>
 		/// _cef_resource_bundle_handler_t* (*)(_cef_app_t* self)*
@@ -76,9 +86,14 @@ namespace CefNet.CApi
 		/// If no handler is returned resources will be loaded from pack files. This
 		/// function is called by the browser and render processes on multiple threads.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_resource_bundle_handler")]
-		public unsafe extern cef_resource_bundle_handler_t* GetResourceBundleHandler();
+		public unsafe cef_resource_bundle_handler_t* GetResourceBundleHandler()
+		{
+			fixed (cef_app_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_app_t*, cef_resource_bundle_handler_t*>)get_resource_bundle_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_browser_process_handler_t* (*)(_cef_app_t* self)*
@@ -89,9 +104,14 @@ namespace CefNet.CApi
 		/// Return the handler for functionality specific to the browser process. This
 		/// function is called on multiple threads in the browser process.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_browser_process_handler")]
-		public unsafe extern cef_browser_process_handler_t* GetBrowserProcessHandler();
+		public unsafe cef_browser_process_handler_t* GetBrowserProcessHandler()
+		{
+			fixed (cef_app_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_app_t*, cef_browser_process_handler_t*>)get_browser_process_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_render_process_handler_t* (*)(_cef_app_t* self)*
@@ -102,9 +122,14 @@ namespace CefNet.CApi
 		/// Return the handler for functionality specific to the render process. This
 		/// function is called on the render process main thread.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_render_process_handler")]
-		public unsafe extern cef_render_process_handler_t* GetRenderProcessHandler();
+		public unsafe cef_render_process_handler_t* GetRenderProcessHandler()
+		{
+			fixed (cef_app_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_app_t*, cef_render_process_handler_t*>)get_render_process_handler)(self);
+			}
+		}
 	}
 }
 

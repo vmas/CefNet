@@ -33,6 +33,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefServerHandler : CefBaseRefCounted<cef_server_handler_t>, ICefServerHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnServerCreatedDelegate fnOnServerCreated = OnServerCreatedImpl;
 
 		private static readonly OnServerDestroyedDelegate fnOnServerDestroyed = OnServerDestroyedImpl;
@@ -49,6 +50,7 @@ namespace CefNet
 
 		private static readonly OnWebSocketMessageDelegate fnOnWebSocketMessage = OnWebSocketMessageImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefServerHandler Create(IntPtr instance)
 		{
 			return new CefServerHandler((cef_server_handler_t*)instance);
@@ -57,6 +59,7 @@ namespace CefNet
 		public CefServerHandler()
 		{
 			cef_server_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_server_created = (void*)Marshal.GetFunctionPointerForDelegate(fnOnServerCreated);
 			self->on_server_destroyed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnServerDestroyed);
 			self->on_client_connected = (void*)Marshal.GetFunctionPointerForDelegate(fnOnClientConnected);
@@ -65,6 +68,16 @@ namespace CefNet
 			self->on_web_socket_request = (void*)Marshal.GetFunctionPointerForDelegate(fnOnWebSocketRequest);
 			self->on_web_socket_connected = (void*)Marshal.GetFunctionPointerForDelegate(fnOnWebSocketConnected);
 			self->on_web_socket_message = (void*)Marshal.GetFunctionPointerForDelegate(fnOnWebSocketMessage);
+			#else
+			self->on_server_created = (delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, void>)&OnServerCreatedImpl;
+			self->on_server_destroyed = (delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, void>)&OnServerDestroyedImpl;
+			self->on_client_connected = (delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, void>)&OnClientConnectedImpl;
+			self->on_client_disconnected = (delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, void>)&OnClientDisconnectedImpl;
+			self->on_http_request = (delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, cef_string_t*, cef_request_t*, void>)&OnHttpRequestImpl;
+			self->on_web_socket_request = (delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, cef_string_t*, cef_request_t*, cef_callback_t*, void>)&OnWebSocketRequestImpl;
+			self->on_web_socket_connected = (delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, void>)&OnWebSocketConnectedImpl;
+			self->on_web_socket_message = (delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, void*, UIntPtr, void>)&OnWebSocketMessageImpl;
+			#endif
 		}
 
 		public CefServerHandler(cef_server_handler_t* instance)
@@ -86,10 +99,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnServerCreatedDelegate(cef_server_handler_t* self, cef_server_t* server);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnServerCreatedImpl(cef_server_handler_t* self, cef_server_t* server)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -114,10 +130,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnServerDestroyedDelegate(cef_server_handler_t* self, cef_server_t* server);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnServerDestroyedImpl(cef_server_handler_t* self, cef_server_t* server)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -141,10 +160,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnClientConnectedDelegate(cef_server_handler_t* self, cef_server_t* server, int connection_id);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnClientConnectedImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -172,10 +194,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnClientDisconnectedDelegate(cef_server_handler_t* self, cef_server_t* server, int connection_id);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnClientDisconnectedImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -201,10 +226,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnHttpRequestDelegate(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id, const cef_string_t* client_address, _cef_request_t* request)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnHttpRequestImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -238,10 +266,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnWebSocketRequestDelegate(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request, cef_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id, const cef_string_t* client_address, _cef_request_t* request, _cef_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnWebSocketRequestImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request, cef_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -267,10 +298,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnWebSocketConnectedDelegate(cef_server_handler_t* self, cef_server_t* server, int connection_id);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnWebSocketConnectedImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -296,10 +330,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnWebSocketMessageDelegate(cef_server_handler_t* self, cef_server_t* server, int connection_id, void* data, UIntPtr data_size);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id, const void* data, size_t data_size)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnWebSocketMessageImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id, void* data, UIntPtr data_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;

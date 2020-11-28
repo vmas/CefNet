@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefMediaRouteCreateCallback : CefBaseRefCounted<cef_media_route_create_callback_t>, ICefMediaRouteCreateCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnMediaRouteCreateFinishedDelegate fnOnMediaRouteCreateFinished = OnMediaRouteCreateFinishedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefMediaRouteCreateCallback Create(IntPtr instance)
 		{
 			return new CefMediaRouteCreateCallback((cef_media_route_create_callback_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefMediaRouteCreateCallback()
 		{
 			cef_media_route_create_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_media_route_create_finished = (void*)Marshal.GetFunctionPointerForDelegate(fnOnMediaRouteCreateFinished);
+			#else
+			self->on_media_route_create_finished = (delegate* unmanaged[Stdcall]<cef_media_route_create_callback_t*, CefMediaRouteCreateResult, cef_string_t*, cef_media_route_t*, void>)&OnMediaRouteCreateFinishedImpl;
+			#endif
 		}
 
 		public CefMediaRouteCreateCallback(cef_media_route_create_callback_t* instance)
@@ -60,10 +66,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnMediaRouteCreateFinishedDelegate(cef_media_route_create_callback_t* self, CefMediaRouteCreateResult result, cef_string_t* error, cef_media_route_t* route);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_media_route_create_callback_t* self, cef_media_route_create_result_t result, const cef_string_t* error, _cef_media_route_t* route)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnMediaRouteCreateFinishedImpl(cef_media_route_create_callback_t* self, CefMediaRouteCreateResult result, cef_string_t* error, cef_media_route_t* route)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMediaRouteCreateCallback;

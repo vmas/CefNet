@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this object is read-only.
 		/// </summary>
 		[NativeName("is_read_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsReadOnly();
+		public unsafe int IsReadOnly()
+		{
+			fixed (cef_post_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_t*, int>)is_read_only)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_post_data_t* self)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// result in the request failing.
 		/// </summary>
 		[NativeName("has_excluded_elements")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasExcludedElements();
+		public unsafe int HasExcludedElements()
+		{
+			fixed (cef_post_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_t*, int>)has_excluded_elements)(self);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_post_data_t* self)*
@@ -66,8 +76,13 @@ namespace CefNet.CApi
 		/// Returns the number of existing post data elements.
 		/// </summary>
 		[NativeName("get_element_count")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetElementCount();
+		public unsafe UIntPtr GetElementCount()
+		{
+			fixed (cef_post_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_t*, UIntPtr>)get_element_count)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_post_data_t* self, size_t* elementsCount, _cef_post_data_element_t** elements)*
@@ -78,8 +93,13 @@ namespace CefNet.CApi
 		/// Retrieve the post data elements.
 		/// </summary>
 		[NativeName("get_elements")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetElements(UIntPtr* elementsCount, cef_post_data_element_t** elements);
+		public unsafe void GetElements(UIntPtr* elementsCount, cef_post_data_element_t** elements)
+		{
+			fixed (cef_post_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_post_data_t*, UIntPtr*, cef_post_data_element_t**, void>)get_elements)(self, elementsCount, elements);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_post_data_t* self, _cef_post_data_element_t* element)*
@@ -91,8 +111,13 @@ namespace CefNet.CApi
 		/// succeeds.
 		/// </summary>
 		[NativeName("remove_element")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int RemoveElement(cef_post_data_element_t* element);
+		public unsafe int RemoveElement(cef_post_data_element_t* element)
+		{
+			fixed (cef_post_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_t*, cef_post_data_element_t*, int>)remove_element)(self, element);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_post_data_t* self, _cef_post_data_element_t* element)*
@@ -103,8 +128,13 @@ namespace CefNet.CApi
 		/// Add the specified post data element.  Returns true (1) if the add succeeds.
 		/// </summary>
 		[NativeName("add_element")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int AddElement(cef_post_data_element_t* element);
+		public unsafe int AddElement(cef_post_data_element_t* element)
+		{
+			fixed (cef_post_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_t*, cef_post_data_element_t*, int>)add_element)(self, element);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_post_data_t* self)*
@@ -115,8 +145,13 @@ namespace CefNet.CApi
 		/// Remove all existing post data elements.
 		/// </summary>
 		[NativeName("remove_elements")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void RemoveElements();
+		public unsafe void RemoveElements()
+		{
+			fixed (cef_post_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_post_data_t*, void>)remove_elements)(self);
+			}
+		}
 	}
 }
 

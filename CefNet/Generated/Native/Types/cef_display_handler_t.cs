@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Called when a frame&apos;s address has changed.
 		/// </summary>
 		[NativeName("on_address_change")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnAddressChange(cef_browser_t* browser, cef_frame_t* frame, [Immutable]cef_string_t* url);
+		public unsafe void OnAddressChange(cef_browser_t* browser, cef_frame_t* frame, [Immutable]cef_string_t* url)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, void>)on_address_change)(self, browser, frame, url);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, const cef_string_t* title)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Called when the page title changes.
 		/// </summary>
 		[NativeName("on_title_change")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnTitleChange(cef_browser_t* browser, [Immutable]cef_string_t* title);
+		public unsafe void OnTitleChange(cef_browser_t* browser, [Immutable]cef_string_t* title)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_string_t*, void>)on_title_change)(self, browser, title);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, cef_string_list_t icon_urls)*
@@ -63,8 +73,13 @@ namespace CefNet.CApi
 		/// Called when the page icon changes.
 		/// </summary>
 		[NativeName("on_favicon_urlchange")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnFaviconUrlChange(cef_browser_t* browser, cef_string_list_t icon_urls);
+		public unsafe void OnFaviconUrlChange(cef_browser_t* browser, cef_string_list_t icon_urls)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_string_list_t, void>)on_favicon_urlchange)(self, browser, icon_urls);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, int fullscreen)*
@@ -79,8 +94,13 @@ namespace CefNet.CApi
 		/// responsible for resizing the browser if desired.
 		/// </summary>
 		[NativeName("on_fullscreen_mode_change")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnFullscreenModeChange(cef_browser_t* browser, int fullscreen);
+		public unsafe void OnFullscreenModeChange(cef_browser_t* browser, int fullscreen)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, int, void>)on_fullscreen_mode_change)(self, browser, fullscreen);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, cef_string_t* text)*
@@ -96,8 +116,13 @@ namespace CefNet.CApi
 		/// for drawing tooltips and the return value is ignored.
 		/// </summary>
 		[NativeName("on_tooltip")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnTooltip(cef_browser_t* browser, cef_string_t* text);
+		public unsafe int OnTooltip(cef_browser_t* browser, cef_string_t* text)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_string_t*, int>)on_tooltip)(self, browser, text);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, const cef_string_t* value)*
@@ -109,8 +134,13 @@ namespace CefNet.CApi
 		/// text that will be displayed in the status message.
 		/// </summary>
 		[NativeName("on_status_message")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnStatusMessage(cef_browser_t* browser, [Immutable]cef_string_t* value);
+		public unsafe void OnStatusMessage(cef_browser_t* browser, [Immutable]cef_string_t* value)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_string_t*, void>)on_status_message)(self, browser, value);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, cef_log_severity_t level, const cef_string_t* message, const cef_string_t* source, int line)*
@@ -122,8 +152,13 @@ namespace CefNet.CApi
 		/// from being output to the console.
 		/// </summary>
 		[NativeName("on_console_message")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnConsoleMessage(cef_browser_t* browser, CefLogSeverity level, [Immutable]cef_string_t* message, [Immutable]cef_string_t* source, int line);
+		public unsafe int OnConsoleMessage(cef_browser_t* browser, CefLogSeverity level, [Immutable]cef_string_t* message, [Immutable]cef_string_t* source, int line)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, CefLogSeverity, cef_string_t*, cef_string_t*, int, int>)on_console_message)(self, browser, level, message, source, line);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, const cef_size_t* new_size)*
@@ -137,8 +172,13 @@ namespace CefNet.CApi
 		/// true (1) if the resize was handled or false (0) for default handling.
 		/// </summary>
 		[NativeName("on_auto_resize")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnAutoResize(cef_browser_t* browser, [Immutable]cef_size_t* new_size);
+		public unsafe int OnAutoResize(cef_browser_t* browser, [Immutable]cef_size_t* new_size)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_size_t*, int>)on_auto_resize)(self, browser, new_size);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, double progress)*
@@ -149,9 +189,14 @@ namespace CefNet.CApi
 		/// Called when the overall page loading progress has changed. |progress|
 		/// ranges from 0.0 to 1.0.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_loading_progress_change")]
-		public unsafe extern void OnLoadingProgressChange(cef_browser_t* browser, double progress);
+		public unsafe void OnLoadingProgressChange(cef_browser_t* browser, double progress)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, double, void>)on_loading_progress_change)(self, browser, progress);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, HCURSOR cursor, cef_cursor_type_t type, const const _cef_cursor_info_t* custom_cursor_info)*
@@ -165,8 +210,13 @@ namespace CefNet.CApi
 		/// handling.
 		/// </summary>
 		[NativeName("on_cursor_change")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnCursorChange(cef_browser_t* browser, IntPtr cursor, CefCursorType type, [Immutable]cef_cursor_info_t* custom_cursor_info);
+		public unsafe int OnCursorChange(cef_browser_t* browser, IntPtr cursor, CefCursorType type, [Immutable]cef_cursor_info_t* custom_cursor_info)
+		{
+			fixed (cef_display_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, IntPtr, CefCursorType, cef_cursor_info_t*, int>)on_cursor_change)(self, browser, cursor, type, custom_cursor_info);
+			}
+		}
 	}
 }
 

@@ -29,6 +29,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefDevToolsMessageObserver : CefBaseRefCounted<cef_dev_tools_message_observer_t>, ICefDevToolsMessageObserverPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnDevToolsMessageDelegate fnOnDevToolsMessage = OnDevToolsMessageImpl;
 
 		private static readonly OnDevToolsMethodResultDelegate fnOnDevToolsMethodResult = OnDevToolsMethodResultImpl;
@@ -39,6 +40,7 @@ namespace CefNet
 
 		private static readonly OnDevToolsAgentDetachedDelegate fnOnDevToolsAgentDetached = OnDevToolsAgentDetachedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefDevToolsMessageObserver Create(IntPtr instance)
 		{
 			return new CefDevToolsMessageObserver((cef_dev_tools_message_observer_t*)instance);
@@ -47,11 +49,19 @@ namespace CefNet
 		public CefDevToolsMessageObserver()
 		{
 			cef_dev_tools_message_observer_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_dev_tools_message = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDevToolsMessage);
 			self->on_dev_tools_method_result = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDevToolsMethodResult);
 			self->on_dev_tools_event = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDevToolsEvent);
 			self->on_dev_tools_agent_attached = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDevToolsAgentAttached);
 			self->on_dev_tools_agent_detached = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDevToolsAgentDetached);
+			#else
+			self->on_dev_tools_message = (delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, void*, UIntPtr, int>)&OnDevToolsMessageImpl;
+			self->on_dev_tools_method_result = (delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, int, int, void*, UIntPtr, void>)&OnDevToolsMethodResultImpl;
+			self->on_dev_tools_event = (delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, cef_string_t*, void*, UIntPtr, void>)&OnDevToolsEventImpl;
+			self->on_dev_tools_agent_attached = (delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, void>)&OnDevToolsAgentAttachedImpl;
+			self->on_dev_tools_agent_detached = (delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, void>)&OnDevToolsAgentDetachedImpl;
+			#endif
 		}
 
 		public CefDevToolsMessageObserver(cef_dev_tools_message_observer_t* instance)
@@ -87,10 +97,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnDevToolsMessageDelegate(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, void* message, UIntPtr message_size);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser, const void* message, size_t message_size)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnDevToolsMessageImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, void* message, UIntPtr message_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;
@@ -121,10 +134,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDevToolsMethodResultDelegate(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, int message_id, int success, void* result, UIntPtr result_size);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser, int message_id, int success, const void* result, size_t result_size)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDevToolsMethodResultImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, int message_id, int success, void* result, UIntPtr result_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;
@@ -151,10 +167,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDevToolsEventDelegate(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, cef_string_t* method, void* @params, UIntPtr params_size);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser, const cef_string_t* method, const void* params, size_t params_size)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDevToolsEventImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, cef_string_t* method, void* @params, UIntPtr params_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;
@@ -178,10 +197,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDevToolsAgentAttachedDelegate(cef_dev_tools_message_observer_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDevToolsAgentAttachedImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;
@@ -206,10 +228,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDevToolsAgentDetachedDelegate(cef_dev_tools_message_observer_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDevToolsAgentDetachedImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;

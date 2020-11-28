@@ -40,9 +40,14 @@ namespace CefNet.CApi
 		/// Called after renderer process sends accessibility tree changes to the
 		/// browser process.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_accessibility_tree_change")]
-		public unsafe extern void OnAccessibilityTreeChange(cef_value_t* value);
+		public unsafe void OnAccessibilityTreeChange(cef_value_t* value)
+		{
+			fixed (cef_accessibility_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_accessibility_handler_t*, cef_value_t*, void>)on_accessibility_tree_change)(self, value);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_accessibility_handler_t* self, _cef_value_t* value)*
@@ -53,9 +58,14 @@ namespace CefNet.CApi
 		/// Called after renderer process sends accessibility location changes to the
 		/// browser process.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_accessibility_location_change")]
-		public unsafe extern void OnAccessibilityLocationChange(cef_value_t* value);
+		public unsafe void OnAccessibilityLocationChange(cef_value_t* value)
+		{
+			fixed (cef_accessibility_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_accessibility_handler_t*, cef_value_t*, void>)on_accessibility_location_change)(self, value);
+			}
+		}
 	}
 }
 

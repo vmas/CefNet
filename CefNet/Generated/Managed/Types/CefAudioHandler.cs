@@ -28,6 +28,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefAudioHandler : CefBaseRefCounted<cef_audio_handler_t>, ICefAudioHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly GetAudioParametersDelegate fnGetAudioParameters = GetAudioParametersImpl;
 
 		private static readonly OnAudioStreamStartedDelegate fnOnAudioStreamStarted = OnAudioStreamStartedImpl;
@@ -38,6 +39,7 @@ namespace CefNet
 
 		private static readonly OnAudioStreamErrorDelegate fnOnAudioStreamError = OnAudioStreamErrorImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefAudioHandler Create(IntPtr instance)
 		{
 			return new CefAudioHandler((cef_audio_handler_t*)instance);
@@ -46,11 +48,19 @@ namespace CefNet
 		public CefAudioHandler()
 		{
 			cef_audio_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->get_audio_parameters = (void*)Marshal.GetFunctionPointerForDelegate(fnGetAudioParameters);
 			self->on_audio_stream_started = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAudioStreamStarted);
 			self->on_audio_stream_packet = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAudioStreamPacket);
 			self->on_audio_stream_stopped = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAudioStreamStopped);
 			self->on_audio_stream_error = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAudioStreamError);
+			#else
+			self->get_audio_parameters = (delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, cef_audio_parameters_t*, int>)&GetAudioParametersImpl;
+			self->on_audio_stream_started = (delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, cef_audio_parameters_t*, int, void>)&OnAudioStreamStartedImpl;
+			self->on_audio_stream_packet = (delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, float**, int, long, void>)&OnAudioStreamPacketImpl;
+			self->on_audio_stream_stopped = (delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, void>)&OnAudioStreamStoppedImpl;
+			self->on_audio_stream_error = (delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, cef_string_t*, void>)&OnAudioStreamErrorImpl;
+			#endif
 		}
 
 		public CefAudioHandler(cef_audio_handler_t* instance)
@@ -72,10 +82,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetAudioParametersDelegate(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, cef_audio_parameters_t* params)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetAudioParametersImpl(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;
@@ -101,10 +114,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnAudioStreamStartedDelegate(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params, int channels);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, const cef_audio_parameters_t* params, int channels)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnAudioStreamStartedImpl(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params, int channels)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;
@@ -133,10 +149,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnAudioStreamPacketDelegate(cef_audio_handler_t* self, cef_browser_t* browser, float** data, int frames, long pts);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, const float** data, int frames, int64 pts)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnAudioStreamPacketImpl(cef_audio_handler_t* self, cef_browser_t* browser, float** data, int frames, long pts)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;
@@ -160,10 +179,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnAudioStreamStoppedDelegate(cef_audio_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnAudioStreamStoppedImpl(cef_audio_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;
@@ -188,10 +210,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnAudioStreamErrorDelegate(cef_audio_handler_t* self, cef_browser_t* browser, cef_string_t* message);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, const cef_string_t* message)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnAudioStreamErrorImpl(cef_audio_handler_t* self, cef_browser_t* browser, cef_string_t* message)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;

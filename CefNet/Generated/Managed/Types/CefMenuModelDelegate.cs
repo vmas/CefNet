@@ -30,6 +30,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefMenuModelDelegate : CefBaseRefCounted<cef_menu_model_delegate_t>, ICefMenuModelDelegatePrivate
 	{
+#if NET_LESS_5_0
 		private static readonly ExecuteCommandDelegate fnExecuteCommand = ExecuteCommandImpl;
 
 		private static readonly MouseOutsideMenuDelegate fnMouseOutsideMenu = MouseOutsideMenuImpl;
@@ -44,6 +45,7 @@ namespace CefNet
 
 		private static readonly FormatLabelDelegate fnFormatLabel = FormatLabelImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefMenuModelDelegate Create(IntPtr instance)
 		{
 			return new CefMenuModelDelegate((cef_menu_model_delegate_t*)instance);
@@ -52,6 +54,7 @@ namespace CefNet
 		public CefMenuModelDelegate()
 		{
 			cef_menu_model_delegate_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->execute_command = (void*)Marshal.GetFunctionPointerForDelegate(fnExecuteCommand);
 			self->mouse_outside_menu = (void*)Marshal.GetFunctionPointerForDelegate(fnMouseOutsideMenu);
 			self->unhandled_open_submenu = (void*)Marshal.GetFunctionPointerForDelegate(fnUnhandledOpenSubmenu);
@@ -59,6 +62,15 @@ namespace CefNet
 			self->menu_will_show = (void*)Marshal.GetFunctionPointerForDelegate(fnMenuWillShow);
 			self->menu_closed = (void*)Marshal.GetFunctionPointerForDelegate(fnMenuClosed);
 			self->format_label = (void*)Marshal.GetFunctionPointerForDelegate(fnFormatLabel);
+			#else
+			self->execute_command = (delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, int, CefEventFlags, void>)&ExecuteCommandImpl;
+			self->mouse_outside_menu = (delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, cef_point_t*, void>)&MouseOutsideMenuImpl;
+			self->unhandled_open_submenu = (delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, int, void>)&UnhandledOpenSubmenuImpl;
+			self->unhandled_close_submenu = (delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, int, void>)&UnhandledCloseSubmenuImpl;
+			self->menu_will_show = (delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, void>)&MenuWillShowImpl;
+			self->menu_closed = (delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, void>)&MenuClosedImpl;
+			self->format_label = (delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, cef_string_t*, int>)&FormatLabelImpl;
+			#endif
 		}
 
 		public CefMenuModelDelegate(cef_menu_model_delegate_t* instance)
@@ -77,10 +89,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void ExecuteCommandDelegate(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int command_id, CefEventFlags event_flags);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void ExecuteCommandImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int command_id, CefEventFlags event_flags)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -103,10 +118,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void MouseOutsideMenuDelegate(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, cef_point_t* screen_point);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, const cef_point_t* screen_point)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void MouseOutsideMenuImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, cef_point_t* screen_point)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -129,10 +147,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void UnhandledOpenSubmenuDelegate(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, int is_rtl)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void UnhandledOpenSubmenuImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -155,10 +176,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void UnhandledCloseSubmenuDelegate(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, int is_rtl)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void UnhandledCloseSubmenuImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -180,10 +204,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void MenuWillShowDelegate(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void MenuWillShowImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -205,10 +232,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void MenuClosedDelegate(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void MenuClosedImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -232,10 +262,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int FormatLabelDelegate(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, cef_string_t* label);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, cef_string_t* label)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int FormatLabelImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, cef_string_t* label)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;

@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// if this function returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_process_message_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_process_message_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_process_message_t* self)*
@@ -52,8 +57,13 @@ namespace CefNet.CApi
 		/// expose read-only objects.
 		/// </summary>
 		[NativeName("is_read_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsReadOnly();
+		public unsafe int IsReadOnly()
+		{
+			fixed (cef_process_message_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_process_message_t*, int>)is_read_only)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_process_message_t* (*)(_cef_process_message_t* self)*
@@ -64,8 +74,13 @@ namespace CefNet.CApi
 		/// Returns a writable copy of this object.
 		/// </summary>
 		[NativeName("copy")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_process_message_t* Copy();
+		public unsafe cef_process_message_t* Copy()
+		{
+			fixed (cef_process_message_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_process_message_t*, cef_process_message_t*>)copy)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_process_message_t* self)*
@@ -77,8 +92,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetName();
+		public unsafe cef_string_userfree_t GetName()
+		{
+			fixed (cef_process_message_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_process_message_t*, cef_string_userfree_t>)get_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_list_value_t* (*)(_cef_process_message_t* self)*
@@ -89,8 +109,13 @@ namespace CefNet.CApi
 		/// Returns the list of arguments.
 		/// </summary>
 		[NativeName("get_argument_list")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_list_value_t* GetArgumentList();
+		public unsafe cef_list_value_t* GetArgumentList()
+		{
+			fixed (cef_process_message_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_process_message_t*, cef_list_value_t*>)get_argument_list)(self);
+			}
+		}
 	}
 }
 

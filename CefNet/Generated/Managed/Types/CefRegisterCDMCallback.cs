@@ -30,8 +30,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefRegisterCDMCallback : CefBaseRefCounted<cef_register_cdm_callback_t>, ICefRegisterCDMCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnCDMRegistrationCompleteDelegate fnOnCDMRegistrationComplete = OnCDMRegistrationCompleteImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefRegisterCDMCallback Create(IntPtr instance)
 		{
 			return new CefRegisterCDMCallback((cef_register_cdm_callback_t*)instance);
@@ -40,7 +42,11 @@ namespace CefNet
 		public CefRegisterCDMCallback()
 		{
 			cef_register_cdm_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_cdm_registration_complete = (void*)Marshal.GetFunctionPointerForDelegate(fnOnCDMRegistrationComplete);
+			#else
+			self->on_cdm_registration_complete = (delegate* unmanaged[Stdcall]<cef_register_cdm_callback_t*, CefCDMRegistrationError, cef_string_t*, void>)&OnCDMRegistrationCompleteImpl;
+			#endif
 		}
 
 		public CefRegisterCDMCallback(cef_register_cdm_callback_t* instance)
@@ -61,10 +67,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnCDMRegistrationCompleteDelegate(cef_register_cdm_callback_t* self, CefCDMRegistrationError result, cef_string_t* error_message);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_register_cdm_callback_t* self, cef_cdm_registration_error_t result, const cef_string_t* error_message)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnCDMRegistrationCompleteImpl(cef_register_cdm_callback_t* self, CefCDMRegistrationError result, cef_string_t* error_message)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRegisterCDMCallback;

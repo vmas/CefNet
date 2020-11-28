@@ -52,8 +52,13 @@ namespace CefNet.CApi
 		/// object.
 		/// </summary>
 		[NativeName("is_same")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSame(cef_request_context_t* other);
+		public unsafe int IsSame(cef_request_context_t* other)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_request_context_t*, int>)is_same)(self, other);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self, _cef_request_context_t* other)*
@@ -65,8 +70,13 @@ namespace CefNet.CApi
 		/// object.
 		/// </summary>
 		[NativeName("is_sharing_with")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSharingWith(cef_request_context_t* other);
+		public unsafe int IsSharingWith(cef_request_context_t* other)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_request_context_t*, int>)is_sharing_with)(self, other);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self)*
@@ -79,8 +89,13 @@ namespace CefNet.CApi
 		/// context argument.
 		/// </summary>
 		[NativeName("is_global")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsGlobal();
+		public unsafe int IsGlobal()
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, int>)is_global)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_request_context_handler_t* (*)(_cef_request_context_t* self)*
@@ -91,8 +106,13 @@ namespace CefNet.CApi
 		/// Returns the handler for this context if any.
 		/// </summary>
 		[NativeName("get_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_request_context_handler_t* GetHandler();
+		public unsafe cef_request_context_handler_t* GetHandler()
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_request_context_handler_t*>)get_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_request_context_t* self)*
@@ -105,8 +125,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_cache_path")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetCachePath();
+		public unsafe cef_string_userfree_t GetCachePath()
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_userfree_t>)get_cache_path)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_cookie_manager_t* (*)(_cef_request_context_t* self, _cef_completion_callback_t* callback)*
@@ -119,8 +144,13 @@ namespace CefNet.CApi
 		/// storage has been initialized.
 		/// </summary>
 		[NativeName("get_cookie_manager")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_cookie_manager_t* GetCookieManager(cef_completion_callback_t* callback);
+		public unsafe cef_cookie_manager_t* GetCookieManager(cef_completion_callback_t* callback)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_completion_callback_t*, cef_cookie_manager_t*>)get_cookie_manager)(self, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self, const cef_string_t* scheme_name, const cef_string_t* domain_name, _cef_scheme_handler_factory_t* factory)*
@@ -140,9 +170,14 @@ namespace CefNet.CApi
 		/// optional |domain_name|. Returns false (0) if an error occurs. This function
 		/// may be called on any thread in the browser process.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("register_scheme_handler_factory")]
-		public unsafe extern int RegisterSchemeHandlerFactory([Immutable]cef_string_t* scheme_name, [Immutable]cef_string_t* domain_name, cef_scheme_handler_factory_t* factory);
+		public unsafe int RegisterSchemeHandlerFactory([Immutable]cef_string_t* scheme_name, [Immutable]cef_string_t* domain_name, cef_scheme_handler_factory_t* factory)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, cef_string_t*, cef_scheme_handler_factory_t*, int>)register_scheme_handler_factory)(self, scheme_name, domain_name, factory);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self)*
@@ -153,9 +188,14 @@ namespace CefNet.CApi
 		/// Clear all registered scheme handler factories. Returns false (0) on error.
 		/// This function may be called on any thread in the browser process.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("clear_scheme_handler_factories")]
-		public unsafe extern int ClearSchemeHandlerFactories();
+		public unsafe int ClearSchemeHandlerFactories()
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, int>)clear_scheme_handler_factories)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_context_t* self, int reload_pages)*
@@ -170,8 +210,13 @@ namespace CefNet.CApi
 		/// the plugin list cache.
 		/// </summary>
 		[NativeName("purge_plugin_list_cache")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void PurgePluginListCache(int reload_pages);
+		public unsafe void PurgePluginListCache(int reload_pages)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_context_t*, int, void>)purge_plugin_list_cache)(self, reload_pages);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self, const cef_string_t* name)*
@@ -183,8 +228,13 @@ namespace CefNet.CApi
 		/// function must be called on the browser process UI thread.
 		/// </summary>
 		[NativeName("has_preference")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasPreference([Immutable]cef_string_t* name);
+		public unsafe int HasPreference([Immutable]cef_string_t* name)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, int>)has_preference)(self, name);
+			}
+		}
 
 		/// <summary>
 		/// _cef_value_t* (*)(_cef_request_context_t* self, const cef_string_t* name)*
@@ -199,8 +249,13 @@ namespace CefNet.CApi
 		/// called on the browser process UI thread.
 		/// </summary>
 		[NativeName("get_preference")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_value_t* GetPreference([Immutable]cef_string_t* name);
+		public unsafe cef_value_t* GetPreference([Immutable]cef_string_t* name)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, cef_value_t*>)get_preference)(self, name);
+			}
+		}
 
 		/// <summary>
 		/// _cef_dictionary_value_t* (*)(_cef_request_context_t* self, int include_defaults)*
@@ -216,8 +271,13 @@ namespace CefNet.CApi
 		/// thread.
 		/// </summary>
 		[NativeName("get_all_preferences")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_dictionary_value_t* GetAllPreferences(int include_defaults);
+		public unsafe cef_dictionary_value_t* GetAllPreferences(int include_defaults)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, int, cef_dictionary_value_t*>)get_all_preferences)(self, include_defaults);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self, const cef_string_t* name)*
@@ -231,8 +291,13 @@ namespace CefNet.CApi
 		/// the browser process UI thread.
 		/// </summary>
 		[NativeName("can_set_preference")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int CanSetPreference([Immutable]cef_string_t* name);
+		public unsafe int CanSetPreference([Immutable]cef_string_t* name)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, int>)can_set_preference)(self, name);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self, const cef_string_t* name, _cef_value_t* value, cef_string_t* error)*
@@ -247,8 +312,13 @@ namespace CefNet.CApi
 		/// problem. This function must be called on the browser process UI thread.
 		/// </summary>
 		[NativeName("set_preference")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetPreference([Immutable]cef_string_t* name, cef_value_t* value, cef_string_t* error);
+		public unsafe int SetPreference([Immutable]cef_string_t* name, cef_value_t* value, cef_string_t* error)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, cef_value_t*, cef_string_t*, int>)set_preference)(self, name, value, error);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_context_t* self, _cef_completion_callback_t* callback)*
@@ -263,9 +333,14 @@ namespace CefNet.CApi
 		/// |callback| is non-NULL it will be executed on the UI thread after
 		/// completion.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("clear_certificate_exceptions")]
-		public unsafe extern void ClearCertificateExceptions(cef_completion_callback_t* callback);
+		public unsafe void ClearCertificateExceptions(cef_completion_callback_t* callback)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_completion_callback_t*, void>)clear_certificate_exceptions)(self, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_context_t* self, _cef_completion_callback_t* callback)*
@@ -277,9 +352,14 @@ namespace CefNet.CApi
 		/// handling GetAuthCredentials. If |callback| is non-NULL it will be executed
 		/// on the UI thread after completion.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("clear_http_auth_credentials")]
-		public unsafe extern void ClearHttpAuthCredentials(cef_completion_callback_t* callback);
+		public unsafe void ClearHttpAuthCredentials(cef_completion_callback_t* callback)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_completion_callback_t*, void>)clear_http_auth_credentials)(self, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_context_t* self, _cef_completion_callback_t* callback)*
@@ -293,8 +373,13 @@ namespace CefNet.CApi
 		/// on the UI thread after completion.
 		/// </summary>
 		[NativeName("close_all_connections")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void CloseAllConnections(cef_completion_callback_t* callback);
+		public unsafe void CloseAllConnections(cef_completion_callback_t* callback)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_completion_callback_t*, void>)close_all_connections)(self, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_context_t* self, const cef_string_t* origin, _cef_resolve_callback_t* callback)*
@@ -306,8 +391,13 @@ namespace CefNet.CApi
 		/// |callback| will be executed on the UI thread after completion.
 		/// </summary>
 		[NativeName("resolve_host")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ResolveHost([Immutable]cef_string_t* origin, cef_resolve_callback_t* callback);
+		public unsafe void ResolveHost([Immutable]cef_string_t* origin, cef_resolve_callback_t* callback)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, cef_resolve_callback_t*, void>)resolve_host)(self, origin, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_context_t* self, const cef_string_t* root_directory, _cef_dictionary_value_t* manifest, _cef_extension_handler_t* handler)*
@@ -360,8 +450,13 @@ namespace CefNet.CApi
 		/// and usage documentation.
 		/// </summary>
 		[NativeName("load_extension")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void LoadExtension([Immutable]cef_string_t* root_directory, cef_dictionary_value_t* manifest, cef_extension_handler_t* handler);
+		public unsafe void LoadExtension([Immutable]cef_string_t* root_directory, cef_dictionary_value_t* manifest, cef_extension_handler_t* handler)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, cef_dictionary_value_t*, cef_extension_handler_t*, void>)load_extension)(self, root_directory, manifest, handler);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self, const cef_string_t* extension_id)*
@@ -375,8 +470,13 @@ namespace CefNet.CApi
 		/// the browser process UI thread.
 		/// </summary>
 		[NativeName("did_load_extension")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int DidLoadExtension([Immutable]cef_string_t* extension_id);
+		public unsafe int DidLoadExtension([Immutable]cef_string_t* extension_id)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, int>)did_load_extension)(self, extension_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self, const cef_string_t* extension_id)*
@@ -390,8 +490,13 @@ namespace CefNet.CApi
 		/// browser process UI thread.
 		/// </summary>
 		[NativeName("has_extension")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasExtension([Immutable]cef_string_t* extension_id);
+		public unsafe int HasExtension([Immutable]cef_string_t* extension_id)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, int>)has_extension)(self, extension_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_t* self, cef_string_list_t extension_ids)*
@@ -405,8 +510,13 @@ namespace CefNet.CApi
 		/// browser process UI thread.
 		/// </summary>
 		[NativeName("get_extensions")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetExtensions(cef_string_list_t extension_ids);
+		public unsafe int GetExtensions(cef_string_list_t extension_ids)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_list_t, int>)get_extensions)(self, extension_ids);
+			}
+		}
 
 		/// <summary>
 		/// _cef_extension_t* (*)(_cef_request_context_t* self, const cef_string_t* extension_id)*
@@ -419,8 +529,13 @@ namespace CefNet.CApi
 		/// must be called on the browser process UI thread.
 		/// </summary>
 		[NativeName("get_extension")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_extension_t* GetExtension([Immutable]cef_string_t* extension_id);
+		public unsafe cef_extension_t* GetExtension([Immutable]cef_string_t* extension_id)
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_string_t*, cef_extension_t*>)get_extension)(self, extension_id);
+			}
+		}
 
 		/// <summary>
 		/// _cef_media_router_t* (*)(_cef_request_context_t* self)*
@@ -431,8 +546,13 @@ namespace CefNet.CApi
 		/// Returns the MediaRouter object associated with this context.
 		/// </summary>
 		[NativeName("get_media_router")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_media_router_t* GetMediaRouter();
+		public unsafe cef_media_router_t* GetMediaRouter()
+		{
+			fixed (cef_request_context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_media_router_t*>)get_media_router)(self);
+			}
+		}
 	}
 }
 

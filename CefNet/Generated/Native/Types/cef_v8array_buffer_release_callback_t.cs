@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// with this object.
 		/// </summary>
 		[NativeName("release_buffer")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ReleaseBuffer(void* buffer);
+		public unsafe void ReleaseBuffer(void* buffer)
+		{
+			fixed (cef_v8array_buffer_release_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_v8array_buffer_release_callback_t*, void*, void>)release_buffer)(self, buffer);
+			}
+		}
 	}
 }
 

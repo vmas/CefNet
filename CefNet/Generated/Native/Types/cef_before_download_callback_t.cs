@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// (1) if you do wish to show the default &quot;Save As&quot; dialog.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue([Immutable]cef_string_t* download_path, int show_dialog);
+		public unsafe void Continue([Immutable]cef_string_t* download_path, int show_dialog)
+		{
+			fixed (cef_before_download_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_before_download_callback_t*, cef_string_t*, int, void>)cont)(self, download_path, show_dialog);
+			}
+		}
 	}
 }
 

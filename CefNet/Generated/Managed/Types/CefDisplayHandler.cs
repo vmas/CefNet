@@ -29,6 +29,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefDisplayHandler : CefBaseRefCounted<cef_display_handler_t>, ICefDisplayHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnAddressChangeDelegate fnOnAddressChange = OnAddressChangeImpl;
 
 		private static readonly OnTitleChangeDelegate fnOnTitleChange = OnTitleChangeImpl;
@@ -49,6 +50,7 @@ namespace CefNet
 
 		private static readonly OnCursorChangeDelegate fnOnCursorChange = OnCursorChangeImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefDisplayHandler Create(IntPtr instance)
 		{
 			return new CefDisplayHandler((cef_display_handler_t*)instance);
@@ -57,6 +59,7 @@ namespace CefNet
 		public CefDisplayHandler()
 		{
 			cef_display_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_address_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAddressChange);
 			self->on_title_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnTitleChange);
 			self->on_favicon_urlchange = (void*)Marshal.GetFunctionPointerForDelegate(fnOnFaviconUrlChange);
@@ -67,6 +70,18 @@ namespace CefNet
 			self->on_auto_resize = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAutoResize);
 			self->on_loading_progress_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnLoadingProgressChange);
 			self->on_cursor_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnCursorChange);
+			#else
+			self->on_address_change = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, void>)&OnAddressChangeImpl;
+			self->on_title_change = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_string_t*, void>)&OnTitleChangeImpl;
+			self->on_favicon_urlchange = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_string_list_t, void>)&OnFaviconUrlChangeImpl;
+			self->on_fullscreen_mode_change = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, int, void>)&OnFullscreenModeChangeImpl;
+			self->on_tooltip = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_string_t*, int>)&OnTooltipImpl;
+			self->on_status_message = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_string_t*, void>)&OnStatusMessageImpl;
+			self->on_console_message = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, CefLogSeverity, cef_string_t*, cef_string_t*, int, int>)&OnConsoleMessageImpl;
+			self->on_auto_resize = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, cef_size_t*, int>)&OnAutoResizeImpl;
+			self->on_loading_progress_change = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, double, void>)&OnLoadingProgressChangeImpl;
+			self->on_cursor_change = (delegate* unmanaged[Stdcall]<cef_display_handler_t*, cef_browser_t*, IntPtr, CefCursorType, cef_cursor_info_t*, int>)&OnCursorChangeImpl;
+			#endif
 		}
 
 		public CefDisplayHandler(cef_display_handler_t* instance)
@@ -84,10 +99,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnAddressChangeDelegate(cef_display_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* url);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, const cef_string_t* url)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnAddressChangeImpl(cef_display_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* url)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
@@ -110,10 +128,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnTitleChangeDelegate(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* title);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, const cef_string_t* title)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnTitleChangeImpl(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* title)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
@@ -135,10 +156,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnFaviconUrlChangeDelegate(cef_display_handler_t* self, cef_browser_t* browser, cef_string_list_t icon_urls);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, cef_string_list_t icon_urls)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnFaviconUrlChangeImpl(cef_display_handler_t* self, cef_browser_t* browser, cef_string_list_t icon_urls)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
@@ -164,10 +188,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnFullscreenModeChangeDelegate(cef_display_handler_t* self, cef_browser_t* browser, int fullscreen);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, int fullscreen)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnFullscreenModeChangeImpl(cef_display_handler_t* self, cef_browser_t* browser, int fullscreen)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
@@ -195,10 +222,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnTooltipDelegate(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* text);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, cef_string_t* text)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnTooltipImpl(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* text)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
@@ -226,10 +256,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnStatusMessageDelegate(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* value);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, const cef_string_t* value)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnStatusMessageImpl(cef_display_handler_t* self, cef_browser_t* browser, cef_string_t* value)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
@@ -253,10 +286,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnConsoleMessageDelegate(cef_display_handler_t* self, cef_browser_t* browser, CefLogSeverity level, cef_string_t* message, cef_string_t* source, int line);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, cef_log_severity_t level, const cef_string_t* message, const cef_string_t* source, int line)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnConsoleMessageImpl(cef_display_handler_t* self, cef_browser_t* browser, CefLogSeverity level, cef_string_t* message, cef_string_t* source, int line)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
@@ -282,10 +318,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnAutoResizeDelegate(cef_display_handler_t* self, cef_browser_t* browser, cef_size_t* new_size);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, const cef_size_t* new_size)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnAutoResizeImpl(cef_display_handler_t* self, cef_browser_t* browser, cef_size_t* new_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
@@ -308,10 +347,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnLoadingProgressChangeDelegate(cef_display_handler_t* self, cef_browser_t* browser, double progress);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_display_handler_t* self, _cef_browser_t* browser, double progress)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnLoadingProgressChangeImpl(cef_display_handler_t* self, cef_browser_t* browser, double progress)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;
@@ -337,10 +379,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnCursorChangeDelegate(cef_display_handler_t* self, cef_browser_t* browser, IntPtr cursor, CefCursorType type, cef_cursor_info_t* custom_cursor_info);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_display_handler_t* self, _cef_browser_t* browser, HCURSOR cursor, cef_cursor_type_t type, const const _cef_cursor_info_t* custom_cursor_info)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnCursorChangeImpl(cef_display_handler_t* self, cef_browser_t* browser, IntPtr cursor, CefCursorType type, cef_cursor_info_t* custom_cursor_info)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDisplayHandler;

@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// dialog mode. If the selection was cancelled |file_paths| will be NULL.
 		/// </summary>
 		[NativeName("on_file_dialog_dismissed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnFileDialogDismissed(int selected_accept_filter, cef_string_list_t file_paths);
+		public unsafe void OnFileDialogDismissed(int selected_accept_filter, cef_string_list_t file_paths)
+		{
+			fixed (cef_run_file_dialog_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_run_file_dialog_callback_t*, int, cef_string_list_t, void>)on_file_dialog_dismissed)(self, selected_accept_filter, file_paths);
+			}
+		}
 	}
 }
 

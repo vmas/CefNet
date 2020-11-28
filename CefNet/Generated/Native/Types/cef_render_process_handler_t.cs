@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// Called after WebKit has been initialized.
 		/// </summary>
 		[NativeName("on_web_kit_initialized")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnWebKitInitialized();
+		public unsafe void OnWebKitInitialized()
+		{
+			fixed (cef_render_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, void>)on_web_kit_initialized)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_dictionary_value_t* extra_info)*
@@ -58,8 +63,13 @@ namespace CefNet.CApi
 		/// cef_browser_view_t::cef_browser_view_create().
 		/// </summary>
 		[NativeName("on_browser_created")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnBrowserCreated(cef_browser_t* browser, cef_dictionary_value_t* extra_info);
+		public unsafe void OnBrowserCreated(cef_browser_t* browser, cef_dictionary_value_t* extra_info)
+		{
+			fixed (cef_render_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_dictionary_value_t*, void>)on_browser_created)(self, browser, extra_info);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser)*
@@ -70,8 +80,13 @@ namespace CefNet.CApi
 		/// Called before a browser is destroyed.
 		/// </summary>
 		[NativeName("on_browser_destroyed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnBrowserDestroyed(cef_browser_t* browser);
+		public unsafe void OnBrowserDestroyed(cef_browser_t* browser)
+		{
+			fixed (cef_render_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, void>)on_browser_destroyed)(self, browser);
+			}
+		}
 
 		/// <summary>
 		/// _cef_load_handler_t* (*)(_cef_render_process_handler_t* self)*
@@ -82,8 +97,13 @@ namespace CefNet.CApi
 		/// Return the handler for browser load status events.
 		/// </summary>
 		[NativeName("get_load_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_load_handler_t* GetLoadHandler();
+		public unsafe cef_load_handler_t* GetLoadHandler()
+		{
+			fixed (cef_render_process_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_load_handler_t*>)get_load_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_v8context_t* context)*
@@ -99,8 +119,13 @@ namespace CefNet.CApi
 		/// cef_v8context_t::get_task_runner() function.
 		/// </summary>
 		[NativeName("on_context_created")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnContextCreated(cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context);
+		public unsafe void OnContextCreated(cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)
+		{
+			fixed (cef_render_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, cef_v8context_t*, void>)on_context_created)(self, browser, frame, context);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_v8context_t* context)*
@@ -112,8 +137,13 @@ namespace CefNet.CApi
 		/// references to the context should be kept after this function is called.
 		/// </summary>
 		[NativeName("on_context_released")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnContextReleased(cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context);
+		public unsafe void OnContextReleased(cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)
+		{
+			fixed (cef_render_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, cef_v8context_t*, void>)on_context_released)(self, browser, frame, context);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_v8context_t* context, _cef_v8exception_t* exception, _cef_v8stack_trace_t* stackTrace)*
@@ -126,8 +156,13 @@ namespace CefNet.CApi
 		/// CefSettings.uncaught_exception_stack_size &gt; 0.
 		/// </summary>
 		[NativeName("on_uncaught_exception")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnUncaughtException(cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context, cef_v8exception_t* exception, cef_v8stack_trace_t* stackTrace);
+		public unsafe void OnUncaughtException(cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context, cef_v8exception_t* exception, cef_v8stack_trace_t* stackTrace)
+		{
+			fixed (cef_render_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, cef_v8context_t*, cef_v8exception_t*, cef_v8stack_trace_t*, void>)on_uncaught_exception)(self, browser, frame, context, exception, stackTrace);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_domnode_t* node)*
@@ -143,8 +178,13 @@ namespace CefNet.CApi
 		/// of this function.
 		/// </summary>
 		[NativeName("on_focused_node_changed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnFocusedNodeChanged(cef_browser_t* browser, cef_frame_t* frame, cef_domnode_t* node);
+		public unsafe void OnFocusedNodeChanged(cef_browser_t* browser, cef_frame_t* frame, cef_domnode_t* node)
+		{
+			fixed (cef_render_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, cef_domnode_t*, void>)on_focused_node_changed)(self, browser, frame, node);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_process_id_t source_process, _cef_process_message_t* message)*
@@ -156,9 +196,14 @@ namespace CefNet.CApi
 		/// (1) if the message was handled or false (0) otherwise. Do not keep a
 		/// reference to or attempt to access the message outside of this callback.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_process_message_received")]
-		public unsafe extern int OnProcessMessageReceived(cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message);
+		public unsafe int OnProcessMessageReceived(cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
+		{
+			fixed (cef_render_process_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, CefProcessId, cef_process_message_t*, int>)on_process_message_received)(self, browser, frame, source_process, message);
+			}
+		}
 	}
 }
 

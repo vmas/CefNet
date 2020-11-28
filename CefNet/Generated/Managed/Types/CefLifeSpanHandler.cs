@@ -30,6 +30,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefLifeSpanHandler : CefBaseRefCounted<cef_life_span_handler_t>, ICefLifeSpanHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnBeforePopupDelegate fnOnBeforePopup = OnBeforePopupImpl;
 
 		private static readonly OnAfterCreatedDelegate fnOnAfterCreated = OnAfterCreatedImpl;
@@ -38,6 +39,7 @@ namespace CefNet
 
 		private static readonly OnBeforeCloseDelegate fnOnBeforeClose = OnBeforeCloseImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefLifeSpanHandler Create(IntPtr instance)
 		{
 			return new CefLifeSpanHandler((cef_life_span_handler_t*)instance);
@@ -46,10 +48,17 @@ namespace CefNet
 		public CefLifeSpanHandler()
 		{
 			cef_life_span_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_before_popup = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforePopup);
 			self->on_after_created = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAfterCreated);
 			self->do_close = (void*)Marshal.GetFunctionPointerForDelegate(fnDoClose);
 			self->on_before_close = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforeClose);
+			#else
+			self->on_before_popup = (delegate* unmanaged[Stdcall]<cef_life_span_handler_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, cef_string_t*, CefWindowOpenDisposition, int, cef_popup_features_t*, cef_window_info_t*, cef_client_t**, cef_browser_settings_t*, cef_dictionary_value_t**, int*, int>)&OnBeforePopupImpl;
+			self->on_after_created = (delegate* unmanaged[Stdcall]<cef_life_span_handler_t*, cef_browser_t*, void>)&OnAfterCreatedImpl;
+			self->do_close = (delegate* unmanaged[Stdcall]<cef_life_span_handler_t*, cef_browser_t*, int>)&DoCloseImpl;
+			self->on_before_close = (delegate* unmanaged[Stdcall]<cef_life_span_handler_t*, cef_browser_t*, void>)&OnBeforeCloseImpl;
+			#endif
 		}
 
 		public CefLifeSpanHandler(cef_life_span_handler_t* instance)
@@ -90,10 +99,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnBeforePopupDelegate(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, cef_string_t* target_frame_name, CefWindowOpenDisposition target_disposition, int user_gesture, cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* no_javascript_access);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_life_span_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, const cef_string_t* target_url, const cef_string_t* target_frame_name, cef_window_open_disposition_t target_disposition, int user_gesture, const const _cef_popup_features_t* popupFeatures, _cef_window_info_t* windowInfo, _cef_client_t** client, _cef_browser_settings_t* settings, _cef_dictionary_value_t** extra_info, int* no_javascript_access)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnBeforePopupImpl(cef_life_span_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, cef_string_t* target_frame_name, CefWindowOpenDisposition target_disposition, int user_gesture, cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* no_javascript_access)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLifeSpanHandler;
@@ -122,10 +134,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnAfterCreatedDelegate(cef_life_span_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_life_span_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnAfterCreatedImpl(cef_life_span_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLifeSpanHandler;
@@ -226,10 +241,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int DoCloseDelegate(cef_life_span_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_life_span_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int DoCloseImpl(cef_life_span_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLifeSpanHandler;
@@ -259,10 +277,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnBeforeCloseDelegate(cef_life_span_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_life_span_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnBeforeCloseImpl(cef_life_span_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLifeSpanHandler;

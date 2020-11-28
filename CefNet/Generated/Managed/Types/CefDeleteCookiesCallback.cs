@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefDeleteCookiesCallback : CefBaseRefCounted<cef_delete_cookies_callback_t>, ICefDeleteCookiesCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnCompleteDelegate fnOnComplete = OnCompleteImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefDeleteCookiesCallback Create(IntPtr instance)
 		{
 			return new CefDeleteCookiesCallback((cef_delete_cookies_callback_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefDeleteCookiesCallback()
 		{
 			cef_delete_cookies_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_complete = (void*)Marshal.GetFunctionPointerForDelegate(fnOnComplete);
+			#else
+			self->on_complete = (delegate* unmanaged[Stdcall]<cef_delete_cookies_callback_t*, int, void>)&OnCompleteImpl;
+			#endif
 		}
 
 		public CefDeleteCookiesCallback(cef_delete_cookies_callback_t* instance)
@@ -58,10 +64,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnCompleteDelegate(cef_delete_cookies_callback_t* self, int num_deleted);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_delete_cookies_callback_t* self, int num_deleted)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnCompleteImpl(cef_delete_cookies_callback_t* self, int num_deleted)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDeleteCookiesCallback;

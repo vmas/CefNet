@@ -28,8 +28,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefResolveCallback : CefBaseRefCounted<cef_resolve_callback_t>, ICefResolveCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnResolveCompletedDelegate fnOnResolveCompleted = OnResolveCompletedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefResolveCallback Create(IntPtr instance)
 		{
 			return new CefResolveCallback((cef_resolve_callback_t*)instance);
@@ -38,7 +40,11 @@ namespace CefNet
 		public CefResolveCallback()
 		{
 			cef_resolve_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_resolve_completed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnResolveCompleted);
+			#else
+			self->on_resolve_completed = (delegate* unmanaged[Stdcall]<cef_resolve_callback_t*, CefErrorCode, cef_string_list_t, void>)&OnResolveCompletedImpl;
+			#endif
 		}
 
 		public CefResolveCallback(cef_resolve_callback_t* instance)
@@ -58,10 +64,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnResolveCompletedDelegate(cef_resolve_callback_t* self, CefErrorCode result, cef_string_list_t resolved_ips);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_resolve_callback_t* self, cef_errorcode_t result, cef_string_list_t resolved_ips)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnResolveCompletedImpl(cef_resolve_callback_t* self, CefErrorCode result, cef_string_list_t resolved_ips)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResolveCallback;

@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// called if no cookies are found.
 		/// </summary>
 		[NativeName("visit")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Visit([Immutable]cef_cookie_t* cookie, int count, int total, int* deleteCookie);
+		public unsafe int Visit([Immutable]cef_cookie_t* cookie, int count, int total, int* deleteCookie)
+		{
+			fixed (cef_cookie_visitor_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_cookie_visitor_t*, cef_cookie_t*, int, int, int*, int>)visit)(self, cookie, count, total, deleteCookie);
+			}
+		}
 	}
 }
 

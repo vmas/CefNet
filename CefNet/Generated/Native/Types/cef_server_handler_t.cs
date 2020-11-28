@@ -47,8 +47,13 @@ namespace CefNet.CApi
 		/// OnServerDestroyed will be called immediately after this function returns.
 		/// </summary>
 		[NativeName("on_server_created")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnServerCreated(cef_server_t* server);
+		public unsafe void OnServerCreated(cef_server_t* server)
+		{
+			fixed (cef_server_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, void>)on_server_created)(self, server);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_handler_t* self, _cef_server_t* server)*
@@ -62,8 +67,13 @@ namespace CefNet.CApi
 		/// description of server lifespan.
 		/// </summary>
 		[NativeName("on_server_destroyed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnServerDestroyed(cef_server_t* server);
+		public unsafe void OnServerDestroyed(cef_server_t* server)
+		{
+			fixed (cef_server_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, void>)on_server_destroyed)(self, server);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id)*
@@ -76,8 +86,13 @@ namespace CefNet.CApi
 		/// call to OnClientDisconnected.
 		/// </summary>
 		[NativeName("on_client_connected")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnClientConnected(cef_server_t* server, int connection_id);
+		public unsafe void OnClientConnected(cef_server_t* server, int connection_id)
+		{
+			fixed (cef_server_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, void>)on_client_connected)(self, server, connection_id);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id)*
@@ -94,8 +109,13 @@ namespace CefNet.CApi
 		/// function is called.
 		/// </summary>
 		[NativeName("on_client_disconnected")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnClientDisconnected(cef_server_t* server, int connection_id);
+		public unsafe void OnClientDisconnected(cef_server_t* server, int connection_id)
+		{
+			fixed (cef_server_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, void>)on_client_disconnected)(self, server, connection_id);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id, const cef_string_t* client_address, _cef_request_t* request)*
@@ -110,8 +130,13 @@ namespace CefNet.CApi
 		/// functions either synchronously or asynchronusly to send a response.
 		/// </summary>
 		[NativeName("on_http_request")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnHttpRequest(cef_server_t* server, int connection_id, [Immutable]cef_string_t* client_address, cef_request_t* request);
+		public unsafe void OnHttpRequest(cef_server_t* server, int connection_id, [Immutable]cef_string_t* client_address, cef_request_t* request)
+		{
+			fixed (cef_server_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, cef_string_t*, cef_request_t*, void>)on_http_request)(self, server, connection_id, client_address, request);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id, const cef_string_t* client_address, _cef_request_t* request, _cef_callback_t* callback)*
@@ -133,8 +158,13 @@ namespace CefNet.CApi
 		/// messages.
 		/// </summary>
 		[NativeName("on_web_socket_request")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnWebSocketRequest(cef_server_t* server, int connection_id, [Immutable]cef_string_t* client_address, cef_request_t* request, cef_callback_t* callback);
+		public unsafe void OnWebSocketRequest(cef_server_t* server, int connection_id, [Immutable]cef_string_t* client_address, cef_request_t* request, cef_callback_t* callback)
+		{
+			fixed (cef_server_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, cef_string_t*, cef_request_t*, cef_callback_t*, void>)on_web_socket_request)(self, server, connection_id, client_address, request, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id)*
@@ -147,8 +177,13 @@ namespace CefNet.CApi
 		/// OnWebSocketRequest documentation for intended usage.
 		/// </summary>
 		[NativeName("on_web_socket_connected")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnWebSocketConnected(cef_server_t* server, int connection_id);
+		public unsafe void OnWebSocketConnected(cef_server_t* server, int connection_id)
+		{
+			fixed (cef_server_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, void>)on_web_socket_connected)(self, server, connection_id);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id, const void* data, size_t data_size)*
@@ -163,8 +198,13 @@ namespace CefNet.CApi
 		/// intended usage.
 		/// </summary>
 		[NativeName("on_web_socket_message")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnWebSocketMessage(cef_server_t* server, int connection_id, [Immutable]void* data, UIntPtr data_size);
+		public unsafe void OnWebSocketMessage(cef_server_t* server, int connection_id, [Immutable]void* data, UIntPtr data_size)
+		{
+			fixed (cef_server_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_handler_t*, cef_server_t*, int, void*, UIntPtr, void>)on_web_socket_message)(self, server, connection_id, data, data_size);
+			}
+		}
 	}
 }
 

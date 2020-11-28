@@ -62,8 +62,13 @@ namespace CefNet.CApi
 		/// cef_render_process_handler_t::on_browser_created() in the render process.
 		/// </summary>
 		[NativeName("on_before_popup")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnBeforePopup(cef_browser_t* browser, cef_frame_t* frame, [Immutable]cef_string_t* target_url, [Immutable]cef_string_t* target_frame_name, CefWindowOpenDisposition target_disposition, int user_gesture, [Immutable]cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* no_javascript_access);
+		public unsafe int OnBeforePopup(cef_browser_t* browser, cef_frame_t* frame, [Immutable]cef_string_t* target_url, [Immutable]cef_string_t* target_frame_name, CefWindowOpenDisposition target_disposition, int user_gesture, [Immutable]cef_popup_features_t* popupFeatures, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings, cef_dictionary_value_t** extra_info, int* no_javascript_access)
+		{
+			fixed (cef_life_span_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_life_span_handler_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, cef_string_t*, CefWindowOpenDisposition, int, cef_popup_features_t*, cef_window_info_t*, cef_client_t**, cef_browser_settings_t*, cef_dictionary_value_t**, int*, int>)on_before_popup)(self, browser, frame, target_url, target_frame_name, target_disposition, user_gesture, popupFeatures, windowInfo, client, settings, extra_info, no_javascript_access);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_life_span_handler_t* self, _cef_browser_t* browser)*
@@ -75,8 +80,13 @@ namespace CefNet.CApi
 		/// notification that references |browser|.
 		/// </summary>
 		[NativeName("on_after_created")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnAfterCreated(cef_browser_t* browser);
+		public unsafe void OnAfterCreated(cef_browser_t* browser)
+		{
+			fixed (cef_life_span_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_life_span_handler_t*, cef_browser_t*, void>)on_after_created)(self, browser);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_life_span_handler_t* self, _cef_browser_t* browser)*
@@ -165,8 +175,13 @@ namespace CefNet.CApi
 		/// exist.
 		/// </summary>
 		[NativeName("do_close")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int DoClose(cef_browser_t* browser);
+		public unsafe int DoClose(cef_browser_t* browser)
+		{
+			fixed (cef_life_span_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_life_span_handler_t*, cef_browser_t*, int>)do_close)(self, browser);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_life_span_handler_t* self, _cef_browser_t* browser)*
@@ -185,8 +200,13 @@ namespace CefNet.CApi
 		/// documentation for additional usage information.
 		/// </summary>
 		[NativeName("on_before_close")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnBeforeClose(cef_browser_t* browser);
+		public unsafe void OnBeforeClose(cef_browser_t* browser)
+		{
+			fixed (cef_life_span_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_life_span_handler_t*, cef_browser_t*, void>)on_before_close)(self, browser);
+			}
+		}
 	}
 }
 

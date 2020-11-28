@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// retrieved.
 		/// </summary>
 		[NativeName("on_media_sink_device_info")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnMediaSinkDeviceInfo([Immutable]cef_media_sink_device_info_t* device_info);
+		public unsafe void OnMediaSinkDeviceInfo([Immutable]cef_media_sink_device_info_t* device_info)
+		{
+			fixed (cef_media_sink_device_info_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_sink_device_info_callback_t*, cef_media_sink_device_info_t*, void>)on_media_sink_device_info)(self, device_info);
+			}
+		}
 	}
 }
 

@@ -41,9 +41,14 @@ namespace CefNet.CApi
 		/// description of the error if the route creation failed. |route| is the
 		/// resulting route, or NULL if the route creation failed.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_media_route_create_finished")]
-		public unsafe extern void OnMediaRouteCreateFinished(CefMediaRouteCreateResult result, [Immutable]cef_string_t* error, cef_media_route_t* route);
+		public unsafe void OnMediaRouteCreateFinished(CefMediaRouteCreateResult result, [Immutable]cef_string_t* error, cef_media_route_t* route)
+		{
+			fixed (cef_media_route_create_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_route_create_callback_t*, CefMediaRouteCreateResult, cef_string_t*, cef_media_route_t*, void>)on_media_route_create_finished)(self, result, error, route);
+			}
+		}
 	}
 }
 

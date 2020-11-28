@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_id")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetId();
+		public unsafe cef_string_userfree_t GetId()
+		{
+			fixed (cef_media_route_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_route_t*, cef_string_userfree_t>)get_id)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_media_source_t* (*)(_cef_media_route_t* self)*
@@ -55,8 +60,13 @@ namespace CefNet.CApi
 		/// Returns the source associated with this route.
 		/// </summary>
 		[NativeName("get_source")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_media_source_t* GetSource();
+		public unsafe cef_media_source_t* GetSource()
+		{
+			fixed (cef_media_route_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_route_t*, cef_media_source_t*>)get_source)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_media_sink_t* (*)(_cef_media_route_t* self)*
@@ -67,8 +77,13 @@ namespace CefNet.CApi
 		/// Returns the sink associated with this route.
 		/// </summary>
 		[NativeName("get_sink")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_media_sink_t* GetSink();
+		public unsafe cef_media_sink_t* GetSink()
+		{
+			fixed (cef_media_route_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_route_t*, cef_media_sink_t*>)get_sink)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_media_route_t* self, const void* message, size_t message_size)*
@@ -79,8 +94,13 @@ namespace CefNet.CApi
 		/// Send a message over this route. |message| will be copied if necessary.
 		/// </summary>
 		[NativeName("send_route_message")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendRouteMessage([Immutable]void* message, UIntPtr message_size);
+		public unsafe void SendRouteMessage([Immutable]void* message, UIntPtr message_size)
+		{
+			fixed (cef_media_route_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_route_t*, void*, UIntPtr, void>)send_route_message)(self, message, message_size);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_media_route_t* self)*
@@ -92,8 +112,13 @@ namespace CefNet.CApi
 		/// cef_media_observer_t::OnRoutes on all registered observers.
 		/// </summary>
 		[NativeName("terminate")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Terminate();
+		public unsafe void Terminate()
+		{
+			fixed (cef_media_route_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_route_t*, void>)terminate)(self);
+			}
+		}
 	}
 }
 

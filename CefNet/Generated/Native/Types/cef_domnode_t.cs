@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Returns the type for this node.
 		/// </summary>
 		[NativeName("get_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefDOMNodeType GetCefType();
+		public unsafe CefDOMNodeType GetCefType()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, CefDOMNodeType>)get_type)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this is a text node.
 		/// </summary>
 		[NativeName("is_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsText();
+		public unsafe int IsText()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, int>)is_text)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self)*
@@ -63,8 +73,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this is an element node.
 		/// </summary>
 		[NativeName("is_element")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsElement();
+		public unsafe int IsElement()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, int>)is_element)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self)*
@@ -75,8 +90,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this is an editable node.
 		/// </summary>
 		[NativeName("is_editable")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsEditable();
+		public unsafe int IsEditable()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, int>)is_editable)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self)*
@@ -87,8 +107,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this is a form control element node.
 		/// </summary>
 		[NativeName("is_form_control_element")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsFormControlElement();
+		public unsafe int IsFormControlElement()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, int>)is_form_control_element)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domnode_t* self)*
@@ -99,9 +124,14 @@ namespace CefNet.CApi
 		/// Returns the type of this form control element node.
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_form_control_element_type")]
-		public unsafe extern cef_string_userfree_t GetFormControlElementType();
+		public unsafe cef_string_userfree_t GetFormControlElementType()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_userfree_t>)get_form_control_element_type)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self, _cef_domnode_t* that)*
@@ -113,8 +143,13 @@ namespace CefNet.CApi
 		/// object.
 		/// </summary>
 		[NativeName("is_same")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSame(cef_domnode_t* that);
+		public unsafe int IsSame(cef_domnode_t* that)
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_domnode_t*, int>)is_same)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domnode_t* self)*
@@ -126,8 +161,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetName();
+		public unsafe cef_string_userfree_t GetName()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_userfree_t>)get_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domnode_t* self)*
@@ -139,8 +179,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_value")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetValue();
+		public unsafe cef_string_userfree_t GetValue()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_userfree_t>)get_value)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self, const cef_string_t* value)*
@@ -151,8 +196,13 @@ namespace CefNet.CApi
 		/// Set the value of this node. Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_value")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetValue([Immutable]cef_string_t* value);
+		public unsafe int SetValue([Immutable]cef_string_t* value)
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_t*, int>)set_value)(self, value);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domnode_t* self)*
@@ -164,8 +214,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_as_markup")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetAsMarkup();
+		public unsafe cef_string_userfree_t GetAsMarkup()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_userfree_t>)get_as_markup)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domdocument_t* (*)(_cef_domnode_t* self)*
@@ -176,8 +231,13 @@ namespace CefNet.CApi
 		/// Returns the document associated with this node.
 		/// </summary>
 		[NativeName("get_document")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domdocument_t* GetDocument();
+		public unsafe cef_domdocument_t* GetDocument()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_domdocument_t*>)get_document)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domnode_t* self)*
@@ -188,8 +248,13 @@ namespace CefNet.CApi
 		/// Returns the parent node.
 		/// </summary>
 		[NativeName("get_parent")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetParent();
+		public unsafe cef_domnode_t* GetParent()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_domnode_t*>)get_parent)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domnode_t* self)*
@@ -200,8 +265,13 @@ namespace CefNet.CApi
 		/// Returns the previous sibling node.
 		/// </summary>
 		[NativeName("get_previous_sibling")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetPreviousSibling();
+		public unsafe cef_domnode_t* GetPreviousSibling()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_domnode_t*>)get_previous_sibling)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domnode_t* self)*
@@ -212,8 +282,13 @@ namespace CefNet.CApi
 		/// Returns the next sibling node.
 		/// </summary>
 		[NativeName("get_next_sibling")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetNextSibling();
+		public unsafe cef_domnode_t* GetNextSibling()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_domnode_t*>)get_next_sibling)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self)*
@@ -224,8 +299,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this node has child nodes.
 		/// </summary>
 		[NativeName("has_children")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasChildren();
+		public unsafe int HasChildren()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, int>)has_children)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domnode_t* self)*
@@ -236,8 +316,13 @@ namespace CefNet.CApi
 		/// Return the first child node.
 		/// </summary>
 		[NativeName("get_first_child")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetFirstChild();
+		public unsafe cef_domnode_t* GetFirstChild()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_domnode_t*>)get_first_child)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domnode_t* self)*
@@ -248,8 +333,13 @@ namespace CefNet.CApi
 		/// Returns the last child node.
 		/// </summary>
 		[NativeName("get_last_child")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetLastChild();
+		public unsafe cef_domnode_t* GetLastChild()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_domnode_t*>)get_last_child)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domnode_t* self)*
@@ -261,8 +351,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_element_tag_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetElementTagName();
+		public unsafe cef_string_userfree_t GetElementTagName()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_userfree_t>)get_element_tag_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self)*
@@ -273,8 +368,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this element has attributes.
 		/// </summary>
 		[NativeName("has_element_attributes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasElementAttributes();
+		public unsafe int HasElementAttributes()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, int>)has_element_attributes)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self, const cef_string_t* attrName)*
@@ -285,8 +385,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this element has an attribute named |attrName|.
 		/// </summary>
 		[NativeName("has_element_attribute")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasElementAttribute([Immutable]cef_string_t* attrName);
+		public unsafe int HasElementAttribute([Immutable]cef_string_t* attrName)
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_t*, int>)has_element_attribute)(self, attrName);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domnode_t* self, const cef_string_t* attrName)*
@@ -298,8 +403,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_element_attribute")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetElementAttribute([Immutable]cef_string_t* attrName);
+		public unsafe cef_string_userfree_t GetElementAttribute([Immutable]cef_string_t* attrName)
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_t*, cef_string_userfree_t>)get_element_attribute)(self, attrName);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_domnode_t* self, cef_string_map_t attrMap)*
@@ -310,8 +420,13 @@ namespace CefNet.CApi
 		/// Returns a map of all element attributes.
 		/// </summary>
 		[NativeName("get_element_attributes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetElementAttributes(cef_string_map_t attrMap);
+		public unsafe void GetElementAttributes(cef_string_map_t attrMap)
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_map_t, void>)get_element_attributes)(self, attrMap);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domnode_t* self, const cef_string_t* attrName, const cef_string_t* value)*
@@ -323,8 +438,13 @@ namespace CefNet.CApi
 		/// on success.
 		/// </summary>
 		[NativeName("set_element_attribute")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetElementAttribute([Immutable]cef_string_t* attrName, [Immutable]cef_string_t* value);
+		public unsafe int SetElementAttribute([Immutable]cef_string_t* attrName, [Immutable]cef_string_t* value)
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_t*, cef_string_t*, int>)set_element_attribute)(self, attrName, value);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domnode_t* self)*
@@ -336,8 +456,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_element_inner_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetElementInnerText();
+		public unsafe cef_string_userfree_t GetElementInnerText()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_string_userfree_t>)get_element_inner_text)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_rect_t (*)(_cef_domnode_t* self)*
@@ -348,8 +473,13 @@ namespace CefNet.CApi
 		/// Returns the bounds of the element.
 		/// </summary>
 		[NativeName("get_element_bounds")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_rect_t GetElementBounds();
+		public unsafe cef_rect_t GetElementBounds()
+		{
+			fixed (cef_domnode_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domnode_t*, cef_rect_t>)get_element_bounds)(self);
+			}
+		}
 	}
 }
 

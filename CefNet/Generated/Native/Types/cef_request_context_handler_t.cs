@@ -40,9 +40,14 @@ namespace CefNet.CApi
 		/// Called on the browser process UI thread immediately after the request
 		/// context has been initialized.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_request_context_initialized")]
-		public unsafe extern void OnRequestContextInitialized(cef_request_context_t* request_context);
+		public unsafe void OnRequestContextInitialized(cef_request_context_t* request_context)
+		{
+			fixed (cef_request_context_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_context_handler_t*, cef_request_context_t*, void>)on_request_context_initialized)(self, request_context);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_context_handler_t* self, const cef_string_t* mime_type, const cef_string_t* plugin_url, int is_main_frame, const cef_string_t* top_origin_url, _cef_web_plugin_info_t* plugin_info, cef_plugin_policy_t* plugin_policy)*
@@ -69,8 +74,13 @@ namespace CefNet.CApi
 		/// cef_request_context_t::PurgePluginListCache.
 		/// </summary>
 		[NativeName("on_before_plugin_load")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnBeforePluginLoad([Immutable]cef_string_t* mime_type, [Immutable]cef_string_t* plugin_url, int is_main_frame, [Immutable]cef_string_t* top_origin_url, cef_web_plugin_info_t* plugin_info, CefPluginPolicy* plugin_policy);
+		public unsafe int OnBeforePluginLoad([Immutable]cef_string_t* mime_type, [Immutable]cef_string_t* plugin_url, int is_main_frame, [Immutable]cef_string_t* top_origin_url, cef_web_plugin_info_t* plugin_info, CefPluginPolicy* plugin_policy)
+		{
+			fixed (cef_request_context_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_handler_t*, cef_string_t*, cef_string_t*, int, cef_string_t*, cef_web_plugin_info_t*, CefPluginPolicy*, int>)on_before_plugin_load)(self, mime_type, plugin_url, is_main_frame, top_origin_url, plugin_info, plugin_policy);
+			}
+		}
 
 		/// <summary>
 		/// _cef_resource_request_handler_t* (*)(_cef_request_context_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, int is_navigation, int is_download, const cef_string_t* request_initiator, int* disable_default_handling)*
@@ -95,9 +105,14 @@ namespace CefNet.CApi
 		/// cef_request_handler_t::GetResourceRequestHandler for the same request
 		/// (identified by cef_request_t::GetIdentifier).
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_resource_request_handler")]
-		public unsafe extern cef_resource_request_handler_t* GetResourceRequestHandler(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, [Immutable]cef_string_t* request_initiator, int* disable_default_handling);
+		public unsafe cef_resource_request_handler_t* GetResourceRequestHandler(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, [Immutable]cef_string_t* request_initiator, int* disable_default_handling)
+		{
+			fixed (cef_request_context_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, int, int, cef_string_t*, int*, cef_resource_request_handler_t*>)get_resource_request_handler)(self, browser, frame, request, is_navigation, is_download, request_initiator, disable_default_handling);
+			}
+		}
 	}
 }
 

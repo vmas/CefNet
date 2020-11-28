@@ -48,8 +48,13 @@ namespace CefNet.CApi
 		/// it navigated automatically (e.g. via the DomContentLoaded event).
 		/// </summary>
 		[NativeName("on_before_browse")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnBeforeBrowse(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int user_gesture, int is_redirect);
+		public unsafe int OnBeforeBrowse(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int user_gesture, int is_redirect)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, int, int, int>)on_before_browse)(self, browser, frame, request, user_gesture, is_redirect);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, const cef_string_t* target_url, cef_window_open_disposition_t target_disposition, int user_gesture)*
@@ -73,8 +78,13 @@ namespace CefNet.CApi
 		/// proceed in the source browser&apos;s top-level frame.
 		/// </summary>
 		[NativeName("on_open_urlfrom_tab")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnOpenUrlFromTab(cef_browser_t* browser, cef_frame_t* frame, [Immutable]cef_string_t* target_url, CefWindowOpenDisposition target_disposition, int user_gesture);
+		public unsafe int OnOpenUrlFromTab(cef_browser_t* browser, cef_frame_t* frame, [Immutable]cef_string_t* target_url, CefWindowOpenDisposition target_disposition, int user_gesture)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, CefWindowOpenDisposition, int, int>)on_open_urlfrom_tab)(self, browser, frame, target_url, target_disposition, user_gesture);
+			}
+		}
 
 		/// <summary>
 		/// _cef_resource_request_handler_t* (*)(_cef_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, int is_navigation, int is_download, const cef_string_t* request_initiator, int* disable_default_handling)*
@@ -97,9 +107,14 @@ namespace CefNet.CApi
 		/// same function will be called on the associated
 		/// cef_request_context_handler_t, if any.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_resource_request_handler")]
-		public unsafe extern cef_resource_request_handler_t* GetResourceRequestHandler(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, [Immutable]cef_string_t* request_initiator, int* disable_default_handling);
+		public unsafe cef_resource_request_handler_t* GetResourceRequestHandler(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, [Immutable]cef_string_t* request_initiator, int* disable_default_handling)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, int, int, cef_string_t*, int*, cef_resource_request_handler_t*>)get_resource_request_handler)(self, browser, frame, request, is_navigation, is_download, request_initiator, disable_default_handling);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, const cef_string_t* origin_url, int isProxy, const cef_string_t* host, int port, const cef_string_t* realm, const cef_string_t* scheme, _cef_auth_callback_t* callback)*
@@ -119,8 +134,13 @@ namespace CefNet.CApi
 		/// request immediately.
 		/// </summary>
 		[NativeName("get_auth_credentials")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetAuthCredentials(cef_browser_t* browser, [Immutable]cef_string_t* origin_url, int isProxy, [Immutable]cef_string_t* host, int port, [Immutable]cef_string_t* realm, [Immutable]cef_string_t* scheme, cef_auth_callback_t* callback);
+		public unsafe int GetAuthCredentials(cef_browser_t* browser, [Immutable]cef_string_t* origin_url, int isProxy, [Immutable]cef_string_t* host, int port, [Immutable]cef_string_t* realm, [Immutable]cef_string_t* scheme, cef_auth_callback_t* callback)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_string_t*, int, cef_string_t*, int, cef_string_t*, cef_string_t*, cef_auth_callback_t*, int>)get_auth_credentials)(self, browser, origin_url, isProxy, host, port, realm, scheme, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, const cef_string_t* origin_url, int64 new_size, _cef_request_callback_t* callback)*
@@ -137,8 +157,13 @@ namespace CefNet.CApi
 		/// immediately.
 		/// </summary>
 		[NativeName("on_quota_request")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnQuotaRequest(cef_browser_t* browser, [Immutable]cef_string_t* origin_url, long new_size, cef_request_callback_t* callback);
+		public unsafe int OnQuotaRequest(cef_browser_t* browser, [Immutable]cef_string_t* origin_url, long new_size, cef_request_callback_t* callback)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_string_t*, long, cef_request_callback_t*, int>)on_quota_request)(self, browser, origin_url, new_size, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, cef_errorcode_t cert_error, const cef_string_t* request_url, _cef_sslinfo_t* ssl_info, _cef_request_callback_t* callback)*
@@ -154,8 +179,13 @@ namespace CefNet.CApi
 		/// be accepted without calling this function.
 		/// </summary>
 		[NativeName("on_certificate_error")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnCertificateError(cef_browser_t* browser, CefErrorCode cert_error, [Immutable]cef_string_t* request_url, cef_sslinfo_t* ssl_info, cef_request_callback_t* callback);
+		public unsafe int OnCertificateError(cef_browser_t* browser, CefErrorCode cert_error, [Immutable]cef_string_t* request_url, cef_sslinfo_t* ssl_info, cef_request_callback_t* callback)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, CefErrorCode, cef_string_t*, cef_sslinfo_t*, cef_request_callback_t*, int>)on_certificate_error)(self, browser, cert_error, request_url, ssl_info, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, int isProxy, const cef_string_t* host, int port, size_t certificatesCount, const _cef_x509certificate_t** certificates, _cef_select_client_certificate_callback_t* callback)*
@@ -175,9 +205,14 @@ namespace CefNet.CApi
 		/// pruned by Chromium so that it only contains certificates from issuers that
 		/// the server trusts.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_select_client_certificate")]
-		public unsafe extern int OnSelectClientCertificate(cef_browser_t* browser, int isProxy, [Immutable]cef_string_t* host, int port, UIntPtr certificatesCount, [Immutable]cef_x509certificate_t** certificates, cef_select_client_certificate_callback_t* callback);
+		public unsafe int OnSelectClientCertificate(cef_browser_t* browser, int isProxy, [Immutable]cef_string_t* host, int port, UIntPtr certificatesCount, [Immutable]cef_x509certificate_t** certificates, cef_select_client_certificate_callback_t* callback)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, int, cef_string_t*, int, UIntPtr, cef_x509certificate_t**, cef_select_client_certificate_callback_t*, int>)on_select_client_certificate)(self, browser, isProxy, host, port, certificatesCount, certificates, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser, const cef_string_t* plugin_path)*
@@ -189,8 +224,13 @@ namespace CefNet.CApi
 		/// |plugin_path| is the path of the plugin that crashed.
 		/// </summary>
 		[NativeName("on_plugin_crashed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnPluginCrashed(cef_browser_t* browser, [Immutable]cef_string_t* plugin_path);
+		public unsafe void OnPluginCrashed(cef_browser_t* browser, [Immutable]cef_string_t* plugin_path)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, cef_string_t*, void>)on_plugin_crashed)(self, browser, plugin_path);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser)*
@@ -203,8 +243,13 @@ namespace CefNet.CApi
 		/// process.
 		/// </summary>
 		[NativeName("on_render_view_ready")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnRenderViewReady(cef_browser_t* browser);
+		public unsafe void OnRenderViewReady(cef_browser_t* browser)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, void>)on_render_view_ready)(self, browser);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser, cef_termination_status_t status)*
@@ -215,9 +260,14 @@ namespace CefNet.CApi
 		/// Called on the browser process UI thread when the render process terminates
 		/// unexpectedly. |status| indicates how the process terminated.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_render_process_terminated")]
-		public unsafe extern void OnRenderProcessTerminated(cef_browser_t* browser, CefTerminationStatus status);
+		public unsafe void OnRenderProcessTerminated(cef_browser_t* browser, CefTerminationStatus status)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, CefTerminationStatus, void>)on_render_process_terminated)(self, browser, status);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser)*
@@ -228,9 +278,14 @@ namespace CefNet.CApi
 		/// Called on the browser process UI thread when the window.document object of
 		/// the main frame has been created.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_document_available_in_main_frame")]
-		public unsafe extern void OnDocumentAvailableInMainFrame(cef_browser_t* browser);
+		public unsafe void OnDocumentAvailableInMainFrame(cef_browser_t* browser)
+		{
+			fixed (cef_request_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_handler_t*, cef_browser_t*, void>)on_document_available_in_main_frame)(self, browser);
+			}
+		}
 	}
 }
 

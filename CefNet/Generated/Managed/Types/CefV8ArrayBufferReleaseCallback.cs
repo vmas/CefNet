@@ -28,8 +28,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefV8ArrayBufferReleaseCallback : CefBaseRefCounted<cef_v8array_buffer_release_callback_t>, ICefV8ArrayBufferReleaseCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly ReleaseBufferDelegate fnReleaseBuffer = ReleaseBufferImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefV8ArrayBufferReleaseCallback Create(IntPtr instance)
 		{
 			return new CefV8ArrayBufferReleaseCallback((cef_v8array_buffer_release_callback_t*)instance);
@@ -38,7 +40,11 @@ namespace CefNet
 		public CefV8ArrayBufferReleaseCallback()
 		{
 			cef_v8array_buffer_release_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->release_buffer = (void*)Marshal.GetFunctionPointerForDelegate(fnReleaseBuffer);
+			#else
+			self->release_buffer = (delegate* unmanaged[Stdcall]<cef_v8array_buffer_release_callback_t*, void*, void>)&ReleaseBufferImpl;
+			#endif
 		}
 
 		public CefV8ArrayBufferReleaseCallback(cef_v8array_buffer_release_callback_t* instance)
@@ -58,10 +64,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void ReleaseBufferDelegate(cef_v8array_buffer_release_callback_t* self, void* buffer);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_v8array_buffer_release_callback_t* self, void* buffer)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void ReleaseBufferImpl(cef_v8array_buffer_release_callback_t* self, void* buffer)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8ArrayBufferReleaseCallback;

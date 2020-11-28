@@ -30,8 +30,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefEndTracingCallback : CefBaseRefCounted<cef_end_tracing_callback_t>, ICefEndTracingCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnEndTracingCompleteDelegate fnOnEndTracingComplete = OnEndTracingCompleteImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefEndTracingCallback Create(IntPtr instance)
 		{
 			return new CefEndTracingCallback((cef_end_tracing_callback_t*)instance);
@@ -40,7 +42,11 @@ namespace CefNet
 		public CefEndTracingCallback()
 		{
 			cef_end_tracing_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_end_tracing_complete = (void*)Marshal.GetFunctionPointerForDelegate(fnOnEndTracingComplete);
+			#else
+			self->on_end_tracing_complete = (delegate* unmanaged[Stdcall]<cef_end_tracing_callback_t*, cef_string_t*, void>)&OnEndTracingCompleteImpl;
+			#endif
 		}
 
 		public CefEndTracingCallback(cef_end_tracing_callback_t* instance)
@@ -60,10 +66,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnEndTracingCompleteDelegate(cef_end_tracing_callback_t* self, cef_string_t* tracing_file);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_end_tracing_callback_t* self, const cef_string_t* tracing_file)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnEndTracingCompleteImpl(cef_end_tracing_callback_t* self, cef_string_t* tracing_file)
 		{
 			var instance = GetInstance((IntPtr)self) as CefEndTracingCallback;

@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// NULL value means that no client certificate should be used.
 		/// </summary>
 		[NativeName("select")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Select(cef_x509certificate_t* cert);
+		public unsafe void Select(cef_x509certificate_t* cert)
+		{
+			fixed (cef_select_client_certificate_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_select_client_certificate_callback_t*, cef_x509certificate_t*, void>)select)(self, cert);
+			}
+		}
 	}
 }
 

@@ -30,6 +30,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefExtensionHandler : CefBaseRefCounted<cef_extension_handler_t>, ICefExtensionHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnExtensionLoadFailedDelegate fnOnExtensionLoadFailed = OnExtensionLoadFailedImpl;
 
 		private static readonly OnExtensionLoadedDelegate fnOnExtensionLoaded = OnExtensionLoadedImpl;
@@ -46,6 +47,7 @@ namespace CefNet
 
 		private static readonly GetExtensionResourceDelegate fnGetExtensionResource = GetExtensionResourceImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefExtensionHandler Create(IntPtr instance)
 		{
 			return new CefExtensionHandler((cef_extension_handler_t*)instance);
@@ -54,6 +56,7 @@ namespace CefNet
 		public CefExtensionHandler()
 		{
 			cef_extension_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_extension_load_failed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnExtensionLoadFailed);
 			self->on_extension_loaded = (void*)Marshal.GetFunctionPointerForDelegate(fnOnExtensionLoaded);
 			self->on_extension_unloaded = (void*)Marshal.GetFunctionPointerForDelegate(fnOnExtensionUnloaded);
@@ -62,6 +65,16 @@ namespace CefNet
 			self->get_active_browser = (void*)Marshal.GetFunctionPointerForDelegate(fnGetActiveBrowser);
 			self->can_access_browser = (void*)Marshal.GetFunctionPointerForDelegate(fnCanAccessBrowser);
 			self->get_extension_resource = (void*)Marshal.GetFunctionPointerForDelegate(fnGetExtensionResource);
+			#else
+			self->on_extension_load_failed = (delegate* unmanaged[Stdcall]<cef_extension_handler_t*, CefErrorCode, void>)&OnExtensionLoadFailedImpl;
+			self->on_extension_loaded = (delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, void>)&OnExtensionLoadedImpl;
+			self->on_extension_unloaded = (delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, void>)&OnExtensionUnloadedImpl;
+			self->on_before_background_browser = (delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_string_t*, cef_client_t**, cef_browser_settings_t*, int>)&OnBeforeBackgroundBrowserImpl;
+			self->on_before_browser = (delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_browser_t*, cef_browser_t*, int, cef_string_t*, int, cef_window_info_t*, cef_client_t**, cef_browser_settings_t*, int>)&OnBeforeBrowserImpl;
+			self->get_active_browser = (delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_browser_t*, int, cef_browser_t*>)&GetActiveBrowserImpl;
+			self->can_access_browser = (delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_browser_t*, int, cef_browser_t*, int>)&CanAccessBrowserImpl;
+			self->get_extension_resource = (delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_browser_t*, cef_string_t*, cef_get_extension_resource_callback_t*, int>)&GetExtensionResourceImpl;
+			#endif
 		}
 
 		public CefExtensionHandler(cef_extension_handler_t* instance)
@@ -80,10 +93,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnExtensionLoadFailedDelegate(cef_extension_handler_t* self, CefErrorCode result);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_extension_handler_t* self, cef_errorcode_t result)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnExtensionLoadFailedImpl(cef_extension_handler_t* self, CefErrorCode result)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -105,10 +121,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnExtensionLoadedDelegate(cef_extension_handler_t* self, cef_extension_t* extension);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_extension_handler_t* self, _cef_extension_t* extension)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnExtensionLoadedImpl(cef_extension_handler_t* self, cef_extension_t* extension)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -130,10 +149,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnExtensionUnloadedDelegate(cef_extension_handler_t* self, cef_extension_t* extension);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_extension_handler_t* self, _cef_extension_t* extension)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnExtensionUnloadedImpl(cef_extension_handler_t* self, cef_extension_t* extension)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -170,10 +192,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnBeforeBackgroundBrowserDelegate(cef_extension_handler_t* self, cef_extension_t* extension, cef_string_t* url, cef_client_t** client, cef_browser_settings_t* settings);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, const cef_string_t* url, _cef_client_t** client, _cef_browser_settings_t* settings)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnBeforeBackgroundBrowserImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_string_t* url, cef_client_t** client, cef_browser_settings_t* settings)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -211,10 +236,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnBeforeBrowserDelegate(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_browser_t* active_browser, int index, cef_string_t* url, int active, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, _cef_browser_t* active_browser, int index, const cef_string_t* url, int active, _cef_window_info_t* windowInfo, _cef_client_t** client, _cef_browser_settings_t* settings)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnBeforeBrowserImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_browser_t* active_browser, int index, cef_string_t* url, int active, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -248,10 +276,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_browser_t* GetActiveBrowserDelegate(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito);
 
+#endif // NET_LESS_5_0
 		// _cef_browser_t* (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, int include_incognito)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_browser_t* GetActiveBrowserImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -283,10 +314,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int CanAccessBrowserDelegate(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito, cef_browser_t* target_browser);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, int include_incognito, _cef_browser_t* target_browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int CanAccessBrowserImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito, cef_browser_t* target_browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -318,10 +352,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetExtensionResourceDelegate(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_string_t* file, cef_get_extension_resource_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, const cef_string_t* file, _cef_get_extension_resource_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetExtensionResourceImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_string_t* file, cef_get_extension_resource_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;

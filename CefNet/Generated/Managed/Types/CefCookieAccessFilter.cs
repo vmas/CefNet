@@ -30,10 +30,12 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefCookieAccessFilter : CefBaseRefCounted<cef_cookie_access_filter_t>, ICefCookieAccessFilterPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly CanSendCookieDelegate fnCanSendCookie = CanSendCookieImpl;
 
 		private static readonly CanSaveCookieDelegate fnCanSaveCookie = CanSaveCookieImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefCookieAccessFilter Create(IntPtr instance)
 		{
 			return new CefCookieAccessFilter((cef_cookie_access_filter_t*)instance);
@@ -42,8 +44,13 @@ namespace CefNet
 		public CefCookieAccessFilter()
 		{
 			cef_cookie_access_filter_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->can_send_cookie = (void*)Marshal.GetFunctionPointerForDelegate(fnCanSendCookie);
 			self->can_save_cookie = (void*)Marshal.GetFunctionPointerForDelegate(fnCanSaveCookie);
+			#else
+			self->can_send_cookie = (delegate* unmanaged[Stdcall]<cef_cookie_access_filter_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_cookie_t*, int>)&CanSendCookieImpl;
+			self->can_save_cookie = (delegate* unmanaged[Stdcall]<cef_cookie_access_filter_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_response_t*, cef_cookie_t*, int>)&CanSaveCookieImpl;
+			#endif
 		}
 
 		public CefCookieAccessFilter(cef_cookie_access_filter_t* instance)
@@ -66,10 +73,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int CanSendCookieDelegate(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_cookie_t* cookie);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_cookie_access_filter_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, const const _cef_cookie_t* cookie)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int CanSendCookieImpl(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_cookie_t* cookie)
 		{
 			var instance = GetInstance((IntPtr)self) as CefCookieAccessFilter;
@@ -99,10 +109,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int CanSaveCookieDelegate(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_cookie_t* cookie);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_cookie_access_filter_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response, const const _cef_cookie_t* cookie)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int CanSaveCookieImpl(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_cookie_t* cookie)
 		{
 			var instance = GetInstance((IntPtr)self) as CefCookieAccessFilter;

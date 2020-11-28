@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// number of cookies that were deleted.
 		/// </summary>
 		[NativeName("on_complete")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnComplete(int num_deleted);
+		public unsafe void OnComplete(int num_deleted)
+		{
+			fixed (cef_delete_cookies_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_delete_cookies_callback_t*, int, void>)on_complete)(self, num_deleted);
+			}
+		}
 	}
 }
 

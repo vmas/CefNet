@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// this function.
 		/// </summary>
 		[NativeName("on_before_download")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnBeforeDownload(cef_browser_t* browser, cef_download_item_t* download_item, [Immutable]cef_string_t* suggested_name, cef_before_download_callback_t* callback);
+		public unsafe void OnBeforeDownload(cef_browser_t* browser, cef_download_item_t* download_item, [Immutable]cef_string_t* suggested_name, cef_before_download_callback_t* callback)
+		{
+			fixed (cef_download_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_download_handler_t*, cef_browser_t*, cef_download_item_t*, cef_string_t*, cef_before_download_callback_t*, void>)on_before_download)(self, browser, download_item, suggested_name, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_download_handler_t* self, _cef_browser_t* browser, _cef_download_item_t* download_item, _cef_download_item_callback_t* callback)*
@@ -59,8 +64,13 @@ namespace CefNet.CApi
 		/// this function.
 		/// </summary>
 		[NativeName("on_download_updated")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnDownloadUpdated(cef_browser_t* browser, cef_download_item_t* download_item, cef_download_item_callback_t* callback);
+		public unsafe void OnDownloadUpdated(cef_browser_t* browser, cef_download_item_t* download_item, cef_download_item_callback_t* callback)
+		{
+			fixed (cef_download_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_download_handler_t*, cef_browser_t*, cef_download_item_t*, cef_download_item_callback_t*, void>)on_download_updated)(self, browser, download_item, callback);
+			}
+		}
 	}
 }
 

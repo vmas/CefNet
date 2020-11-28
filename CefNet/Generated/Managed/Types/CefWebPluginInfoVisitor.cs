@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefWebPluginInfoVisitor : CefBaseRefCounted<cef_web_plugin_info_visitor_t>, ICefWebPluginInfoVisitorPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly VisitDelegate fnVisit = VisitImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefWebPluginInfoVisitor Create(IntPtr instance)
 		{
 			return new CefWebPluginInfoVisitor((cef_web_plugin_info_visitor_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefWebPluginInfoVisitor()
 		{
 			cef_web_plugin_info_visitor_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->visit = (void*)Marshal.GetFunctionPointerForDelegate(fnVisit);
+			#else
+			self->visit = (delegate* unmanaged[Stdcall]<cef_web_plugin_info_visitor_t*, cef_web_plugin_info_t*, int, int, int>)&VisitImpl;
+			#endif
 		}
 
 		public CefWebPluginInfoVisitor(cef_web_plugin_info_visitor_t* instance)
@@ -61,10 +67,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int VisitDelegate(cef_web_plugin_info_visitor_t* self, cef_web_plugin_info_t* info, int count, int total);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_web_plugin_info_visitor_t* self, _cef_web_plugin_info_t* info, int count, int total)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int VisitImpl(cef_web_plugin_info_visitor_t* self, cef_web_plugin_info_t* info, int count, int total)
 		{
 			var instance = GetInstance((IntPtr)self) as CefWebPluginInfoVisitor;

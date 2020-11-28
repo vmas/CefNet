@@ -50,8 +50,13 @@ namespace CefNet.CApi
 		/// override these values.
 		/// </summary>
 		[NativeName("get_cookieable_schemes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetCookieableSchemes(cef_string_list_t schemes, int* include_defaults);
+		public unsafe void GetCookieableSchemes(cef_string_list_t schemes, int* include_defaults)
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_string_list_t, int*, void>)get_cookieable_schemes)(self, schemes, include_defaults);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_process_handler_t* self)*
@@ -63,8 +68,13 @@ namespace CefNet.CApi
 		/// has been initialized.
 		/// </summary>
 		[NativeName("on_context_initialized")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnContextInitialized();
+		public unsafe void OnContextInitialized()
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, void>)on_context_initialized)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_process_handler_t* self, _cef_command_line_t* command_line)*
@@ -78,9 +88,14 @@ namespace CefNet.CApi
 		/// opportunity to modify the child process command line. Do not keep a
 		/// reference to |command_line| outside of this function.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_before_child_process_launch")]
-		public unsafe extern void OnBeforeChildProcessLaunch(cef_command_line_t* command_line);
+		public unsafe void OnBeforeChildProcessLaunch(cef_command_line_t* command_line)
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_command_line_t*, void>)on_before_child_process_launch)(self, command_line);
+			}
+		}
 
 		/// <summary>
 		/// _cef_print_handler_t* (*)(_cef_browser_process_handler_t* self)*
@@ -92,8 +107,13 @@ namespace CefNet.CApi
 		/// provided then printing will not be supported on the Linux platform.
 		/// </summary>
 		[NativeName("get_print_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_print_handler_t* GetPrintHandler();
+		public unsafe cef_print_handler_t* GetPrintHandler()
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_print_handler_t*>)get_print_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_process_handler_t* self, int64 delay_ms)*
@@ -115,9 +135,14 @@ namespace CefNet.CApi
 		/// specified delay and any currently pending scheduled call should be
 		/// cancelled.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_schedule_message_pump_work")]
-		public unsafe extern void OnScheduleMessagePumpWork(long delay_ms);
+		public unsafe void OnScheduleMessagePumpWork(long delay_ms)
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, long, void>)on_schedule_message_pump_work)(self, delay_ms);
+			}
+		}
 
 		/// <summary>
 		/// _cef_client_t* (*)(_cef_browser_process_handler_t* self)*
@@ -132,8 +157,13 @@ namespace CefNet.CApi
 		/// with the chrome runtime.
 		/// </summary>
 		[NativeName("get_default_client")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_client_t* GetDefaultClient();
+		public unsafe cef_client_t* GetDefaultClient()
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_client_t*>)get_default_client)(self);
+			}
+		}
 	}
 }
 

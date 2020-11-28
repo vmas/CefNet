@@ -44,8 +44,13 @@ namespace CefNet.CApi
 		/// cookie can be sent with the request or false (0) otherwise.
 		/// </summary>
 		[NativeName("can_send_cookie")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int CanSendCookie(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, [Immutable]cef_cookie_t* cookie);
+		public unsafe int CanSendCookie(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, [Immutable]cef_cookie_t* cookie)
+		{
+			fixed (cef_cookie_access_filter_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_cookie_access_filter_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_cookie_t*, int>)can_send_cookie)(self, browser, frame, request, cookie);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_cookie_access_filter_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response, const const _cef_cookie_t* cookie)*
@@ -61,8 +66,13 @@ namespace CefNet.CApi
 		/// otherwise.
 		/// </summary>
 		[NativeName("can_save_cookie")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int CanSaveCookie(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, [Immutable]cef_cookie_t* cookie);
+		public unsafe int CanSaveCookie(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, [Immutable]cef_cookie_t* cookie)
+		{
+			fixed (cef_cookie_access_filter_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_cookie_access_filter_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_response_t*, cef_cookie_t*, int>)can_save_cookie)(self, browser, frame, request, response, cookie);
+			}
+		}
 	}
 }
 

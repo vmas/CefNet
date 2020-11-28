@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefRunFileDialogCallback : CefBaseRefCounted<cef_run_file_dialog_callback_t>, ICefRunFileDialogCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnFileDialogDismissedDelegate fnOnFileDialogDismissed = OnFileDialogDismissedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefRunFileDialogCallback Create(IntPtr instance)
 		{
 			return new CefRunFileDialogCallback((cef_run_file_dialog_callback_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefRunFileDialogCallback()
 		{
 			cef_run_file_dialog_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_file_dialog_dismissed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnFileDialogDismissed);
+			#else
+			self->on_file_dialog_dismissed = (delegate* unmanaged[Stdcall]<cef_run_file_dialog_callback_t*, int, cef_string_list_t, void>)&OnFileDialogDismissedImpl;
+			#endif
 		}
 
 		public CefRunFileDialogCallback(cef_run_file_dialog_callback_t* instance)
@@ -61,10 +67,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnFileDialogDismissedDelegate(cef_run_file_dialog_callback_t* self, int selected_accept_filter, cef_string_list_t file_paths);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_run_file_dialog_callback_t* self, int selected_accept_filter, cef_string_list_t file_paths)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnFileDialogDismissedImpl(cef_run_file_dialog_callback_t* self, int selected_accept_filter, cef_string_list_t file_paths)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRunFileDialogCallback;

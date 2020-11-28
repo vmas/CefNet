@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// certificate.
 		/// </summary>
 		[NativeName("get_cert_status")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefCertStatus GetCertStatus();
+		public unsafe CefCertStatus GetCertStatus()
+		{
+			fixed (cef_sslinfo_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_sslinfo_t*, CefCertStatus>)get_cert_status)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_x509certificate_t* (*)(_cef_sslinfo_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Returns the X.509 certificate.
 		/// </summary>
 		[NativeName("get_x509certificate")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_x509certificate_t* GetX509certificate();
+		public unsafe cef_x509certificate_t* GetX509certificate()
+		{
+			fixed (cef_sslinfo_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_sslinfo_t*, cef_x509certificate_t*>)get_x509certificate)(self);
+			}
+		}
 	}
 }
 

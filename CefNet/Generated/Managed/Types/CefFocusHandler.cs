@@ -29,12 +29,14 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefFocusHandler : CefBaseRefCounted<cef_focus_handler_t>, ICefFocusHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnTakeFocusDelegate fnOnTakeFocus = OnTakeFocusImpl;
 
 		private static readonly OnSetFocusDelegate fnOnSetFocus = OnSetFocusImpl;
 
 		private static readonly OnGotFocusDelegate fnOnGotFocus = OnGotFocusImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefFocusHandler Create(IntPtr instance)
 		{
 			return new CefFocusHandler((cef_focus_handler_t*)instance);
@@ -43,9 +45,15 @@ namespace CefNet
 		public CefFocusHandler()
 		{
 			cef_focus_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_take_focus = (void*)Marshal.GetFunctionPointerForDelegate(fnOnTakeFocus);
 			self->on_set_focus = (void*)Marshal.GetFunctionPointerForDelegate(fnOnSetFocus);
 			self->on_got_focus = (void*)Marshal.GetFunctionPointerForDelegate(fnOnGotFocus);
+			#else
+			self->on_take_focus = (delegate* unmanaged[Stdcall]<cef_focus_handler_t*, cef_browser_t*, int, void>)&OnTakeFocusImpl;
+			self->on_set_focus = (delegate* unmanaged[Stdcall]<cef_focus_handler_t*, cef_browser_t*, CefFocusSource, int>)&OnSetFocusImpl;
+			self->on_got_focus = (delegate* unmanaged[Stdcall]<cef_focus_handler_t*, cef_browser_t*, void>)&OnGotFocusImpl;
+			#endif
 		}
 
 		public CefFocusHandler(cef_focus_handler_t* instance)
@@ -66,10 +74,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnTakeFocusDelegate(cef_focus_handler_t* self, cef_browser_t* browser, int next);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_focus_handler_t* self, _cef_browser_t* browser, int next)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnTakeFocusImpl(cef_focus_handler_t* self, cef_browser_t* browser, int next)
 		{
 			var instance = GetInstance((IntPtr)self) as CefFocusHandler;
@@ -94,10 +105,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnSetFocusDelegate(cef_focus_handler_t* self, cef_browser_t* browser, CefFocusSource source);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_focus_handler_t* self, _cef_browser_t* browser, cef_focus_source_t source)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnSetFocusImpl(cef_focus_handler_t* self, cef_browser_t* browser, CefFocusSource source)
 		{
 			var instance = GetInstance((IntPtr)self) as CefFocusHandler;
@@ -119,10 +133,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnGotFocusDelegate(cef_focus_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_focus_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnGotFocusImpl(cef_focus_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefFocusHandler;

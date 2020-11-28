@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Continue the authentication request.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue([Immutable]cef_string_t* username, [Immutable]cef_string_t* password);
+		public unsafe void Continue([Immutable]cef_string_t* username, [Immutable]cef_string_t* password)
+		{
+			fixed (cef_auth_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_auth_callback_t*, cef_string_t*, cef_string_t*, void>)cont)(self, username, password);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_auth_callback_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Cancel the authentication request.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_auth_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_auth_callback_t*, void>)cancel)(self);
+			}
+		}
 	}
 }
 

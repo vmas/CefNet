@@ -41,9 +41,14 @@ namespace CefNet.CApi
 		/// resulting HTTP status code. |image| is the resulting image, possibly at
 		/// multiple scale factors, or NULL if the download failed.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_download_image_finished")]
-		public unsafe extern void OnDownloadImageFinished([Immutable]cef_string_t* image_url, int http_status_code, cef_image_t* image);
+		public unsafe void OnDownloadImageFinished([Immutable]cef_string_t* image_url, int http_status_code, cef_image_t* image)
+		{
+			fixed (cef_download_image_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_download_image_callback_t*, cef_string_t*, int, cef_image_t*, void>)on_download_image_finished)(self, image_url, http_status_code, image);
+			}
+		}
 	}
 }
 

@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this menu is a submenu.
 		/// </summary>
 		[NativeName("is_sub_menu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSubMenu();
+		public unsafe int IsSubMenu()
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int>)is_sub_menu)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self)*
@@ -53,8 +58,13 @@ namespace CefNet.CApi
 		/// Clears the menu. Returns true (1) on success.
 		/// </summary>
 		[NativeName("clear")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Clear();
+		public unsafe int Clear()
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int>)clear)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self)*
@@ -65,8 +75,13 @@ namespace CefNet.CApi
 		/// Returns the number of items in this menu.
 		/// </summary>
 		[NativeName("get_count")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetCount();
+		public unsafe int GetCount()
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int>)get_count)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self)*
@@ -77,8 +92,13 @@ namespace CefNet.CApi
 		/// Add a separator to the menu. Returns true (1) on success.
 		/// </summary>
 		[NativeName("add_separator")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int AddSeparator();
+		public unsafe int AddSeparator()
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int>)add_separator)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, const cef_string_t* label)*
@@ -89,8 +109,13 @@ namespace CefNet.CApi
 		/// Add an item to the menu. Returns true (1) on success.
 		/// </summary>
 		[NativeName("add_item")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int AddItem(int command_id, [Immutable]cef_string_t* label);
+		public unsafe int AddItem(int command_id, [Immutable]cef_string_t* label)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_t*, int>)add_item)(self, command_id, label);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, const cef_string_t* label)*
@@ -101,8 +126,13 @@ namespace CefNet.CApi
 		/// Add a check item to the menu. Returns true (1) on success.
 		/// </summary>
 		[NativeName("add_check_item")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int AddCheckItem(int command_id, [Immutable]cef_string_t* label);
+		public unsafe int AddCheckItem(int command_id, [Immutable]cef_string_t* label)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_t*, int>)add_check_item)(self, command_id, label);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, const cef_string_t* label, int group_id)*
@@ -114,8 +144,13 @@ namespace CefNet.CApi
 		/// |group_id| can be checked at a time. Returns true (1) on success.
 		/// </summary>
 		[NativeName("add_radio_item")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int AddRadioItem(int command_id, [Immutable]cef_string_t* label, int group_id);
+		public unsafe int AddRadioItem(int command_id, [Immutable]cef_string_t* label, int group_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_t*, int, int>)add_radio_item)(self, command_id, label, group_id);
+			}
+		}
 
 		/// <summary>
 		/// _cef_menu_model_t* (*)(_cef_menu_model_t* self, int command_id, const cef_string_t* label)*
@@ -126,8 +161,13 @@ namespace CefNet.CApi
 		/// Add a sub-menu to the menu. The new sub-menu is returned.
 		/// </summary>
 		[NativeName("add_sub_menu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_menu_model_t* AddSubMenu(int command_id, [Immutable]cef_string_t* label);
+		public unsafe cef_menu_model_t* AddSubMenu(int command_id, [Immutable]cef_string_t* label)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_t*, cef_menu_model_t*>)add_sub_menu)(self, command_id, label);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index)*
@@ -139,8 +179,13 @@ namespace CefNet.CApi
 		/// on success.
 		/// </summary>
 		[NativeName("insert_separator_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int InsertSeparatorAt(int index);
+		public unsafe int InsertSeparatorAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)insert_separator_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int command_id, const cef_string_t* label)*
@@ -152,8 +197,13 @@ namespace CefNet.CApi
 		/// success.
 		/// </summary>
 		[NativeName("insert_item_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int InsertItemAt(int index, int command_id, [Immutable]cef_string_t* label);
+		public unsafe int InsertItemAt(int index, int command_id, [Immutable]cef_string_t* label)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, cef_string_t*, int>)insert_item_at)(self, index, command_id, label);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int command_id, const cef_string_t* label)*
@@ -165,8 +215,13 @@ namespace CefNet.CApi
 		/// on success.
 		/// </summary>
 		[NativeName("insert_check_item_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int InsertCheckItemAt(int index, int command_id, [Immutable]cef_string_t* label);
+		public unsafe int InsertCheckItemAt(int index, int command_id, [Immutable]cef_string_t* label)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, cef_string_t*, int>)insert_check_item_at)(self, index, command_id, label);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int command_id, const cef_string_t* label, int group_id)*
@@ -179,8 +234,13 @@ namespace CefNet.CApi
 		/// (1) on success.
 		/// </summary>
 		[NativeName("insert_radio_item_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int InsertRadioItemAt(int index, int command_id, [Immutable]cef_string_t* label, int group_id);
+		public unsafe int InsertRadioItemAt(int index, int command_id, [Immutable]cef_string_t* label, int group_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, cef_string_t*, int, int>)insert_radio_item_at)(self, index, command_id, label, group_id);
+			}
+		}
 
 		/// <summary>
 		/// _cef_menu_model_t* (*)(_cef_menu_model_t* self, int index, int command_id, const cef_string_t* label)*
@@ -192,8 +252,13 @@ namespace CefNet.CApi
 		/// returned.
 		/// </summary>
 		[NativeName("insert_sub_menu_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_menu_model_t* InsertSubMenuAt(int index, int command_id, [Immutable]cef_string_t* label);
+		public unsafe cef_menu_model_t* InsertSubMenuAt(int index, int command_id, [Immutable]cef_string_t* label)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, cef_string_t*, cef_menu_model_t*>)insert_sub_menu_at)(self, index, command_id, label);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id)*
@@ -205,8 +270,13 @@ namespace CefNet.CApi
 		/// success.
 		/// </summary>
 		[NativeName("remove")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Remove(int command_id);
+		public unsafe int Remove(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)remove)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index)*
@@ -217,8 +287,13 @@ namespace CefNet.CApi
 		/// Removes the item at the specified |index|. Returns true (1) on success.
 		/// </summary>
 		[NativeName("remove_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int RemoveAt(int index);
+		public unsafe int RemoveAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)remove_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id)*
@@ -230,8 +305,13 @@ namespace CefNet.CApi
 		/// found due to the command id not existing in the menu.
 		/// </summary>
 		[NativeName("get_index_of")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetIndexOf(int command_id);
+		public unsafe int GetIndexOf(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)get_index_of)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index)*
@@ -243,8 +323,13 @@ namespace CefNet.CApi
 		/// invalid range or the index being a separator.
 		/// </summary>
 		[NativeName("get_command_id_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetCommandIdAt(int index);
+		public unsafe int GetCommandIdAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)get_command_id_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int command_id)*
@@ -255,8 +340,13 @@ namespace CefNet.CApi
 		/// Sets the command id at the specified |index|. Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_command_id_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetCommandIdAt(int index, int command_id);
+		public unsafe int SetCommandIdAt(int index, int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int>)set_command_id_at)(self, index, command_id);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_menu_model_t* self, int command_id)*
@@ -268,8 +358,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_label")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetLabel(int command_id);
+		public unsafe cef_string_userfree_t GetLabel(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_userfree_t>)get_label)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_menu_model_t* self, int index)*
@@ -282,8 +377,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_label_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetLabelAt(int index);
+		public unsafe cef_string_userfree_t GetLabelAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_userfree_t>)get_label_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, const cef_string_t* label)*
@@ -294,8 +394,13 @@ namespace CefNet.CApi
 		/// Sets the label for the specified |command_id|. Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_label")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetLabel(int command_id, [Immutable]cef_string_t* label);
+		public unsafe int SetLabel(int command_id, [Immutable]cef_string_t* label)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_t*, int>)set_label)(self, command_id, label);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, const cef_string_t* label)*
@@ -306,8 +411,13 @@ namespace CefNet.CApi
 		/// Set the label at the specified |index|. Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_label_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetLabelAt(int index, [Immutable]cef_string_t* label);
+		public unsafe int SetLabelAt(int index, [Immutable]cef_string_t* label)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_t*, int>)set_label_at)(self, index, label);
+			}
+		}
 
 		/// <summary>
 		/// cef_menu_item_type_t (*)(_cef_menu_model_t* self, int command_id)*
@@ -318,8 +428,13 @@ namespace CefNet.CApi
 		/// Returns the item type for the specified |command_id|.
 		/// </summary>
 		[NativeName("get_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefMenuItemType GetType(int command_id);
+		public unsafe CefMenuItemType GetType(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, CefMenuItemType>)get_type)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// cef_menu_item_type_t (*)(_cef_menu_model_t* self, int index)*
@@ -330,8 +445,13 @@ namespace CefNet.CApi
 		/// Returns the item type at the specified |index|.
 		/// </summary>
 		[NativeName("get_type_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefMenuItemType GetTypeAt(int index);
+		public unsafe CefMenuItemType GetTypeAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, CefMenuItemType>)get_type_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id)*
@@ -342,8 +462,13 @@ namespace CefNet.CApi
 		/// Returns the group id for the specified |command_id| or -1 if invalid.
 		/// </summary>
 		[NativeName("get_group_id")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetGroupId(int command_id);
+		public unsafe int GetGroupId(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)get_group_id)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index)*
@@ -354,8 +479,13 @@ namespace CefNet.CApi
 		/// Returns the group id at the specified |index| or -1 if invalid.
 		/// </summary>
 		[NativeName("get_group_id_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetGroupIdAt(int index);
+		public unsafe int GetGroupIdAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)get_group_id_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, int group_id)*
@@ -367,8 +497,13 @@ namespace CefNet.CApi
 		/// success.
 		/// </summary>
 		[NativeName("set_group_id")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetGroupId(int command_id, int group_id);
+		public unsafe int SetGroupId(int command_id, int group_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int>)set_group_id)(self, command_id, group_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int group_id)*
@@ -379,8 +514,13 @@ namespace CefNet.CApi
 		/// Sets the group id at the specified |index|. Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_group_id_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetGroupIdAt(int index, int group_id);
+		public unsafe int SetGroupIdAt(int index, int group_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int>)set_group_id_at)(self, index, group_id);
+			}
+		}
 
 		/// <summary>
 		/// _cef_menu_model_t* (*)(_cef_menu_model_t* self, int command_id)*
@@ -391,8 +531,13 @@ namespace CefNet.CApi
 		/// Returns the submenu for the specified |command_id| or NULL if invalid.
 		/// </summary>
 		[NativeName("get_sub_menu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_menu_model_t* GetSubMenu(int command_id);
+		public unsafe cef_menu_model_t* GetSubMenu(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_menu_model_t*>)get_sub_menu)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// _cef_menu_model_t* (*)(_cef_menu_model_t* self, int index)*
@@ -403,8 +548,13 @@ namespace CefNet.CApi
 		/// Returns the submenu at the specified |index| or NULL if invalid.
 		/// </summary>
 		[NativeName("get_sub_menu_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_menu_model_t* GetSubMenuAt(int index);
+		public unsafe cef_menu_model_t* GetSubMenuAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_menu_model_t*>)get_sub_menu_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id)*
@@ -415,8 +565,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the specified |command_id| is visible.
 		/// </summary>
 		[NativeName("is_visible")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsVisible(int command_id);
+		public unsafe int IsVisible(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)is_visible)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index)*
@@ -427,8 +582,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the specified |index| is visible.
 		/// </summary>
 		[NativeName("is_visible_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsVisibleAt(int index);
+		public unsafe int IsVisibleAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)is_visible_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, int visible)*
@@ -440,8 +600,13 @@ namespace CefNet.CApi
 		/// success.
 		/// </summary>
 		[NativeName("set_visible")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetVisible(int command_id, int visible);
+		public unsafe int SetVisible(int command_id, int visible)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int>)set_visible)(self, command_id, visible);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int visible)*
@@ -453,8 +618,13 @@ namespace CefNet.CApi
 		/// success.
 		/// </summary>
 		[NativeName("set_visible_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetVisibleAt(int index, int visible);
+		public unsafe int SetVisibleAt(int index, int visible)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int>)set_visible_at)(self, index, visible);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id)*
@@ -465,8 +635,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the specified |command_id| is enabled.
 		/// </summary>
 		[NativeName("is_enabled")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsEnabled(int command_id);
+		public unsafe int IsEnabled(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)is_enabled)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index)*
@@ -477,8 +652,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the specified |index| is enabled.
 		/// </summary>
 		[NativeName("is_enabled_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsEnabledAt(int index);
+		public unsafe int IsEnabledAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)is_enabled_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, int enabled)*
@@ -490,8 +670,13 @@ namespace CefNet.CApi
 		/// on success.
 		/// </summary>
 		[NativeName("set_enabled")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetEnabled(int command_id, int enabled);
+		public unsafe int SetEnabled(int command_id, int enabled)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int>)set_enabled)(self, command_id, enabled);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int enabled)*
@@ -503,8 +688,13 @@ namespace CefNet.CApi
 		/// success.
 		/// </summary>
 		[NativeName("set_enabled_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetEnabledAt(int index, int enabled);
+		public unsafe int SetEnabledAt(int index, int enabled)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int>)set_enabled_at)(self, index, enabled);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id)*
@@ -516,8 +706,13 @@ namespace CefNet.CApi
 		/// check and radio items.
 		/// </summary>
 		[NativeName("is_checked")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsChecked(int command_id);
+		public unsafe int IsChecked(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)is_checked)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index)*
@@ -529,8 +724,13 @@ namespace CefNet.CApi
 		/// and radio items.
 		/// </summary>
 		[NativeName("is_checked_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsCheckedAt(int index);
+		public unsafe int IsCheckedAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)is_checked_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, int checked)*
@@ -542,8 +742,13 @@ namespace CefNet.CApi
 		/// Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_checked")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetChecked(int command_id, int @checked);
+		public unsafe int SetChecked(int command_id, int @checked)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int>)set_checked)(self, command_id, @checked);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int checked)*
@@ -555,8 +760,13 @@ namespace CefNet.CApi
 		/// true (1) on success.
 		/// </summary>
 		[NativeName("set_checked_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetCheckedAt(int index, int @checked);
+		public unsafe int SetCheckedAt(int index, int @checked)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int>)set_checked_at)(self, index, @checked);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id)*
@@ -568,8 +778,13 @@ namespace CefNet.CApi
 		/// assigned.
 		/// </summary>
 		[NativeName("has_accelerator")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasAccelerator(int command_id);
+		public unsafe int HasAccelerator(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)has_accelerator)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index)*
@@ -581,8 +796,13 @@ namespace CefNet.CApi
 		/// assigned.
 		/// </summary>
 		[NativeName("has_accelerator_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasAcceleratorAt(int index);
+		public unsafe int HasAcceleratorAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)has_accelerator_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, int key_code, int shift_pressed, int ctrl_pressed, int alt_pressed)*
@@ -594,8 +814,13 @@ namespace CefNet.CApi
 		/// be any virtual key or character value. Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_accelerator")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetAccelerator(int command_id, int key_code, int shift_pressed, int ctrl_pressed, int alt_pressed);
+		public unsafe int SetAccelerator(int command_id, int key_code, int shift_pressed, int ctrl_pressed, int alt_pressed)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int, int, int, int>)set_accelerator)(self, command_id, key_code, shift_pressed, ctrl_pressed, alt_pressed);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int key_code, int shift_pressed, int ctrl_pressed, int alt_pressed)*
@@ -607,8 +832,13 @@ namespace CefNet.CApi
 		/// any virtual key or character value. Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_accelerator_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetAcceleratorAt(int index, int key_code, int shift_pressed, int ctrl_pressed, int alt_pressed);
+		public unsafe int SetAcceleratorAt(int index, int key_code, int shift_pressed, int ctrl_pressed, int alt_pressed)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int, int, int, int, int>)set_accelerator_at)(self, index, key_code, shift_pressed, ctrl_pressed, alt_pressed);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id)*
@@ -620,8 +850,13 @@ namespace CefNet.CApi
 		/// true (1) on success.
 		/// </summary>
 		[NativeName("remove_accelerator")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int RemoveAccelerator(int command_id);
+		public unsafe int RemoveAccelerator(int command_id)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)remove_accelerator)(self, command_id);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index)*
@@ -633,8 +868,13 @@ namespace CefNet.CApi
 		/// on success.
 		/// </summary>
 		[NativeName("remove_accelerator_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int RemoveAcceleratorAt(int index);
+		public unsafe int RemoveAcceleratorAt(int index)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int>)remove_accelerator_at)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, int* key_code, int* shift_pressed, int* ctrl_pressed, int* alt_pressed)*
@@ -646,8 +886,13 @@ namespace CefNet.CApi
 		/// true (1) on success.
 		/// </summary>
 		[NativeName("get_accelerator")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetAccelerator(int command_id, int* key_code, int* shift_pressed, int* ctrl_pressed, int* alt_pressed);
+		public unsafe int GetAccelerator(int command_id, int* key_code, int* shift_pressed, int* ctrl_pressed, int* alt_pressed)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int*, int*, int*, int*, int>)get_accelerator)(self, command_id, key_code, shift_pressed, ctrl_pressed, alt_pressed);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, int* key_code, int* shift_pressed, int* ctrl_pressed, int* alt_pressed)*
@@ -659,8 +904,13 @@ namespace CefNet.CApi
 		/// (1) on success.
 		/// </summary>
 		[NativeName("get_accelerator_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetAcceleratorAt(int index, int* key_code, int* shift_pressed, int* ctrl_pressed, int* alt_pressed);
+		public unsafe int GetAcceleratorAt(int index, int* key_code, int* shift_pressed, int* ctrl_pressed, int* alt_pressed)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, int*, int*, int*, int*, int>)get_accelerator_at)(self, index, key_code, shift_pressed, ctrl_pressed, alt_pressed);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, cef_menu_color_type_t color_type, cef_color_t color)*
@@ -674,8 +924,13 @@ namespace CefNet.CApi
 		/// be used. Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_color")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetColor(int command_id, CefMenuColorType color_type, cef_color_t color);
+		public unsafe int SetColor(int command_id, CefMenuColorType color_type, cef_color_t color)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, CefMenuColorType, cef_color_t, int>)set_color)(self, command_id, color_type, color);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, cef_menu_color_type_t color_type, cef_color_t color)*
@@ -690,8 +945,13 @@ namespace CefNet.CApi
 		/// system color will be used. Returns true (1) on success.
 		/// </summary>
 		[NativeName("set_color_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetColorAt(int index, CefMenuColorType color_type, cef_color_t color);
+		public unsafe int SetColorAt(int index, CefMenuColorType color_type, cef_color_t color)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, CefMenuColorType, cef_color_t, int>)set_color_at)(self, index, color_type, color);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, cef_menu_color_type_t color_type, cef_color_t* color)*
@@ -704,8 +964,13 @@ namespace CefNet.CApi
 		/// Returns true (1) on success.
 		/// </summary>
 		[NativeName("get_color")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetColor(int command_id, CefMenuColorType color_type, cef_color_t* color);
+		public unsafe int GetColor(int command_id, CefMenuColorType color_type, cef_color_t* color)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, CefMenuColorType, cef_color_t*, int>)get_color)(self, command_id, color_type, color);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, cef_menu_color_type_t color_type, cef_color_t* color)*
@@ -719,8 +984,13 @@ namespace CefNet.CApi
 		/// true (1) on success.
 		/// </summary>
 		[NativeName("get_color_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetColorAt(int index, CefMenuColorType color_type, cef_color_t* color);
+		public unsafe int GetColorAt(int index, CefMenuColorType color_type, cef_color_t* color)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, CefMenuColorType, cef_color_t*, int>)get_color_at)(self, index, color_type, color);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int command_id, const cef_string_t* font_list)*
@@ -743,8 +1013,13 @@ namespace CefNet.CApi
 		/// Bold Italic 14px&quot; - &quot;Arial, 14px&quot;
 		/// </summary>
 		[NativeName("set_font_list")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetFontList(int command_id, [Immutable]cef_string_t* font_list);
+		public unsafe int SetFontList(int command_id, [Immutable]cef_string_t* font_list)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_t*, int>)set_font_list)(self, command_id, font_list);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_t* self, int index, const cef_string_t* font_list)*
@@ -768,8 +1043,13 @@ namespace CefNet.CApi
 		/// Bold Italic 14px&quot; - &quot;Arial, 14px&quot;
 		/// </summary>
 		[NativeName("set_font_list_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetFontListAt(int index, [Immutable]cef_string_t* font_list);
+		public unsafe int SetFontListAt(int index, [Immutable]cef_string_t* font_list)
+		{
+			fixed (cef_menu_model_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_t*, int, cef_string_t*, int>)set_font_list_at)(self, index, font_list);
+			}
+		}
 	}
 }
 

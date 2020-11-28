@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// continued. Otherwise, the request will be canceled.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue(int allow);
+		public unsafe void Continue(int allow)
+		{
+			fixed (cef_request_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_callback_t*, int, void>)cont)(self, allow);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_request_callback_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Cancel the url request.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_request_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_request_callback_t*, void>)cancel)(self);
+			}
+		}
 	}
 }
 

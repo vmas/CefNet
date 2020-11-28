@@ -44,8 +44,13 @@ namespace CefNet.CApi
 		/// returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_v8stack_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_frame_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_v8stack_frame_t* self)*
@@ -57,8 +62,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_script_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetScriptName();
+		public unsafe cef_string_userfree_t GetScriptName()
+		{
+			fixed (cef_v8stack_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_frame_t*, cef_string_userfree_t>)get_script_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_v8stack_frame_t* self)*
@@ -73,9 +83,14 @@ namespace CefNet.CApi
 		/// sourceURL=...&quot; string.
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_script_name_or_source_url")]
-		public unsafe extern cef_string_userfree_t GetScriptNameOrSourceUrl();
+		public unsafe cef_string_userfree_t GetScriptNameOrSourceUrl()
+		{
+			fixed (cef_v8stack_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_frame_t*, cef_string_userfree_t>)get_script_name_or_source_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_v8stack_frame_t* self)*
@@ -87,8 +102,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_function_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFunctionName();
+		public unsafe cef_string_userfree_t GetFunctionName()
+		{
+			fixed (cef_v8stack_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_frame_t*, cef_string_userfree_t>)get_function_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8stack_frame_t* self)*
@@ -99,8 +119,13 @@ namespace CefNet.CApi
 		/// Returns the 1-based line number for the function call or 0 if unknown.
 		/// </summary>
 		[NativeName("get_line_number")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetLineNumber();
+		public unsafe int GetLineNumber()
+		{
+			fixed (cef_v8stack_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_frame_t*, int>)get_line_number)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8stack_frame_t* self)*
@@ -112,8 +137,13 @@ namespace CefNet.CApi
 		/// unknown.
 		/// </summary>
 		[NativeName("get_column")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetColumn();
+		public unsafe int GetColumn()
+		{
+			fixed (cef_v8stack_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_frame_t*, int>)get_column)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8stack_frame_t* self)*
@@ -124,8 +154,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the function was compiled using eval().
 		/// </summary>
 		[NativeName("is_eval")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsEval();
+		public unsafe int IsEval()
+		{
+			fixed (cef_v8stack_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_frame_t*, int>)is_eval)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8stack_frame_t* self)*
@@ -136,8 +171,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the function was called as a constructor via &quot;new&quot;.
 		/// </summary>
 		[NativeName("is_constructor")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsConstructor();
+		public unsafe int IsConstructor()
+		{
+			fixed (cef_v8stack_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_frame_t*, int>)is_constructor)(self);
+			}
+		}
 	}
 }
 

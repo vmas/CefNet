@@ -44,8 +44,13 @@ namespace CefNet.CApi
 		/// fail and the |bytes_read| value will be treated as the error code.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue(int bytes_read);
+		public unsafe void Continue(int bytes_read)
+		{
+			fixed (cef_resource_read_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_resource_read_callback_t*, int, void>)cont)(self, bytes_read);
+			}
+		}
 	}
 }
 

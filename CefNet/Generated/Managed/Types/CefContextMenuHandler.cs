@@ -29,6 +29,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefContextMenuHandler : CefBaseRefCounted<cef_context_menu_handler_t>, ICefContextMenuHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnBeforeContextMenuDelegate fnOnBeforeContextMenu = OnBeforeContextMenuImpl;
 
 		private static readonly RunContextMenuDelegate fnRunContextMenu = RunContextMenuImpl;
@@ -37,6 +38,7 @@ namespace CefNet
 
 		private static readonly OnContextMenuDismissedDelegate fnOnContextMenuDismissed = OnContextMenuDismissedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefContextMenuHandler Create(IntPtr instance)
 		{
 			return new CefContextMenuHandler((cef_context_menu_handler_t*)instance);
@@ -45,10 +47,17 @@ namespace CefNet
 		public CefContextMenuHandler()
 		{
 			cef_context_menu_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_before_context_menu = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforeContextMenu);
 			self->run_context_menu = (void*)Marshal.GetFunctionPointerForDelegate(fnRunContextMenu);
 			self->on_context_menu_command = (void*)Marshal.GetFunctionPointerForDelegate(fnOnContextMenuCommand);
 			self->on_context_menu_dismissed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnContextMenuDismissed);
+			#else
+			self->on_before_context_menu = (delegate* unmanaged[Stdcall]<cef_context_menu_handler_t*, cef_browser_t*, cef_frame_t*, cef_context_menu_params_t*, cef_menu_model_t*, void>)&OnBeforeContextMenuImpl;
+			self->run_context_menu = (delegate* unmanaged[Stdcall]<cef_context_menu_handler_t*, cef_browser_t*, cef_frame_t*, cef_context_menu_params_t*, cef_menu_model_t*, cef_run_context_menu_callback_t*, int>)&RunContextMenuImpl;
+			self->on_context_menu_command = (delegate* unmanaged[Stdcall]<cef_context_menu_handler_t*, cef_browser_t*, cef_frame_t*, cef_context_menu_params_t*, int, CefEventFlags, int>)&OnContextMenuCommandImpl;
+			self->on_context_menu_dismissed = (delegate* unmanaged[Stdcall]<cef_context_menu_handler_t*, cef_browser_t*, cef_frame_t*, void>)&OnContextMenuDismissedImpl;
+			#endif
 		}
 
 		public CefContextMenuHandler(cef_context_menu_handler_t* instance)
@@ -70,10 +79,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnBeforeContextMenuDelegate(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_context_menu_params_t* params, _cef_menu_model_t* model)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnBeforeContextMenuImpl(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model)
 		{
 			var instance = GetInstance((IntPtr)self) as CefContextMenuHandler;
@@ -104,10 +116,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int RunContextMenuDelegate(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_context_menu_params_t* params, _cef_menu_model_t* model, _cef_run_context_menu_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int RunContextMenuImpl(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefContextMenuHandler;
@@ -140,10 +155,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnContextMenuCommandDelegate(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, int command_id, CefEventFlags event_flags);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_context_menu_params_t* params, int command_id, cef_event_flags_t event_flags)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnContextMenuCommandImpl(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, int command_id, CefEventFlags event_flags)
 		{
 			var instance = GetInstance((IntPtr)self) as CefContextMenuHandler;
@@ -168,10 +186,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnContextMenuDismissedDelegate(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnContextMenuDismissedImpl(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
 		{
 			var instance = GetInstance((IntPtr)self) as CefContextMenuHandler;

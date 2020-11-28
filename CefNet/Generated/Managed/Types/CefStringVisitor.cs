@@ -28,8 +28,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefStringVisitor : CefBaseRefCounted<cef_string_visitor_t>, ICefStringVisitorPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly VisitDelegate fnVisit = VisitImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefStringVisitor Create(IntPtr instance)
 		{
 			return new CefStringVisitor((cef_string_visitor_t*)instance);
@@ -38,7 +40,11 @@ namespace CefNet
 		public CefStringVisitor()
 		{
 			cef_string_visitor_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->visit = (void*)Marshal.GetFunctionPointerForDelegate(fnVisit);
+			#else
+			self->visit = (delegate* unmanaged[Stdcall]<cef_string_visitor_t*, cef_string_t*, void>)&VisitImpl;
+			#endif
 		}
 
 		public CefStringVisitor(cef_string_visitor_t* instance)
@@ -56,10 +62,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void VisitDelegate(cef_string_visitor_t* self, cef_string_t* @string);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_string_visitor_t* self, const cef_string_t* string)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void VisitImpl(cef_string_visitor_t* self, cef_string_t* @string)
 		{
 			var instance = GetInstance((IntPtr)self) as CefStringVisitor;

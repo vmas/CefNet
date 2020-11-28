@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefNavigationEntryVisitor : CefBaseRefCounted<cef_navigation_entry_visitor_t>, ICefNavigationEntryVisitorPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly VisitDelegate fnVisit = VisitImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefNavigationEntryVisitor Create(IntPtr instance)
 		{
 			return new CefNavigationEntryVisitor((cef_navigation_entry_visitor_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefNavigationEntryVisitor()
 		{
 			cef_navigation_entry_visitor_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->visit = (void*)Marshal.GetFunctionPointerForDelegate(fnVisit);
+			#else
+			self->visit = (delegate* unmanaged[Stdcall]<cef_navigation_entry_visitor_t*, cef_navigation_entry_t*, int, int, int, int>)&VisitImpl;
+			#endif
 		}
 
 		public CefNavigationEntryVisitor(cef_navigation_entry_visitor_t* instance)
@@ -62,10 +68,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int VisitDelegate(cef_navigation_entry_visitor_t* self, cef_navigation_entry_t* entry, int current, int index, int total);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_navigation_entry_visitor_t* self, _cef_navigation_entry_t* entry, int current, int index, int total)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int VisitImpl(cef_navigation_entry_visitor_t* self, cef_navigation_entry_t* entry, int current, int index, int total)
 		{
 			var instance = GetInstance((IntPtr)self) as CefNavigationEntryVisitor;

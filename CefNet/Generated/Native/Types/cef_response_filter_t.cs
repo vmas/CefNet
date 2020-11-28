@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// filter will not be installed if this function returns false (0).
 		/// </summary>
 		[NativeName("init_filter")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int InitFilter();
+		public unsafe int InitFilter()
+		{
+			fixed (cef_response_filter_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_filter_t*, int>)init_filter)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_response_filter_status_t (*)(_cef_response_filter_t* self, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written)*
@@ -75,8 +80,13 @@ namespace CefNet.CApi
 		/// Do not keep a reference to the buffers passed to this function.
 		/// </summary>
 		[NativeName("filter")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefResponseFilterStatus Filter(void* data_in, UIntPtr data_in_size, UIntPtr* data_in_read, void* data_out, UIntPtr data_out_size, UIntPtr* data_out_written);
+		public unsafe CefResponseFilterStatus Filter(void* data_in, UIntPtr data_in_size, UIntPtr* data_in_read, void* data_out, UIntPtr data_out_size, UIntPtr* data_out_written)
+		{
+			fixed (cef_response_filter_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_filter_t*, void*, UIntPtr, UIntPtr*, void*, UIntPtr, UIntPtr*, CefResponseFilterStatus>)filter)(self, data_in, data_in_size, data_in_read, data_out, data_out_size, data_out_written);
+			}
+		}
 	}
 }
 

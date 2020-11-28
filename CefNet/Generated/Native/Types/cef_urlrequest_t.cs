@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// object is read-only and should not be modified.
 		/// </summary>
 		[NativeName("get_request")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_request_t* GetRequest();
+		public unsafe cef_request_t* GetRequest()
+		{
+			fixed (cef_urlrequest_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_urlrequest_t*, cef_request_t*>)get_request)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_urlrequest_client_t* (*)(_cef_urlrequest_t* self)*
@@ -55,8 +60,13 @@ namespace CefNet.CApi
 		/// Returns the client.
 		/// </summary>
 		[NativeName("get_client")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_urlrequest_client_t* GetClient();
+		public unsafe cef_urlrequest_client_t* GetClient()
+		{
+			fixed (cef_urlrequest_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_urlrequest_t*, cef_urlrequest_client_t*>)get_client)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_urlrequest_status_t (*)(_cef_urlrequest_t* self)*
@@ -67,8 +77,13 @@ namespace CefNet.CApi
 		/// Returns the request status.
 		/// </summary>
 		[NativeName("get_request_status")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefUrlRequestStatus GetRequestStatus();
+		public unsafe CefUrlRequestStatus GetRequestStatus()
+		{
+			fixed (cef_urlrequest_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_urlrequest_t*, CefUrlRequestStatus>)get_request_status)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_errorcode_t (*)(_cef_urlrequest_t* self)*
@@ -80,8 +95,13 @@ namespace CefNet.CApi
 		/// otherwise.
 		/// </summary>
 		[NativeName("get_request_error")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefErrorCode GetRequestError();
+		public unsafe CefErrorCode GetRequestError()
+		{
+			fixed (cef_urlrequest_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_urlrequest_t*, CefErrorCode>)get_request_error)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_response_t* (*)(_cef_urlrequest_t* self)*
@@ -94,8 +114,13 @@ namespace CefNet.CApi
 		/// The returned object is read-only and should not be modified.
 		/// </summary>
 		[NativeName("get_response")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_response_t* GetResponse();
+		public unsafe cef_response_t* GetResponse()
+		{
+			fixed (cef_urlrequest_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_urlrequest_t*, cef_response_t*>)get_response)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_urlrequest_t* self)*
@@ -107,8 +132,13 @@ namespace CefNet.CApi
 		/// includes responses for which revalidation was required.
 		/// </summary>
 		[NativeName("response_was_cached")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int ResponseWasCached();
+		public unsafe int ResponseWasCached()
+		{
+			fixed (cef_urlrequest_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_urlrequest_t*, int>)response_was_cached)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_urlrequest_t* self)*
@@ -119,8 +149,13 @@ namespace CefNet.CApi
 		/// Cancel the request.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_urlrequest_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_urlrequest_t*, void>)cancel)(self);
+			}
+		}
 	}
 }
 

@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this Image is NULL.
 		/// </summary>
 		[NativeName("is_empty")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsEmpty();
+		public unsafe int IsEmpty()
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, int>)is_empty)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_image_t* self, _cef_image_t* that)*
@@ -56,8 +61,13 @@ namespace CefNet.CApi
 		/// storage. Will also return true (1) if both images are NULL.
 		/// </summary>
 		[NativeName("is_same")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSame(cef_image_t* that);
+		public unsafe int IsSame(cef_image_t* that)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, cef_image_t*, int>)is_same)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_image_t* self, float scale_factor, int pixel_width, int pixel_height, cef_color_type_t color_type, cef_alpha_type_t alpha_type, const void* pixel_data, size_t pixel_data_size)*
@@ -72,8 +82,13 @@ namespace CefNet.CApi
 		/// |color_type| and |alpha_type| values specify the pixel format.
 		/// </summary>
 		[NativeName("add_bitmap")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int AddBitmap(float scale_factor, int pixel_width, int pixel_height, CefColorType color_type, CefAlphaType alpha_type, [Immutable]void* pixel_data, UIntPtr pixel_data_size);
+		public unsafe int AddBitmap(float scale_factor, int pixel_width, int pixel_height, CefColorType color_type, CefAlphaType alpha_type, [Immutable]void* pixel_data, UIntPtr pixel_data_size)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, float, int, int, CefColorType, CefAlphaType, void*, UIntPtr, int>)add_bitmap)(self, scale_factor, pixel_width, pixel_height, color_type, alpha_type, pixel_data, pixel_data_size);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_image_t* self, float scale_factor, const void* png_data, size_t png_data_size)*
@@ -86,8 +101,13 @@ namespace CefNet.CApi
 		/// be maintained.
 		/// </summary>
 		[NativeName("add_png")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int AddPng(float scale_factor, [Immutable]void* png_data, UIntPtr png_data_size);
+		public unsafe int AddPng(float scale_factor, [Immutable]void* png_data, UIntPtr png_data_size)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, float, void*, UIntPtr, int>)add_png)(self, scale_factor, png_data, png_data_size);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_image_t* self, float scale_factor, const void* jpeg_data, size_t jpeg_data_size)*
@@ -100,8 +120,13 @@ namespace CefNet.CApi
 		/// transparency so the alpha byte will be set to 0xFF for all pixels.
 		/// </summary>
 		[NativeName("add_jpeg")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int AddJpeg(float scale_factor, [Immutable]void* jpeg_data, UIntPtr jpeg_data_size);
+		public unsafe int AddJpeg(float scale_factor, [Immutable]void* jpeg_data, UIntPtr jpeg_data_size)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, float, void*, UIntPtr, int>)add_jpeg)(self, scale_factor, jpeg_data, jpeg_data_size);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_image_t* self)*
@@ -112,8 +137,13 @@ namespace CefNet.CApi
 		/// Returns the image width in density independent pixel (DIP) units.
 		/// </summary>
 		[NativeName("get_width")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetWidth();
+		public unsafe UIntPtr GetWidth()
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, UIntPtr>)get_width)(self);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_image_t* self)*
@@ -124,8 +154,13 @@ namespace CefNet.CApi
 		/// Returns the image height in density independent pixel (DIP) units.
 		/// </summary>
 		[NativeName("get_height")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetHeight();
+		public unsafe UIntPtr GetHeight()
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, UIntPtr>)get_height)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_image_t* self, float scale_factor)*
@@ -137,8 +172,13 @@ namespace CefNet.CApi
 		/// |scale_factor|.
 		/// </summary>
 		[NativeName("has_representation")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasRepresentation(float scale_factor);
+		public unsafe int HasRepresentation(float scale_factor)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, float, int>)has_representation)(self, scale_factor);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_image_t* self, float scale_factor)*
@@ -149,8 +189,13 @@ namespace CefNet.CApi
 		/// Removes the representation for |scale_factor|. Returns true (1) on success.
 		/// </summary>
 		[NativeName("remove_representation")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int RemoveRepresentation(float scale_factor);
+		public unsafe int RemoveRepresentation(float scale_factor)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, float, int>)remove_representation)(self, scale_factor);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_image_t* self, float scale_factor, float* actual_scale_factor, int* pixel_width, int* pixel_height)*
@@ -164,8 +209,13 @@ namespace CefNet.CApi
 		/// size in pixel coordinates. Returns true (1) on success.
 		/// </summary>
 		[NativeName("get_representation_info")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetRepresentationInfo(float scale_factor, float* actual_scale_factor, int* pixel_width, int* pixel_height);
+		public unsafe int GetRepresentationInfo(float scale_factor, float* actual_scale_factor, int* pixel_width, int* pixel_height)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, float, float*, int*, int*, int>)get_representation_info)(self, scale_factor, actual_scale_factor, pixel_width, pixel_height);
+			}
+		}
 
 		/// <summary>
 		/// _cef_binary_value_t* (*)(_cef_image_t* self, float scale_factor, cef_color_type_t color_type, cef_alpha_type_t alpha_type, int* pixel_width, int* pixel_height)*
@@ -181,8 +231,13 @@ namespace CefNet.CApi
 		/// on failure.
 		/// </summary>
 		[NativeName("get_as_bitmap")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_binary_value_t* GetAsBitmap(float scale_factor, CefColorType color_type, CefAlphaType alpha_type, int* pixel_width, int* pixel_height);
+		public unsafe cef_binary_value_t* GetAsBitmap(float scale_factor, CefColorType color_type, CefAlphaType alpha_type, int* pixel_width, int* pixel_height)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, float, CefColorType, CefAlphaType, int*, int*, cef_binary_value_t*>)get_as_bitmap)(self, scale_factor, color_type, alpha_type, pixel_width, pixel_height);
+			}
+		}
 
 		/// <summary>
 		/// _cef_binary_value_t* (*)(_cef_image_t* self, float scale_factor, int with_transparency, int* pixel_width, int* pixel_height)*
@@ -198,8 +253,13 @@ namespace CefNet.CApi
 		/// failure.
 		/// </summary>
 		[NativeName("get_as_png")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_binary_value_t* GetAsPng(float scale_factor, int with_transparency, int* pixel_width, int* pixel_height);
+		public unsafe cef_binary_value_t* GetAsPng(float scale_factor, int with_transparency, int* pixel_width, int* pixel_height)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, float, int, int*, int*, cef_binary_value_t*>)get_as_png)(self, scale_factor, with_transparency, pixel_width, pixel_height);
+			}
+		}
 
 		/// <summary>
 		/// _cef_binary_value_t* (*)(_cef_image_t* self, float scale_factor, int quality, int* pixel_width, int* pixel_height)*
@@ -216,8 +276,13 @@ namespace CefNet.CApi
 		/// failure.
 		/// </summary>
 		[NativeName("get_as_jpeg")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_binary_value_t* GetAsJpeg(float scale_factor, int quality, int* pixel_width, int* pixel_height);
+		public unsafe cef_binary_value_t* GetAsJpeg(float scale_factor, int quality, int* pixel_width, int* pixel_height)
+		{
+			fixed (cef_image_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_image_t*, float, int, int*, int*, cef_binary_value_t*>)get_as_jpeg)(self, scale_factor, quality, pixel_width, pixel_height);
+			}
+		}
 	}
 }
 

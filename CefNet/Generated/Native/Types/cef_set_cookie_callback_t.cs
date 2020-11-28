@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// the cookie was set successfully.
 		/// </summary>
 		[NativeName("on_complete")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnComplete(int success);
+		public unsafe void OnComplete(int success)
+		{
+			fixed (cef_set_cookie_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_set_cookie_callback_t*, int, void>)on_complete)(self, success);
+			}
+		}
 	}
 }
 

@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Continue the request. Read the resource contents from |stream|.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue(cef_stream_reader_t* stream);
+		public unsafe void Continue(cef_stream_reader_t* stream)
+		{
+			fixed (cef_get_extension_resource_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_get_extension_resource_callback_t*, cef_stream_reader_t*, void>)cont)(self, stream);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_get_extension_resource_callback_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Cancel the request.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_get_extension_resource_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_get_extension_resource_callback_t*, void>)cancel)(self);
+			}
+		}
 	}
 }
 

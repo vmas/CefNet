@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// to cancel the drag event.
 		/// </summary>
 		[NativeName("on_drag_enter")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnDragEnter(cef_browser_t* browser, cef_drag_data_t* dragData, CefDragOperationsMask mask);
+		public unsafe int OnDragEnter(cef_browser_t* browser, cef_drag_data_t* dragData, CefDragOperationsMask mask)
+		{
+			fixed (cef_drag_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_handler_t*, cef_browser_t*, cef_drag_data_t*, CefDragOperationsMask, int>)on_drag_enter)(self, browser, dragData, mask);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_drag_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, size_t regionsCount, const cef_draggable_region_t* regions)*
@@ -57,9 +62,14 @@ namespace CefNet.CApi
 		/// never be called. If the last draggable region is removed from a document
 		/// this function will be called with an NULL vector.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_draggable_regions_changed")]
-		public unsafe extern void OnDraggableRegionsChanged(cef_browser_t* browser, cef_frame_t* frame, UIntPtr regionsCount, [Immutable]cef_draggable_region_t* regions);
+		public unsafe void OnDraggableRegionsChanged(cef_browser_t* browser, cef_frame_t* frame, UIntPtr regionsCount, [Immutable]cef_draggable_region_t* regions)
+		{
+			fixed (cef_drag_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_drag_handler_t*, cef_browser_t*, cef_frame_t*, UIntPtr, cef_draggable_region_t*, void>)on_draggable_regions_changed)(self, browser, frame, regionsCount, regions);
+			}
+		}
 	}
 }
 

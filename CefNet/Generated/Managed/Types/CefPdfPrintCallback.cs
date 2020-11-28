@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefPdfPrintCallback : CefBaseRefCounted<cef_pdf_print_callback_t>, ICefPdfPrintCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnPdfPrintFinishedDelegate fnOnPdfPrintFinished = OnPdfPrintFinishedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefPdfPrintCallback Create(IntPtr instance)
 		{
 			return new CefPdfPrintCallback((cef_pdf_print_callback_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefPdfPrintCallback()
 		{
 			cef_pdf_print_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_pdf_print_finished = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPdfPrintFinished);
+			#else
+			self->on_pdf_print_finished = (delegate* unmanaged[Stdcall]<cef_pdf_print_callback_t*, cef_string_t*, int, void>)&OnPdfPrintFinishedImpl;
+			#endif
 		}
 
 		public CefPdfPrintCallback(cef_pdf_print_callback_t* instance)
@@ -59,10 +65,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnPdfPrintFinishedDelegate(cef_pdf_print_callback_t* self, cef_string_t* path, int ok);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_pdf_print_callback_t* self, const cef_string_t* path, int ok)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnPdfPrintFinishedImpl(cef_pdf_print_callback_t* self, cef_string_t* path, int ok)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPdfPrintCallback;

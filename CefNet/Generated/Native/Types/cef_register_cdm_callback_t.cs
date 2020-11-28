@@ -42,9 +42,14 @@ namespace CefNet.CApi
 		/// Otherwise, |result| and |error_message| will contain additional information
 		/// about why registration failed.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_cdm_registration_complete")]
-		public unsafe extern void OnCDMRegistrationComplete(CefCDMRegistrationError result, [Immutable]cef_string_t* error_message);
+		public unsafe void OnCDMRegistrationComplete(CefCDMRegistrationError result, [Immutable]cef_string_t* error_message)
+		{
+			fixed (cef_register_cdm_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_register_cdm_callback_t*, CefCDMRegistrationError, cef_string_t*, void>)on_cdm_registration_complete)(self, result, error_message);
+			}
+		}
 	}
 }
 

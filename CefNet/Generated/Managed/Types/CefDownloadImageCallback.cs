@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefDownloadImageCallback : CefBaseRefCounted<cef_download_image_callback_t>, ICefDownloadImageCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnDownloadImageFinishedDelegate fnOnDownloadImageFinished = OnDownloadImageFinishedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefDownloadImageCallback Create(IntPtr instance)
 		{
 			return new CefDownloadImageCallback((cef_download_image_callback_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefDownloadImageCallback()
 		{
 			cef_download_image_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_download_image_finished = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDownloadImageFinished);
+			#else
+			self->on_download_image_finished = (delegate* unmanaged[Stdcall]<cef_download_image_callback_t*, cef_string_t*, int, cef_image_t*, void>)&OnDownloadImageFinishedImpl;
+			#endif
 		}
 
 		public CefDownloadImageCallback(cef_download_image_callback_t* instance)
@@ -60,10 +66,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDownloadImageFinishedDelegate(cef_download_image_callback_t* self, cef_string_t* image_url, int http_status_code, cef_image_t* image);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_download_image_callback_t* self, const cef_string_t* image_url, int http_status_code, _cef_image_t* image)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDownloadImageFinishedImpl(cef_download_image_callback_t* self, cef_string_t* image_url, int http_status_code, cef_image_t* image)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDownloadImageCallback;

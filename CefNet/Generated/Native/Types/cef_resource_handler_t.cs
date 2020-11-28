@@ -46,8 +46,13 @@ namespace CefNet.CApi
 		/// the ProcessRequest function will be called.
 		/// </summary>
 		[NativeName("open")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Open(cef_request_t* request, int* handle_request, cef_callback_t* callback);
+		public unsafe int Open(cef_request_t* request, int* handle_request, cef_callback_t* callback)
+		{
+			fixed (cef_resource_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_handler_t*, cef_request_t*, int*, cef_callback_t*, int>)open)(self, request, handle_request, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_resource_handler_t* self, _cef_request_t* request, _cef_callback_t* callback)*
@@ -63,8 +68,13 @@ namespace CefNet.CApi
 		/// WARNING: This function is deprecated. Use Open instead.
 		/// </summary>
 		[NativeName("process_request")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int ProcessRequest(cef_request_t* request, cef_callback_t* callback);
+		public unsafe int ProcessRequest(cef_request_t* request, cef_callback_t* callback)
+		{
+			fixed (cef_resource_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_handler_t*, cef_request_t*, cef_callback_t*, int>)process_request)(self, request, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_resource_handler_t* self, _cef_response_t* response, int64* response_length, cef_string_t* redirectUrl)*
@@ -87,8 +97,13 @@ namespace CefNet.CApi
 		/// |response| to indicate the error condition.
 		/// </summary>
 		[NativeName("get_response_headers")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetResponseHeaders(cef_response_t* response, long* response_length, cef_string_t* redirectUrl);
+		public unsafe void GetResponseHeaders(cef_response_t* response, long* response_length, cef_string_t* redirectUrl)
+		{
+			fixed (cef_resource_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_resource_handler_t*, cef_response_t*, long*, cef_string_t*, void>)get_response_headers)(self, response, response_length, redirectUrl);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_resource_handler_t* self, int64 bytes_to_skip, int64* bytes_skipped, _cef_resource_skip_callback_t* callback)*
@@ -107,8 +122,13 @@ namespace CefNet.CApi
 		/// function will be called in sequence but not from a dedicated thread.
 		/// </summary>
 		[NativeName("skip")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Skip(long bytes_to_skip, long* bytes_skipped, cef_resource_skip_callback_t* callback);
+		public unsafe int Skip(long bytes_to_skip, long* bytes_skipped, cef_resource_skip_callback_t* callback)
+		{
+			fixed (cef_resource_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_handler_t*, long, long*, cef_resource_skip_callback_t*, int>)skip)(self, bytes_to_skip, bytes_skipped, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, _cef_resource_read_callback_t* callback)*
@@ -131,8 +151,13 @@ namespace CefNet.CApi
 		/// will be called.
 		/// </summary>
 		[NativeName("read")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Read(void* data_out, int bytes_to_read, int* bytes_read, cef_resource_read_callback_t* callback);
+		public unsafe int Read(void* data_out, int bytes_to_read, int* bytes_read, cef_resource_read_callback_t* callback)
+		{
+			fixed (cef_resource_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_handler_t*, void*, int, int*, cef_resource_read_callback_t*, int>)read)(self, data_out, bytes_to_read, bytes_read, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, _cef_callback_t* callback)*
@@ -148,8 +173,13 @@ namespace CefNet.CApi
 		/// WARNING: This function is deprecated. Use Skip and Read instead.
 		/// </summary>
 		[NativeName("read_response")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int ReadResponse(void* data_out, int bytes_to_read, int* bytes_read, cef_callback_t* callback);
+		public unsafe int ReadResponse(void* data_out, int bytes_to_read, int* bytes_read, cef_callback_t* callback)
+		{
+			fixed (cef_resource_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_handler_t*, void*, int, int*, cef_callback_t*, int>)read_response)(self, data_out, bytes_to_read, bytes_read, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_resource_handler_t* self)*
@@ -160,8 +190,13 @@ namespace CefNet.CApi
 		/// Request processing has been canceled.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_resource_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_resource_handler_t*, void>)cancel)(self);
+			}
+		}
 	}
 }
 

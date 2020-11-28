@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Read raw binary data.
 		/// </summary>
 		[NativeName("read")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr Read(void* ptr, UIntPtr size, UIntPtr n);
+		public unsafe UIntPtr Read(void* ptr, UIntPtr size, UIntPtr n)
+		{
+			fixed (cef_stream_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_stream_reader_t*, void*, UIntPtr, UIntPtr, UIntPtr>)read)(self, ptr, size, n);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_stream_reader_t* self, int64 offset, int whence)*
@@ -52,8 +57,13 @@ namespace CefNet.CApi
 		/// SEEK_END or SEEK_SET. Returns zero on success and non-zero on failure.
 		/// </summary>
 		[NativeName("seek")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Seek(long offset, int whence);
+		public unsafe int Seek(long offset, int whence)
+		{
+			fixed (cef_stream_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_stream_reader_t*, long, int, int>)seek)(self, offset, whence);
+			}
+		}
 
 		/// <summary>
 		/// int64 (*)(_cef_stream_reader_t* self)*
@@ -64,8 +74,13 @@ namespace CefNet.CApi
 		/// Return the current offset position.
 		/// </summary>
 		[NativeName("tell")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern long Tell();
+		public unsafe long Tell()
+		{
+			fixed (cef_stream_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_stream_reader_t*, long>)tell)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_stream_reader_t* self)*
@@ -76,8 +91,13 @@ namespace CefNet.CApi
 		/// Return non-zero if at end of file.
 		/// </summary>
 		[NativeName("eof")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Eof();
+		public unsafe int Eof()
+		{
+			fixed (cef_stream_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_stream_reader_t*, int>)eof)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_stream_reader_t* self)*
@@ -90,8 +110,13 @@ namespace CefNet.CApi
 		/// the reader from.
 		/// </summary>
 		[NativeName("may_block")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MayBlock();
+		public unsafe int MayBlock()
+		{
+			fixed (cef_stream_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_stream_reader_t*, int>)may_block)(self);
+			}
+		}
 	}
 }
 

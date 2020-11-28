@@ -49,8 +49,13 @@ namespace CefNet.CApi
 		/// if interceptor retrieval was handled, false (0) otherwise.
 		/// </summary>
 		[NativeName("get_byname")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetByName([Immutable]cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception);
+		public unsafe int GetByName([Immutable]cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception)
+		{
+			fixed (cef_v8interceptor_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8interceptor_t*, cef_string_t*, cef_v8value_t*, cef_v8value_t**, cef_string_t*, int>)get_byname)(self, name, @object, retval, exception);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8interceptor_t* self, int index, _cef_v8value_t* object, _cef_v8value_t** retval, cef_string_t* exception)*
@@ -66,8 +71,13 @@ namespace CefNet.CApi
 		/// interceptor retrieval was handled, false (0) otherwise.
 		/// </summary>
 		[NativeName("get_byindex")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetByIndex(int index, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception);
+		public unsafe int GetByIndex(int index, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception)
+		{
+			fixed (cef_v8interceptor_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8interceptor_t*, int, cef_v8value_t*, cef_v8value_t**, cef_string_t*, int>)get_byindex)(self, index, @object, retval, exception);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8interceptor_t* self, const cef_string_t* name, _cef_v8value_t* object, _cef_v8value_t* value, cef_string_t* exception)*
@@ -83,8 +93,13 @@ namespace CefNet.CApi
 		/// (1) if interceptor assignment was handled, false (0) otherwise.
 		/// </summary>
 		[NativeName("set_byname")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetByName([Immutable]cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception);
+		public unsafe int SetByName([Immutable]cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception)
+		{
+			fixed (cef_v8interceptor_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8interceptor_t*, cef_string_t*, cef_v8value_t*, cef_v8value_t*, cef_string_t*, int>)set_byname)(self, name, @object, value, exception);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8interceptor_t* self, int index, _cef_v8value_t* object, _cef_v8value_t* value, cef_string_t* exception)*
@@ -99,8 +114,13 @@ namespace CefNet.CApi
 		/// interceptor assignment was handled, false (0) otherwise.
 		/// </summary>
 		[NativeName("set_byindex")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetByIndex(int index, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception);
+		public unsafe int SetByIndex(int index, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception)
+		{
+			fixed (cef_v8interceptor_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8interceptor_t*, int, cef_v8value_t*, cef_v8value_t*, cef_string_t*, int>)set_byindex)(self, index, @object, value, exception);
+			}
+		}
 	}
 }
 

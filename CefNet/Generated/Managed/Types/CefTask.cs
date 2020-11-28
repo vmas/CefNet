@@ -33,8 +33,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefTask : CefBaseRefCounted<cef_task_t>, ICefTaskPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly ExecuteDelegate fnExecute = ExecuteImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefTask Create(IntPtr instance)
 		{
 			return new CefTask((cef_task_t*)instance);
@@ -43,7 +45,11 @@ namespace CefNet
 		public CefTask()
 		{
 			cef_task_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->execute = (void*)Marshal.GetFunctionPointerForDelegate(fnExecute);
+			#else
+			self->execute = (delegate* unmanaged[Stdcall]<cef_task_t*, void>)&ExecuteImpl;
+			#endif
 		}
 
 		public CefTask(cef_task_t* instance)
@@ -58,10 +64,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void ExecuteDelegate(cef_task_t* self);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_task_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void ExecuteImpl(cef_task_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefTask;

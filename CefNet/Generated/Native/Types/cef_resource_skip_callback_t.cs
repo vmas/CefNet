@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// request will fail with ERR_REQUEST_RANGE_NOT_SATISFIABLE.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue(long bytes_skipped);
+		public unsafe void Continue(long bytes_skipped)
+		{
+			fixed (cef_resource_skip_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_resource_skip_callback_t*, long, void>)cont)(self, bytes_skipped);
+			}
+		}
 	}
 }
 

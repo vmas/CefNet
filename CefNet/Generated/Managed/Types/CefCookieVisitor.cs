@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefCookieVisitor : CefBaseRefCounted<cef_cookie_visitor_t>, ICefCookieVisitorPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly VisitDelegate fnVisit = VisitImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefCookieVisitor Create(IntPtr instance)
 		{
 			return new CefCookieVisitor((cef_cookie_visitor_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefCookieVisitor()
 		{
 			cef_cookie_visitor_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->visit = (void*)Marshal.GetFunctionPointerForDelegate(fnVisit);
+			#else
+			self->visit = (delegate* unmanaged[Stdcall]<cef_cookie_visitor_t*, cef_cookie_t*, int, int, int*, int>)&VisitImpl;
+			#endif
 		}
 
 		public CefCookieVisitor(cef_cookie_visitor_t* instance)
@@ -62,10 +68,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int VisitDelegate(cef_cookie_visitor_t* self, cef_cookie_t* cookie, int count, int total, int* deleteCookie);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_cookie_visitor_t* self, const const _cef_cookie_t* cookie, int count, int total, int* deleteCookie)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int VisitImpl(cef_cookie_visitor_t* self, cef_cookie_t* cookie, int count, int total, int* deleteCookie)
 		{
 			var instance = GetInstance((IntPtr)self) as CefCookieVisitor;

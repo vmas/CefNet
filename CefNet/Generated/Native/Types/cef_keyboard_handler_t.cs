@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// shortcut set |is_keyboard_shortcut| to true (1) and return false (0).
 		/// </summary>
 		[NativeName("on_pre_key_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnPreKeyEvent(cef_browser_t* browser, [Immutable]cef_key_event_t* @event, CefEventHandle os_event, int* is_keyboard_shortcut);
+		public unsafe int OnPreKeyEvent(cef_browser_t* browser, [Immutable]cef_key_event_t* @event, CefEventHandle os_event, int* is_keyboard_shortcut)
+		{
+			fixed (cef_keyboard_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_keyboard_handler_t*, cef_browser_t*, cef_key_event_t*, CefEventHandle, int*, int>)on_pre_key_event)(self, browser, @event, os_event, is_keyboard_shortcut);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_keyboard_handler_t* self, _cef_browser_t* browser, const const _cef_key_event_t* event, CefEventHandle os_event)*
@@ -58,8 +63,13 @@ namespace CefNet.CApi
 		/// if the keyboard event was handled or false (0) otherwise.
 		/// </summary>
 		[NativeName("on_key_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnKeyEvent(cef_browser_t* browser, [Immutable]cef_key_event_t* @event, CefEventHandle os_event);
+		public unsafe int OnKeyEvent(cef_browser_t* browser, [Immutable]cef_key_event_t* @event, CefEventHandle os_event)
+		{
+			fixed (cef_keyboard_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_keyboard_handler_t*, cef_browser_t*, cef_key_event_t*, CefEventHandle, int>)on_key_event)(self, browser, @event, os_event);
+			}
+		}
 	}
 }
 

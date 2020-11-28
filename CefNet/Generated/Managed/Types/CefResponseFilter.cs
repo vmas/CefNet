@@ -29,10 +29,12 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefResponseFilter : CefBaseRefCounted<cef_response_filter_t>, ICefResponseFilterPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly InitFilterDelegate fnInitFilter = InitFilterImpl;
 
 		private static readonly FilterDelegate fnFilter = FilterImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefResponseFilter Create(IntPtr instance)
 		{
 			return new CefResponseFilter((cef_response_filter_t*)instance);
@@ -41,8 +43,13 @@ namespace CefNet
 		public CefResponseFilter()
 		{
 			cef_response_filter_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->init_filter = (void*)Marshal.GetFunctionPointerForDelegate(fnInitFilter);
 			self->filter = (void*)Marshal.GetFunctionPointerForDelegate(fnFilter);
+			#else
+			self->init_filter = (delegate* unmanaged[Stdcall]<cef_response_filter_t*, int>)&InitFilterImpl;
+			self->filter = (delegate* unmanaged[Stdcall]<cef_response_filter_t*, void*, UIntPtr, UIntPtr*, void*, UIntPtr, UIntPtr*, CefResponseFilterStatus>)&FilterImpl;
+			#endif
 		}
 
 		public CefResponseFilter(cef_response_filter_t* instance)
@@ -59,10 +66,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int InitFilterDelegate(cef_response_filter_t* self);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_response_filter_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int InitFilterImpl(cef_response_filter_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResponseFilter;
@@ -107,10 +117,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate CefResponseFilterStatus FilterDelegate(cef_response_filter_t* self, void* data_in, UIntPtr data_in_size, UIntPtr* data_in_read, void* data_out, UIntPtr data_out_size, UIntPtr* data_out_written);
 
+#endif // NET_LESS_5_0
 		// cef_response_filter_status_t (*)(_cef_response_filter_t* self, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe CefResponseFilterStatus FilterImpl(cef_response_filter_t* self, void* data_in, UIntPtr data_in_size, UIntPtr* data_in_read, void* data_out, UIntPtr data_out_size, UIntPtr* data_out_written)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResponseFilter;

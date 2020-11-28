@@ -56,8 +56,13 @@ namespace CefNet.CApi
 		/// parsing large messages (some of which may exceed 1MB in size).
 		/// </summary>
 		[NativeName("on_dev_tools_message")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnDevToolsMessage(cef_browser_t* browser, [Immutable]void* message, UIntPtr message_size);
+		public unsafe int OnDevToolsMessage(cef_browser_t* browser, [Immutable]void* message, UIntPtr message_size)
+		{
+			fixed (cef_dev_tools_message_observer_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, void*, UIntPtr, int>)on_dev_tools_message)(self, browser, message, message_size);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser, int message_id, int success, const void* result, size_t result_size)*
@@ -76,9 +81,14 @@ namespace CefNet.CApi
 		/// OnDevToolsMessage documentation for additional details on |result|
 		/// contents.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_dev_tools_method_result")]
-		public unsafe extern void OnDevToolsMethodResult(cef_browser_t* browser, int message_id, int success, [Immutable]void* result, UIntPtr result_size);
+		public unsafe void OnDevToolsMethodResult(cef_browser_t* browser, int message_id, int success, [Immutable]void* result, UIntPtr result_size)
+		{
+			fixed (cef_dev_tools_message_observer_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, int, int, void*, UIntPtr, void>)on_dev_tools_method_result)(self, browser, message_id, success, result, result_size);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser, const cef_string_t* method, const void* params, size_t params_size)*
@@ -94,8 +104,13 @@ namespace CefNet.CApi
 		/// additional details on |params| contents.
 		/// </summary>
 		[NativeName("on_dev_tools_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnDevToolsEvent(cef_browser_t* browser, [Immutable]cef_string_t* method, [Immutable]void* @params, UIntPtr params_size);
+		public unsafe void OnDevToolsEvent(cef_browser_t* browser, [Immutable]cef_string_t* method, [Immutable]void* @params, UIntPtr params_size)
+		{
+			fixed (cef_dev_tools_message_observer_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, cef_string_t*, void*, UIntPtr, void>)on_dev_tools_event)(self, browser, method, @params, params_size);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser)*
@@ -107,9 +122,14 @@ namespace CefNet.CApi
 		/// is the originating browser instance. This will generally occur in response
 		/// to the first message sent while the agent is detached.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_dev_tools_agent_attached")]
-		public unsafe extern void OnDevToolsAgentAttached(cef_browser_t* browser);
+		public unsafe void OnDevToolsAgentAttached(cef_browser_t* browser)
+		{
+			fixed (cef_dev_tools_message_observer_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, void>)on_dev_tools_agent_attached)(self, browser);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser)*
@@ -122,9 +142,14 @@ namespace CefNet.CApi
 		/// before the agent became detached will not be delivered, and any active
 		/// event subscriptions will be canceled.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_dev_tools_agent_detached")]
-		public unsafe extern void OnDevToolsAgentDetached(cef_browser_t* browser);
+		public unsafe void OnDevToolsAgentDetached(cef_browser_t* browser)
+		{
+			fixed (cef_dev_tools_message_observer_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_dev_tools_message_observer_t*, cef_browser_t*, void>)on_dev_tools_agent_detached)(self, browser);
+			}
+		}
 	}
 }
 

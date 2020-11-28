@@ -51,8 +51,13 @@ namespace CefNet.CApi
 		/// display the default dialog return false (0).
 		/// </summary>
 		[NativeName("on_file_dialog")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnFileDialog(cef_browser_t* browser, CefFileDialogMode mode, [Immutable]cef_string_t* title, [Immutable]cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback);
+		public unsafe int OnFileDialog(cef_browser_t* browser, CefFileDialogMode mode, [Immutable]cef_string_t* title, [Immutable]cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback)
+		{
+			fixed (cef_dialog_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_dialog_handler_t*, cef_browser_t*, CefFileDialogMode, cef_string_t*, cef_string_t*, cef_string_list_t, int, cef_file_dialog_callback_t*, int>)on_file_dialog)(self, browser, mode, title, default_file_path, accept_filters, selected_accept_filter, callback);
+			}
+		}
 	}
 }
 

@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// until the returned Registration object is destroyed.
 		/// </summary>
 		[NativeName("add_observer")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_registration_t* AddObserver(cef_media_observer_t* observer);
+		public unsafe cef_registration_t* AddObserver(cef_media_observer_t* observer)
+		{
+			fixed (cef_media_router_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_router_t*, cef_media_observer_t*, cef_registration_t*>)add_observer)(self, observer);
+			}
+		}
 
 		/// <summary>
 		/// _cef_media_source_t* (*)(_cef_media_router_t* self, const cef_string_t* urn)*
@@ -59,8 +64,13 @@ namespace CefNet.CApi
 		/// &gt;&quot;).
 		/// </summary>
 		[NativeName("get_source")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_media_source_t* GetSource([Immutable]cef_string_t* urn);
+		public unsafe cef_media_source_t* GetSource([Immutable]cef_string_t* urn)
+		{
+			fixed (cef_media_router_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_router_t*, cef_string_t*, cef_media_source_t*>)get_source)(self, urn);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_media_router_t* self)*
@@ -72,8 +82,13 @@ namespace CefNet.CApi
 		/// registered observers.
 		/// </summary>
 		[NativeName("notify_current_sinks")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void NotifyCurrentSinks();
+		public unsafe void NotifyCurrentSinks()
+		{
+			fixed (cef_media_router_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_router_t*, void>)notify_current_sinks)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_media_router_t* self, _cef_media_source_t* source, _cef_media_sink_t* sink, _cef_media_route_create_callback_t* callback)*
@@ -89,8 +104,13 @@ namespace CefNet.CApi
 		/// observers.
 		/// </summary>
 		[NativeName("create_route")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void CreateRoute(cef_media_source_t* source, cef_media_sink_t* sink, cef_media_route_create_callback_t* callback);
+		public unsafe void CreateRoute(cef_media_source_t* source, cef_media_sink_t* sink, cef_media_route_create_callback_t* callback)
+		{
+			fixed (cef_media_router_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_router_t*, cef_media_source_t*, cef_media_sink_t*, cef_media_route_create_callback_t*, void>)create_route)(self, source, sink, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_media_router_t* self)*
@@ -102,8 +122,13 @@ namespace CefNet.CApi
 		/// registered observers.
 		/// </summary>
 		[NativeName("notify_current_routes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void NotifyCurrentRoutes();
+		public unsafe void NotifyCurrentRoutes()
+		{
+			fixed (cef_media_router_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_router_t*, void>)notify_current_routes)(self);
+			}
+		}
 	}
 }
 

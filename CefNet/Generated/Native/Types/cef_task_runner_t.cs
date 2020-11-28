@@ -44,8 +44,13 @@ namespace CefNet.CApi
 		/// |that| object.
 		/// </summary>
 		[NativeName("is_same")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSame(cef_task_runner_t* that);
+		public unsafe int IsSame(cef_task_runner_t* that)
+		{
+			fixed (cef_task_runner_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_task_runner_t*, cef_task_runner_t*, int>)is_same)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_task_runner_t* self)*
@@ -56,8 +61,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this task runner belongs to the current thread.
 		/// </summary>
 		[NativeName("belongs_to_current_thread")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int BelongsToCurrentThread();
+		public unsafe int BelongsToCurrentThread()
+		{
+			fixed (cef_task_runner_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_task_runner_t*, int>)belongs_to_current_thread)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_task_runner_t* self, cef_thread_id_t threadId)*
@@ -68,8 +78,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this task runner is for the specified CEF thread.
 		/// </summary>
 		[NativeName("belongs_to_thread")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int BelongsToThread(CefThreadId threadId);
+		public unsafe int BelongsToThread(CefThreadId threadId)
+		{
+			fixed (cef_task_runner_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_task_runner_t*, CefThreadId, int>)belongs_to_thread)(self, threadId);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_task_runner_t* self, _cef_task_t* task)*
@@ -81,8 +96,13 @@ namespace CefNet.CApi
 		/// Execution will occur asynchronously.
 		/// </summary>
 		[NativeName("post_task")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int PostTask(cef_task_t* task);
+		public unsafe int PostTask(cef_task_t* task)
+		{
+			fixed (cef_task_runner_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_task_runner_t*, cef_task_t*, int>)post_task)(self, task);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_task_runner_t* self, _cef_task_t* task, int64 delay_ms)*
@@ -96,8 +116,13 @@ namespace CefNet.CApi
 		/// specified delay.
 		/// </summary>
 		[NativeName("post_delayed_task")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int PostDelayedTask(cef_task_t* task, long delay_ms);
+		public unsafe int PostDelayedTask(cef_task_t* task, long delay_ms)
+		{
+			fixed (cef_task_runner_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_task_runner_t*, cef_task_t*, long, int>)post_delayed_task)(self, task, delay_ms);
+			}
+		}
 	}
 }
 

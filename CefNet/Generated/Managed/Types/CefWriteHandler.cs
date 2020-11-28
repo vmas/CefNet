@@ -29,6 +29,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefWriteHandler : CefBaseRefCounted<cef_write_handler_t>, ICefWriteHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly WriteDelegate fnWrite = WriteImpl;
 
 		private static readonly SeekDelegate fnSeek = SeekImpl;
@@ -39,6 +40,7 @@ namespace CefNet
 
 		private static readonly MayBlockDelegate fnMayBlock = MayBlockImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefWriteHandler Create(IntPtr instance)
 		{
 			return new CefWriteHandler((cef_write_handler_t*)instance);
@@ -47,11 +49,19 @@ namespace CefNet
 		public CefWriteHandler()
 		{
 			cef_write_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->write = (void*)Marshal.GetFunctionPointerForDelegate(fnWrite);
 			self->seek = (void*)Marshal.GetFunctionPointerForDelegate(fnSeek);
 			self->tell = (void*)Marshal.GetFunctionPointerForDelegate(fnTell);
 			self->flush = (void*)Marshal.GetFunctionPointerForDelegate(fnFlush);
 			self->may_block = (void*)Marshal.GetFunctionPointerForDelegate(fnMayBlock);
+			#else
+			self->write = (delegate* unmanaged[Stdcall]<cef_write_handler_t*, void*, UIntPtr, UIntPtr, UIntPtr>)&WriteImpl;
+			self->seek = (delegate* unmanaged[Stdcall]<cef_write_handler_t*, long, int, int>)&SeekImpl;
+			self->tell = (delegate* unmanaged[Stdcall]<cef_write_handler_t*, long>)&TellImpl;
+			self->flush = (delegate* unmanaged[Stdcall]<cef_write_handler_t*, int>)&FlushImpl;
+			self->may_block = (delegate* unmanaged[Stdcall]<cef_write_handler_t*, int>)&MayBlockImpl;
+			#endif
 		}
 
 		public CefWriteHandler(cef_write_handler_t* instance)
@@ -70,10 +80,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate UIntPtr WriteDelegate(cef_write_handler_t* self, void* ptr, UIntPtr size, UIntPtr n);
 
+#endif // NET_LESS_5_0
 		// size_t (*)(_cef_write_handler_t* self, const void* ptr, size_t size, size_t n)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe UIntPtr WriteImpl(cef_write_handler_t* self, void* ptr, UIntPtr size, UIntPtr n)
 		{
 			var instance = GetInstance((IntPtr)self) as CefWriteHandler;
@@ -96,10 +109,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int SeekDelegate(cef_write_handler_t* self, long offset, int whence);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_write_handler_t* self, int64 offset, int whence)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int SeekImpl(cef_write_handler_t* self, long offset, int whence)
 		{
 			var instance = GetInstance((IntPtr)self) as CefWriteHandler;
@@ -118,10 +134,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate long TellDelegate(cef_write_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// int64 (*)(_cef_write_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe long TellImpl(cef_write_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefWriteHandler;
@@ -140,10 +159,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int FlushDelegate(cef_write_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_write_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int FlushImpl(cef_write_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefWriteHandler;
@@ -164,10 +186,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int MayBlockDelegate(cef_write_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_write_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int MayBlockImpl(cef_write_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefWriteHandler;

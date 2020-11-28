@@ -38,8 +38,13 @@ namespace CefNet.CApi
 		/// Method that will be called once the task is complete.
 		/// </summary>
 		[NativeName("on_complete")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnComplete();
+		public unsafe void OnComplete()
+		{
+			fixed (cef_completion_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_completion_callback_t*, void>)on_complete)(self);
+			}
+		}
 	}
 }
 

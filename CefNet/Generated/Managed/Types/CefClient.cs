@@ -28,6 +28,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefClient : CefBaseRefCounted<cef_client_t>, ICefClientPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly GetAudioHandlerDelegate fnGetAudioHandler = GetAudioHandlerImpl;
 
 		private static readonly GetContextMenuHandlerDelegate fnGetContextMenuHandler = GetContextMenuHandlerImpl;
@@ -58,6 +59,7 @@ namespace CefNet
 
 		private static readonly OnProcessMessageReceivedDelegate fnOnProcessMessageReceived = OnProcessMessageReceivedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefClient Create(IntPtr instance)
 		{
 			return new CefClient((cef_client_t*)instance);
@@ -66,6 +68,7 @@ namespace CefNet
 		public CefClient()
 		{
 			cef_client_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->get_audio_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetAudioHandler);
 			self->get_context_menu_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetContextMenuHandler);
 			self->get_dialog_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetDialogHandler);
@@ -81,6 +84,23 @@ namespace CefNet
 			self->get_render_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetRenderHandler);
 			self->get_request_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetRequestHandler);
 			self->on_process_message_received = (void*)Marshal.GetFunctionPointerForDelegate(fnOnProcessMessageReceived);
+			#else
+			self->get_audio_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_audio_handler_t*>)&GetAudioHandlerImpl;
+			self->get_context_menu_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_context_menu_handler_t*>)&GetContextMenuHandlerImpl;
+			self->get_dialog_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_dialog_handler_t*>)&GetDialogHandlerImpl;
+			self->get_display_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_display_handler_t*>)&GetDisplayHandlerImpl;
+			self->get_download_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_download_handler_t*>)&GetDownloadHandlerImpl;
+			self->get_drag_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_drag_handler_t*>)&GetDragHandlerImpl;
+			self->get_find_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_find_handler_t*>)&GetFindHandlerImpl;
+			self->get_focus_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_focus_handler_t*>)&GetFocusHandlerImpl;
+			self->get_jsdialog_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_jsdialog_handler_t*>)&GetJSDialogHandlerImpl;
+			self->get_keyboard_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_keyboard_handler_t*>)&GetKeyboardHandlerImpl;
+			self->get_life_span_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_life_span_handler_t*>)&GetLifeSpanHandlerImpl;
+			self->get_load_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_load_handler_t*>)&GetLoadHandlerImpl;
+			self->get_render_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_render_handler_t*>)&GetRenderHandlerImpl;
+			self->get_request_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_request_handler_t*>)&GetRequestHandlerImpl;
+			self->on_process_message_received = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_browser_t*, cef_frame_t*, CefProcessId, cef_process_message_t*, int>)&OnProcessMessageReceivedImpl;
+			#endif
 		}
 
 		public CefClient(cef_client_t* instance)
@@ -96,10 +116,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_audio_handler_t* GetAudioHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_audio_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_audio_handler_t* GetAudioHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -122,10 +145,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_context_menu_handler_t* GetContextMenuHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_context_menu_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_context_menu_handler_t* GetContextMenuHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -148,10 +174,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_dialog_handler_t* GetDialogHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_dialog_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_dialog_handler_t* GetDialogHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -173,10 +202,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_display_handler_t* GetDisplayHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_display_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_display_handler_t* GetDisplayHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -199,10 +231,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_download_handler_t* GetDownloadHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_download_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_download_handler_t* GetDownloadHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -224,10 +259,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_drag_handler_t* GetDragHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_drag_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_drag_handler_t* GetDragHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -249,10 +287,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_find_handler_t* GetFindHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_find_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_find_handler_t* GetFindHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -274,10 +315,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_focus_handler_t* GetFocusHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_focus_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_focus_handler_t* GetFocusHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -300,10 +344,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_jsdialog_handler_t* GetJSDialogHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_jsdialog_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_jsdialog_handler_t* GetJSDialogHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -325,10 +372,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_keyboard_handler_t* GetKeyboardHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_keyboard_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_keyboard_handler_t* GetKeyboardHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -350,10 +400,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_life_span_handler_t* GetLifeSpanHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_life_span_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_life_span_handler_t* GetLifeSpanHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -375,10 +428,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_load_handler_t* GetLoadHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_load_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_load_handler_t* GetLoadHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -400,10 +456,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_render_handler_t* GetRenderHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_render_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_render_handler_t* GetRenderHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -425,10 +484,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_request_handler_t* GetRequestHandlerDelegate(cef_client_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_request_handler_t* (*)(_cef_client_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_request_handler_t* GetRequestHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -455,10 +517,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnProcessMessageReceivedDelegate(cef_client_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_client_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_process_id_t source_process, _cef_process_message_t* message)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnProcessMessageReceivedImpl(cef_client_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;

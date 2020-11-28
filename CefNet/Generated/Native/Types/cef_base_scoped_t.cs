@@ -38,8 +38,13 @@ namespace CefNet.CApi
 		/// Called to delete this object. May be NULL if the object is not owned.
 		/// </summary>
 		[NativeName("del")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Del();
+		public unsafe void Del()
+		{
+			fixed (cef_base_scoped_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_base_scoped_t*, void>)del)(self);
+			}
+		}
 	}
 }
 

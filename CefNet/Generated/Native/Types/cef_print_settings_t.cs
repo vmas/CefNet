@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// if this function returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_print_settings_t* self)*
@@ -52,8 +57,13 @@ namespace CefNet.CApi
 		/// expose read-only objects.
 		/// </summary>
 		[NativeName("is_read_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsReadOnly();
+		public unsafe int IsReadOnly()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int>)is_read_only)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, int landscape)*
@@ -64,8 +74,13 @@ namespace CefNet.CApi
 		/// Set the page orientation.
 		/// </summary>
 		[NativeName("set_orientation")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetOrientation(int landscape);
+		public unsafe void SetOrientation(int landscape)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int, void>)set_orientation)(self, landscape);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_print_settings_t* self)*
@@ -76,8 +91,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the orientation is landscape.
 		/// </summary>
 		[NativeName("is_landscape")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsLandscape();
+		public unsafe int IsLandscape()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int>)is_landscape)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, const cef_size_t* physical_size_device_units, const cef_rect_t* printable_area_device_units, int landscape_needs_flip)*
@@ -89,9 +109,14 @@ namespace CefNet.CApi
 		/// provide flipped area. Set |landscape_needs_flip| to false (0) on those
 		/// platforms to avoid double flipping.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("set_printer_printable_area")]
-		public unsafe extern void SetPrinterPrintableArea([Immutable]cef_size_t* physical_size_device_units, [Immutable]cef_rect_t* printable_area_device_units, int landscape_needs_flip);
+		public unsafe void SetPrinterPrintableArea([Immutable]cef_size_t* physical_size_device_units, [Immutable]cef_rect_t* printable_area_device_units, int landscape_needs_flip)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, cef_size_t*, cef_rect_t*, int, void>)set_printer_printable_area)(self, physical_size_device_units, printable_area_device_units, landscape_needs_flip);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, const cef_string_t* name)*
@@ -102,8 +127,13 @@ namespace CefNet.CApi
 		/// Set the device name.
 		/// </summary>
 		[NativeName("set_device_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetDeviceName([Immutable]cef_string_t* name);
+		public unsafe void SetDeviceName([Immutable]cef_string_t* name)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, cef_string_t*, void>)set_device_name)(self, name);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_print_settings_t* self)*
@@ -115,8 +145,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_device_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetDeviceName();
+		public unsafe cef_string_userfree_t GetDeviceName()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, cef_string_userfree_t>)get_device_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, int dpi)*
@@ -127,8 +162,13 @@ namespace CefNet.CApi
 		/// Set the DPI (dots per inch).
 		/// </summary>
 		[NativeName("set_dpi")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetDpi(int dpi);
+		public unsafe void SetDpi(int dpi)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int, void>)set_dpi)(self, dpi);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_print_settings_t* self)*
@@ -139,8 +179,13 @@ namespace CefNet.CApi
 		/// Get the DPI (dots per inch).
 		/// </summary>
 		[NativeName("get_dpi")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetDpi();
+		public unsafe int GetDpi()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int>)get_dpi)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, size_t rangesCount, const cef_range_t* ranges)*
@@ -151,8 +196,13 @@ namespace CefNet.CApi
 		/// Set the page ranges.
 		/// </summary>
 		[NativeName("set_page_ranges")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetPageRanges(UIntPtr rangesCount, [Immutable]cef_range_t* ranges);
+		public unsafe void SetPageRanges(UIntPtr rangesCount, [Immutable]cef_range_t* ranges)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, UIntPtr, cef_range_t*, void>)set_page_ranges)(self, rangesCount, ranges);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_print_settings_t* self)*
@@ -163,8 +213,13 @@ namespace CefNet.CApi
 		/// Returns the number of page ranges that currently exist.
 		/// </summary>
 		[NativeName("get_page_ranges_count")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetPageRangesCount();
+		public unsafe UIntPtr GetPageRangesCount()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, UIntPtr>)get_page_ranges_count)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, size_t* rangesCount, cef_range_t* ranges)*
@@ -175,8 +230,13 @@ namespace CefNet.CApi
 		/// Retrieve the page ranges.
 		/// </summary>
 		[NativeName("get_page_ranges")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetPageRanges(UIntPtr* rangesCount, cef_range_t* ranges);
+		public unsafe void GetPageRanges(UIntPtr* rangesCount, cef_range_t* ranges)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, UIntPtr*, cef_range_t*, void>)get_page_ranges)(self, rangesCount, ranges);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, int selection_only)*
@@ -187,8 +247,13 @@ namespace CefNet.CApi
 		/// Set whether only the selection will be printed.
 		/// </summary>
 		[NativeName("set_selection_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetSelectionOnly(int selection_only);
+		public unsafe void SetSelectionOnly(int selection_only)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int, void>)set_selection_only)(self, selection_only);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_print_settings_t* self)*
@@ -199,8 +264,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if only the selection will be printed.
 		/// </summary>
 		[NativeName("is_selection_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSelectionOnly();
+		public unsafe int IsSelectionOnly()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int>)is_selection_only)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, int collate)*
@@ -211,8 +281,13 @@ namespace CefNet.CApi
 		/// Set whether pages will be collated.
 		/// </summary>
 		[NativeName("set_collate")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetCollate(int collate);
+		public unsafe void SetCollate(int collate)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int, void>)set_collate)(self, collate);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_print_settings_t* self)*
@@ -223,8 +298,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if pages will be collated.
 		/// </summary>
 		[NativeName("will_collate")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int WillCollate();
+		public unsafe int WillCollate()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int>)will_collate)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, cef_color_model_t model)*
@@ -235,8 +315,13 @@ namespace CefNet.CApi
 		/// Set the color model.
 		/// </summary>
 		[NativeName("set_color_model")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetColorModel(CefColorModel model);
+		public unsafe void SetColorModel(CefColorModel model)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, CefColorModel, void>)set_color_model)(self, model);
+			}
+		}
 
 		/// <summary>
 		/// cef_color_model_t (*)(_cef_print_settings_t* self)*
@@ -247,8 +332,13 @@ namespace CefNet.CApi
 		/// Get the color model.
 		/// </summary>
 		[NativeName("get_color_model")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefColorModel GetColorModel();
+		public unsafe CefColorModel GetColorModel()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, CefColorModel>)get_color_model)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, int copies)*
@@ -259,8 +349,13 @@ namespace CefNet.CApi
 		/// Set the number of copies.
 		/// </summary>
 		[NativeName("set_copies")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetCopies(int copies);
+		public unsafe void SetCopies(int copies)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int, void>)set_copies)(self, copies);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_print_settings_t* self)*
@@ -271,8 +366,13 @@ namespace CefNet.CApi
 		/// Get the number of copies.
 		/// </summary>
 		[NativeName("get_copies")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetCopies();
+		public unsafe int GetCopies()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, int>)get_copies)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_settings_t* self, cef_duplex_mode_t mode)*
@@ -283,8 +383,13 @@ namespace CefNet.CApi
 		/// Set the duplex mode.
 		/// </summary>
 		[NativeName("set_duplex_mode")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetDuplexMode(CefDuplexMode mode);
+		public unsafe void SetDuplexMode(CefDuplexMode mode)
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_settings_t*, CefDuplexMode, void>)set_duplex_mode)(self, mode);
+			}
+		}
 
 		/// <summary>
 		/// cef_duplex_mode_t (*)(_cef_print_settings_t* self)*
@@ -295,8 +400,13 @@ namespace CefNet.CApi
 		/// Get the duplex mode.
 		/// </summary>
 		[NativeName("get_duplex_mode")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefDuplexMode GetDuplexMode();
+		public unsafe CefDuplexMode GetDuplexMode()
+		{
+			fixed (cef_print_settings_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_settings_t*, CefDuplexMode>)get_duplex_mode)(self);
+			}
+		}
 	}
 }
 
