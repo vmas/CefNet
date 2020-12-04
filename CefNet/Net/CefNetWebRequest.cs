@@ -220,7 +220,11 @@ namespace CefNet.Net
 
 		private bool IsCompleted { get; set; }
 
-		private void GetResult() { }
+		private void GetResult()
+		{
+			if (_exception is not null)
+				throw _exception;
+		}
 
 		void INotifyCompletion.OnCompleted(Action continuation)
 		{
@@ -230,7 +234,9 @@ namespace CefNet.Net
 			RequestOperation op = Volatile.Read(ref _activeOperation);
 			if (op is null)
 			{
-				throw new InvalidOperationException();
+				SetException(new InvalidOperationException());
+				IsCompleted = true;
+				continuation();
 			}
 			else
 			{
@@ -415,8 +421,12 @@ namespace CefNet.Net
 		public virtual Stream GetResponseStream()
 		{
 			if (!IsCompleted)
-				GetWaitTask().Wait(_activeOperation.cancellationToken);
-
+			{
+				RequestOperation op = Volatile.Read(ref _activeOperation);
+				if (op is null)
+					return null;
+				GetWaitTask().Wait(op.cancellationToken);
+			}
 			return _stream;
 		}
 
