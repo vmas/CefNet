@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// the total number of entries.
 		/// </summary>
 		[NativeName("visit")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Visit(cef_navigation_entry_t* entry, int current, int index, int total);
+		public unsafe int Visit(cef_navigation_entry_t* entry, int current, int index, int total)
+		{
+			fixed (cef_navigation_entry_visitor_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_visitor_t*, cef_navigation_entry_t*, int, int, int, int>)visit)(self, entry, current, index, total);
+			}
+		}
 	}
 }
 

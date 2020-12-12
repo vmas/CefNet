@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_id")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetId();
+		public unsafe cef_string_userfree_t GetId()
+		{
+			fixed (cef_media_sink_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_sink_t*, cef_string_userfree_t>)get_id)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_media_sink_t* self)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetName();
+		public unsafe cef_string_userfree_t GetName()
+		{
+			fixed (cef_media_sink_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_sink_t*, cef_string_userfree_t>)get_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_media_sink_t* self)*
@@ -67,8 +77,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_description")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetDescription();
+		public unsafe cef_string_userfree_t GetDescription()
+		{
+			fixed (cef_media_sink_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_sink_t*, cef_string_userfree_t>)get_description)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_media_sink_icon_type_t (*)(_cef_media_sink_t* self)*
@@ -79,8 +94,13 @@ namespace CefNet.CApi
 		/// Returns the icon type for this sink.
 		/// </summary>
 		[NativeName("get_icon_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefMediaSinkIconType GetIconType();
+		public unsafe CefMediaSinkIconType GetIconType()
+		{
+			fixed (cef_media_sink_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_sink_t*, CefMediaSinkIconType>)get_icon_type)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_media_sink_t* self, _cef_media_sink_device_info_callback_t* callback)*
@@ -91,8 +111,13 @@ namespace CefNet.CApi
 		/// Asynchronously retrieves device info.
 		/// </summary>
 		[NativeName("get_device_info")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetDeviceInfo(cef_media_sink_device_info_callback_t* callback);
+		public unsafe void GetDeviceInfo(cef_media_sink_device_info_callback_t* callback)
+		{
+			fixed (cef_media_sink_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_sink_t*, cef_media_sink_device_info_callback_t*, void>)get_device_info)(self, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_media_sink_t* self)*
@@ -103,8 +128,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this sink accepts content via Cast.
 		/// </summary>
 		[NativeName("is_cast_sink")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsCastSink();
+		public unsafe int IsCastSink()
+		{
+			fixed (cef_media_sink_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_sink_t*, int>)is_cast_sink)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_media_sink_t* self)*
@@ -115,8 +145,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this sink accepts content via DIAL.
 		/// </summary>
 		[NativeName("is_dial_sink")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsDialSink();
+		public unsafe int IsDialSink()
+		{
+			fixed (cef_media_sink_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_sink_t*, int>)is_dial_sink)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_media_sink_t* self, _cef_media_source_t* source)*
@@ -127,8 +162,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this sink is compatible with |source|.
 		/// </summary>
 		[NativeName("is_compatible_with")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsCompatibleWith(cef_media_source_t* source);
+		public unsafe int IsCompatibleWith(cef_media_source_t* source)
+		{
+			fixed (cef_media_sink_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_media_sink_t*, cef_media_source_t*, int>)is_compatible_with)(self, source);
+			}
+		}
 	}
 }
 

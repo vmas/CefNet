@@ -36,8 +36,8 @@ namespace WinFormsCoreApp
 
 			if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
 			{
-				commandLine.AppendSwitch("--no-zygote");
-				commandLine.AppendSwitch("--no-sandbox");
+				commandLine.AppendSwitch("no-zygote");
+				commandLine.AppendSwitch("no-sandbox");
 			}
 		}
 

@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// cef_pack_strings.h for a listing of valid string ID values.
 		/// </summary>
 		[NativeName("get_localized_string")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetLocalizedString(int string_id, cef_string_t* @string);
+		public unsafe int GetLocalizedString(int string_id, cef_string_t* @string)
+		{
+			fixed (cef_resource_bundle_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_bundle_handler_t*, int, cef_string_t*, int>)get_localized_string)(self, string_id, @string);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_resource_bundle_handler_t* self, int resource_id, void** data, size_t* data_size)*
@@ -60,8 +65,13 @@ namespace CefNet.CApi
 		/// resource ID values.
 		/// </summary>
 		[NativeName("get_data_resource")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetDataResource(int resource_id, void** data, UIntPtr* data_size);
+		public unsafe int GetDataResource(int resource_id, void** data, UIntPtr* data_size)
+		{
+			fixed (cef_resource_bundle_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_bundle_handler_t*, int, void**, UIntPtr*, int>)get_data_resource)(self, resource_id, data, data_size);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_resource_bundle_handler_t* self, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size)*
@@ -76,9 +86,14 @@ namespace CefNet.CApi
 		/// not be copied and must remain resident in memory. Include
 		/// cef_pack_resources.h for a listing of valid resource ID values.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_data_resource_for_scale")]
-		public unsafe extern int GetDataResourceForScale(int resource_id, CefScaleFactor scale_factor, void** data, UIntPtr* data_size);
+		public unsafe int GetDataResourceForScale(int resource_id, CefScaleFactor scale_factor, void** data, UIntPtr* data_size)
+		{
+			fixed (cef_resource_bundle_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_bundle_handler_t*, int, CefScaleFactor, void**, UIntPtr*, int>)get_data_resource_for_scale)(self, resource_id, scale_factor, data, data_size);
+			}
+		}
 	}
 }
 

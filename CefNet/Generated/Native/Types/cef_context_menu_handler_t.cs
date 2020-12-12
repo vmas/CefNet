@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// |model| outside of this callback.
 		/// </summary>
 		[NativeName("on_before_context_menu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnBeforeContextMenu(cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model);
+		public unsafe void OnBeforeContextMenu(cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model)
+		{
+			fixed (cef_context_menu_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_context_menu_handler_t*, cef_browser_t*, cef_frame_t*, cef_context_menu_params_t*, cef_menu_model_t*, void>)on_before_context_menu)(self, browser, frame, @params, model);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_context_menu_params_t* params, _cef_menu_model_t* model, _cef_run_context_menu_callback_t* callback)*
@@ -60,8 +65,13 @@ namespace CefNet.CApi
 		/// references to |params| or |model| outside of this callback.
 		/// </summary>
 		[NativeName("run_context_menu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int RunContextMenu(cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback);
+		public unsafe int RunContextMenu(cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback)
+		{
+			fixed (cef_context_menu_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_handler_t*, cef_browser_t*, cef_frame_t*, cef_context_menu_params_t*, cef_menu_model_t*, cef_run_context_menu_callback_t*, int>)run_context_menu)(self, browser, frame, @params, model, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_context_menu_params_t* params, int command_id, cef_event_flags_t event_flags)*
@@ -78,8 +88,13 @@ namespace CefNet.CApi
 		/// this callback.
 		/// </summary>
 		[NativeName("on_context_menu_command")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnContextMenuCommand(cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, int command_id, CefEventFlags event_flags);
+		public unsafe int OnContextMenuCommand(cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, int command_id, CefEventFlags event_flags)
+		{
+			fixed (cef_context_menu_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_handler_t*, cef_browser_t*, cef_frame_t*, cef_context_menu_params_t*, int, CefEventFlags, int>)on_context_menu_command)(self, browser, frame, @params, command_id, event_flags);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame)*
@@ -91,8 +106,13 @@ namespace CefNet.CApi
 		/// was NULL or a command was selected.
 		/// </summary>
 		[NativeName("on_context_menu_dismissed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnContextMenuDismissed(cef_browser_t* browser, cef_frame_t* frame);
+		public unsafe void OnContextMenuDismissed(cef_browser_t* browser, cef_frame_t* frame)
+		{
+			fixed (cef_context_menu_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_context_menu_handler_t*, cef_browser_t*, cef_frame_t*, void>)on_context_menu_dismissed)(self, browser, frame);
+			}
+		}
 	}
 }
 

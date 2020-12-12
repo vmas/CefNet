@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// |event_flags|.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue(int command_id, CefEventFlags event_flags);
+		public unsafe void Continue(int command_id, CefEventFlags event_flags)
+		{
+			fixed (cef_run_context_menu_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_run_context_menu_callback_t*, int, CefEventFlags, void>)cont)(self, command_id, event_flags);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_run_context_menu_callback_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Cancel context menu display.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_run_context_menu_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_run_context_menu_callback_t*, void>)cancel)(self);
+			}
+		}
 	}
 }
 

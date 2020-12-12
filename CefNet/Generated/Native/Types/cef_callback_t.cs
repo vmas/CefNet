@@ -38,8 +38,13 @@ namespace CefNet.CApi
 		/// Continue processing.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue();
+		public unsafe void Continue()
+		{
+			fixed (cef_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_callback_t*, void>)cont)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_callback_t* self)*
@@ -50,8 +55,13 @@ namespace CefNet.CApi
 		/// Cancel processing.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_callback_t*, void>)cancel)(self);
+			}
+		}
 	}
 }
 

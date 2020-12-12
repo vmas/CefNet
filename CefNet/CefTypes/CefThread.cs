@@ -17,7 +17,7 @@ namespace CefNet
 		/// </param>
 		/// <param name="stoppable">
 		/// If |stoppable| is True the thread will stopped and joined on
-		/// destruction or when stop() is called; otherwise, the the thread cannot be
+		/// destruction or when stop() is called; otherwise, the thread cannot be
 		/// stopped and will be leaked on shutdown.
 		/// </param>
 		/// <param name="messageLoopType">

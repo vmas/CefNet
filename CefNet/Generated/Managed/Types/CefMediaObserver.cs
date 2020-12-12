@@ -30,6 +30,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefMediaObserver : CefBaseRefCounted<cef_media_observer_t>, ICefMediaObserverPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnSinksDelegate fnOnSinks = OnSinksImpl;
 
 		private static readonly OnRoutesDelegate fnOnRoutes = OnRoutesImpl;
@@ -38,6 +39,7 @@ namespace CefNet
 
 		private static readonly OnRouteMessageReceivedDelegate fnOnRouteMessageReceived = OnRouteMessageReceivedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefMediaObserver Create(IntPtr instance)
 		{
 			return new CefMediaObserver((cef_media_observer_t*)instance);
@@ -46,10 +48,17 @@ namespace CefNet
 		public CefMediaObserver()
 		{
 			cef_media_observer_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_sinks = (void*)Marshal.GetFunctionPointerForDelegate(fnOnSinks);
 			self->on_routes = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRoutes);
 			self->on_route_state_changed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRouteStateChanged);
 			self->on_route_message_received = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRouteMessageReceived);
+			#else
+			self->on_sinks = (delegate* unmanaged[Stdcall]<cef_media_observer_t*, UIntPtr, cef_media_sink_t**, void>)&OnSinksImpl;
+			self->on_routes = (delegate* unmanaged[Stdcall]<cef_media_observer_t*, UIntPtr, cef_media_route_t**, void>)&OnRoutesImpl;
+			self->on_route_state_changed = (delegate* unmanaged[Stdcall]<cef_media_observer_t*, cef_media_route_t*, CefMediaRouteConnectionState, void>)&OnRouteStateChangedImpl;
+			self->on_route_message_received = (delegate* unmanaged[Stdcall]<cef_media_observer_t*, cef_media_route_t*, void*, UIntPtr, void>)&OnRouteMessageReceivedImpl;
+			#endif
 		}
 
 		public CefMediaObserver(cef_media_observer_t* instance)
@@ -68,10 +77,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnSinksDelegate(cef_media_observer_t* self, UIntPtr sinksCount, cef_media_sink_t** sinks);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_media_observer_t* self, size_t sinksCount, const _cef_media_sink_t** sinks)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnSinksImpl(cef_media_observer_t* self, UIntPtr sinksCount, cef_media_sink_t** sinks)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMediaObserver;
@@ -100,10 +112,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnRoutesDelegate(cef_media_observer_t* self, UIntPtr routesCount, cef_media_route_t** routes);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_media_observer_t* self, size_t routesCount, const _cef_media_route_t** routes)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnRoutesImpl(cef_media_observer_t* self, UIntPtr routesCount, cef_media_route_t** routes)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMediaObserver;
@@ -131,10 +146,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnRouteStateChangedDelegate(cef_media_observer_t* self, cef_media_route_t* route, CefMediaRouteConnectionState state);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_media_observer_t* self, _cef_media_route_t* route, cef_media_route_connection_state_t state)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnRouteStateChangedImpl(cef_media_observer_t* self, cef_media_route_t* route, CefMediaRouteConnectionState state)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMediaObserver;
@@ -157,10 +175,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnRouteMessageReceivedDelegate(cef_media_observer_t* self, cef_media_route_t* route, void* message, UIntPtr message_size);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_media_observer_t* self, _cef_media_route_t* route, const void* message, size_t message_size)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnRouteMessageReceivedImpl(cef_media_observer_t* self, cef_media_route_t* route, void* message, UIntPtr message_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMediaObserver;

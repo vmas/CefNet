@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// of this function.
 		/// </summary>
 		[NativeName("visit")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Visit(cef_domdocument_t* document);
+		public unsafe void Visit(cef_domdocument_t* document)
+		{
+			fixed (cef_domvisitor_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_domvisitor_t*, cef_domdocument_t*, void>)visit)(self, document);
+			}
+		}
 	}
 }
 

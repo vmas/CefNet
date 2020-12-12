@@ -31,10 +31,12 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefV8Accessor : CefBaseRefCounted<cef_v8accessor_t>, ICefV8AccessorPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly GetDelegate fnGet = GetImpl;
 
 		private static readonly SetDelegate fnSet = SetImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefV8Accessor Create(IntPtr instance)
 		{
 			return new CefV8Accessor((cef_v8accessor_t*)instance);
@@ -43,8 +45,13 @@ namespace CefNet
 		public CefV8Accessor()
 		{
 			cef_v8accessor_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->get = (void*)Marshal.GetFunctionPointerForDelegate(fnGet);
 			self->set = (void*)Marshal.GetFunctionPointerForDelegate(fnSet);
+			#else
+			self->get = (delegate* unmanaged[Stdcall]<cef_v8accessor_t*, cef_string_t*, cef_v8value_t*, cef_v8value_t**, cef_string_t*, int>)&GetImpl;
+			self->set = (delegate* unmanaged[Stdcall]<cef_v8accessor_t*, cef_string_t*, cef_v8value_t*, cef_v8value_t*, cef_string_t*, int>)&SetImpl;
+			#endif
 		}
 
 		public CefV8Accessor(cef_v8accessor_t* instance)
@@ -67,10 +74,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetDelegate(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_v8accessor_t* self, const cef_string_t* name, _cef_v8value_t* object, _cef_v8value_t** retval, cef_string_t* exception)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetImpl(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8Accessor;
@@ -104,10 +114,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int SetDelegate(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_v8accessor_t* self, const cef_string_t* name, _cef_v8value_t* object, _cef_v8value_t* value, cef_string_t* exception)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int SetImpl(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8Accessor;

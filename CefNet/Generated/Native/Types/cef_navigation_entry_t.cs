@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// if this function returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_navigation_entry_t* self)*
@@ -53,8 +58,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetUrl();
+		public unsafe cef_string_userfree_t GetUrl()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, cef_string_userfree_t>)get_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_navigation_entry_t* self)*
@@ -66,8 +76,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_display_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetDisplayUrl();
+		public unsafe cef_string_userfree_t GetDisplayUrl()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, cef_string_userfree_t>)get_display_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_navigation_entry_t* self)*
@@ -79,8 +94,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_original_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetOriginalUrl();
+		public unsafe cef_string_userfree_t GetOriginalUrl()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, cef_string_userfree_t>)get_original_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_navigation_entry_t* self)*
@@ -92,8 +112,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_title")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetTitle();
+		public unsafe cef_string_userfree_t GetTitle()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, cef_string_userfree_t>)get_title)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_transition_type_t (*)(_cef_navigation_entry_t* self)*
@@ -105,8 +130,13 @@ namespace CefNet.CApi
 		/// this page from the previous page.
 		/// </summary>
 		[NativeName("get_transition_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefTransitionType GetTransitionType();
+		public unsafe CefTransitionType GetTransitionType()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, CefTransitionType>)get_transition_type)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_navigation_entry_t* self)*
@@ -117,8 +147,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this navigation includes post data.
 		/// </summary>
 		[NativeName("has_post_data")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasPostData();
+		public unsafe int HasPostData()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, int>)has_post_data)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_time_t (*)(_cef_navigation_entry_t* self)*
@@ -131,8 +166,13 @@ namespace CefNet.CApi
 		/// 0 if the navigation has not yet completed.
 		/// </summary>
 		[NativeName("get_completion_time")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_time_t GetCompletionTime();
+		public unsafe cef_time_t GetCompletionTime()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, cef_time_t>)get_completion_time)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_navigation_entry_t* self)*
@@ -145,8 +185,13 @@ namespace CefNet.CApi
 		/// navigation has not yet completed.
 		/// </summary>
 		[NativeName("get_http_status_code")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetHttpStatusCode();
+		public unsafe int GetHttpStatusCode()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, int>)get_http_status_code)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_sslstatus_t* (*)(_cef_navigation_entry_t* self)*
@@ -157,8 +202,13 @@ namespace CefNet.CApi
 		/// Returns the SSL information for this navigation entry.
 		/// </summary>
 		[NativeName("get_sslstatus")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_sslstatus_t* GetSslstatus();
+		public unsafe cef_sslstatus_t* GetSslstatus()
+		{
+			fixed (cef_navigation_entry_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_navigation_entry_t*, cef_sslstatus_t*>)get_sslstatus)(self);
+			}
+		}
 	}
 }
 

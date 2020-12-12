@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// if an error occurs this function will return false (0).
 		/// </summary>
 		[NativeName("add_custom_scheme")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int AddCustomScheme([Immutable]cef_string_t* scheme_name, int options);
+		public unsafe int AddCustomScheme([Immutable]cef_string_t* scheme_name, int options)
+		{
+			fixed (cef_scheme_registrar_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_scheme_registrar_t*, cef_string_t*, int, int>)add_custom_scheme)(self, scheme_name, options);
+			}
+		}
 	}
 }
 

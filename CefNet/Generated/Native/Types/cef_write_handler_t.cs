@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Write raw binary data.
 		/// </summary>
 		[NativeName("write")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr Write([Immutable]void* ptr, UIntPtr size, UIntPtr n);
+		public unsafe UIntPtr Write([Immutable]void* ptr, UIntPtr size, UIntPtr n)
+		{
+			fixed (cef_write_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_write_handler_t*, void*, UIntPtr, UIntPtr, UIntPtr>)write)(self, ptr, size, n);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_write_handler_t* self, int64 offset, int whence)*
@@ -52,8 +57,13 @@ namespace CefNet.CApi
 		/// SEEK_END or SEEK_SET. Return zero on success and non-zero on failure.
 		/// </summary>
 		[NativeName("seek")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Seek(long offset, int whence);
+		public unsafe int Seek(long offset, int whence)
+		{
+			fixed (cef_write_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_write_handler_t*, long, int, int>)seek)(self, offset, whence);
+			}
+		}
 
 		/// <summary>
 		/// int64 (*)(_cef_write_handler_t* self)*
@@ -64,8 +74,13 @@ namespace CefNet.CApi
 		/// Return the current offset position.
 		/// </summary>
 		[NativeName("tell")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern long Tell();
+		public unsafe long Tell()
+		{
+			fixed (cef_write_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_write_handler_t*, long>)tell)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_write_handler_t* self)*
@@ -76,8 +91,13 @@ namespace CefNet.CApi
 		/// Flush the stream.
 		/// </summary>
 		[NativeName("flush")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Flush();
+		public unsafe int Flush()
+		{
+			fixed (cef_write_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_write_handler_t*, int>)flush)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_write_handler_t* self)*
@@ -90,8 +110,13 @@ namespace CefNet.CApi
 		/// the handler from.
 		/// </summary>
 		[NativeName("may_block")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MayBlock();
+		public unsafe int MayBlock()
+		{
+			fixed (cef_write_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_write_handler_t*, int>)may_block)(self);
+			}
+		}
 	}
 }
 

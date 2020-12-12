@@ -604,14 +604,6 @@ namespace CefNet
 			AliveBrowserHost.CloseDevTools();
 		}
 
-		[Browsable(false)]
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public bool MouseCursorChangeDisabled
-		{
-			get { return AliveBrowserHost.MouseCursorChangeDisabled; }
-			set { AliveBrowserHost.MouseCursorChangeDisabled = value; }
-		}
-
 		/// <summary>
 		/// If a misspelled word is currently selected in an editable node calling this
 		/// function will replace it with the specified <paramref name="word"/>.

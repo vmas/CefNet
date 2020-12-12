@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// value is treated the same as calling cancel().
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue(int selected_accept_filter, cef_string_list_t file_paths);
+		public unsafe void Continue(int selected_accept_filter, cef_string_list_t file_paths)
+		{
+			fixed (cef_file_dialog_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_file_dialog_callback_t*, int, cef_string_list_t, void>)cont)(self, selected_accept_filter, file_paths);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_file_dialog_callback_t* self)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// Cancel the file selection.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_file_dialog_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_file_dialog_callback_t*, void>)cancel)(self);
+			}
+		}
 	}
 }
 

@@ -20,7 +20,7 @@ namespace CefNet.CApi
 {
 	public static partial class CefNativeApi
 	{
-		public static readonly string ApiHash = "09d3d4f08869644fe3baa7a751de537f3446525b";
+		public static readonly string ApiHash = "7f349b7262bfe13bda037370004f56a6081e543b";
 
 		/// <summary>
 		/// Add an entry to the cross-origin access whitelist.
@@ -749,15 +749,14 @@ namespace CefNet.CApi
 		/// <summary>
 		/// Parses the specified |json_string| and returns a dictionary or list
 		/// representation. If JSON parsing fails this function returns NULL and
-		/// populates |error_code_out| and |error_msg_out| with an error code and a
-		/// formatted error message respectively.
+		/// populates |error_msg_out| with a formatted error message.
 		/// </summary>
 		/// <remarks>
 		/// Defined in include/capi/cef_parser_capi.h as
-		/// _cef_value_t* cef_parse_jsonand_return_error(const cef_string_t* json_string, cef_json_parser_options_t options, cef_json_parser_error_t* error_code_out, cef_string_t* error_msg_out)
+		/// _cef_value_t* cef_parse_jsonand_return_error(const cef_string_t* json_string, cef_json_parser_options_t options, cef_string_t* error_msg_out)
 		/// </remarks>
 		[DllImport("libcef", CallingConvention = CallingConvention.Cdecl)]
-		public static unsafe extern cef_value_t* cef_parse_jsonand_return_error(cef_string_t* json_string, CefJsonParserOptions options, CefJsonParserError* error_code_out, cef_string_t* error_msg_out);
+		public static unsafe extern cef_value_t* cef_parse_jsonand_return_error(cef_string_t* json_string, CefJsonParserOptions options, cef_string_t* error_msg_out);
 
 		/// <summary>
 		/// Parse the specified |url| into its component parts. Returns false (0) if the
@@ -1649,8 +1648,8 @@ namespace CefNet.CApi
 		/// identify the thread. |priority| is the thread execution priority.
 		/// |message_loop_type| indicates the set of asynchronous events that the thread
 		/// can process. If |stoppable| is true (1) the thread will stopped and joined on
-		/// destruction or when stop() is called; otherwise, the the thread cannot be
-		/// stopped and will be leaked on shutdown. On Windows the |com_init_mode| value
+		/// destruction or when stop() is called; otherwise, the thread cannot be stopped
+		/// and will be leaked on shutdown. On Windows the |com_init_mode| value
 		/// specifies how COM will be initialized for the thread. If |com_init_mode| is
 		/// set to COM_INIT_MODE_STA then |message_loop_type| must be set to ML_TYPE_UI.
 		/// </summary>

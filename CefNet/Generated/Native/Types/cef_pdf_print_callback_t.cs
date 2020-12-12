@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// successfully or false (0) otherwise.
 		/// </summary>
 		[NativeName("on_pdf_print_finished")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnPdfPrintFinished([Immutable]cef_string_t* path, int ok);
+		public unsafe void OnPdfPrintFinished([Immutable]cef_string_t* path, int ok)
+		{
+			fixed (cef_pdf_print_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_pdf_print_callback_t*, cef_string_t*, int, void>)on_pdf_print_finished)(self, path, ok);
+			}
+		}
 	}
 }
 

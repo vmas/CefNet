@@ -17,16 +17,9 @@ namespace CefNet
 	/// Base class for all wrapper classes for scoped CEF structs.
 	/// </summary>
 	/// <typeparam name="T">A scoped CEF struct.</typeparam>
-	public abstract class CefBaseScoped<T> : CefBaseScoped
+	public abstract class CefBaseScoped<T> : Internal.CefBaseScopedImpl
 		where T : unmanaged
 	{
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-		private unsafe delegate void CefActionDelegate(cef_base_scoped_t* self);
-
-
-		private static readonly unsafe CefActionDelegate fnDel = DelImpl;
-		private static readonly Dictionary<IntPtr, CefBaseScoped> Scope = new Dictionary<IntPtr, CefBaseScoped>();
-
 		/// <summary>
 		/// Initializes a new instance of <see cref="CefBaseScoped{T}"/>.
 		/// </summary>
@@ -103,13 +96,6 @@ namespace CefNet
 			return null;
 		}
 
-		private unsafe static cef_base_scoped_t* Allocate(int size)
-		{
-			cef_base_scoped_t* instance = (cef_base_scoped_t*)CefStructure.Allocate(size);
-			instance->del = (void*)Marshal.GetFunctionPointerForDelegate(fnDel);
-			return instance;
-		}
-
 #pragma warning disable CS1591
 		protected unsafe override void Dispose(bool disposing)
 		{
@@ -127,16 +113,55 @@ namespace CefNet
 		}
 #pragma warning restore CS1591
 
+	}
+
+}
+
+namespace CefNet.Internal
+{
+	public unsafe abstract class CefBaseScopedImpl : CefBaseScoped
+	{
+#if NET_LESS_5_0
+		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		private unsafe delegate void CefActionDelegate(cef_base_scoped_t* self);
+
+		private static readonly unsafe CefActionDelegate fnDel = DelImpl;
+#endif
+		private protected static readonly Dictionary<IntPtr, CefBaseScoped> Scope = new Dictionary<IntPtr, CefBaseScoped>();
+
+		internal unsafe CefBaseScopedImpl(cef_base_scoped_t* instance)
+			: base(instance)
+		{
+
+		}
+
+		private protected unsafe static cef_base_scoped_t* Allocate(int size)
+		{
+			cef_base_scoped_t* instance = (cef_base_scoped_t*)CefStructure.Allocate(size);
+#if NET_LESS_5_0
+			instance->del = (void*)Marshal.GetFunctionPointerForDelegate(fnDel);
+#else
+			instance->del = (delegate* unmanaged[Stdcall]<cef_base_scoped_t*, void>)&DelImpl;
+#endif
+			return instance;
+		}
+
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private unsafe static void DelImpl(cef_base_scoped_t* self)
 		{
 			CefBaseScoped instance;
-			lock(Scope)
+			lock (Scope)
 			{
 				Scope.TryGetValue((IntPtr)self, out instance);
 			}
 			((IDisposable)instance)?.Dispose();
 		}
+
 	}
+}
+
+namespace CefNet
+{ 
 
 	/// <summary>
 	/// Base class for all wrapper classes for scoped CEF structs.

@@ -44,8 +44,13 @@ namespace CefNet.CApi
 		/// this is the last find notification.
 		/// </summary>
 		[NativeName("on_find_result")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnFindResult(cef_browser_t* browser, int identifier, int count, [Immutable]cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate);
+		public unsafe void OnFindResult(cef_browser_t* browser, int identifier, int count, [Immutable]cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate)
+		{
+			fixed (cef_find_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_find_handler_t*, cef_browser_t*, int, int, cef_rect_t*, int, int, void>)on_find_result)(self, browser, identifier, count, selectionRect, activeMatchOrdinal, finalUpdate);
+			}
+		}
 	}
 }
 

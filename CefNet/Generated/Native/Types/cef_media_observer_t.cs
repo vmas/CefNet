@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// cef_media_router_t::NotifyCurrentSinks was called.
 		/// </summary>
 		[NativeName("on_sinks")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnSinks(UIntPtr sinksCount, [Immutable]cef_media_sink_t** sinks);
+		public unsafe void OnSinks(UIntPtr sinksCount, [Immutable]cef_media_sink_t** sinks)
+		{
+			fixed (cef_media_observer_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_observer_t*, UIntPtr, cef_media_sink_t**, void>)on_sinks)(self, sinksCount, sinks);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_media_observer_t* self, size_t routesCount, const _cef_media_route_t** routes)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// cef_media_router_t::NotifyCurrentRoutes was called.
 		/// </summary>
 		[NativeName("on_routes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnRoutes(UIntPtr routesCount, [Immutable]cef_media_route_t** routes);
+		public unsafe void OnRoutes(UIntPtr routesCount, [Immutable]cef_media_route_t** routes)
+		{
+			fixed (cef_media_observer_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_observer_t*, UIntPtr, cef_media_route_t**, void>)on_routes)(self, routesCount, routes);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_media_observer_t* self, _cef_media_route_t* route, cef_media_route_connection_state_t state)*
@@ -66,8 +76,13 @@ namespace CefNet.CApi
 		/// The connection state of |route| has changed.
 		/// </summary>
 		[NativeName("on_route_state_changed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnRouteStateChanged(cef_media_route_t* route, CefMediaRouteConnectionState state);
+		public unsafe void OnRouteStateChanged(cef_media_route_t* route, CefMediaRouteConnectionState state)
+		{
+			fixed (cef_media_observer_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_observer_t*, cef_media_route_t*, CefMediaRouteConnectionState, void>)on_route_state_changed)(self, route, state);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_media_observer_t* self, _cef_media_route_t* route, const void* message, size_t message_size)*
@@ -79,8 +94,13 @@ namespace CefNet.CApi
 		/// of this callback and should be copied if necessary.
 		/// </summary>
 		[NativeName("on_route_message_received")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnRouteMessageReceived(cef_media_route_t* route, [Immutable]void* message, UIntPtr message_size);
+		public unsafe void OnRouteMessageReceived(cef_media_route_t* route, [Immutable]void* message, UIntPtr message_size)
+		{
+			fixed (cef_media_observer_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_media_observer_t*, cef_media_route_t*, void*, UIntPtr, void>)on_route_message_received)(self, route, message, message_size);
+			}
+		}
 	}
 }
 

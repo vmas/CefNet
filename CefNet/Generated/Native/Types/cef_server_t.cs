@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// Returns the task runner for the dedicated server thread.
 		/// </summary>
 		[NativeName("get_task_runner")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_task_runner_t* GetTaskRunner();
+		public unsafe cef_task_runner_t* GetTaskRunner()
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_server_t*, cef_task_runner_t*>)get_task_runner)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_t* self)*
@@ -56,8 +61,13 @@ namespace CefNet.CApi
 		/// server lifespan.
 		/// </summary>
 		[NativeName("shutdown")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Shutdown();
+		public unsafe void Shutdown()
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_t*, void>)shutdown)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_server_t* self)*
@@ -71,8 +81,13 @@ namespace CefNet.CApi
 		/// dedicated server thread.
 		/// </summary>
 		[NativeName("is_running")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsRunning();
+		public unsafe int IsRunning()
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_server_t*, int>)is_running)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_server_t* self)*
@@ -84,8 +99,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_address")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetAddress();
+		public unsafe cef_string_userfree_t GetAddress()
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_server_t*, cef_string_userfree_t>)get_address)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_server_t* self)*
@@ -97,8 +117,13 @@ namespace CefNet.CApi
 		/// must be called on the dedicated server thread.
 		/// </summary>
 		[NativeName("has_connection")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasConnection();
+		public unsafe int HasConnection()
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_server_t*, int>)has_connection)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_server_t* self, int connection_id)*
@@ -110,8 +135,13 @@ namespace CefNet.CApi
 		/// function must be called on the dedicated server thread.
 		/// </summary>
 		[NativeName("is_valid_connection")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValidConnection(int connection_id);
+		public unsafe int IsValidConnection(int connection_id)
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_server_t*, int, int>)is_valid_connection)(self, connection_id);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_t* self, int connection_id, const cef_string_t* content_type, const void* data, size_t data_size)*
@@ -126,8 +156,13 @@ namespace CefNet.CApi
 		/// will be closed automatically after the response is sent.
 		/// </summary>
 		[NativeName("send_http200response")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendHttp200response(int connection_id, [Immutable]cef_string_t* content_type, [Immutable]void* data, UIntPtr data_size);
+		public unsafe void SendHttp200response(int connection_id, [Immutable]cef_string_t* content_type, [Immutable]void* data, UIntPtr data_size)
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_t*, int, cef_string_t*, void*, UIntPtr, void>)send_http200response)(self, connection_id, content_type, data, data_size);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_t* self, int connection_id)*
@@ -140,8 +175,13 @@ namespace CefNet.CApi
 		/// response is sent.
 		/// </summary>
 		[NativeName("send_http404response")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendHttp404response(int connection_id);
+		public unsafe void SendHttp404response(int connection_id)
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_t*, int, void>)send_http404response)(self, connection_id);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_t* self, int connection_id, const cef_string_t* error_message)*
@@ -155,8 +195,13 @@ namespace CefNet.CApi
 		/// sent.
 		/// </summary>
 		[NativeName("send_http500response")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendHttp500response(int connection_id, [Immutable]cef_string_t* error_message);
+		public unsafe void SendHttp500response(int connection_id, [Immutable]cef_string_t* error_message)
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_t*, int, cef_string_t*, void>)send_http500response)(self, connection_id, error_message);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_t* self, int connection_id, int response_code, const cef_string_t* content_type, int64 content_length, cef_string_multimap_t extra_headers)*
@@ -180,8 +225,13 @@ namespace CefNet.CApi
 		/// CloseConnection after all content has been sent.
 		/// </summary>
 		[NativeName("send_http_response")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendHttpResponse(int connection_id, int response_code, [Immutable]cef_string_t* content_type, long content_length, cef_string_multimap_t extra_headers);
+		public unsafe void SendHttpResponse(int connection_id, int response_code, [Immutable]cef_string_t* content_type, long content_length, cef_string_multimap_t extra_headers)
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_t*, int, int, cef_string_t*, long, cef_string_multimap_t, void>)send_http_response)(self, connection_id, response_code, content_type, content_length, extra_headers);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_t* self, int connection_id, const void* data, size_t data_size)*
@@ -197,8 +247,13 @@ namespace CefNet.CApi
 		/// documentation for intended usage.
 		/// </summary>
 		[NativeName("send_raw_data")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendRawData(int connection_id, [Immutable]void* data, UIntPtr data_size);
+		public unsafe void SendRawData(int connection_id, [Immutable]void* data, UIntPtr data_size)
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_t*, int, void*, UIntPtr, void>)send_raw_data)(self, connection_id, data, data_size);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_t* self, int connection_id)*
@@ -210,8 +265,13 @@ namespace CefNet.CApi
 		/// documentation for intended usage.
 		/// </summary>
 		[NativeName("close_connection")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void CloseConnection(int connection_id);
+		public unsafe void CloseConnection(int connection_id)
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_t*, int, void>)close_connection)(self, connection_id);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_server_t* self, int connection_id, const void* data, size_t data_size)*
@@ -225,8 +285,13 @@ namespace CefNet.CApi
 		/// cef_server_handler_t::OnWebSocketRequest documentation for intended usage.
 		/// </summary>
 		[NativeName("send_web_socket_message")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendWebSocketMessage(int connection_id, [Immutable]void* data, UIntPtr data_size);
+		public unsafe void SendWebSocketMessage(int connection_id, [Immutable]void* data, UIntPtr data_size)
+		{
+			fixed (cef_server_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_server_t*, int, void*, UIntPtr, void>)send_web_socket_message)(self, connection_id, data, data_size);
+			}
+		}
 	}
 }
 

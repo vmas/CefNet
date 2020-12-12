@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefMediaSinkDeviceInfoCallback : CefBaseRefCounted<cef_media_sink_device_info_callback_t>, ICefMediaSinkDeviceInfoCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnMediaSinkDeviceInfoDelegate fnOnMediaSinkDeviceInfo = OnMediaSinkDeviceInfoImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefMediaSinkDeviceInfoCallback Create(IntPtr instance)
 		{
 			return new CefMediaSinkDeviceInfoCallback((cef_media_sink_device_info_callback_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefMediaSinkDeviceInfoCallback()
 		{
 			cef_media_sink_device_info_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_media_sink_device_info = (void*)Marshal.GetFunctionPointerForDelegate(fnOnMediaSinkDeviceInfo);
+			#else
+			self->on_media_sink_device_info = (delegate* unmanaged[Stdcall]<cef_media_sink_device_info_callback_t*, cef_media_sink_device_info_t*, void>)&OnMediaSinkDeviceInfoImpl;
+			#endif
 		}
 
 		public CefMediaSinkDeviceInfoCallback(cef_media_sink_device_info_callback_t* instance)
@@ -58,10 +64,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnMediaSinkDeviceInfoDelegate(cef_media_sink_device_info_callback_t* self, cef_media_sink_device_info_t* device_info);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_media_sink_device_info_callback_t* self, const const _cef_media_sink_device_info_t* device_info)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnMediaSinkDeviceInfoImpl(cef_media_sink_device_info_callback_t* self, cef_media_sink_device_info_t* device_info)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMediaSinkDeviceInfoCallback;

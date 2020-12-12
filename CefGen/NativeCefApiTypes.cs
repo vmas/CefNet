@@ -193,15 +193,15 @@ namespace CefGen
 				return CefTypeKind.Unknown;
 
 			INamedTypeSymbol value;
-			if (RefCounted.TryGetValue(symbol.Name, out value) && Equals(value, symbol))
+			if (RefCounted.TryGetValue(symbol.Name, out value) && SymbolEqualityComparer.Default.Equals(value, symbol))
 				return CefTypeKind.RefCounted;
-			if (Scoped.TryGetValue(symbol.Name, out value) && Equals(value, symbol))
+			if (Scoped.TryGetValue(symbol.Name, out value) && SymbolEqualityComparer.Default.Equals(value, symbol))
 				return CefTypeKind.Scoped;
-			if (Enums.TryGetValue(symbol.Name, out value) && Equals(value, symbol))
+			if (Enums.TryGetValue(symbol.Name, out value) && SymbolEqualityComparer.Default.Equals(value, symbol))
 				return CefTypeKind.Enum;
-			if (Sized.TryGetValue(symbol.Name, out value) && Equals(value, symbol))
+			if (Sized.TryGetValue(symbol.Name, out value) && SymbolEqualityComparer.Default.Equals(value, symbol))
 				return CefTypeKind.Sized;
-			if (Simple.TryGetValue(symbol.Name, out value) && Equals(value, symbol))
+			if (Simple.TryGetValue(symbol.Name, out value) && SymbolEqualityComparer.Default.Equals(value, symbol))
 				return CefTypeKind.Simple;
 			throw new NotImplementedException();
 		}

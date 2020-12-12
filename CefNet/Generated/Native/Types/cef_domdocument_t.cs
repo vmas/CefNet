@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Returns the document type.
 		/// </summary>
 		[NativeName("get_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefDOMDocumentType GetCefType();
+		public unsafe CefDOMDocumentType GetCefType()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, CefDOMDocumentType>)get_type)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domdocument_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Returns the root document node.
 		/// </summary>
 		[NativeName("get_document")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetDocument();
+		public unsafe cef_domnode_t* GetDocument()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_domnode_t*>)get_document)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domdocument_t* self)*
@@ -63,8 +73,13 @@ namespace CefNet.CApi
 		/// Returns the BODY node of an HTML document.
 		/// </summary>
 		[NativeName("get_body")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetBody();
+		public unsafe cef_domnode_t* GetBody()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_domnode_t*>)get_body)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domdocument_t* self)*
@@ -75,8 +90,13 @@ namespace CefNet.CApi
 		/// Returns the HEAD node of an HTML document.
 		/// </summary>
 		[NativeName("get_head")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetHead();
+		public unsafe cef_domnode_t* GetHead()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_domnode_t*>)get_head)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domdocument_t* self)*
@@ -88,8 +108,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_title")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetTitle();
+		public unsafe cef_string_userfree_t GetTitle()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_string_userfree_t>)get_title)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domdocument_t* self, const cef_string_t* id)*
@@ -100,8 +125,13 @@ namespace CefNet.CApi
 		/// Returns the document element with the specified ID value.
 		/// </summary>
 		[NativeName("get_element_by_id")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetElementById([Immutable]cef_string_t* id);
+		public unsafe cef_domnode_t* GetElementById([Immutable]cef_string_t* id)
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_string_t*, cef_domnode_t*>)get_element_by_id)(self, id);
+			}
+		}
 
 		/// <summary>
 		/// _cef_domnode_t* (*)(_cef_domdocument_t* self)*
@@ -112,8 +142,13 @@ namespace CefNet.CApi
 		/// Returns the node that currently has keyboard focus.
 		/// </summary>
 		[NativeName("get_focused_node")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_domnode_t* GetFocusedNode();
+		public unsafe cef_domnode_t* GetFocusedNode()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_domnode_t*>)get_focused_node)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domdocument_t* self)*
@@ -124,8 +159,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if a portion of the document is selected.
 		/// </summary>
 		[NativeName("has_selection")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasSelection();
+		public unsafe int HasSelection()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, int>)has_selection)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domdocument_t* self)*
@@ -135,9 +175,14 @@ namespace CefNet.CApi
 		/// <summary>
 		/// Returns the selection offset within the start node.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_selection_start_offset")]
-		public unsafe extern int GetSelectionStartOffset();
+		public unsafe int GetSelectionStartOffset()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, int>)get_selection_start_offset)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_domdocument_t* self)*
@@ -148,8 +193,13 @@ namespace CefNet.CApi
 		/// Returns the selection offset within the end node.
 		/// </summary>
 		[NativeName("get_selection_end_offset")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetSelectionEndOffset();
+		public unsafe int GetSelectionEndOffset()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, int>)get_selection_end_offset)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domdocument_t* self)*
@@ -161,8 +211,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_selection_as_markup")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetSelectionAsMarkup();
+		public unsafe cef_string_userfree_t GetSelectionAsMarkup()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_string_userfree_t>)get_selection_as_markup)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domdocument_t* self)*
@@ -174,8 +229,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_selection_as_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetSelectionAsText();
+		public unsafe cef_string_userfree_t GetSelectionAsText()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_string_userfree_t>)get_selection_as_text)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domdocument_t* self)*
@@ -187,8 +247,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_base_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetBaseUrl();
+		public unsafe cef_string_userfree_t GetBaseUrl()
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_string_userfree_t>)get_base_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_domdocument_t* self, const cef_string_t* partialURL)*
@@ -201,8 +266,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_complete_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetCompleteUrl([Immutable]cef_string_t* partialURL);
+		public unsafe cef_string_userfree_t GetCompleteUrl([Immutable]cef_string_t* partialURL)
+		{
+			fixed (cef_domdocument_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_domdocument_t*, cef_string_t*, cef_string_userfree_t>)get_complete_url)(self, partialURL);
+			}
+		}
 	}
 }
 

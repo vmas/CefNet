@@ -28,8 +28,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefCompletionCallback : CefBaseRefCounted<cef_completion_callback_t>, ICefCompletionCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnCompleteDelegate fnOnComplete = OnCompleteImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefCompletionCallback Create(IntPtr instance)
 		{
 			return new CefCompletionCallback((cef_completion_callback_t*)instance);
@@ -38,7 +40,11 @@ namespace CefNet
 		public CefCompletionCallback()
 		{
 			cef_completion_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_complete = (void*)Marshal.GetFunctionPointerForDelegate(fnOnComplete);
+			#else
+			self->on_complete = (delegate* unmanaged[Stdcall]<cef_completion_callback_t*, void>)&OnCompleteImpl;
+			#endif
 		}
 
 		public CefCompletionCallback(cef_completion_callback_t* instance)
@@ -53,10 +59,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnCompleteDelegate(cef_completion_callback_t* self);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_completion_callback_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnCompleteImpl(cef_completion_callback_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefCompletionCallback;

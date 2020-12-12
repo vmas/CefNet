@@ -86,32 +86,19 @@ namespace CefNet
 			return count;
 		}
 	}
-	
-	[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-	internal unsafe delegate void CefActionDelegate(cef_base_ref_counted_t* self);
-
-	[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-	internal unsafe delegate int CefIntFunctionDelegate(cef_base_ref_counted_t* self);
 
 	/// <summary>
 	/// Base class for all wrapper classes for ref counted CEF structs.
 	/// </summary>
 	/// <typeparam name="T">A ref counted CEF struct.</typeparam>
-	public abstract class CefBaseRefCounted<T> : CefBaseRefCounted
+	public abstract class CefBaseRefCounted<T> : Internal.CefBaseRefCountedImpl
 		where T : unmanaged
 	{
-		private static readonly unsafe CefActionDelegate fnAddRef = AddRefImpl;
-		private static readonly unsafe CefIntFunctionDelegate fnRelease = ReleaseImpl;
-		private static readonly unsafe CefIntFunctionDelegate fnHasOneRef = HasOneRefImpl;
-		private static readonly unsafe CefIntFunctionDelegate fnHasAtLeastOneRef = HasAtLeastOneRefImpl;
-		internal static readonly Dictionary<IntPtr, RefCountedReference> RefCounted = new Dictionary<IntPtr, RefCountedReference>();
-		internal static readonly Dictionary<IntPtr, WeakReference<CefBaseRefCounted>> UnsafeRefCounted = new Dictionary<IntPtr, WeakReference<CefBaseRefCounted>>();
-		public static readonly ReaderWriterLockSlim GlobalSyncRoot = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 
 		protected static IEnumerable<CefBaseRefCounted> GetCached<TClass>()
 			where TClass : CefBaseRefCounted
 		{
-			GlobalSyncRoot.EnterReadLock();
+			Internal.CefBaseRefCountedImpl.GlobalSyncRoot.EnterReadLock();
 			try
 			{
 				foreach (RefCountedReference reference in RefCounted.Values)
@@ -119,13 +106,13 @@ namespace CefNet
 					if (reference.Instance.TryGetTarget(out CefBaseRefCounted instance)
 						&& instance is TClass wrapper)
 					{
-						yield return wrapper; 
+						yield return wrapper;
 					}
 				}
 			}
 			finally
 			{
-				GlobalSyncRoot.ExitReadLock();
+				Internal.CefBaseRefCountedImpl.GlobalSyncRoot.ExitReadLock();
 			}
 		}
 
@@ -153,7 +140,7 @@ namespace CefNet
 			RefCountedWrapperStruct* ws = null;
 			CefBaseRefCounted wrapper;
 			IntPtr key = new IntPtr(instance);
-			GlobalSyncRoot.EnterUpgradeableReadLock();
+			Internal.CefBaseRefCountedImpl.GlobalSyncRoot.EnterUpgradeableReadLock();
 			try
 			{
 				if (CefApi.UseUnsafeImplementation)
@@ -174,14 +161,14 @@ namespace CefNet
 					return (TClass)wrapper;
 				}
 #if DEBUG
-				else if(CefStructure.IsAllocated(key))
+				else if (CefStructure.IsAllocated(key))
 				{
 					throw new InvalidCefObjectException(string.Format("Unexpected access to {0}.", typeof(TClass).Name));
 				}
 #endif
 				else
 				{
-					GlobalSyncRoot.EnterWriteLock();
+					Internal.CefBaseRefCountedImpl.GlobalSyncRoot.EnterWriteLock();
 					try
 					{
 						TClass typedWrapper = create(key);
@@ -195,13 +182,13 @@ namespace CefNet
 					}
 					finally
 					{
-						GlobalSyncRoot.ExitWriteLock();
+						Internal.CefBaseRefCountedImpl.GlobalSyncRoot.ExitWriteLock();
 					}
 				}
 			}
 			finally
 			{
-				GlobalSyncRoot.ExitUpgradeableReadLock();
+				Internal.CefBaseRefCountedImpl.GlobalSyncRoot.ExitUpgradeableReadLock();
 			}
 		}
 
@@ -234,6 +221,14 @@ namespace CefNet
 
 		}
 
+		/// <summary>
+		/// Gets a lock that can be used to synchronize access to the ref-counted collection.
+		/// </summary>
+		public new ReaderWriterLockSlim GlobalSyncRoot
+		{
+			get { return Internal.CefBaseRefCountedImpl.GlobalSyncRoot; }
+		}
+
 #pragma warning disable CS1591
 		protected unsafe override void Dispose(bool disposing)
 		{
@@ -264,7 +259,7 @@ namespace CefNet
 #endif
 				if (CefStructure.Free(key))
 					return;
-				
+
 				base.Dispose(disposing);
 			}
 		}
@@ -304,7 +299,7 @@ namespace CefNet
 		public static CefBaseRefCounted GetInstance(IntPtr ptr)
 		{
 			RefCountedReference reference;
-			GlobalSyncRoot.EnterReadLock();
+			Internal.CefBaseRefCountedImpl.GlobalSyncRoot.EnterReadLock();
 			try
 			{
 				RefCounted.TryGetValue(ptr, out reference);
@@ -313,21 +308,64 @@ namespace CefNet
 			}
 			finally
 			{
-				GlobalSyncRoot.ExitReadLock();
+				Internal.CefBaseRefCountedImpl.GlobalSyncRoot.ExitReadLock();
 			}
 			return null;
 		}
+	}
 
-		private unsafe static cef_base_ref_counted_t* Allocate(int size)
+}
+
+namespace CefNet.Internal
+{
+	/// <summary>
+	/// Internal class.
+	/// </summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public abstract class CefBaseRefCountedImpl : CefBaseRefCounted
+	{
+#if NET_LESS_5_0
+		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		internal unsafe delegate void CefActionDelegate(cef_base_ref_counted_t* self);
+
+		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		internal unsafe delegate int CefIntFunctionDelegate(cef_base_ref_counted_t* self);
+
+		private static readonly unsafe CefActionDelegate fnAddRef = AddRefImpl;
+		private static readonly unsafe CefIntFunctionDelegate fnRelease = ReleaseImpl;
+		private static readonly unsafe CefIntFunctionDelegate fnHasOneRef = HasOneRefImpl;
+		private static readonly unsafe CefIntFunctionDelegate fnHasAtLeastOneRef = HasAtLeastOneRefImpl;
+#endif
+
+		internal static readonly Dictionary<IntPtr, RefCountedReference> RefCounted = new Dictionary<IntPtr, RefCountedReference>();
+		internal static readonly Dictionary<IntPtr, WeakReference<CefBaseRefCounted>> UnsafeRefCounted = new Dictionary<IntPtr, WeakReference<CefBaseRefCounted>>();
+		private protected static readonly ReaderWriterLockSlim GlobalSyncRoot = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
+
+
+		internal unsafe CefBaseRefCountedImpl(cef_base_ref_counted_t* instance)
+			: base(instance)
+		{
+
+		}
+
+		private protected unsafe static cef_base_ref_counted_t* Allocate(int size)
 		{
 			cef_base_ref_counted_t* instance = (cef_base_ref_counted_t*)CefStructure.Allocate(size);
+#if NET_LESS_5_0
 			instance->add_ref = (void*)Marshal.GetFunctionPointerForDelegate(fnAddRef);
 			instance->release = (void*)Marshal.GetFunctionPointerForDelegate(fnRelease);
 			instance->has_one_ref = (void*)Marshal.GetFunctionPointerForDelegate(fnHasOneRef);
 			instance->has_at_least_one_ref = (void*)Marshal.GetFunctionPointerForDelegate(fnHasAtLeastOneRef);
+#else
+			instance->add_ref = (delegate* unmanaged[Stdcall]<cef_base_ref_counted_t*, void>)&AddRefImpl;
+			instance->release = (delegate* unmanaged[Stdcall]<cef_base_ref_counted_t*, int>)&ReleaseImpl;
+			instance->has_one_ref = (delegate* unmanaged[Stdcall]<cef_base_ref_counted_t*, int>)&HasOneRefImpl;
+			instance->has_at_least_one_ref = (delegate* unmanaged[Stdcall]<cef_base_ref_counted_t*, int>)&HasAtLeastOneRefImpl;
+#endif
 			return instance;
 		}
 
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private unsafe static void AddRefImpl(cef_base_ref_counted_t* self)
 		{
 			RefCountedReference reference;
@@ -345,6 +383,7 @@ namespace CefNet
 			reference.AddRef();
 		}
 
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private unsafe static int ReleaseImpl(cef_base_ref_counted_t* self)
 		{
 			RefCountedReference reference;
@@ -366,6 +405,7 @@ namespace CefNet
 			return reference.Release();
 		}
 
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private unsafe static int HasOneRefImpl(cef_base_ref_counted_t* self)
 		{
 			RefCountedReference reference;
@@ -381,6 +421,7 @@ namespace CefNet
 			return (reference != null && reference.Count == 1) ? 1 : 0;
 		}
 
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private unsafe static int HasAtLeastOneRefImpl(cef_base_ref_counted_t* self)
 		{
 			RefCountedReference reference;
@@ -397,6 +438,10 @@ namespace CefNet
 		}
 	}
 
+}
+
+namespace CefNet
+{
 	/// <summary>
 	/// Base class for all wrapper classes for ref counted CEF structs.
 	/// </summary>

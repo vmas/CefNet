@@ -119,5 +119,15 @@ namespace CefNet.Internal
 			_implementation.OnLoadingProgressChange(browser, progress);
 		}
 
+		bool ICefDisplayHandlerPrivate.AvoidOnCursorChange()
+		{
+			return _implementation.AvoidOnCursorChange();
+		}
+
+		protected internal unsafe override bool OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
+		{
+			return _implementation.OnCursorChange(browser, cursor, type, customCursorInfo);
+		}
+
 	}
 }

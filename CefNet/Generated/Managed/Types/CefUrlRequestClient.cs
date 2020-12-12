@@ -30,6 +30,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefUrlRequestClient : CefBaseRefCounted<cef_urlrequest_client_t>, ICefUrlRequestClientPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnRequestCompleteDelegate fnOnRequestComplete = OnRequestCompleteImpl;
 
 		private static readonly OnUploadProgressDelegate fnOnUploadProgress = OnUploadProgressImpl;
@@ -40,6 +41,7 @@ namespace CefNet
 
 		private static readonly GetAuthCredentialsDelegate fnGetAuthCredentials = GetAuthCredentialsImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefUrlRequestClient Create(IntPtr instance)
 		{
 			return new CefUrlRequestClient((cef_urlrequest_client_t*)instance);
@@ -48,11 +50,19 @@ namespace CefNet
 		public CefUrlRequestClient()
 		{
 			cef_urlrequest_client_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_request_complete = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRequestComplete);
 			self->on_upload_progress = (void*)Marshal.GetFunctionPointerForDelegate(fnOnUploadProgress);
 			self->on_download_progress = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDownloadProgress);
 			self->on_download_data = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDownloadData);
 			self->get_auth_credentials = (void*)Marshal.GetFunctionPointerForDelegate(fnGetAuthCredentials);
+			#else
+			self->on_request_complete = (delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, cef_urlrequest_t*, void>)&OnRequestCompleteImpl;
+			self->on_upload_progress = (delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, cef_urlrequest_t*, long, long, void>)&OnUploadProgressImpl;
+			self->on_download_progress = (delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, cef_urlrequest_t*, long, long, void>)&OnDownloadProgressImpl;
+			self->on_download_data = (delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, cef_urlrequest_t*, void*, UIntPtr, void>)&OnDownloadDataImpl;
+			self->get_auth_credentials = (delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, int, cef_string_t*, int, cef_string_t*, cef_string_t*, cef_auth_callback_t*, int>)&GetAuthCredentialsImpl;
+			#endif
 		}
 
 		public CefUrlRequestClient(cef_urlrequest_client_t* instance)
@@ -72,10 +82,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnRequestCompleteDelegate(cef_urlrequest_client_t* self, cef_urlrequest_t* request);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnRequestCompleteImpl(cef_urlrequest_client_t* self, cef_urlrequest_t* request)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;
@@ -100,10 +113,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnUploadProgressDelegate(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request, int64 current, int64 total)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnUploadProgressImpl(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;
@@ -127,10 +143,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDownloadProgressDelegate(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request, int64 current, int64 total)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDownloadProgressImpl(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;
@@ -154,10 +173,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDownloadDataDelegate(cef_urlrequest_client_t* self, cef_urlrequest_t* request, void* data, UIntPtr data_length);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request, const void* data, size_t data_length)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDownloadDataImpl(cef_urlrequest_client_t* self, cef_urlrequest_t* request, void* data, UIntPtr data_length)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;
@@ -188,10 +210,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetAuthCredentialsDelegate(cef_urlrequest_client_t* self, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_urlrequest_client_t* self, int isProxy, const cef_string_t* host, int port, const cef_string_t* realm, const cef_string_t* scheme, _cef_auth_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetAuthCredentialsImpl(cef_urlrequest_client_t* self, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;

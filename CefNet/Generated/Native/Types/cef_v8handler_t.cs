@@ -44,8 +44,13 @@ namespace CefNet.CApi
 		/// that will be thrown. Return true (1) if execution was handled.
 		/// </summary>
 		[NativeName("execute")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Execute([Immutable]cef_string_t* name, cef_v8value_t* @object, UIntPtr argumentsCount, [Immutable]cef_v8value_t** arguments, cef_v8value_t** retval, cef_string_t* exception);
+		public unsafe int Execute([Immutable]cef_string_t* name, cef_v8value_t* @object, UIntPtr argumentsCount, [Immutable]cef_v8value_t** arguments, cef_v8value_t** retval, cef_string_t* exception)
+		{
+			fixed (cef_v8handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8handler_t*, cef_string_t*, cef_v8value_t*, UIntPtr, cef_v8value_t**, cef_v8value_t**, cef_string_t*, int>)execute)(self, name, @object, argumentsCount, arguments, retval, exception);
+			}
+		}
 	}
 }
 

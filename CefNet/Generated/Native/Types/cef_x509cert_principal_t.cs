@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_display_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetDisplayName();
+		public unsafe cef_string_userfree_t GetDisplayName()
+		{
+			fixed (cef_x509cert_principal_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509cert_principal_t*, cef_string_userfree_t>)get_display_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_x509cert_principal_t* self)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_common_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetCommonName();
+		public unsafe cef_string_userfree_t GetCommonName()
+		{
+			fixed (cef_x509cert_principal_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509cert_principal_t*, cef_string_userfree_t>)get_common_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_x509cert_principal_t* self)*
@@ -67,8 +77,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_locality_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetLocalityName();
+		public unsafe cef_string_userfree_t GetLocalityName()
+		{
+			fixed (cef_x509cert_principal_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509cert_principal_t*, cef_string_userfree_t>)get_locality_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_x509cert_principal_t* self)*
@@ -79,9 +94,14 @@ namespace CefNet.CApi
 		/// Returns the state or province name.
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_state_or_province_name")]
-		public unsafe extern cef_string_userfree_t GetStateOrProvinceName();
+		public unsafe cef_string_userfree_t GetStateOrProvinceName()
+		{
+			fixed (cef_x509cert_principal_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509cert_principal_t*, cef_string_userfree_t>)get_state_or_province_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_x509cert_principal_t* self)*
@@ -93,8 +113,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_country_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetCountryName();
+		public unsafe cef_string_userfree_t GetCountryName()
+		{
+			fixed (cef_x509cert_principal_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509cert_principal_t*, cef_string_userfree_t>)get_country_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_x509cert_principal_t* self, cef_string_list_t addresses)*
@@ -105,8 +130,13 @@ namespace CefNet.CApi
 		/// Retrieve the list of street addresses.
 		/// </summary>
 		[NativeName("get_street_addresses")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetStreetAddresses(cef_string_list_t addresses);
+		public unsafe void GetStreetAddresses(cef_string_list_t addresses)
+		{
+			fixed (cef_x509cert_principal_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_x509cert_principal_t*, cef_string_list_t, void>)get_street_addresses)(self, addresses);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_x509cert_principal_t* self, cef_string_list_t names)*
@@ -117,8 +147,13 @@ namespace CefNet.CApi
 		/// Retrieve the list of organization names.
 		/// </summary>
 		[NativeName("get_organization_names")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetOrganizationNames(cef_string_list_t names);
+		public unsafe void GetOrganizationNames(cef_string_list_t names)
+		{
+			fixed (cef_x509cert_principal_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_x509cert_principal_t*, cef_string_list_t, void>)get_organization_names)(self, names);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_x509cert_principal_t* self, cef_string_list_t names)*
@@ -128,9 +163,14 @@ namespace CefNet.CApi
 		/// <summary>
 		/// Retrieve the list of organization unit names.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_organization_unit_names")]
-		public unsafe extern void GetOrganizationUnitNames(cef_string_list_t names);
+		public unsafe void GetOrganizationUnitNames(cef_string_list_t names)
+		{
+			fixed (cef_x509cert_principal_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_x509cert_principal_t*, cef_string_list_t, void>)get_organization_unit_names)(self, names);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_x509cert_principal_t* self, cef_string_list_t components)*
@@ -141,8 +181,13 @@ namespace CefNet.CApi
 		/// Retrieve the list of domain components.
 		/// </summary>
 		[NativeName("get_domain_components")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetDomainComponents(cef_string_list_t components);
+		public unsafe void GetDomainComponents(cef_string_list_t components)
+		{
+			fixed (cef_x509cert_principal_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_x509cert_principal_t*, cef_string_list_t, void>)get_domain_components)(self, components);
+			}
+		}
 	}
 }
 

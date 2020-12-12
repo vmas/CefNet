@@ -17,7 +17,7 @@ using System.Threading;
 
 namespace CefGen
 {
-	class Program
+	partial class Program
 	{
 		private static readonly HashSet<string> IgnoreClasses = new HashSet<string>
 		{
@@ -135,7 +135,7 @@ namespace CefGen
 			return null;
 		}
 
-		private static string ApplyHotPatch(string basePath)
+		private static string ApplyHotPatch(string basePath, List<string> files)
 		{
 			string temp = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp");
 			if (Directory.Exists(temp))
@@ -168,6 +168,7 @@ namespace CefGen
 					content = content.Replace("#define cef_event_handle_t MSG*", "typedef MSG* CefEventHandle;\n#define cef_event_handle_t CefEventHandle");
 					File.WriteAllText(Path.Combine(temp, "include", "internal", "cef_types_win.h"), content, Encoding.UTF8);
 				}
+				FixSTL1300(temp, files);
 			}
 			else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 			{
@@ -190,7 +191,7 @@ namespace CefGen
 			var files = new List<string>(Directory.GetFiles(Path.Combine(basePath, "include", "capi"), "*.h"));
 			files.Add(Path.Combine(basePath, "include", "cef_version.h"));
 			files.Add(Path.Combine(basePath, "include", "cef_api_hash.h"));
-			options.IncludeFolders.Add(ApplyHotPatch(basePath));
+			options.IncludeFolders.Add(ApplyHotPatch(basePath, files));
 			options.IncludeFolders.Add(basePath);
 
 			if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -203,7 +204,7 @@ namespace CefGen
 			}
 			else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 			{
-				options.Defines.Add("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH");
+				//options.Defines.Add("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH");
 			}
 			else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 			{
@@ -254,11 +255,12 @@ namespace CefGen
 
 				string fileName = aliasResolver.ResolveNonFail(@class.Name);
 				using (var csfile = new StreamWriter(Path.Combine(outDirPath, "Native", "Types", fileName + ".cs"), false, Encoding.UTF8))
-				using (var ilfile = new StreamWriter(Path.Combine(outDirPath, "Native", "MSIL", fileName + ".il"), false, Encoding.UTF8))
+				//using (var ilfile = new StreamWriter(Path.Combine(outDirPath, "Native", "MSIL", fileName + ".il"), false, Encoding.UTF8))
 				{
-					nativeBuild.Format(@class, csfile, ilfile);
+					//nativeBuild.Format(@class, csfile, ilfile);
+					nativeBuild.Format(@class, csfile, null);
 					csfile.Flush();
-					ilfile.Flush();
+					//ilfile.Flush();
 				}
 			}
 
@@ -297,6 +299,7 @@ namespace CefGen
 				}
 			}
 
+			FixSTL1300RemoveIncludesAfterParse(compilation.Functions);
 
 			var api = new CefApiClass("CefNativeApi")
 			{
@@ -331,6 +334,8 @@ namespace CefGen
 			Directory.CreateDirectory(Path.Combine(path, "Native", "Typedefs"));
 		}
 
+		static partial void FixSTL1300(string tempIncludePath, List<string> files);
+		static partial void FixSTL1300RemoveIncludesAfterParse(CppContainerList<CppFunction> functions);
 
 	}
 

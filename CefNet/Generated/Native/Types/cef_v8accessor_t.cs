@@ -45,8 +45,13 @@ namespace CefNet.CApi
 		/// handled.
 		/// </summary>
 		[NativeName("get")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Get([Immutable]cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception);
+		public unsafe int Get([Immutable]cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception)
+		{
+			fixed (cef_v8accessor_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8accessor_t*, cef_string_t*, cef_v8value_t*, cef_v8value_t**, cef_string_t*, int>)get)(self, name, @object, retval, exception);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8accessor_t* self, const cef_string_t* name, _cef_v8value_t* object, _cef_v8value_t* value, cef_string_t* exception)*
@@ -61,8 +66,13 @@ namespace CefNet.CApi
 		/// handled.
 		/// </summary>
 		[NativeName("set")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Set([Immutable]cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception);
+		public unsafe int Set([Immutable]cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception)
+		{
+			fixed (cef_v8accessor_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8accessor_t*, cef_string_t*, cef_v8value_t*, cef_v8value_t*, cef_string_t*, int>)set)(self, name, @object, value, exception);
+			}
+		}
 	}
 }
 

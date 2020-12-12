@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// if this function returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_download_item_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the download is in progress.
 		/// </summary>
 		[NativeName("is_in_progress")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsInProgress();
+		public unsafe int IsInProgress()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, int>)is_in_progress)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_download_item_t* self)*
@@ -63,8 +73,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the download is complete.
 		/// </summary>
 		[NativeName("is_complete")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsComplete();
+		public unsafe int IsComplete()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, int>)is_complete)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_download_item_t* self)*
@@ -75,8 +90,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the download has been canceled or interrupted.
 		/// </summary>
 		[NativeName("is_canceled")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsCanceled();
+		public unsafe int IsCanceled()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, int>)is_canceled)(self);
+			}
+		}
 
 		/// <summary>
 		/// int64 (*)(_cef_download_item_t* self)*
@@ -87,8 +107,13 @@ namespace CefNet.CApi
 		/// Returns a simple speed estimate in bytes/s.
 		/// </summary>
 		[NativeName("get_current_speed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern long GetCurrentSpeed();
+		public unsafe long GetCurrentSpeed()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, long>)get_current_speed)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_download_item_t* self)*
@@ -100,8 +125,13 @@ namespace CefNet.CApi
 		/// unknown.
 		/// </summary>
 		[NativeName("get_percent_complete")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetPercentComplete();
+		public unsafe int GetPercentComplete()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, int>)get_percent_complete)(self);
+			}
+		}
 
 		/// <summary>
 		/// int64 (*)(_cef_download_item_t* self)*
@@ -112,8 +142,13 @@ namespace CefNet.CApi
 		/// Returns the total number of bytes.
 		/// </summary>
 		[NativeName("get_total_bytes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern long GetTotalBytes();
+		public unsafe long GetTotalBytes()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, long>)get_total_bytes)(self);
+			}
+		}
 
 		/// <summary>
 		/// int64 (*)(_cef_download_item_t* self)*
@@ -124,8 +159,13 @@ namespace CefNet.CApi
 		/// Returns the number of received bytes.
 		/// </summary>
 		[NativeName("get_received_bytes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern long GetReceivedBytes();
+		public unsafe long GetReceivedBytes()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, long>)get_received_bytes)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_time_t (*)(_cef_download_item_t* self)*
@@ -136,8 +176,13 @@ namespace CefNet.CApi
 		/// Returns the time that the download started.
 		/// </summary>
 		[NativeName("get_start_time")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_time_t GetStartTime();
+		public unsafe cef_time_t GetStartTime()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, cef_time_t>)get_start_time)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_time_t (*)(_cef_download_item_t* self)*
@@ -148,8 +193,13 @@ namespace CefNet.CApi
 		/// Returns the time that the download ended.
 		/// </summary>
 		[NativeName("get_end_time")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_time_t GetEndTime();
+		public unsafe cef_time_t GetEndTime()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, cef_time_t>)get_end_time)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_download_item_t* self)*
@@ -161,8 +211,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_full_path")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFullPath();
+		public unsafe cef_string_userfree_t GetFullPath()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, cef_string_userfree_t>)get_full_path)(self);
+			}
+		}
 
 		/// <summary>
 		/// uint32 (*)(_cef_download_item_t* self)*
@@ -173,8 +228,13 @@ namespace CefNet.CApi
 		/// Returns the unique identifier for this download.
 		/// </summary>
 		[NativeName("get_id")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern uint GetId();
+		public unsafe uint GetId()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, uint>)get_id)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_download_item_t* self)*
@@ -186,8 +246,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetUrl();
+		public unsafe cef_string_userfree_t GetUrl()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, cef_string_userfree_t>)get_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_download_item_t* self)*
@@ -199,8 +264,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_original_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetOriginalUrl();
+		public unsafe cef_string_userfree_t GetOriginalUrl()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, cef_string_userfree_t>)get_original_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_download_item_t* self)*
@@ -212,8 +282,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_suggested_file_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetSuggestedFileName();
+		public unsafe cef_string_userfree_t GetSuggestedFileName()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, cef_string_userfree_t>)get_suggested_file_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_download_item_t* self)*
@@ -225,8 +300,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_content_disposition")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetContentDisposition();
+		public unsafe cef_string_userfree_t GetContentDisposition()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, cef_string_userfree_t>)get_content_disposition)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_download_item_t* self)*
@@ -238,8 +318,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_mime_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetMimeType();
+		public unsafe cef_string_userfree_t GetMimeType()
+		{
+			fixed (cef_download_item_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_download_item_t*, cef_string_userfree_t>)get_mime_type)(self);
+			}
+		}
 	}
 }
 

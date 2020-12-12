@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefDialogHandler : CefBaseRefCounted<cef_dialog_handler_t>, ICefDialogHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnFileDialogDelegate fnOnFileDialog = OnFileDialogImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefDialogHandler Create(IntPtr instance)
 		{
 			return new CefDialogHandler((cef_dialog_handler_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefDialogHandler()
 		{
 			cef_dialog_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_file_dialog = (void*)Marshal.GetFunctionPointerForDelegate(fnOnFileDialog);
+			#else
+			self->on_file_dialog = (delegate* unmanaged[Stdcall]<cef_dialog_handler_t*, cef_browser_t*, CefFileDialogMode, cef_string_t*, cef_string_t*, cef_string_list_t, int, cef_file_dialog_callback_t*, int>)&OnFileDialogImpl;
+			#endif
 		}
 
 		public CefDialogHandler(cef_dialog_handler_t* instance)
@@ -70,10 +76,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnFileDialogDelegate(cef_dialog_handler_t* self, cef_browser_t* browser, CefFileDialogMode mode, cef_string_t* title, cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_dialog_handler_t* self, _cef_browser_t* browser, cef_file_dialog_mode_t mode, const cef_string_t* title, const cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, _cef_file_dialog_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnFileDialogImpl(cef_dialog_handler_t* self, cef_browser_t* browser, CefFileDialogMode mode, cef_string_t* title, cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, cef_file_dialog_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDialogHandler;

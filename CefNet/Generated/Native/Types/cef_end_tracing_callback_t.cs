@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// deleting |tracing_file|.
 		/// </summary>
 		[NativeName("on_end_tracing_complete")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnEndTracingComplete([Immutable]cef_string_t* tracing_file);
+		public unsafe void OnEndTracingComplete([Immutable]cef_string_t* tracing_file)
+		{
+			fixed (cef_end_tracing_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_end_tracing_callback_t*, cef_string_t*, void>)on_end_tracing_complete)(self, tracing_file);
+			}
+		}
 	}
 }
 

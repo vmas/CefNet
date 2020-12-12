@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// window.print() or PDF extension print button).
 		/// </summary>
 		[NativeName("on_print_start")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnPrintStart(cef_browser_t* browser);
+		public unsafe void OnPrintStart(cef_browser_t* browser)
+		{
+			fixed (cef_print_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, void>)on_print_start)(self, browser);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_handler_t* self, _cef_browser_t* browser, _cef_print_settings_t* settings, int get_defaults)*
@@ -57,8 +62,13 @@ namespace CefNet.CApi
 		/// reference to |settings| outside of this callback.
 		/// </summary>
 		[NativeName("on_print_settings")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnPrintSettings(cef_browser_t* browser, cef_print_settings_t* settings, int get_defaults);
+		public unsafe void OnPrintSettings(cef_browser_t* browser, cef_print_settings_t* settings, int get_defaults)
+		{
+			fixed (cef_print_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, cef_print_settings_t*, int, void>)on_print_settings)(self, browser, settings, get_defaults);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_print_handler_t* self, _cef_browser_t* browser, int has_selection, _cef_print_dialog_callback_t* callback)*
@@ -71,8 +81,13 @@ namespace CefNet.CApi
 		/// printing immediately.
 		/// </summary>
 		[NativeName("on_print_dialog")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnPrintDialog(cef_browser_t* browser, int has_selection, cef_print_dialog_callback_t* callback);
+		public unsafe int OnPrintDialog(cef_browser_t* browser, int has_selection, cef_print_dialog_callback_t* callback)
+		{
+			fixed (cef_print_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, int, cef_print_dialog_callback_t*, int>)on_print_dialog)(self, browser, has_selection, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_print_handler_t* self, _cef_browser_t* browser, const cef_string_t* document_name, const cef_string_t* pdf_file_path, _cef_print_job_callback_t* callback)*
@@ -85,8 +100,13 @@ namespace CefNet.CApi
 		/// the job immediately.
 		/// </summary>
 		[NativeName("on_print_job")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnPrintJob(cef_browser_t* browser, [Immutable]cef_string_t* document_name, [Immutable]cef_string_t* pdf_file_path, cef_print_job_callback_t* callback);
+		public unsafe int OnPrintJob(cef_browser_t* browser, [Immutable]cef_string_t* document_name, [Immutable]cef_string_t* pdf_file_path, cef_print_job_callback_t* callback)
+		{
+			fixed (cef_print_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, cef_string_t*, cef_string_t*, cef_print_job_callback_t*, int>)on_print_job)(self, browser, document_name, pdf_file_path, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_handler_t* self, _cef_browser_t* browser)*
@@ -97,8 +117,13 @@ namespace CefNet.CApi
 		/// Reset client state related to printing.
 		/// </summary>
 		[NativeName("on_print_reset")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnPrintReset(cef_browser_t* browser);
+		public unsafe void OnPrintReset(cef_browser_t* browser)
+		{
+			fixed (cef_print_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, void>)on_print_reset)(self, browser);
+			}
+		}
 
 		/// <summary>
 		/// cef_size_t (*)(_cef_print_handler_t* self, int device_units_per_inch)*
@@ -110,8 +135,13 @@ namespace CefNet.CApi
 		/// cef_browser_host_t::print_to_pdf().
 		/// </summary>
 		[NativeName("get_pdf_paper_size")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_size_t GetPdfPaperSize(int device_units_per_inch);
+		public unsafe cef_size_t GetPdfPaperSize(int device_units_per_inch)
+		{
+			fixed (cef_print_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_print_handler_t*, int, cef_size_t>)get_pdf_paper_size)(self, device_units_per_inch);
+			}
+		}
 	}
 }
 

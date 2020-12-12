@@ -902,28 +902,24 @@ namespace CefNet
 		/// </summary>
 		/// <param name="json">The JSON string to parse.</param>
 		/// <param name="options">Options to control the behavior during parsing.</param>
-		/// <param name="errorCode">The error code.</param>
 		/// <param name="errorMessage">The error message.</param>
 		/// <returns>
-		/// Returns a dictionary or list representation. If JSON parsing fails returns null and
-		/// populates <paramref name="errorCode"/> and <paramref name="errorMessage"/> with an
-		/// error code and a formatted error message respectively.
+		/// Returns a dictionary or list representation of the JSON string. If JSON parsing fails
+		/// returns null and populates <paramref name="errorMessage"/> with a formatted error message.
 		/// </returns>
-		public static CefValue CefParseJSON(string json, CefJsonParserOptions options, out CefJsonParserError errorCode, out string errorMessage)
+		public static CefValue CefParseJSON(string json, CefJsonParserOptions options, out string errorMessage)
 		{
 			if (json == null)
 			{
-				errorCode = CefJsonParserError.UnexpectedToken;
 				errorMessage = "Line: 1, column: 1, Unexpected token.";
 				return null;
 			}
 
 			fixed (char* s0 = json)
-			fixed (CefJsonParserError* p1 = &errorCode)
 			{
 				var cstr0 = new cef_string_t { Str = s0, Length = json.Length };
 				var cstr1 = new cef_string_t();
-				CefValue rv = CefValue.Wrap(CefValue.Create, CefNativeApi.cef_parse_jsonand_return_error(&cstr0, options, p1, &cstr1));
+				CefValue rv = CefValue.Wrap(CefValue.Create, CefNativeApi.cef_parse_jsonand_return_error(&cstr0, options, &cstr1));
 				errorMessage = CefString.ReadAndFree(&cstr1);
 				return rv;
 			}

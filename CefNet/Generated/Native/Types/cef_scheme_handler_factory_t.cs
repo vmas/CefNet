@@ -45,8 +45,13 @@ namespace CefNet.CApi
 		/// passed to this function cannot be modified.
 		/// </summary>
 		[NativeName("create")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_resource_handler_t* Create(cef_browser_t* browser, cef_frame_t* frame, [Immutable]cef_string_t* scheme_name, cef_request_t* request);
+		public unsafe cef_resource_handler_t* Create(cef_browser_t* browser, cef_frame_t* frame, [Immutable]cef_string_t* scheme_name, cef_request_t* request)
+		{
+			fixed (cef_scheme_handler_factory_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_scheme_handler_factory_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, cef_request_t*, cef_resource_handler_t*>)create)(self, browser, frame, scheme_name, request);
+			}
+		}
 	}
 }
 

@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// True if this object is currently attached to a valid frame.
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self)*
@@ -53,8 +58,13 @@ namespace CefNet.CApi
 		/// Execute undo in this frame.
 		/// </summary>
 		[NativeName("undo")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Undo();
+		public unsafe void Undo()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, void>)undo)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self)*
@@ -65,8 +75,13 @@ namespace CefNet.CApi
 		/// Execute redo in this frame.
 		/// </summary>
 		[NativeName("redo")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Redo();
+		public unsafe void Redo()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, void>)redo)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self)*
@@ -77,8 +92,13 @@ namespace CefNet.CApi
 		/// Execute cut in this frame.
 		/// </summary>
 		[NativeName("cut")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cut();
+		public unsafe void Cut()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, void>)cut)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self)*
@@ -89,8 +109,13 @@ namespace CefNet.CApi
 		/// Execute copy in this frame.
 		/// </summary>
 		[NativeName("copy")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Copy();
+		public unsafe void Copy()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, void>)copy)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self)*
@@ -101,8 +126,13 @@ namespace CefNet.CApi
 		/// Execute paste in this frame.
 		/// </summary>
 		[NativeName("paste")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Paste();
+		public unsafe void Paste()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, void>)paste)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self)*
@@ -113,8 +143,13 @@ namespace CefNet.CApi
 		/// Execute delete in this frame.
 		/// </summary>
 		[NativeName("del")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Del();
+		public unsafe void Del()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, void>)del)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self)*
@@ -125,8 +160,13 @@ namespace CefNet.CApi
 		/// Execute select all in this frame.
 		/// </summary>
 		[NativeName("select_all")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SelectAll();
+		public unsafe void SelectAll()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, void>)select_all)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self)*
@@ -139,8 +179,13 @@ namespace CefNet.CApi
 		/// browser process.
 		/// </summary>
 		[NativeName("view_source")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ViewSource();
+		public unsafe void ViewSource()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, void>)view_source)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self, _cef_string_visitor_t* visitor)*
@@ -152,8 +197,13 @@ namespace CefNet.CApi
 		/// visitor.
 		/// </summary>
 		[NativeName("get_source")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetSource(cef_string_visitor_t* visitor);
+		public unsafe void GetSource(cef_string_visitor_t* visitor)
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_string_visitor_t*, void>)get_source)(self, visitor);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self, _cef_string_visitor_t* visitor)*
@@ -165,8 +215,13 @@ namespace CefNet.CApi
 		/// visitor.
 		/// </summary>
 		[NativeName("get_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetText(cef_string_visitor_t* visitor);
+		public unsafe void GetText(cef_string_visitor_t* visitor)
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_string_visitor_t*, void>)get_text)(self, visitor);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self, _cef_request_t* request)*
@@ -180,8 +235,13 @@ namespace CefNet.CApi
 		/// origin using some other mechanism (LoadURL, link click, etc).
 		/// </summary>
 		[NativeName("load_request")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void LoadRequest(cef_request_t* request);
+		public unsafe void LoadRequest(cef_request_t* request)
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_request_t*, void>)load_request)(self, request);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self, const cef_string_t* url)*
@@ -192,8 +252,13 @@ namespace CefNet.CApi
 		/// Load the specified |url|.
 		/// </summary>
 		[NativeName("load_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void LoadUrl([Immutable]cef_string_t* url);
+		public unsafe void LoadUrl([Immutable]cef_string_t* url)
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_string_t*, void>)load_url)(self, url);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self, const cef_string_t* code, const cef_string_t* script_url, int start_line)*
@@ -208,8 +273,13 @@ namespace CefNet.CApi
 		/// reporting.
 		/// </summary>
 		[NativeName("execute_java_script")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ExecuteJavaScript([Immutable]cef_string_t* code, [Immutable]cef_string_t* script_url, int start_line);
+		public unsafe void ExecuteJavaScript([Immutable]cef_string_t* code, [Immutable]cef_string_t* script_url, int start_line)
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_string_t*, cef_string_t*, int, void>)execute_java_script)(self, code, script_url, start_line);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_frame_t* self)*
@@ -220,8 +290,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this is the main (top-level) frame.
 		/// </summary>
 		[NativeName("is_main")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsMain();
+		public unsafe int IsMain()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, int>)is_main)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_frame_t* self)*
@@ -232,8 +307,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this is the focused frame.
 		/// </summary>
 		[NativeName("is_focused")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsFocused();
+		public unsafe int IsFocused()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, int>)is_focused)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_frame_t* self)*
@@ -249,8 +329,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetName();
+		public unsafe cef_string_userfree_t GetName()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_string_userfree_t>)get_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// int64 (*)(_cef_frame_t* self)*
@@ -264,8 +349,13 @@ namespace CefNet.CApi
 		/// underlying frame does not yet exist.
 		/// </summary>
 		[NativeName("get_identifier")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern long GetIdentifier();
+		public unsafe long GetIdentifier()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, long>)get_identifier)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_frame_t* (*)(_cef_frame_t* self)*
@@ -277,8 +367,13 @@ namespace CefNet.CApi
 		/// frame.
 		/// </summary>
 		[NativeName("get_parent")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_frame_t* GetParent();
+		public unsafe cef_frame_t* GetParent()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_frame_t*>)get_parent)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_frame_t* self)*
@@ -290,8 +385,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetUrl();
+		public unsafe cef_string_userfree_t GetUrl()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_string_userfree_t>)get_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_browser_t* (*)(_cef_frame_t* self)*
@@ -302,8 +402,13 @@ namespace CefNet.CApi
 		/// Returns the browser that this frame belongs to.
 		/// </summary>
 		[NativeName("get_browser")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_browser_t* GetBrowser();
+		public unsafe cef_browser_t* GetBrowser()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_browser_t*>)get_browser)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_v8context_t* (*)(_cef_frame_t* self)*
@@ -315,8 +420,13 @@ namespace CefNet.CApi
 		/// called from the render process.
 		/// </summary>
 		[NativeName("get_v8context")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_v8context_t* GetV8Context();
+		public unsafe cef_v8context_t* GetV8Context()
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_v8context_t*>)get_v8context)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self, _cef_domvisitor_t* visitor)*
@@ -328,8 +438,13 @@ namespace CefNet.CApi
 		/// process.
 		/// </summary>
 		[NativeName("visit_dom")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void VisitDOM(cef_domvisitor_t* visitor);
+		public unsafe void VisitDOM(cef_domvisitor_t* visitor)
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_domvisitor_t*, void>)visit_dom)(self, visitor);
+			}
+		}
 
 		/// <summary>
 		/// _cef_urlrequest_t* (*)(_cef_frame_t* self, _cef_request_t* request, _cef_urlrequest_client_t* client)*
@@ -357,8 +472,13 @@ namespace CefNet.CApi
 		/// function.
 		/// </summary>
 		[NativeName("create_urlrequest")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_urlrequest_t* CreateUrlRequest(cef_request_t* request, cef_urlrequest_client_t* client);
+		public unsafe cef_urlrequest_t* CreateUrlRequest(cef_request_t* request, cef_urlrequest_client_t* client)
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_frame_t*, cef_request_t*, cef_urlrequest_client_t*, cef_urlrequest_t*>)create_urlrequest)(self, request, client);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_frame_t* self, cef_process_id_t target_process, _cef_process_message_t* message)*
@@ -372,8 +492,13 @@ namespace CefNet.CApi
 		/// from the target process if confirmation is required.
 		/// </summary>
 		[NativeName("send_process_message")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendProcessMessage(CefProcessId target_process, cef_process_message_t* message);
+		public unsafe void SendProcessMessage(CefProcessId target_process, cef_process_message_t* message)
+		{
+			fixed (cef_frame_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_frame_t*, CefProcessId, cef_process_message_t*, void>)send_process_message)(self, target_process, message);
+			}
+		}
 	}
 }
 

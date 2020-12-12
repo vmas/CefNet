@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// successful or not.
 		/// </summary>
 		[NativeName("on_request_complete")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnRequestComplete(cef_urlrequest_t* request);
+		public unsafe void OnRequestComplete(cef_urlrequest_t* request)
+		{
+			fixed (cef_urlrequest_client_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, cef_urlrequest_t*, void>)on_request_complete)(self, request);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request, int64 current, int64 total)*
@@ -57,8 +62,13 @@ namespace CefNet.CApi
 		/// UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
 		/// </summary>
 		[NativeName("on_upload_progress")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnUploadProgress(cef_urlrequest_t* request, long current, long total);
+		public unsafe void OnUploadProgress(cef_urlrequest_t* request, long current, long total)
+		{
+			fixed (cef_urlrequest_client_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, cef_urlrequest_t*, long, long, void>)on_upload_progress)(self, request, current, total);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request, int64 current, int64 total)*
@@ -71,8 +81,13 @@ namespace CefNet.CApi
 		/// response (or -1 if not determined).
 		/// </summary>
 		[NativeName("on_download_progress")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnDownloadProgress(cef_urlrequest_t* request, long current, long total);
+		public unsafe void OnDownloadProgress(cef_urlrequest_t* request, long current, long total)
+		{
+			fixed (cef_urlrequest_client_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, cef_urlrequest_t*, long, long, void>)on_download_progress)(self, request, current, total);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request, const void* data, size_t data_length)*
@@ -85,8 +100,13 @@ namespace CefNet.CApi
 		/// UR_FLAG_NO_DOWNLOAD_DATA flag is set on the request.
 		/// </summary>
 		[NativeName("on_download_data")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnDownloadData(cef_urlrequest_t* request, [Immutable]void* data, UIntPtr data_length);
+		public unsafe void OnDownloadData(cef_urlrequest_t* request, [Immutable]void* data, UIntPtr data_length)
+		{
+			fixed (cef_urlrequest_client_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, cef_urlrequest_t*, void*, UIntPtr, void>)on_download_data)(self, request, data, data_length);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_urlrequest_client_t* self, int isProxy, const cef_string_t* host, int port, const cef_string_t* realm, const cef_string_t* scheme, _cef_auth_callback_t* callback)*
@@ -105,8 +125,13 @@ namespace CefNet.CApi
 		/// only be called for requests initiated from the browser process.
 		/// </summary>
 		[NativeName("get_auth_credentials")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetAuthCredentials(int isProxy, [Immutable]cef_string_t* host, int port, [Immutable]cef_string_t* realm, [Immutable]cef_string_t* scheme, cef_auth_callback_t* callback);
+		public unsafe int GetAuthCredentials(int isProxy, [Immutable]cef_string_t* host, int port, [Immutable]cef_string_t* realm, [Immutable]cef_string_t* scheme, cef_auth_callback_t* callback)
+		{
+			fixed (cef_urlrequest_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_urlrequest_client_t*, int, cef_string_t*, int, cef_string_t*, cef_string_t*, cef_auth_callback_t*, int>)get_auth_credentials)(self, isProxy, host, port, realm, scheme, callback);
+			}
+		}
 	}
 }
 

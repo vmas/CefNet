@@ -38,8 +38,13 @@ namespace CefNet.CApi
 		/// Call to cancel the download.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_download_item_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_download_item_callback_t*, void>)cancel)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_download_item_callback_t* self)*
@@ -50,8 +55,13 @@ namespace CefNet.CApi
 		/// Call to pause the download.
 		/// </summary>
 		[NativeName("pause")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Pause();
+		public unsafe void Pause()
+		{
+			fixed (cef_download_item_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_download_item_callback_t*, void>)pause)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_download_item_callback_t* self)*
@@ -62,8 +72,13 @@ namespace CefNet.CApi
 		/// Call to resume the download.
 		/// </summary>
 		[NativeName("resume")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Resume();
+		public unsafe void Resume()
+		{
+			fixed (cef_download_item_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_download_item_callback_t*, void>)resume)(self);
+			}
+		}
 	}
 }
 

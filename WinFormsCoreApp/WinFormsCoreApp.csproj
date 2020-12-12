@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -18,7 +18,7 @@
     <ProjectReference Include="..\CefNet\CefNet.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework.StartsWith('net')) AND $([System.Char]::IsDigit($(TargetFramework), 3))">
+  <ItemGroup Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net\d+$'))">
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 

@@ -30,6 +30,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefRenderProcessHandler : CefBaseRefCounted<cef_render_process_handler_t>, ICefRenderProcessHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnWebKitInitializedDelegate fnOnWebKitInitialized = OnWebKitInitializedImpl;
 
 		private static readonly OnBrowserCreatedDelegate fnOnBrowserCreated = OnBrowserCreatedImpl;
@@ -48,6 +49,7 @@ namespace CefNet
 
 		private static readonly OnProcessMessageReceivedDelegate fnOnProcessMessageReceived = OnProcessMessageReceivedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefRenderProcessHandler Create(IntPtr instance)
 		{
 			return new CefRenderProcessHandler((cef_render_process_handler_t*)instance);
@@ -56,6 +58,7 @@ namespace CefNet
 		public CefRenderProcessHandler()
 		{
 			cef_render_process_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_web_kit_initialized = (void*)Marshal.GetFunctionPointerForDelegate(fnOnWebKitInitialized);
 			self->on_browser_created = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBrowserCreated);
 			self->on_browser_destroyed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBrowserDestroyed);
@@ -65,6 +68,17 @@ namespace CefNet
 			self->on_uncaught_exception = (void*)Marshal.GetFunctionPointerForDelegate(fnOnUncaughtException);
 			self->on_focused_node_changed = (void*)Marshal.GetFunctionPointerForDelegate(fnOnFocusedNodeChanged);
 			self->on_process_message_received = (void*)Marshal.GetFunctionPointerForDelegate(fnOnProcessMessageReceived);
+			#else
+			self->on_web_kit_initialized = (delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, void>)&OnWebKitInitializedImpl;
+			self->on_browser_created = (delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_dictionary_value_t*, void>)&OnBrowserCreatedImpl;
+			self->on_browser_destroyed = (delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, void>)&OnBrowserDestroyedImpl;
+			self->get_load_handler = (delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_load_handler_t*>)&GetLoadHandlerImpl;
+			self->on_context_created = (delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, cef_v8context_t*, void>)&OnContextCreatedImpl;
+			self->on_context_released = (delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, cef_v8context_t*, void>)&OnContextReleasedImpl;
+			self->on_uncaught_exception = (delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, cef_v8context_t*, cef_v8exception_t*, cef_v8stack_trace_t*, void>)&OnUncaughtExceptionImpl;
+			self->on_focused_node_changed = (delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, cef_domnode_t*, void>)&OnFocusedNodeChangedImpl;
+			self->on_process_message_received = (delegate* unmanaged[Stdcall]<cef_render_process_handler_t*, cef_browser_t*, cef_frame_t*, CefProcessId, cef_process_message_t*, int>)&OnProcessMessageReceivedImpl;
+			#endif
 		}
 
 		public CefRenderProcessHandler(cef_render_process_handler_t* instance)
@@ -79,10 +93,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnWebKitInitializedDelegate(cef_render_process_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_render_process_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnWebKitInitializedImpl(cef_render_process_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;
@@ -109,10 +126,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnBrowserCreatedDelegate(cef_render_process_handler_t* self, cef_browser_t* browser, cef_dictionary_value_t* extra_info);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_dictionary_value_t* extra_info)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnBrowserCreatedImpl(cef_render_process_handler_t* self, cef_browser_t* browser, cef_dictionary_value_t* extra_info)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;
@@ -135,10 +155,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnBrowserDestroyedDelegate(cef_render_process_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnBrowserDestroyedImpl(cef_render_process_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;
@@ -158,10 +181,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_load_handler_t* GetLoadHandlerDelegate(cef_render_process_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_load_handler_t* (*)(_cef_render_process_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_load_handler_t* GetLoadHandlerImpl(cef_render_process_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;
@@ -190,10 +216,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnContextCreatedDelegate(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_v8context_t* context)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnContextCreatedImpl(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;
@@ -218,10 +247,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnContextReleasedDelegate(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_v8context_t* context)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnContextReleasedImpl(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;
@@ -247,10 +279,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnUncaughtExceptionDelegate(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context, cef_v8exception_t* exception, cef_v8stack_trace_t* stackTrace);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_v8context_t* context, _cef_v8exception_t* exception, _cef_v8stack_trace_t* stackTrace)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnUncaughtExceptionImpl(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_v8context_t* context, cef_v8exception_t* exception, cef_v8stack_trace_t* stackTrace)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;
@@ -281,10 +316,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnFocusedNodeChangedDelegate(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_domnode_t* node);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_domnode_t* node)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnFocusedNodeChangedImpl(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_domnode_t* node)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;
@@ -311,10 +349,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnProcessMessageReceivedDelegate(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_render_process_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_process_id_t source_process, _cef_process_message_t* message)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnProcessMessageReceivedImpl(cef_render_process_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderProcessHandler;

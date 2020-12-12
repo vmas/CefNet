@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this object is read-only.
 		/// </summary>
 		[NativeName("is_read_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsReadOnly();
+		public unsafe int IsReadOnly()
+		{
+			fixed (cef_post_data_element_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_element_t*, int>)is_read_only)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_post_data_element_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Remove all contents from the post data element.
 		/// </summary>
 		[NativeName("set_to_empty")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetToEmpty();
+		public unsafe void SetToEmpty()
+		{
+			fixed (cef_post_data_element_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_post_data_element_t*, void>)set_to_empty)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_post_data_element_t* self, const cef_string_t* fileName)*
@@ -63,8 +73,13 @@ namespace CefNet.CApi
 		/// The post data element will represent a file.
 		/// </summary>
 		[NativeName("set_to_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetToFile([Immutable]cef_string_t* fileName);
+		public unsafe void SetToFile([Immutable]cef_string_t* fileName)
+		{
+			fixed (cef_post_data_element_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_post_data_element_t*, cef_string_t*, void>)set_to_file)(self, fileName);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_post_data_element_t* self, size_t size, const void* bytes)*
@@ -76,8 +91,13 @@ namespace CefNet.CApi
 		/// copied.
 		/// </summary>
 		[NativeName("set_to_bytes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetToBytes(UIntPtr size, [Immutable]void* bytes);
+		public unsafe void SetToBytes(UIntPtr size, [Immutable]void* bytes)
+		{
+			fixed (cef_post_data_element_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_post_data_element_t*, UIntPtr, void*, void>)set_to_bytes)(self, size, bytes);
+			}
+		}
 
 		/// <summary>
 		/// cef_postdataelement_type_t (*)(_cef_post_data_element_t* self)*
@@ -88,8 +108,13 @@ namespace CefNet.CApi
 		/// Return the type of this post data element.
 		/// </summary>
 		[NativeName("get_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefPostDataElementType GetCefType();
+		public unsafe CefPostDataElementType GetCefType()
+		{
+			fixed (cef_post_data_element_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_element_t*, CefPostDataElementType>)get_type)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_post_data_element_t* self)*
@@ -101,8 +126,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFile();
+		public unsafe cef_string_userfree_t GetFile()
+		{
+			fixed (cef_post_data_element_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_element_t*, cef_string_userfree_t>)get_file)(self);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_post_data_element_t* self)*
@@ -113,8 +143,13 @@ namespace CefNet.CApi
 		/// Return the number of bytes.
 		/// </summary>
 		[NativeName("get_bytes_count")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetBytesCount();
+		public unsafe UIntPtr GetBytesCount()
+		{
+			fixed (cef_post_data_element_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_element_t*, UIntPtr>)get_bytes_count)(self);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_post_data_element_t* self, size_t size, void* bytes)*
@@ -126,8 +161,13 @@ namespace CefNet.CApi
 		/// actually read.
 		/// </summary>
 		[NativeName("get_bytes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetBytes(UIntPtr size, void* bytes);
+		public unsafe UIntPtr GetBytes(UIntPtr size, void* bytes)
+		{
+			fixed (cef_post_data_element_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_post_data_element_t*, UIntPtr, void*, UIntPtr>)get_bytes)(self, size, bytes);
+			}
+		}
 	}
 }
 

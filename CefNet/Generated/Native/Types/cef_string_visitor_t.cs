@@ -38,8 +38,13 @@ namespace CefNet.CApi
 		/// Method that will be executed.
 		/// </summary>
 		[NativeName("visit")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Visit([Immutable]cef_string_t* @string);
+		public unsafe void Visit([Immutable]cef_string_t* @string)
+		{
+			fixed (cef_string_visitor_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_string_visitor_t*, cef_string_t*, void>)visit)(self, @string);
+			}
+		}
 	}
 }
 

@@ -47,8 +47,13 @@ namespace CefNet.CApi
 		/// message loop. This function is safe to call from any thread.
 		/// </summary>
 		[NativeName("get_task_runner")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_task_runner_t* GetTaskRunner();
+		public unsafe cef_task_runner_t* GetTaskRunner()
+		{
+			fixed (cef_thread_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_thread_t*, cef_task_runner_t*>)get_task_runner)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_platform_thread_id_t (*)(_cef_thread_t* self)*
@@ -60,8 +65,13 @@ namespace CefNet.CApi
 		/// is called. This function is safe to call from any thread.
 		/// </summary>
 		[NativeName("get_platform_thread_id")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern uint GetPlatformThreadId();
+		public unsafe uint GetPlatformThreadId()
+		{
+			fixed (cef_thread_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_thread_t*, uint>)get_platform_thread_id)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_thread_t* self)*
@@ -74,8 +84,13 @@ namespace CefNet.CApi
 		/// cef_thread_create() was called with a |stoppable| value of false (0).
 		/// </summary>
 		[NativeName("stop")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Stop();
+		public unsafe void Stop()
+		{
+			fixed (cef_thread_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_thread_t*, void>)stop)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_thread_t* self)*
@@ -87,8 +102,13 @@ namespace CefNet.CApi
 		/// called from the same thread that called cef_thread_create().
 		/// </summary>
 		[NativeName("is_running")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsRunning();
+		public unsafe int IsRunning()
+		{
+			fixed (cef_thread_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_thread_t*, int>)is_running)(self);
+			}
+		}
 	}
 }
 

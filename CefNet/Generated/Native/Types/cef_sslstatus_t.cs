@@ -38,8 +38,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the status is related to a secure SSL/TLS connection.
 		/// </summary>
 		[NativeName("is_secure_connection")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSecureConnection();
+		public unsafe int IsSecureConnection()
+		{
+			fixed (cef_sslstatus_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_sslstatus_t*, int>)is_secure_connection)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_cert_status_t (*)(_cef_sslstatus_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// certificate.
 		/// </summary>
 		[NativeName("get_cert_status")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefCertStatus GetCertStatus();
+		public unsafe CefCertStatus GetCertStatus()
+		{
+			fixed (cef_sslstatus_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_sslstatus_t*, CefCertStatus>)get_cert_status)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_ssl_version_t (*)(_cef_sslstatus_t* self)*
@@ -63,8 +73,13 @@ namespace CefNet.CApi
 		/// Returns the SSL version used for the SSL connection.
 		/// </summary>
 		[NativeName("get_sslversion")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefSSLVersion GetSslversion();
+		public unsafe CefSSLVersion GetSslversion()
+		{
+			fixed (cef_sslstatus_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_sslstatus_t*, CefSSLVersion>)get_sslversion)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_ssl_content_status_t (*)(_cef_sslstatus_t* self)*
@@ -75,8 +90,13 @@ namespace CefNet.CApi
 		/// Returns a bitmask containing the page security content status.
 		/// </summary>
 		[NativeName("get_content_status")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefSSLContentStatus GetContentStatus();
+		public unsafe CefSSLContentStatus GetContentStatus()
+		{
+			fixed (cef_sslstatus_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_sslstatus_t*, CefSSLContentStatus>)get_content_status)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_x509certificate_t* (*)(_cef_sslstatus_t* self)*
@@ -87,8 +107,13 @@ namespace CefNet.CApi
 		/// Returns the X.509 certificate.
 		/// </summary>
 		[NativeName("get_x509certificate")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_x509certificate_t* GetX509certificate();
+		public unsafe cef_x509certificate_t* GetX509certificate()
+		{
+			fixed (cef_sslstatus_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_sslstatus_t*, cef_x509certificate_t*>)get_x509certificate)(self);
+			}
+		}
 	}
 }
 

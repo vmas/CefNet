@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// called if no plugins are found.
 		/// </summary>
 		[NativeName("visit")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Visit(cef_web_plugin_info_t* info, int count, int total);
+		public unsafe int Visit(cef_web_plugin_info_t* info, int count, int total)
+		{
+			fixed (cef_web_plugin_info_visitor_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_web_plugin_info_visitor_t*, cef_web_plugin_info_t*, int, int, int>)visit)(self, info, count, total);
+			}
+		}
 	}
 }
 

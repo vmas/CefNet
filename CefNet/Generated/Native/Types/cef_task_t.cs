@@ -43,8 +43,13 @@ namespace CefNet.CApi
 		/// Method that will be executed on the target thread.
 		/// </summary>
 		[NativeName("execute")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Execute();
+		public unsafe void Execute()
+		{
+			fixed (cef_task_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_task_t*, void>)execute)(self);
+			}
+		}
 	}
 }
 

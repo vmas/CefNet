@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this object is read-only.
 		/// </summary>
 		[NativeName("is_read_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsReadOnly();
+		public unsafe int IsReadOnly()
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_t*, int>)is_read_only)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_errorcode_t (*)(_cef_response_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Get the response error code. Returns ERR_NONE if there was no error.
 		/// </summary>
 		[NativeName("get_error")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefErrorCode GetError();
+		public unsafe CefErrorCode GetError()
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_t*, CefErrorCode>)get_error)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_response_t* self, cef_errorcode_t error)*
@@ -64,8 +74,13 @@ namespace CefNet.CApi
 		/// return errors during initial request processing.
 		/// </summary>
 		[NativeName("set_error")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetError(CefErrorCode error);
+		public unsafe void SetError(CefErrorCode error)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_response_t*, CefErrorCode, void>)set_error)(self, error);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_response_t* self)*
@@ -76,8 +91,13 @@ namespace CefNet.CApi
 		/// Get the response status code.
 		/// </summary>
 		[NativeName("get_status")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetStatus();
+		public unsafe int GetStatus()
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_t*, int>)get_status)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_response_t* self, int status)*
@@ -88,8 +108,13 @@ namespace CefNet.CApi
 		/// Set the response status code.
 		/// </summary>
 		[NativeName("set_status")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetStatus(int status);
+		public unsafe void SetStatus(int status)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_response_t*, int, void>)set_status)(self, status);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_response_t* self)*
@@ -101,8 +126,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_status_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetStatusText();
+		public unsafe cef_string_userfree_t GetStatusText()
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_userfree_t>)get_status_text)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_response_t* self, const cef_string_t* statusText)*
@@ -113,8 +143,13 @@ namespace CefNet.CApi
 		/// Set the response status text.
 		/// </summary>
 		[NativeName("set_status_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetStatusText([Immutable]cef_string_t* statusText);
+		public unsafe void SetStatusText([Immutable]cef_string_t* statusText)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_t*, void>)set_status_text)(self, statusText);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_response_t* self)*
@@ -126,8 +161,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_mime_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetMimeType();
+		public unsafe cef_string_userfree_t GetMimeType()
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_userfree_t>)get_mime_type)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_response_t* self, const cef_string_t* mimeType)*
@@ -138,8 +178,13 @@ namespace CefNet.CApi
 		/// Set the response mime type.
 		/// </summary>
 		[NativeName("set_mime_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetMimeType([Immutable]cef_string_t* mimeType);
+		public unsafe void SetMimeType([Immutable]cef_string_t* mimeType)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_t*, void>)set_mime_type)(self, mimeType);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_response_t* self)*
@@ -151,8 +196,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_charset")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetCharset();
+		public unsafe cef_string_userfree_t GetCharset()
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_userfree_t>)get_charset)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_response_t* self, const cef_string_t* charset)*
@@ -163,8 +213,13 @@ namespace CefNet.CApi
 		/// Set the response charset.
 		/// </summary>
 		[NativeName("set_charset")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetCharset([Immutable]cef_string_t* charset);
+		public unsafe void SetCharset([Immutable]cef_string_t* charset)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_t*, void>)set_charset)(self, charset);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_response_t* self, const cef_string_t* name)*
@@ -176,8 +231,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_header_by_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetHeaderByName([Immutable]cef_string_t* name);
+		public unsafe cef_string_userfree_t GetHeaderByName([Immutable]cef_string_t* name)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_t*, cef_string_userfree_t>)get_header_by_name)(self, name);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_response_t* self, const cef_string_t* name, const cef_string_t* value, int overwrite)*
@@ -190,8 +250,13 @@ namespace CefNet.CApi
 		/// existing values will not be overwritten.
 		/// </summary>
 		[NativeName("set_header_by_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetHeaderByName([Immutable]cef_string_t* name, [Immutable]cef_string_t* value, int overwrite);
+		public unsafe void SetHeaderByName([Immutable]cef_string_t* name, [Immutable]cef_string_t* value, int overwrite)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_t*, cef_string_t*, int, void>)set_header_by_name)(self, name, value, overwrite);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_response_t* self, cef_string_multimap_t headerMap)*
@@ -202,8 +267,13 @@ namespace CefNet.CApi
 		/// Get all response header fields.
 		/// </summary>
 		[NativeName("get_header_map")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetHeaderMap(cef_string_multimap_t headerMap);
+		public unsafe void GetHeaderMap(cef_string_multimap_t headerMap)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_multimap_t, void>)get_header_map)(self, headerMap);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_response_t* self, cef_string_multimap_t headerMap)*
@@ -214,8 +284,13 @@ namespace CefNet.CApi
 		/// Set all response header fields.
 		/// </summary>
 		[NativeName("set_header_map")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetHeaderMap(cef_string_multimap_t headerMap);
+		public unsafe void SetHeaderMap(cef_string_multimap_t headerMap)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_multimap_t, void>)set_header_map)(self, headerMap);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_response_t* self)*
@@ -227,8 +302,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetUrl();
+		public unsafe cef_string_userfree_t GetUrl()
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_userfree_t>)get_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_response_t* self, const cef_string_t* url)*
@@ -239,8 +319,13 @@ namespace CefNet.CApi
 		/// Set the resolved URL after redirects or changed as a result of HSTS.
 		/// </summary>
 		[NativeName("set_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetUrl([Immutable]cef_string_t* url);
+		public unsafe void SetUrl([Immutable]cef_string_t* url)
+		{
+			fixed (cef_response_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_response_t*, cef_string_t*, void>)set_url)(self, url);
+			}
+		}
 	}
 }
 

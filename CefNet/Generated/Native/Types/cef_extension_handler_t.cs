@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// will be the error code.
 		/// </summary>
 		[NativeName("on_extension_load_failed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnExtensionLoadFailed(CefErrorCode result);
+		public unsafe void OnExtensionLoadFailed(CefErrorCode result)
+		{
+			fixed (cef_extension_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_extension_handler_t*, CefErrorCode, void>)on_extension_load_failed)(self, result);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_extension_handler_t* self, _cef_extension_t* extension)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// |extension| is the loaded extension.
 		/// </summary>
 		[NativeName("on_extension_loaded")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnExtensionLoaded(cef_extension_t* extension);
+		public unsafe void OnExtensionLoaded(cef_extension_t* extension)
+		{
+			fixed (cef_extension_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, void>)on_extension_loaded)(self, extension);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_extension_handler_t* self, _cef_extension_t* extension)*
@@ -66,8 +76,13 @@ namespace CefNet.CApi
 		/// Called after the cef_extension_t::Unload request has completed.
 		/// </summary>
 		[NativeName("on_extension_unloaded")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnExtensionUnloaded(cef_extension_t* extension);
+		public unsafe void OnExtensionUnloaded(cef_extension_t* extension)
+		{
+			fixed (cef_extension_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, void>)on_extension_unloaded)(self, extension);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, const cef_string_t* url, _cef_client_t** client, _cef_browser_settings_t* settings)*
@@ -91,9 +106,14 @@ namespace CefNet.CApi
 		/// browser. See https://developer.chrome.com/extensions/event_pages for more
 		/// information about extension background script usage.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_before_background_browser")]
-		public unsafe extern int OnBeforeBackgroundBrowser(cef_extension_t* extension, [Immutable]cef_string_t* url, cef_client_t** client, cef_browser_settings_t* settings);
+		public unsafe int OnBeforeBackgroundBrowser(cef_extension_t* extension, [Immutable]cef_string_t* url, cef_client_t** client, cef_browser_settings_t* settings)
+		{
+			fixed (cef_extension_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_string_t*, cef_client_t**, cef_browser_settings_t*, int>)on_before_background_browser)(self, extension, url, client, settings);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, _cef_browser_t* active_browser, int index, const cef_string_t* url, int active, _cef_window_info_t* windowInfo, _cef_client_t** client, _cef_browser_settings_t* settings)*
@@ -116,8 +136,13 @@ namespace CefNet.CApi
 		/// wrapped in a cef_browser_view_t.
 		/// </summary>
 		[NativeName("on_before_browser")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnBeforeBrowser(cef_extension_t* extension, cef_browser_t* browser, cef_browser_t* active_browser, int index, [Immutable]cef_string_t* url, int active, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings);
+		public unsafe int OnBeforeBrowser(cef_extension_t* extension, cef_browser_t* browser, cef_browser_t* active_browser, int index, [Immutable]cef_string_t* url, int active, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings)
+		{
+			fixed (cef_extension_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_browser_t*, cef_browser_t*, int, cef_string_t*, int, cef_window_info_t*, cef_client_t**, cef_browser_settings_t*, int>)on_before_browser)(self, extension, browser, active_browser, index, url, active, windowInfo, client, settings);
+			}
+		}
 
 		/// <summary>
 		/// _cef_browser_t* (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, int include_incognito)*
@@ -134,8 +159,13 @@ namespace CefNet.CApi
 		/// which case |include_incognito| will be true (1).
 		/// </summary>
 		[NativeName("get_active_browser")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_browser_t* GetActiveBrowser(cef_extension_t* extension, cef_browser_t* browser, int include_incognito);
+		public unsafe cef_browser_t* GetActiveBrowser(cef_extension_t* extension, cef_browser_t* browser, int include_incognito)
+		{
+			fixed (cef_extension_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_browser_t*, int, cef_browser_t*>)get_active_browser)(self, extension, browser, include_incognito);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, int include_incognito, _cef_browser_t* target_browser)*
@@ -151,8 +181,13 @@ namespace CefNet.CApi
 		/// enabled, in which case |include_incognito| will be true (1).
 		/// </summary>
 		[NativeName("can_access_browser")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int CanAccessBrowser(cef_extension_t* extension, cef_browser_t* browser, int include_incognito, cef_browser_t* target_browser);
+		public unsafe int CanAccessBrowser(cef_extension_t* extension, cef_browser_t* browser, int include_incognito, cef_browser_t* target_browser)
+		{
+			fixed (cef_extension_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_browser_t*, int, cef_browser_t*, int>)can_access_browser)(self, extension, browser, include_incognito, target_browser);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, const cef_string_t* file, _cef_get_extension_resource_callback_t* callback)*
@@ -170,8 +205,13 @@ namespace CefNet.CApi
 		/// resources handled via this function.
 		/// </summary>
 		[NativeName("get_extension_resource")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetExtensionResource(cef_extension_t* extension, cef_browser_t* browser, [Immutable]cef_string_t* file, cef_get_extension_resource_callback_t* callback);
+		public unsafe int GetExtensionResource(cef_extension_t* extension, cef_browser_t* browser, [Immutable]cef_string_t* file, cef_get_extension_resource_callback_t* callback)
+		{
+			fixed (cef_extension_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_handler_t*, cef_extension_t*, cef_browser_t*, cef_string_t*, cef_get_extension_resource_callback_t*, int>)get_extension_resource)(self, extension, browser, file, callback);
+			}
+		}
 	}
 }
 

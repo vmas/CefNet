@@ -38,8 +38,13 @@ namespace CefNet.CApi
 		/// Continue printing with the specified |settings|.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue(cef_print_settings_t* settings);
+		public unsafe void Continue(cef_print_settings_t* settings)
+		{
+			fixed (cef_print_dialog_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_dialog_callback_t*, cef_print_settings_t*, void>)cont)(self, settings);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_print_dialog_callback_t* self)*
@@ -50,8 +55,13 @@ namespace CefNet.CApi
 		/// Cancel the printing.
 		/// </summary>
 		[NativeName("cancel")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Cancel();
+		public unsafe void Cancel()
+		{
+			fixed (cef_print_dialog_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_dialog_callback_t*, void>)cancel)(self);
+			}
+		}
 	}
 }
 

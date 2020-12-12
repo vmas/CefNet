@@ -19,11 +19,12 @@ namespace CefNet.Internal
 			get { return (IModernFormsWebViewPrivate)base.WebView; }
 		}
 
-		protected override void OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
+		protected override bool OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
 		{
 			//WebView.RaiseCefCursorChange(
 			//	new CursorChangeEventArgs(type != CefCursorType.Custom ? CursorInteropHelper.Create(cursorHandle) : CustomCursor.Create(ref customCursorInfo), type)
 			//);
+			return false;
 		}
 
 		protected override bool OnTooltip(CefBrowser browser, ref string text)

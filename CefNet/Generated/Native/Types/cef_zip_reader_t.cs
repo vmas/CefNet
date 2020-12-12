@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// cursor position was set successfully.
 		/// </summary>
 		[NativeName("move_to_first_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToFirstFile();
+		public unsafe int MoveToFirstFile()
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, int>)move_to_first_file)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_zip_reader_t* self)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// cursor position was set successfully.
 		/// </summary>
 		[NativeName("move_to_next_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToNextFile();
+		public unsafe int MoveToNextFile()
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, int>)move_to_next_file)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_zip_reader_t* self, const cef_string_t* fileName, int caseSensitive)*
@@ -68,8 +78,13 @@ namespace CefNet.CApi
 		/// cursor position was set successfully.
 		/// </summary>
 		[NativeName("move_to_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToFile([Immutable]cef_string_t* fileName, int caseSensitive);
+		public unsafe int MoveToFile([Immutable]cef_string_t* fileName, int caseSensitive)
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, cef_string_t*, int, int>)move_to_file)(self, fileName, caseSensitive);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_zip_reader_t* self)*
@@ -81,8 +96,13 @@ namespace CefNet.CApi
 		/// occurs on the correct thread.
 		/// </summary>
 		[NativeName("close")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Close();
+		public unsafe int Close()
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, int>)close)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_zip_reader_t* self)*
@@ -94,8 +114,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_file_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFileName();
+		public unsafe cef_string_userfree_t GetFileName()
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, cef_string_userfree_t>)get_file_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// int64 (*)(_cef_zip_reader_t* self)*
@@ -106,8 +131,13 @@ namespace CefNet.CApi
 		/// Returns the uncompressed size of the file.
 		/// </summary>
 		[NativeName("get_file_size")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern long GetFileSize();
+		public unsafe long GetFileSize()
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, long>)get_file_size)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_time_t (*)(_cef_zip_reader_t* self)*
@@ -118,8 +148,13 @@ namespace CefNet.CApi
 		/// Returns the last modified timestamp for the file.
 		/// </summary>
 		[NativeName("get_file_last_modified")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_time_t GetFileLastModified();
+		public unsafe cef_time_t GetFileLastModified()
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, cef_time_t>)get_file_last_modified)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_zip_reader_t* self, const cef_string_t* password)*
@@ -131,8 +166,13 @@ namespace CefNet.CApi
 		/// optionally be specified.
 		/// </summary>
 		[NativeName("open_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OpenFile([Immutable]cef_string_t* password);
+		public unsafe int OpenFile([Immutable]cef_string_t* password)
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, cef_string_t*, int>)open_file)(self, password);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_zip_reader_t* self)*
@@ -143,8 +183,13 @@ namespace CefNet.CApi
 		/// Closes the file.
 		/// </summary>
 		[NativeName("close_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int CloseFile();
+		public unsafe int CloseFile()
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, int>)close_file)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_zip_reader_t* self, void* buffer, size_t bufferSize)*
@@ -158,8 +203,13 @@ namespace CefNet.CApi
 		/// an error occurred, 0 if at the end of file, or the number of bytes read.
 		/// </summary>
 		[NativeName("read_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int ReadFile(void* buffer, UIntPtr bufferSize);
+		public unsafe int ReadFile(void* buffer, UIntPtr bufferSize)
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, void*, UIntPtr, int>)read_file)(self, buffer, bufferSize);
+			}
+		}
 
 		/// <summary>
 		/// int64 (*)(_cef_zip_reader_t* self)*
@@ -170,8 +220,13 @@ namespace CefNet.CApi
 		/// Returns the current offset in the uncompressed file contents.
 		/// </summary>
 		[NativeName("tell")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern long Tell();
+		public unsafe long Tell()
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, long>)tell)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_zip_reader_t* self)*
@@ -182,8 +237,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if at end of the file contents.
 		/// </summary>
 		[NativeName("eof")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Eof();
+		public unsafe int Eof()
+		{
+			fixed (cef_zip_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_zip_reader_t*, int>)eof)(self);
+			}
+		}
 	}
 }
 

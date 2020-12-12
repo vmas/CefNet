@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// was pressed. The |user_input| value should be specified for prompt dialogs.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue(int success, [Immutable]cef_string_t* user_input);
+		public unsafe void Continue(int success, [Immutable]cef_string_t* user_input)
+		{
+			fixed (cef_jsdialog_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_jsdialog_callback_t*, int, cef_string_t*, void>)cont)(self, success, user_input);
+			}
+		}
 	}
 }
 

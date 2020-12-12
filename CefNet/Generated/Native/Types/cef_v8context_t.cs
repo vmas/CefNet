@@ -44,8 +44,13 @@ namespace CefNet.CApi
 		/// called on any render process thread.
 		/// </summary>
 		[NativeName("get_task_runner")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_task_runner_t* GetTaskRunner();
+		public unsafe cef_task_runner_t* GetTaskRunner()
+		{
+			fixed (cef_v8context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8context_t*, cef_task_runner_t*>)get_task_runner)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8context_t* self)*
@@ -58,8 +63,13 @@ namespace CefNet.CApi
 		/// returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_v8context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8context_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_browser_t* (*)(_cef_v8context_t* self)*
@@ -71,8 +81,13 @@ namespace CefNet.CApi
 		/// reference for WebWorker contexts.
 		/// </summary>
 		[NativeName("get_browser")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_browser_t* GetBrowser();
+		public unsafe cef_browser_t* GetBrowser()
+		{
+			fixed (cef_v8context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8context_t*, cef_browser_t*>)get_browser)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_frame_t* (*)(_cef_v8context_t* self)*
@@ -84,8 +99,13 @@ namespace CefNet.CApi
 		/// reference for WebWorker contexts.
 		/// </summary>
 		[NativeName("get_frame")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_frame_t* GetFrame();
+		public unsafe cef_frame_t* GetFrame()
+		{
+			fixed (cef_v8context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8context_t*, cef_frame_t*>)get_frame)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_v8value_t* (*)(_cef_v8context_t* self)*
@@ -97,8 +117,13 @@ namespace CefNet.CApi
 		/// before calling this function.
 		/// </summary>
 		[NativeName("get_global")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_v8value_t* GetGlobal();
+		public unsafe cef_v8value_t* GetGlobal()
+		{
+			fixed (cef_v8context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8context_t*, cef_v8value_t*>)get_global)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8context_t* self)*
@@ -113,8 +138,13 @@ namespace CefNet.CApi
 		/// if the scope was entered successfully.
 		/// </summary>
 		[NativeName("enter")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Enter();
+		public unsafe int Enter()
+		{
+			fixed (cef_v8context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8context_t*, int>)enter)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8context_t* self)*
@@ -126,8 +156,13 @@ namespace CefNet.CApi
 		/// true (1) if the scope was exited successfully.
 		/// </summary>
 		[NativeName("exit")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Exit();
+		public unsafe int Exit()
+		{
+			fixed (cef_v8context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8context_t*, int>)exit)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8context_t* self, _cef_v8context_t* that)*
@@ -139,8 +174,13 @@ namespace CefNet.CApi
 		/// object.
 		/// </summary>
 		[NativeName("is_same")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSame(cef_v8context_t* that);
+		public unsafe int IsSame(cef_v8context_t* that)
+		{
+			fixed (cef_v8context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8context_t*, cef_v8context_t*, int>)is_same)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8context_t* self, const cef_string_t* code, const cef_string_t* script_url, int start_line, _cef_v8value_t** retval, _cef_v8exception_t** exception)*
@@ -156,8 +196,13 @@ namespace CefNet.CApi
 		/// exception, if any, and the function will return false (0).
 		/// </summary>
 		[NativeName("eval")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Eval([Immutable]cef_string_t* code, [Immutable]cef_string_t* script_url, int start_line, cef_v8value_t** retval, cef_v8exception_t** exception);
+		public unsafe int Eval([Immutable]cef_string_t* code, [Immutable]cef_string_t* script_url, int start_line, cef_v8value_t** retval, cef_v8exception_t** exception)
+		{
+			fixed (cef_v8context_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8context_t*, cef_string_t*, cef_string_t*, int, cef_v8value_t**, cef_v8exception_t**, int>)eval)(self, code, script_url, start_line, retval, exception);
+			}
+		}
 	}
 }
 

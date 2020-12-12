@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// resolved IP addresses or NULL if the resolution failed.
 		/// </summary>
 		[NativeName("on_resolve_completed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnResolveCompleted(CefErrorCode result, cef_string_list_t resolved_ips);
+		public unsafe void OnResolveCompleted(CefErrorCode result, cef_string_list_t resolved_ips)
+		{
+			fixed (cef_resolve_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_resolve_callback_t*, CefErrorCode, cef_string_list_t, void>)on_resolve_completed)(self, result, resolved_ips);
+			}
+		}
 	}
 }
 

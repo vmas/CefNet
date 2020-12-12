@@ -30,12 +30,14 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefResourceBundleHandler : CefBaseRefCounted<cef_resource_bundle_handler_t>, ICefResourceBundleHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly GetLocalizedStringDelegate fnGetLocalizedString = GetLocalizedStringImpl;
 
 		private static readonly GetDataResourceDelegate fnGetDataResource = GetDataResourceImpl;
 
 		private static readonly GetDataResourceForScaleDelegate fnGetDataResourceForScale = GetDataResourceForScaleImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefResourceBundleHandler Create(IntPtr instance)
 		{
 			return new CefResourceBundleHandler((cef_resource_bundle_handler_t*)instance);
@@ -44,9 +46,15 @@ namespace CefNet
 		public CefResourceBundleHandler()
 		{
 			cef_resource_bundle_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->get_localized_string = (void*)Marshal.GetFunctionPointerForDelegate(fnGetLocalizedString);
 			self->get_data_resource = (void*)Marshal.GetFunctionPointerForDelegate(fnGetDataResource);
 			self->get_data_resource_for_scale = (void*)Marshal.GetFunctionPointerForDelegate(fnGetDataResourceForScale);
+			#else
+			self->get_localized_string = (delegate* unmanaged[Stdcall]<cef_resource_bundle_handler_t*, int, cef_string_t*, int>)&GetLocalizedStringImpl;
+			self->get_data_resource = (delegate* unmanaged[Stdcall]<cef_resource_bundle_handler_t*, int, void**, UIntPtr*, int>)&GetDataResourceImpl;
+			self->get_data_resource_for_scale = (delegate* unmanaged[Stdcall]<cef_resource_bundle_handler_t*, int, CefScaleFactor, void**, UIntPtr*, int>)&GetDataResourceForScaleImpl;
+			#endif
 		}
 
 		public CefResourceBundleHandler(cef_resource_bundle_handler_t* instance)
@@ -68,10 +76,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetLocalizedStringDelegate(cef_resource_bundle_handler_t* self, int string_id, cef_string_t* @string);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_resource_bundle_handler_t* self, int string_id, cef_string_t* string)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetLocalizedStringImpl(cef_resource_bundle_handler_t* self, int string_id, cef_string_t* @string)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceBundleHandler;
@@ -103,10 +114,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetDataResourceDelegate(cef_resource_bundle_handler_t* self, int resource_id, void** data, UIntPtr* data_size);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_resource_bundle_handler_t* self, int resource_id, void** data, size_t* data_size)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetDataResourceImpl(cef_resource_bundle_handler_t* self, int resource_id, void** data, UIntPtr* data_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceBundleHandler;
@@ -136,10 +150,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetDataResourceForScaleDelegate(cef_resource_bundle_handler_t* self, int resource_id, CefScaleFactor scale_factor, void** data, UIntPtr* data_size);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_resource_bundle_handler_t* self, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetDataResourceForScaleImpl(cef_resource_bundle_handler_t* self, int resource_id, CefScaleFactor scale_factor, void** data, UIntPtr* data_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceBundleHandler;

@@ -142,22 +142,6 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Gets or sets a value indicating whether mouse cursor change is disabled.
-		/// </summary>
-		public unsafe virtual bool MouseCursorChangeDisabled
-		{
-			get
-			{
-				return SafeCall(NativeInstance->IsMouseCursorChangeDisabled() != 0);
-			}
-			set
-			{
-				NativeInstance->SetMouseCursorChangeDisabled(value ? 1 : 0);
-				GC.KeepAlive(this);
-			}
-		}
-
-		/// <summary>
 		/// Gets a value indicating whether window rendering is disabled.
 		/// </summary>
 		public unsafe virtual bool IsWindowRenderingDisabled

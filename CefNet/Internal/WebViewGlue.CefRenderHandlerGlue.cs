@@ -133,9 +133,9 @@ namespace CefNet.Internal
 			return false;
 		}
 
-		internal protected virtual void OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
+		internal protected virtual bool OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
 		{
-
+			return false;
 		}
 
 		[MethodImpl(MethodImplOptions.ForwardRef)]

@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// false (0) if the browser is giving focus to the previous component.
 		/// </summary>
 		[NativeName("on_take_focus")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnTakeFocus(cef_browser_t* browser, int next);
+		public unsafe void OnTakeFocus(cef_browser_t* browser, int next)
+		{
+			fixed (cef_focus_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_focus_handler_t*, cef_browser_t*, int, void>)on_take_focus)(self, browser, next);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_focus_handler_t* self, _cef_browser_t* browser, cef_focus_source_t source)*
@@ -56,8 +61,13 @@ namespace CefNet.CApi
 		/// focus to be set or true (1) to cancel setting the focus.
 		/// </summary>
 		[NativeName("on_set_focus")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnSetFocus(cef_browser_t* browser, CefFocusSource source);
+		public unsafe int OnSetFocus(cef_browser_t* browser, CefFocusSource source)
+		{
+			fixed (cef_focus_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_focus_handler_t*, cef_browser_t*, CefFocusSource, int>)on_set_focus)(self, browser, source);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_focus_handler_t* self, _cef_browser_t* browser)*
@@ -68,8 +78,13 @@ namespace CefNet.CApi
 		/// Called when the browser component has received focus.
 		/// </summary>
 		[NativeName("on_got_focus")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnGotFocus(cef_browser_t* browser);
+		public unsafe void OnGotFocus(cef_browser_t* browser)
+		{
+			fixed (cef_focus_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_focus_handler_t*, cef_browser_t*, void>)on_got_focus)(self, browser);
+			}
+		}
 	}
 }
 

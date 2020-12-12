@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_identifier")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetIdentifier();
+		public unsafe cef_string_userfree_t GetIdentifier()
+		{
+			fixed (cef_extension_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_t*, cef_string_userfree_t>)get_identifier)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_extension_t* self)*
@@ -57,8 +62,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_path")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetPath();
+		public unsafe cef_string_userfree_t GetPath()
+		{
+			fixed (cef_extension_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_t*, cef_string_userfree_t>)get_path)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_dictionary_value_t* (*)(_cef_extension_t* self)*
@@ -70,8 +80,13 @@ namespace CefNet.CApi
 		/// See https://developer.chrome.com/extensions/manifest for details.
 		/// </summary>
 		[NativeName("get_manifest")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_dictionary_value_t* GetManifest();
+		public unsafe cef_dictionary_value_t* GetManifest()
+		{
+			fixed (cef_extension_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_t*, cef_dictionary_value_t*>)get_manifest)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_extension_t* self, _cef_extension_t* that)*
@@ -84,8 +99,13 @@ namespace CefNet.CApi
 		/// match.
 		/// </summary>
 		[NativeName("is_same")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSame(cef_extension_t* that);
+		public unsafe int IsSame(cef_extension_t* that)
+		{
+			fixed (cef_extension_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_t*, cef_extension_t*, int>)is_same)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// _cef_extension_handler_t* (*)(_cef_extension_t* self)*
@@ -98,8 +118,13 @@ namespace CefNet.CApi
 		/// cef_request_context_t::LoadExtension.
 		/// </summary>
 		[NativeName("get_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_extension_handler_t* GetHandler();
+		public unsafe cef_extension_handler_t* GetHandler()
+		{
+			fixed (cef_extension_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_t*, cef_extension_handler_t*>)get_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_request_context_t* (*)(_cef_extension_t* self)*
@@ -113,8 +138,13 @@ namespace CefNet.CApi
 		/// about loader contexts. Must be called on the browser process UI thread.
 		/// </summary>
 		[NativeName("get_loader_context")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_request_context_t* GetLoaderContext();
+		public unsafe cef_request_context_t* GetLoaderContext()
+		{
+			fixed (cef_extension_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_t*, cef_request_context_t*>)get_loader_context)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_extension_t* self)*
@@ -126,8 +156,13 @@ namespace CefNet.CApi
 		/// the browser process UI thread.
 		/// </summary>
 		[NativeName("is_loaded")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsLoaded();
+		public unsafe int IsLoaded()
+		{
+			fixed (cef_extension_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_extension_t*, int>)is_loaded)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_extension_t* self)*
@@ -140,8 +175,13 @@ namespace CefNet.CApi
 		/// cef_extension_handler_t::OnExtensionUnloaded on success.
 		/// </summary>
 		[NativeName("unload")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Unload();
+		public unsafe void Unload()
+		{
+			fixed (cef_extension_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_extension_t*, void>)unload)(self);
+			}
+		}
 	}
 }
 

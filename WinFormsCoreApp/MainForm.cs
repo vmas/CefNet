@@ -138,6 +138,14 @@ namespace WinFormsCoreApp
 
 		private void HandleLoadFromString(object sender, EventArgs e)
 		{
+			if (!CefCommandLine.Global.HasSwitch("disable-site-isolation-trials"))
+			{
+				// info:
+				// https://magpcss.org/ceforum/viewtopic.php?f=6&t=17176&p=43706
+				// https://bitbucket.org/chromiumembedded/cef/issues/2586
+				MessageBox.Show("This test only works with --disable-site-isolation-trials.");
+			}
+
 			var view = SelectedView as CustomWebView;
 			if (view is null)
 				return;

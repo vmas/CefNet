@@ -30,8 +30,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefSchemeHandlerFactory : CefBaseRefCounted<cef_scheme_handler_factory_t>, ICefSchemeHandlerFactoryPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly CreateDelegate fnCreate = CreateImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefSchemeHandlerFactory Create(IntPtr instance)
 		{
 			return new CefSchemeHandlerFactory((cef_scheme_handler_factory_t*)instance);
@@ -40,7 +42,11 @@ namespace CefNet
 		public CefSchemeHandlerFactory()
 		{
 			cef_scheme_handler_factory_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->create = (void*)Marshal.GetFunctionPointerForDelegate(fnCreate);
+			#else
+			self->create = (delegate* unmanaged[Stdcall]<cef_scheme_handler_factory_t*, cef_browser_t*, cef_frame_t*, cef_string_t*, cef_request_t*, cef_resource_handler_t*>)&CreateImpl;
+			#endif
 		}
 
 		public CefSchemeHandlerFactory(cef_scheme_handler_factory_t* instance)
@@ -64,10 +70,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_resource_handler_t* CreateDelegate(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* scheme_name, cef_request_t* request);
 
+#endif // NET_LESS_5_0
 		// _cef_resource_handler_t* (*)(_cef_scheme_handler_factory_t* self, _cef_browser_t* browser, _cef_frame_t* frame, const cef_string_t* scheme_name, _cef_request_t* request)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_resource_handler_t* CreateImpl(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* scheme_name, cef_request_t* request)
 		{
 			var instance = GetInstance((IntPtr)self) as CefSchemeHandlerFactory;

@@ -423,6 +423,11 @@ namespace CefGen
 			list.Add(attr);
 		}
 
-
+		public static void AddUnmanagedCallesOnlyAttribute(this IList<CustomCodeAttribute> list)
+		{
+			var attr = new CustomCodeAttribute("UnmanagedCallersOnly");
+			attr.Parameters.Add("CallConvs = new[] { typeof(CallConvStdcall) }");
+			list.Add(attr);
+		}
 	}
 }

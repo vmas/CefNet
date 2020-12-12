@@ -38,8 +38,13 @@ namespace CefNet.CApi
 		/// Indicate completion of the print job.
 		/// </summary>
 		[NativeName("cont")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Continue();
+		public unsafe void Continue()
+		{
+			fixed (cef_print_job_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_print_job_callback_t*, void>)cont)(self);
+			}
+		}
 	}
 }
 

@@ -29,6 +29,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefReadHandler : CefBaseRefCounted<cef_read_handler_t>, ICefReadHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly ReadDelegate fnRead = ReadImpl;
 
 		private static readonly SeekDelegate fnSeek = SeekImpl;
@@ -39,6 +40,7 @@ namespace CefNet
 
 		private static readonly MayBlockDelegate fnMayBlock = MayBlockImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefReadHandler Create(IntPtr instance)
 		{
 			return new CefReadHandler((cef_read_handler_t*)instance);
@@ -47,11 +49,19 @@ namespace CefNet
 		public CefReadHandler()
 		{
 			cef_read_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->read = (void*)Marshal.GetFunctionPointerForDelegate(fnRead);
 			self->seek = (void*)Marshal.GetFunctionPointerForDelegate(fnSeek);
 			self->tell = (void*)Marshal.GetFunctionPointerForDelegate(fnTell);
 			self->eof = (void*)Marshal.GetFunctionPointerForDelegate(fnEof);
 			self->may_block = (void*)Marshal.GetFunctionPointerForDelegate(fnMayBlock);
+			#else
+			self->read = (delegate* unmanaged[Stdcall]<cef_read_handler_t*, void*, UIntPtr, UIntPtr, UIntPtr>)&ReadImpl;
+			self->seek = (delegate* unmanaged[Stdcall]<cef_read_handler_t*, long, int, int>)&SeekImpl;
+			self->tell = (delegate* unmanaged[Stdcall]<cef_read_handler_t*, long>)&TellImpl;
+			self->eof = (delegate* unmanaged[Stdcall]<cef_read_handler_t*, int>)&EofImpl;
+			self->may_block = (delegate* unmanaged[Stdcall]<cef_read_handler_t*, int>)&MayBlockImpl;
+			#endif
 		}
 
 		public CefReadHandler(cef_read_handler_t* instance)
@@ -70,10 +80,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate UIntPtr ReadDelegate(cef_read_handler_t* self, void* ptr, UIntPtr size, UIntPtr n);
 
+#endif // NET_LESS_5_0
 		// size_t (*)(_cef_read_handler_t* self, void* ptr, size_t size, size_t n)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe UIntPtr ReadImpl(cef_read_handler_t* self, void* ptr, UIntPtr size, UIntPtr n)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;
@@ -96,10 +109,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int SeekDelegate(cef_read_handler_t* self, long offset, int whence);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_read_handler_t* self, int64 offset, int whence)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int SeekImpl(cef_read_handler_t* self, long offset, int whence)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;
@@ -118,10 +134,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate long TellDelegate(cef_read_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// int64 (*)(_cef_read_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe long TellImpl(cef_read_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;
@@ -140,10 +159,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int EofDelegate(cef_read_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_read_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int EofImpl(cef_read_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;
@@ -164,10 +186,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int MayBlockDelegate(cef_read_handler_t* self);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_read_handler_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int MayBlockImpl(cef_read_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;

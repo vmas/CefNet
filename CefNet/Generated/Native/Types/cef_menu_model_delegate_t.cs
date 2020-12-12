@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// |event_flags|.
 		/// </summary>
 		[NativeName("execute_command")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ExecuteCommand(cef_menu_model_t* menu_model, int command_id, CefEventFlags event_flags);
+		public unsafe void ExecuteCommand(cef_menu_model_t* menu_model, int command_id, CefEventFlags event_flags)
+		{
+			fixed (cef_menu_model_delegate_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, int, CefEventFlags, void>)execute_command)(self, menu_model, command_id, event_flags);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, const cef_point_t* screen_point)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// window.
 		/// </summary>
 		[NativeName("mouse_outside_menu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void MouseOutsideMenu(cef_menu_model_t* menu_model, [Immutable]cef_point_t* screen_point);
+		public unsafe void MouseOutsideMenu(cef_menu_model_t* menu_model, [Immutable]cef_point_t* screen_point)
+		{
+			fixed (cef_menu_model_delegate_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, cef_point_t*, void>)mouse_outside_menu)(self, menu_model, screen_point);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, int is_rtl)*
@@ -67,8 +77,13 @@ namespace CefNet.CApi
 		/// (1) if the menu is displaying a right-to-left language.
 		/// </summary>
 		[NativeName("unhandled_open_submenu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void UnhandledOpenSubmenu(cef_menu_model_t* menu_model, int is_rtl);
+		public unsafe void UnhandledOpenSubmenu(cef_menu_model_t* menu_model, int is_rtl)
+		{
+			fixed (cef_menu_model_delegate_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, int, void>)unhandled_open_submenu)(self, menu_model, is_rtl);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, int is_rtl)*
@@ -80,8 +95,13 @@ namespace CefNet.CApi
 		/// (1) if the menu is displaying a right-to-left language.
 		/// </summary>
 		[NativeName("unhandled_close_submenu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void UnhandledCloseSubmenu(cef_menu_model_t* menu_model, int is_rtl);
+		public unsafe void UnhandledCloseSubmenu(cef_menu_model_t* menu_model, int is_rtl)
+		{
+			fixed (cef_menu_model_delegate_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, int, void>)unhandled_close_submenu)(self, menu_model, is_rtl);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model)*
@@ -92,8 +112,13 @@ namespace CefNet.CApi
 		/// The menu is about to show.
 		/// </summary>
 		[NativeName("menu_will_show")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void MenuWillShow(cef_menu_model_t* menu_model);
+		public unsafe void MenuWillShow(cef_menu_model_t* menu_model)
+		{
+			fixed (cef_menu_model_delegate_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, void>)menu_will_show)(self, menu_model);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model)*
@@ -104,8 +129,13 @@ namespace CefNet.CApi
 		/// The menu has closed.
 		/// </summary>
 		[NativeName("menu_closed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void MenuClosed(cef_menu_model_t* menu_model);
+		public unsafe void MenuClosed(cef_menu_model_t* menu_model)
+		{
+			fixed (cef_menu_model_delegate_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, void>)menu_closed)(self, menu_model);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, cef_string_t* label)*
@@ -117,8 +147,13 @@ namespace CefNet.CApi
 		/// modified.
 		/// </summary>
 		[NativeName("format_label")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int FormatLabel(cef_menu_model_t* menu_model, cef_string_t* label);
+		public unsafe int FormatLabel(cef_menu_model_t* menu_model, cef_string_t* label)
+		{
+			fixed (cef_menu_model_delegate_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_menu_model_delegate_t*, cef_menu_model_t*, cef_string_t*, int>)format_label)(self, menu_model, label);
+			}
+		}
 	}
 }
 

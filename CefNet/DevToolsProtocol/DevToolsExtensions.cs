@@ -234,9 +234,9 @@ namespace CefNet
 			CefValue args = null;
 			if (parameters != null)
 			{
-				args = CefApi.CefParseJSON(parameters, CefJsonParserOptions.AllowTrailingCommas, out CefJsonParserError errorCode, out string errorMessage);
+				args = CefApi.CefParseJSON(parameters, CefJsonParserOptions.AllowTrailingCommas, out string errorMessage);
 				if (args is null)
-					throw new ArgumentOutOfRangeException(nameof(parameters), errorMessage is null ? $"An error occurred during JSON parsing: {errorCode}." : errorMessage);
+					throw new ArgumentOutOfRangeException(nameof(parameters), errorMessage is null ? "An error occurred during JSON parsing." : errorMessage);
 			}
 			return ExecuteDevToolsMethodAsync(webview, method, args is null ? default(CefDictionaryValue) : args.GetDictionary(), cancellationToken);
 		}

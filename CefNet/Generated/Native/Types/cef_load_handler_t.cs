@@ -44,8 +44,13 @@ namespace CefNet.CApi
 		/// calls to OnLoadError and/or OnLoadEnd.
 		/// </summary>
 		[NativeName("on_loading_state_change")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnLoadingStateChange(cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward);
+		public unsafe void OnLoadingStateChange(cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)
+		{
+			fixed (cef_load_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_load_handler_t*, cef_browser_t*, int, int, int, void>)on_loading_state_change)(self, browser, isLoading, canGoBack, canGoForward);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_transition_type_t transition_type)*
@@ -65,8 +70,13 @@ namespace CefNet.CApi
 		/// overall browser load status use OnLoadingStateChange instead.
 		/// </summary>
 		[NativeName("on_load_start")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnLoadStart(cef_browser_t* browser, cef_frame_t* frame, CefTransitionType transition_type);
+		public unsafe void OnLoadStart(cef_browser_t* browser, cef_frame_t* frame, CefTransitionType transition_type)
+		{
+			fixed (cef_load_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_load_handler_t*, cef_browser_t*, cef_frame_t*, CefTransitionType, void>)on_load_start)(self, browser, frame, transition_type);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, int httpStatusCode)*
@@ -84,8 +94,13 @@ namespace CefNet.CApi
 		/// instead.
 		/// </summary>
 		[NativeName("on_load_end")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnLoadEnd(cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode);
+		public unsafe void OnLoadEnd(cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode)
+		{
+			fixed (cef_load_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_load_handler_t*, cef_browser_t*, cef_frame_t*, int, void>)on_load_end)(self, browser, frame, httpStatusCode);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_errorcode_t errorCode, const cef_string_t* errorText, const cef_string_t* failedUrl)*
@@ -100,8 +115,13 @@ namespace CefNet.CApi
 		/// net@base @net _error_list.h for complete descriptions of the error codes.
 		/// </summary>
 		[NativeName("on_load_error")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnLoadError(cef_browser_t* browser, cef_frame_t* frame, CefErrorCode errorCode, [Immutable]cef_string_t* errorText, [Immutable]cef_string_t* failedUrl);
+		public unsafe void OnLoadError(cef_browser_t* browser, cef_frame_t* frame, CefErrorCode errorCode, [Immutable]cef_string_t* errorText, [Immutable]cef_string_t* failedUrl)
+		{
+			fixed (cef_load_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_load_handler_t*, cef_browser_t*, cef_frame_t*, CefErrorCode, cef_string_t*, cef_string_t*, void>)on_load_error)(self, browser, frame, errorCode, errorText, failedUrl);
+			}
+		}
 	}
 }
 

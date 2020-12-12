@@ -30,10 +30,12 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefAccessibilityHandler : CefBaseRefCounted<cef_accessibility_handler_t>, ICefAccessibilityHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnAccessibilityTreeChangeDelegate fnOnAccessibilityTreeChange = OnAccessibilityTreeChangeImpl;
 
 		private static readonly OnAccessibilityLocationChangeDelegate fnOnAccessibilityLocationChange = OnAccessibilityLocationChangeImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefAccessibilityHandler Create(IntPtr instance)
 		{
 			return new CefAccessibilityHandler((cef_accessibility_handler_t*)instance);
@@ -42,8 +44,13 @@ namespace CefNet
 		public CefAccessibilityHandler()
 		{
 			cef_accessibility_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_accessibility_tree_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAccessibilityTreeChange);
 			self->on_accessibility_location_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnAccessibilityLocationChange);
+			#else
+			self->on_accessibility_tree_change = (delegate* unmanaged[Stdcall]<cef_accessibility_handler_t*, cef_value_t*, void>)&OnAccessibilityTreeChangeImpl;
+			self->on_accessibility_location_change = (delegate* unmanaged[Stdcall]<cef_accessibility_handler_t*, cef_value_t*, void>)&OnAccessibilityLocationChangeImpl;
+			#endif
 		}
 
 		public CefAccessibilityHandler(cef_accessibility_handler_t* instance)
@@ -62,10 +69,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnAccessibilityTreeChangeDelegate(cef_accessibility_handler_t* self, cef_value_t* value);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_accessibility_handler_t* self, _cef_value_t* value)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnAccessibilityTreeChangeImpl(cef_accessibility_handler_t* self, cef_value_t* value)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAccessibilityHandler;
@@ -88,10 +98,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnAccessibilityLocationChangeDelegate(cef_accessibility_handler_t* self, cef_value_t* value);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_accessibility_handler_t* self, _cef_value_t* value)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnAccessibilityLocationChangeImpl(cef_accessibility_handler_t* self, cef_value_t* value)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAccessibilityHandler;

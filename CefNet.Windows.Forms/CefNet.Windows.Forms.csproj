@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net45</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net45;net5.0-windows</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Configurations>Debug;Release;Nuget_Release</Configurations>
@@ -12,7 +12,7 @@
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);TRACE;WINFORMS</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="($(TargetFramework) == 'netcoreapp3.0') OR ($(TargetFramework.StartsWith('net')) AND $([System.Char]::IsDigit($(TargetFramework), 3)))">
+  <PropertyGroup Condition="($(TargetFramework) == 'netcoreapp3.0') OR $([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net\d+$'))">
     <DefineConstants>$(DefineConstants);OBSOLETED_CONTROLS_3_1</DefineConstants>
   </PropertyGroup>
 
@@ -23,5 +23,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CefNet\CefNet.csproj" />
   </ItemGroup>
+
+  <Target Name="msggg" AfterTargets="Compile">
+    <Message Text="$(TargetFramework)" Importance="high" />
+  </Target>
 
 </Project>

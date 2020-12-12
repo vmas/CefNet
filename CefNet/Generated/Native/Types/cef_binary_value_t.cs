@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// functions if this function returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_binary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_binary_value_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_binary_value_t* self)*
@@ -53,8 +58,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this object is currently owned by another object.
 		/// </summary>
 		[NativeName("is_owned")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsOwned();
+		public unsafe int IsOwned()
+		{
+			fixed (cef_binary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_binary_value_t*, int>)is_owned)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_binary_value_t* self, _cef_binary_value_t* that)*
@@ -66,8 +76,13 @@ namespace CefNet.CApi
 		/// data.
 		/// </summary>
 		[NativeName("is_same")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSame(cef_binary_value_t* that);
+		public unsafe int IsSame(cef_binary_value_t* that)
+		{
+			fixed (cef_binary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_binary_value_t*, cef_binary_value_t*, int>)is_same)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_binary_value_t* self, _cef_binary_value_t* that)*
@@ -79,8 +94,13 @@ namespace CefNet.CApi
 		/// underlying value but are not necessarily the same object.
 		/// </summary>
 		[NativeName("is_equal")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsEqual(cef_binary_value_t* that);
+		public unsafe int IsEqual(cef_binary_value_t* that)
+		{
+			fixed (cef_binary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_binary_value_t*, cef_binary_value_t*, int>)is_equal)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// _cef_binary_value_t* (*)(_cef_binary_value_t* self)*
@@ -91,8 +111,13 @@ namespace CefNet.CApi
 		/// Returns a copy of this object. The data in this object will also be copied.
 		/// </summary>
 		[NativeName("copy")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_binary_value_t* Copy();
+		public unsafe cef_binary_value_t* Copy()
+		{
+			fixed (cef_binary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_binary_value_t*, cef_binary_value_t*>)copy)(self);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_binary_value_t* self)*
@@ -103,8 +128,13 @@ namespace CefNet.CApi
 		/// Returns the data size.
 		/// </summary>
 		[NativeName("get_size")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetSize();
+		public unsafe UIntPtr GetSize()
+		{
+			fixed (cef_binary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_binary_value_t*, UIntPtr>)get_size)(self);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_binary_value_t* self, void* buffer, size_t buffer_size, size_t data_offset)*
@@ -116,8 +146,13 @@ namespace CefNet.CApi
 		/// the specified byte |data_offset|. Returns the number of bytes read.
 		/// </summary>
 		[NativeName("get_data")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetData(void* buffer, UIntPtr buffer_size, UIntPtr data_offset);
+		public unsafe UIntPtr GetData(void* buffer, UIntPtr buffer_size, UIntPtr data_offset)
+		{
+			fixed (cef_binary_value_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_binary_value_t*, void*, UIntPtr, UIntPtr, UIntPtr>)get_data)(self, buffer, buffer_size, data_offset);
+			}
+		}
 	}
 }
 

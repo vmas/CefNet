@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// if the cursor position was set successfully.
 		/// </summary>
 		[NativeName("move_to_next_node")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToNextNode();
+		public unsafe int MoveToNextNode()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)move_to_next_node)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -55,8 +60,13 @@ namespace CefNet.CApi
 		/// occurs on the correct thread.
 		/// </summary>
 		[NativeName("close")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Close();
+		public unsafe int Close()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)close)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -67,8 +77,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if an error has been reported by the XML parser.
 		/// </summary>
 		[NativeName("has_error")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasError();
+		public unsafe int HasError()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)has_error)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -80,8 +95,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_error")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetError();
+		public unsafe cef_string_userfree_t GetError()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_error)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_xml_node_type_t (*)(_cef_xml_reader_t* self)*
@@ -92,8 +112,13 @@ namespace CefNet.CApi
 		/// Returns the node type.
 		/// </summary>
 		[NativeName("get_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefXmlNodeType GetCefType();
+		public unsafe CefXmlNodeType GetCefType()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, CefXmlNodeType>)get_type)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -104,8 +129,13 @@ namespace CefNet.CApi
 		/// Returns the node depth. Depth starts at 0 for the root node.
 		/// </summary>
 		[NativeName("get_depth")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetDepth();
+		public unsafe int GetDepth()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)get_depth)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -118,8 +148,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_local_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetLocalName();
+		public unsafe cef_string_userfree_t GetLocalName()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_local_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -132,8 +167,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_prefix")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetPrefix();
+		public unsafe cef_string_userfree_t GetPrefix()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_prefix)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -146,8 +186,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_qualified_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetQualifiedName();
+		public unsafe cef_string_userfree_t GetQualifiedName()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_qualified_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -160,8 +205,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_namespace_uri")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetNamespaceUri();
+		public unsafe cef_string_userfree_t GetNamespaceUri()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_namespace_uri)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -174,8 +224,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_base_uri")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetBaseUri();
+		public unsafe cef_string_userfree_t GetBaseUri()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_base_uri)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -188,8 +243,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_xml_lang")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetXmlLang();
+		public unsafe cef_string_userfree_t GetXmlLang()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_xml_lang)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -201,8 +261,13 @@ namespace CefNet.CApi
 		/// NULL but &lt;a&gt;&lt;/a&gt;is not.
 		/// </summary>
 		[NativeName("is_empty_element")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsEmptyElement();
+		public unsafe int IsEmptyElement()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)is_empty_element)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -213,8 +278,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the node has a text value.
 		/// </summary>
 		[NativeName("has_value")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasValue();
+		public unsafe int HasValue()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)has_value)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -226,8 +296,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_value")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetValue();
+		public unsafe cef_string_userfree_t GetValue()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_value)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -238,8 +313,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the node has attributes.
 		/// </summary>
 		[NativeName("has_attributes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasAttributes();
+		public unsafe int HasAttributes()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)has_attributes)(self);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_xml_reader_t* self)*
@@ -250,8 +330,13 @@ namespace CefNet.CApi
 		/// Returns the number of attributes.
 		/// </summary>
 		[NativeName("get_attribute_count")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetAttributeCount();
+		public unsafe UIntPtr GetAttributeCount()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, UIntPtr>)get_attribute_count)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self, int index)*
@@ -263,8 +348,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_attribute_byindex")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetAttributeByIndex(int index);
+		public unsafe cef_string_userfree_t GetAttributeByIndex(int index)
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int, cef_string_userfree_t>)get_attribute_byindex)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self, const cef_string_t* qualifiedName)*
@@ -276,8 +366,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_attribute_byqname")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetAttributeByQName([Immutable]cef_string_t* qualifiedName);
+		public unsafe cef_string_userfree_t GetAttributeByQName([Immutable]cef_string_t* qualifiedName)
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_t*, cef_string_userfree_t>)get_attribute_byqname)(self, qualifiedName);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self, const cef_string_t* localName, const cef_string_t* namespaceURI)*
@@ -290,8 +385,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_attribute_bylname")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetAttributeByLName([Immutable]cef_string_t* localName, [Immutable]cef_string_t* namespaceURI);
+		public unsafe cef_string_userfree_t GetAttributeByLName([Immutable]cef_string_t* localName, [Immutable]cef_string_t* namespaceURI)
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_t*, cef_string_t*, cef_string_userfree_t>)get_attribute_bylname)(self, localName, namespaceURI);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -303,8 +403,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_inner_xml")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetInnerXml();
+		public unsafe cef_string_userfree_t GetInnerXml()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_inner_xml)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_xml_reader_t* self)*
@@ -316,8 +421,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_outer_xml")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetOuterXml();
+		public unsafe cef_string_userfree_t GetOuterXml()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_userfree_t>)get_outer_xml)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -328,8 +438,13 @@ namespace CefNet.CApi
 		/// Returns the line number for the current node.
 		/// </summary>
 		[NativeName("get_line_number")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetLineNumber();
+		public unsafe int GetLineNumber()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)get_line_number)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self, int index)*
@@ -341,8 +456,13 @@ namespace CefNet.CApi
 		/// true (1) if the cursor position was set successfully.
 		/// </summary>
 		[NativeName("move_to_attribute_byindex")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToAttributeByIndex(int index);
+		public unsafe int MoveToAttributeByIndex(int index)
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int, int>)move_to_attribute_byindex)(self, index);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self, const cef_string_t* qualifiedName)*
@@ -354,8 +474,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the cursor position was set successfully.
 		/// </summary>
 		[NativeName("move_to_attribute_byqname")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToAttributeByQName([Immutable]cef_string_t* qualifiedName);
+		public unsafe int MoveToAttributeByQName([Immutable]cef_string_t* qualifiedName)
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_t*, int>)move_to_attribute_byqname)(self, qualifiedName);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self, const cef_string_t* localName, const cef_string_t* namespaceURI)*
@@ -368,8 +493,13 @@ namespace CefNet.CApi
 		/// successfully.
 		/// </summary>
 		[NativeName("move_to_attribute_bylname")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToAttributeByLName([Immutable]cef_string_t* localName, [Immutable]cef_string_t* namespaceURI);
+		public unsafe int MoveToAttributeByLName([Immutable]cef_string_t* localName, [Immutable]cef_string_t* namespaceURI)
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, cef_string_t*, cef_string_t*, int>)move_to_attribute_bylname)(self, localName, namespaceURI);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -381,8 +511,13 @@ namespace CefNet.CApi
 		/// true (1) if the cursor position was set successfully.
 		/// </summary>
 		[NativeName("move_to_first_attribute")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToFirstAttribute();
+		public unsafe int MoveToFirstAttribute()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)move_to_first_attribute)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -394,8 +529,13 @@ namespace CefNet.CApi
 		/// (1) if the cursor position was set successfully.
 		/// </summary>
 		[NativeName("move_to_next_attribute")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToNextAttribute();
+		public unsafe int MoveToNextAttribute()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)move_to_next_attribute)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_xml_reader_t* self)*
@@ -407,8 +547,13 @@ namespace CefNet.CApi
 		/// cursor position was set successfully.
 		/// </summary>
 		[NativeName("move_to_carrying_element")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int MoveToCarryingElement();
+		public unsafe int MoveToCarryingElement()
+		{
+			fixed (cef_xml_reader_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_xml_reader_t*, int>)move_to_carrying_element)(self);
+			}
+		}
 	}
 }
 

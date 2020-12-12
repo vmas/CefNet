@@ -38,8 +38,13 @@ namespace CefNet.CApi
 		/// Return the handler for audio rendering events.
 		/// </summary>
 		[NativeName("get_audio_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_audio_handler_t* GetAudioHandler();
+		public unsafe cef_audio_handler_t* GetAudioHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_audio_handler_t*>)get_audio_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_context_menu_handler_t* (*)(_cef_client_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// implementation will be used.
 		/// </summary>
 		[NativeName("get_context_menu_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_context_menu_handler_t* GetContextMenuHandler();
+		public unsafe cef_context_menu_handler_t* GetContextMenuHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_context_menu_handler_t*>)get_context_menu_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_dialog_handler_t* (*)(_cef_client_t* self)*
@@ -64,8 +74,13 @@ namespace CefNet.CApi
 		/// implementation will be used.
 		/// </summary>
 		[NativeName("get_dialog_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_dialog_handler_t* GetDialogHandler();
+		public unsafe cef_dialog_handler_t* GetDialogHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_dialog_handler_t*>)get_dialog_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_display_handler_t* (*)(_cef_client_t* self)*
@@ -76,8 +91,13 @@ namespace CefNet.CApi
 		/// Return the handler for browser display state events.
 		/// </summary>
 		[NativeName("get_display_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_display_handler_t* GetDisplayHandler();
+		public unsafe cef_display_handler_t* GetDisplayHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_display_handler_t*>)get_display_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_download_handler_t* (*)(_cef_client_t* self)*
@@ -89,8 +109,13 @@ namespace CefNet.CApi
 		/// will not be allowed.
 		/// </summary>
 		[NativeName("get_download_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_download_handler_t* GetDownloadHandler();
+		public unsafe cef_download_handler_t* GetDownloadHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_download_handler_t*>)get_download_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_drag_handler_t* (*)(_cef_client_t* self)*
@@ -101,8 +126,13 @@ namespace CefNet.CApi
 		/// Return the handler for drag events.
 		/// </summary>
 		[NativeName("get_drag_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_drag_handler_t* GetDragHandler();
+		public unsafe cef_drag_handler_t* GetDragHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_drag_handler_t*>)get_drag_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_find_handler_t* (*)(_cef_client_t* self)*
@@ -113,8 +143,13 @@ namespace CefNet.CApi
 		/// Return the handler for find result events.
 		/// </summary>
 		[NativeName("get_find_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_find_handler_t* GetFindHandler();
+		public unsafe cef_find_handler_t* GetFindHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_find_handler_t*>)get_find_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_focus_handler_t* (*)(_cef_client_t* self)*
@@ -125,8 +160,13 @@ namespace CefNet.CApi
 		/// Return the handler for focus events.
 		/// </summary>
 		[NativeName("get_focus_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_focus_handler_t* GetFocusHandler();
+		public unsafe cef_focus_handler_t* GetFocusHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_focus_handler_t*>)get_focus_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_jsdialog_handler_t* (*)(_cef_client_t* self)*
@@ -138,8 +178,13 @@ namespace CefNet.CApi
 		/// default implementation will be used.
 		/// </summary>
 		[NativeName("get_jsdialog_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_jsdialog_handler_t* GetJSDialogHandler();
+		public unsafe cef_jsdialog_handler_t* GetJSDialogHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_jsdialog_handler_t*>)get_jsdialog_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_keyboard_handler_t* (*)(_cef_client_t* self)*
@@ -150,8 +195,13 @@ namespace CefNet.CApi
 		/// Return the handler for keyboard events.
 		/// </summary>
 		[NativeName("get_keyboard_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_keyboard_handler_t* GetKeyboardHandler();
+		public unsafe cef_keyboard_handler_t* GetKeyboardHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_keyboard_handler_t*>)get_keyboard_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_life_span_handler_t* (*)(_cef_client_t* self)*
@@ -162,8 +212,13 @@ namespace CefNet.CApi
 		/// Return the handler for browser life span events.
 		/// </summary>
 		[NativeName("get_life_span_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_life_span_handler_t* GetLifeSpanHandler();
+		public unsafe cef_life_span_handler_t* GetLifeSpanHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_life_span_handler_t*>)get_life_span_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_load_handler_t* (*)(_cef_client_t* self)*
@@ -174,8 +229,13 @@ namespace CefNet.CApi
 		/// Return the handler for browser load status events.
 		/// </summary>
 		[NativeName("get_load_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_load_handler_t* GetLoadHandler();
+		public unsafe cef_load_handler_t* GetLoadHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_load_handler_t*>)get_load_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_render_handler_t* (*)(_cef_client_t* self)*
@@ -186,8 +246,13 @@ namespace CefNet.CApi
 		/// Return the handler for off-screen rendering events.
 		/// </summary>
 		[NativeName("get_render_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_render_handler_t* GetRenderHandler();
+		public unsafe cef_render_handler_t* GetRenderHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_render_handler_t*>)get_render_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_request_handler_t* (*)(_cef_client_t* self)*
@@ -198,8 +263,13 @@ namespace CefNet.CApi
 		/// Return the handler for browser request events.
 		/// </summary>
 		[NativeName("get_request_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_request_handler_t* GetRequestHandler();
+		public unsafe cef_request_handler_t* GetRequestHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_request_handler_t*>)get_request_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_client_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_process_id_t source_process, _cef_process_message_t* message)*
@@ -211,9 +281,14 @@ namespace CefNet.CApi
 		/// (1) if the message was handled or false (0) otherwise. Do not keep a
 		/// reference to or attempt to access the message outside of this callback.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_process_message_received")]
-		public unsafe extern int OnProcessMessageReceived(cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message);
+		public unsafe int OnProcessMessageReceived(cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_browser_t*, cef_frame_t*, CefProcessId, cef_process_message_t*, int>)on_process_message_received)(self, browser, frame, source_process, message);
+			}
+		}
 	}
 }
 

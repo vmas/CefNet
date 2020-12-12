@@ -29,8 +29,10 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefWebPluginUnstableCallback : CefBaseRefCounted<cef_web_plugin_unstable_callback_t>, ICefWebPluginUnstableCallbackPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly IsUnstableDelegate fnIsUnstable = IsUnstableImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefWebPluginUnstableCallback Create(IntPtr instance)
 		{
 			return new CefWebPluginUnstableCallback((cef_web_plugin_unstable_callback_t*)instance);
@@ -39,7 +41,11 @@ namespace CefNet
 		public CefWebPluginUnstableCallback()
 		{
 			cef_web_plugin_unstable_callback_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->is_unstable = (void*)Marshal.GetFunctionPointerForDelegate(fnIsUnstable);
+			#else
+			self->is_unstable = (delegate* unmanaged[Stdcall]<cef_web_plugin_unstable_callback_t*, cef_string_t*, int, void>)&IsUnstableImpl;
+			#endif
 		}
 
 		public CefWebPluginUnstableCallback(cef_web_plugin_unstable_callback_t* instance)
@@ -59,10 +65,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void IsUnstableDelegate(cef_web_plugin_unstable_callback_t* self, cef_string_t* path, int unstable);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_web_plugin_unstable_callback_t* self, const cef_string_t* path, int unstable)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void IsUnstableImpl(cef_web_plugin_unstable_callback_t* self, cef_string_t* path, int unstable)
 		{
 			var instance = GetInstance((IntPtr)self) as CefWebPluginUnstableCallback;

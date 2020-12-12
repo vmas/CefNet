@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// Returns the hosted browser object.
 		/// </summary>
 		[NativeName("get_browser")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_browser_t* GetBrowser();
+		public unsafe cef_browser_t* GetBrowser()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_browser_t*>)get_browser)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int force_close)*
@@ -60,8 +65,13 @@ namespace CefNet.CApi
 		/// information.
 		/// </summary>
 		[NativeName("close_browser")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void CloseBrowser(int force_close);
+		public unsafe void CloseBrowser(int force_close)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, void>)close_browser)(self, force_close);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_host_t* self)*
@@ -77,8 +87,13 @@ namespace CefNet.CApi
 		/// information. This function must be called on the browser process UI thread.
 		/// </summary>
 		[NativeName("try_close_browser")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int TryCloseBrowser();
+		public unsafe int TryCloseBrowser()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int>)try_close_browser)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int focus)*
@@ -89,8 +104,13 @@ namespace CefNet.CApi
 		/// Set whether the browser is focused.
 		/// </summary>
 		[NativeName("set_focus")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetFocus(int focus);
+		public unsafe void SetFocus(int focus)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, void>)set_focus)(self, focus);
+			}
+		}
 
 		/// <summary>
 		/// HWND (*)(_cef_browser_host_t* self)*
@@ -103,8 +123,13 @@ namespace CefNet.CApi
 		/// UI thread and it will return the handle for the top-level native window.
 		/// </summary>
 		[NativeName("get_window_handle")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern IntPtr GetWindowHandle();
+		public unsafe IntPtr GetWindowHandle()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, IntPtr>)get_window_handle)(self);
+			}
+		}
 
 		/// <summary>
 		/// HWND (*)(_cef_browser_host_t* self)*
@@ -118,8 +143,13 @@ namespace CefNet.CApi
 		/// handling of modal windows.
 		/// </summary>
 		[NativeName("get_opener_window_handle")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern IntPtr GetOpenerWindowHandle();
+		public unsafe IntPtr GetOpenerWindowHandle()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, IntPtr>)get_opener_window_handle)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_host_t* self)*
@@ -130,8 +160,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this browser is wrapped in a cef_browser_view_t.
 		/// </summary>
 		[NativeName("has_view")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasView();
+		public unsafe int HasView()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int>)has_view)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_client_t* (*)(_cef_browser_host_t* self)*
@@ -142,8 +177,13 @@ namespace CefNet.CApi
 		/// Returns the client for this browser.
 		/// </summary>
 		[NativeName("get_client")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_client_t* GetClient();
+		public unsafe cef_client_t* GetClient()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_client_t*>)get_client)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_request_context_t* (*)(_cef_browser_host_t* self)*
@@ -154,8 +194,13 @@ namespace CefNet.CApi
 		/// Returns the request context for this browser.
 		/// </summary>
 		[NativeName("get_request_context")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_request_context_t* GetRequestContext();
+		public unsafe cef_request_context_t* GetRequestContext()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_request_context_t*>)get_request_context)(self);
+			}
+		}
 
 		/// <summary>
 		/// double (*)(_cef_browser_host_t* self)*
@@ -167,8 +212,13 @@ namespace CefNet.CApi
 		/// can only be called on the UI thread.
 		/// </summary>
 		[NativeName("get_zoom_level")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern double GetZoomLevel();
+		public unsafe double GetZoomLevel()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, double>)get_zoom_level)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, double zoomLevel)*
@@ -181,8 +231,13 @@ namespace CefNet.CApi
 		/// Otherwise, the change will be applied asynchronously on the UI thread.
 		/// </summary>
 		[NativeName("set_zoom_level")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetZoomLevel(double zoomLevel);
+		public unsafe void SetZoomLevel(double zoomLevel)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, double, void>)set_zoom_level)(self, zoomLevel);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, cef_file_dialog_mode_t mode, const cef_string_t* title, const cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, _cef_run_file_dialog_callback_t* callback)*
@@ -206,8 +261,13 @@ namespace CefNet.CApi
 		/// will be initiated asynchronously on the UI thread.
 		/// </summary>
 		[NativeName("run_file_dialog")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void RunFileDialog(CefFileDialogMode mode, [Immutable]cef_string_t* title, [Immutable]cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, cef_run_file_dialog_callback_t* callback);
+		public unsafe void RunFileDialog(CefFileDialogMode mode, [Immutable]cef_string_t* title, [Immutable]cef_string_t* default_file_path, cef_string_list_t accept_filters, int selected_accept_filter, cef_run_file_dialog_callback_t* callback)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, CefFileDialogMode, cef_string_t*, cef_string_t*, cef_string_list_t, int, cef_run_file_dialog_callback_t*, void>)run_file_dialog)(self, mode, title, default_file_path, accept_filters, selected_accept_filter, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const cef_string_t* url)*
@@ -218,8 +278,13 @@ namespace CefNet.CApi
 		/// Download the file at |url| using cef_download_handler_t.
 		/// </summary>
 		[NativeName("start_download")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void StartDownload([Immutable]cef_string_t* url);
+		public unsafe void StartDownload([Immutable]cef_string_t* url)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_string_t*, void>)start_download)(self, url);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const cef_string_t* image_url, int is_favicon, uint32 max_image_size, int bypass_cache, _cef_download_image_callback_t* callback)*
@@ -241,8 +306,13 @@ namespace CefNet.CApi
 		/// the server even if it is present in the browser cache.
 		/// </summary>
 		[NativeName("download_image")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void DownloadImage([Immutable]cef_string_t* image_url, int is_favicon, uint max_image_size, int bypass_cache, cef_download_image_callback_t* callback);
+		public unsafe void DownloadImage([Immutable]cef_string_t* image_url, int is_favicon, uint max_image_size, int bypass_cache, cef_download_image_callback_t* callback)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_string_t*, int, uint, int, cef_download_image_callback_t*, void>)download_image)(self, image_url, is_favicon, max_image_size, bypass_cache, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -253,8 +323,13 @@ namespace CefNet.CApi
 		/// Print the current browser contents.
 		/// </summary>
 		[NativeName("print")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Print();
+		public unsafe void Print()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)print)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const cef_string_t* path, const const _cef_pdf_print_settings_t* settings, _cef_pdf_print_callback_t* callback)*
@@ -268,8 +343,13 @@ namespace CefNet.CApi
 		/// cef_print_handler_t::GetPdfPaperSize function.
 		/// </summary>
 		[NativeName("print_to_pdf")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void PrintToPdf([Immutable]cef_string_t* path, [Immutable]cef_pdf_print_settings_t* settings, cef_pdf_print_callback_t* callback);
+		public unsafe void PrintToPdf([Immutable]cef_string_t* path, [Immutable]cef_pdf_print_settings_t* settings, cef_pdf_print_callback_t* callback)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_string_t*, cef_pdf_print_settings_t*, cef_pdf_print_callback_t*, void>)print_to_pdf)(self, path, settings, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int identifier, const cef_string_t* searchText, int forward, int matchCase, int findNext)*
@@ -288,8 +368,13 @@ namespace CefNet.CApi
 		/// to report find results.
 		/// </summary>
 		[NativeName("find")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Find(int identifier, [Immutable]cef_string_t* searchText, int forward, int matchCase, int findNext);
+		public unsafe void Find(int identifier, [Immutable]cef_string_t* searchText, int forward, int matchCase, int findNext)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, cef_string_t*, int, int, int, void>)find)(self, identifier, searchText, forward, matchCase, findNext);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int clearSelection)*
@@ -300,8 +385,13 @@ namespace CefNet.CApi
 		/// Cancel all searches that are currently going on.
 		/// </summary>
 		[NativeName("stop_finding")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void StopFinding(int clearSelection);
+		public unsafe void StopFinding(int clearSelection)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, void>)stop_finding)(self, clearSelection);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const const _cef_window_info_t* windowInfo, _cef_client_t* client, const const _cef_browser_settings_t* settings, const cef_point_t* inspect_element_at)*
@@ -318,8 +408,13 @@ namespace CefNet.CApi
 		/// wrapped in a cef_browser_view_t.
 		/// </summary>
 		[NativeName("show_dev_tools")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ShowDevTools([Immutable]cef_window_info_t* windowInfo, cef_client_t* client, [Immutable]cef_browser_settings_t* settings, [Immutable]cef_point_t* inspect_element_at);
+		public unsafe void ShowDevTools([Immutable]cef_window_info_t* windowInfo, cef_client_t* client, [Immutable]cef_browser_settings_t* settings, [Immutable]cef_point_t* inspect_element_at)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_window_info_t*, cef_client_t*, cef_browser_settings_t*, cef_point_t*, void>)show_dev_tools)(self, windowInfo, client, settings, inspect_element_at);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -330,8 +425,13 @@ namespace CefNet.CApi
 		/// Explicitly close the associated DevTools browser, if any.
 		/// </summary>
 		[NativeName("close_dev_tools")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void CloseDevTools();
+		public unsafe void CloseDevTools()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)close_dev_tools)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_host_t* self)*
@@ -343,8 +443,13 @@ namespace CefNet.CApi
 		/// browser. Must be called on the browser process UI thread.
 		/// </summary>
 		[NativeName("has_dev_tools")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasDevTools();
+		public unsafe int HasDevTools()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int>)has_dev_tools)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_host_t* self, const void* message, size_t message_size)*
@@ -384,8 +489,13 @@ namespace CefNet.CApi
 		/// &gt;` command-line flag.
 		/// </summary>
 		[NativeName("send_dev_tools_message")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SendDevToolsMessage([Immutable]void* message, UIntPtr message_size);
+		public unsafe int SendDevToolsMessage([Immutable]void* message, UIntPtr message_size)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void*, UIntPtr, int>)send_dev_tools_message)(self, message, message_size);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_host_t* self, int message_id, const cef_string_t* method, _cef_dictionary_value_t* params)*
@@ -405,8 +515,13 @@ namespace CefNet.CApi
 		/// SendDevToolsMessage documentation for additional usage information.
 		/// </summary>
 		[NativeName("execute_dev_tools_method")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int ExecuteDevToolsMethod(int message_id, [Immutable]cef_string_t* method, cef_dictionary_value_t* @params);
+		public unsafe int ExecuteDevToolsMethod(int message_id, [Immutable]cef_string_t* method, cef_dictionary_value_t* @params)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, cef_string_t*, cef_dictionary_value_t*, int>)execute_dev_tools_method)(self, message_id, method, @params);
+			}
+		}
 
 		/// <summary>
 		/// _cef_registration_t* (*)(_cef_browser_host_t* self, _cef_dev_tools_message_observer_t* observer)*
@@ -419,9 +534,14 @@ namespace CefNet.CApi
 		/// Registration object is destroyed. See the SendDevToolsMessage documentation
 		/// for additional usage information.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("add_dev_tools_message_observer")]
-		public unsafe extern cef_registration_t* AddDevToolsMessageObserver(cef_dev_tools_message_observer_t* observer);
+		public unsafe cef_registration_t* AddDevToolsMessageObserver(cef_dev_tools_message_observer_t* observer)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_dev_tools_message_observer_t*, cef_registration_t*>)add_dev_tools_message_observer)(self, observer);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, _cef_navigation_entry_visitor_t* visitor, int current_only)*
@@ -435,32 +555,13 @@ namespace CefNet.CApi
 		/// sent.
 		/// </summary>
 		[NativeName("get_navigation_entries")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetNavigationEntries(cef_navigation_entry_visitor_t* visitor, int current_only);
-
-		/// <summary>
-		/// void (*)(_cef_browser_host_t* self, int disabled)*
-		/// </summary>
-		public void* set_mouse_cursor_change_disabled;
-
-		/// <summary>
-		/// Set whether mouse cursor change is disabled.
-		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		[NativeName("set_mouse_cursor_change_disabled")]
-		public unsafe extern void SetMouseCursorChangeDisabled(int disabled);
-
-		/// <summary>
-		/// int (*)(_cef_browser_host_t* self)*
-		/// </summary>
-		public void* is_mouse_cursor_change_disabled;
-
-		/// <summary>
-		/// Returns true (1) if mouse cursor change is disabled.
-		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		[NativeName("is_mouse_cursor_change_disabled")]
-		public unsafe extern int IsMouseCursorChangeDisabled();
+		public unsafe void GetNavigationEntries(cef_navigation_entry_visitor_t* visitor, int current_only)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_navigation_entry_visitor_t*, int, void>)get_navigation_entries)(self, visitor, current_only);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const cef_string_t* word)*
@@ -472,8 +573,13 @@ namespace CefNet.CApi
 		/// function will replace it with the specified |word|.
 		/// </summary>
 		[NativeName("replace_misspelling")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ReplaceMisspelling([Immutable]cef_string_t* word);
+		public unsafe void ReplaceMisspelling([Immutable]cef_string_t* word)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_string_t*, void>)replace_misspelling)(self, word);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const cef_string_t* word)*
@@ -484,8 +590,13 @@ namespace CefNet.CApi
 		/// Add the specified |word| to the spelling dictionary.
 		/// </summary>
 		[NativeName("add_word_to_dictionary")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void AddWordToDictionary([Immutable]cef_string_t* word);
+		public unsafe void AddWordToDictionary([Immutable]cef_string_t* word)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_string_t*, void>)add_word_to_dictionary)(self, word);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_host_t* self)*
@@ -495,9 +606,14 @@ namespace CefNet.CApi
 		/// <summary>
 		/// Returns true (1) if window rendering is disabled.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("is_window_rendering_disabled")]
-		public unsafe extern int IsWindowRenderingDisabled();
+		public unsafe int IsWindowRenderingDisabled()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int>)is_window_rendering_disabled)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -511,8 +627,13 @@ namespace CefNet.CApi
 		/// function is only used when window rendering is disabled.
 		/// </summary>
 		[NativeName("was_resized")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void WasResized();
+		public unsafe void WasResized()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)was_resized)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int hidden)*
@@ -525,8 +646,13 @@ namespace CefNet.CApi
 		/// hidden. This function is only used when window rendering is disabled.
 		/// </summary>
 		[NativeName("was_hidden")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void WasHidden(int hidden);
+		public unsafe void WasHidden(int hidden)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, void>)was_hidden)(self, hidden);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -541,9 +667,14 @@ namespace CefNet.CApi
 		/// current display. This function is only used when window rendering is
 		/// disabled.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("notify_screen_info_changed")]
-		public unsafe extern void NotifyScreenInfoChanged();
+		public unsafe void NotifyScreenInfoChanged()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)notify_screen_info_changed)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, cef_paint_element_type_t type)*
@@ -556,8 +687,13 @@ namespace CefNet.CApi
 		/// disabled.
 		/// </summary>
 		[NativeName("invalidate")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Invalidate(CefPaintElementType type);
+		public unsafe void Invalidate(CefPaintElementType type)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, CefPaintElementType, void>)invalidate)(self, type);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -569,8 +705,13 @@ namespace CefNet.CApi
 		/// cef_window_tInfo::external_begin_frame_enabled is set to true (1).
 		/// </summary>
 		[NativeName("send_external_begin_frame")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendExternalBeginFrame();
+		public unsafe void SendExternalBeginFrame()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)send_external_begin_frame)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const const _cef_key_event_t* event)*
@@ -581,8 +722,13 @@ namespace CefNet.CApi
 		/// Send a key event to the browser.
 		/// </summary>
 		[NativeName("send_key_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendKeyEvent([Immutable]cef_key_event_t* @event);
+		public unsafe void SendKeyEvent([Immutable]cef_key_event_t* @event)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_key_event_t*, void>)send_key_event)(self, @event);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const const _cef_mouse_event_t* event, cef_mouse_button_type_t type, int mouseUp, int clickCount)*
@@ -594,8 +740,13 @@ namespace CefNet.CApi
 		/// relative to the upper-left corner of the view.
 		/// </summary>
 		[NativeName("send_mouse_click_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendMouseClickEvent([Immutable]cef_mouse_event_t* @event, CefMouseButtonType type, int mouseUp, int clickCount);
+		public unsafe void SendMouseClickEvent([Immutable]cef_mouse_event_t* @event, CefMouseButtonType type, int mouseUp, int clickCount)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_mouse_event_t*, CefMouseButtonType, int, int, void>)send_mouse_click_event)(self, @event, type, mouseUp, clickCount);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const const _cef_mouse_event_t* event, int mouseLeave)*
@@ -607,8 +758,13 @@ namespace CefNet.CApi
 		/// relative to the upper-left corner of the view.
 		/// </summary>
 		[NativeName("send_mouse_move_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendMouseMoveEvent([Immutable]cef_mouse_event_t* @event, int mouseLeave);
+		public unsafe void SendMouseMoveEvent([Immutable]cef_mouse_event_t* @event, int mouseLeave)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_mouse_event_t*, int, void>)send_mouse_move_event)(self, @event, mouseLeave);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const const _cef_mouse_event_t* event, int deltaX, int deltaY)*
@@ -623,8 +779,13 @@ namespace CefNet.CApi
 		/// cef_render_handler_t::GetScreenPoint should be implemented properly.
 		/// </summary>
 		[NativeName("send_mouse_wheel_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendMouseWheelEvent([Immutable]cef_mouse_event_t* @event, int deltaX, int deltaY);
+		public unsafe void SendMouseWheelEvent([Immutable]cef_mouse_event_t* @event, int deltaX, int deltaY)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_mouse_event_t*, int, int, void>)send_mouse_wheel_event)(self, @event, deltaX, deltaY);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const const _cef_touch_event_t* event)*
@@ -635,8 +796,13 @@ namespace CefNet.CApi
 		/// Send a touch event to the browser for a windowless browser.
 		/// </summary>
 		[NativeName("send_touch_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendTouchEvent([Immutable]cef_touch_event_t* @event);
+		public unsafe void SendTouchEvent([Immutable]cef_touch_event_t* @event)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_touch_event_t*, void>)send_touch_event)(self, @event);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int setFocus)*
@@ -647,8 +813,13 @@ namespace CefNet.CApi
 		/// Send a focus event to the browser.
 		/// </summary>
 		[NativeName("send_focus_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendFocusEvent(int setFocus);
+		public unsafe void SendFocusEvent(int setFocus)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, void>)send_focus_event)(self, setFocus);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -659,8 +830,13 @@ namespace CefNet.CApi
 		/// Send a capture lost event to the browser.
 		/// </summary>
 		[NativeName("send_capture_lost_event")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SendCaptureLostEvent();
+		public unsafe void SendCaptureLostEvent()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)send_capture_lost_event)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -671,9 +847,14 @@ namespace CefNet.CApi
 		/// Notify the browser that the window hosting it is about to be moved or
 		/// resized. This function is only used on Windows and Linux.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("notify_move_or_resize_started")]
-		public unsafe extern void NotifyMoveOrResizeStarted();
+		public unsafe void NotifyMoveOrResizeStarted()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)notify_move_or_resize_started)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_host_t* self)*
@@ -688,8 +869,13 @@ namespace CefNet.CApi
 		/// 30). This function can only be called on the UI thread.
 		/// </summary>
 		[NativeName("get_windowless_frame_rate")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetWindowlessFrameRate();
+		public unsafe int GetWindowlessFrameRate()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int>)get_windowless_frame_rate)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int frame_rate)*
@@ -704,8 +890,13 @@ namespace CefNet.CApi
 		/// set at browser creation via cef_browser_tSettings.windowless_frame_rate.
 		/// </summary>
 		[NativeName("set_windowless_frame_rate")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetWindowlessFrameRate(int frame_rate);
+		public unsafe void SetWindowlessFrameRate(int frame_rate)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, void>)set_windowless_frame_rate)(self, frame_rate);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const cef_string_t* text, size_t underlinesCount, const cef_composition_underline_t* underlines, const cef_range_t* replacement_range, const cef_range_t* selection_range)*
@@ -734,8 +925,13 @@ namespace CefNet.CApi
 		/// This function is only used when window rendering is disabled.
 		/// </summary>
 		[NativeName("ime_set_composition")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ImeSetComposition([Immutable]cef_string_t* text, UIntPtr underlinesCount, [Immutable]cef_composition_underline_t* underlines, [Immutable]cef_range_t* replacement_range, [Immutable]cef_range_t* selection_range);
+		public unsafe void ImeSetComposition([Immutable]cef_string_t* text, UIntPtr underlinesCount, [Immutable]cef_composition_underline_t* underlines, [Immutable]cef_range_t* replacement_range, [Immutable]cef_range_t* selection_range)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_string_t*, UIntPtr, cef_composition_underline_t*, cef_range_t*, cef_range_t*, void>)ime_set_composition)(self, text, underlinesCount, underlines, replacement_range, selection_range);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const cef_string_t* text, const cef_range_t* replacement_range, int relative_cursor_pos)*
@@ -752,8 +948,13 @@ namespace CefNet.CApi
 		/// used when window rendering is disabled.
 		/// </summary>
 		[NativeName("ime_commit_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ImeCommitText([Immutable]cef_string_t* text, [Immutable]cef_range_t* replacement_range, int relative_cursor_pos);
+		public unsafe void ImeCommitText([Immutable]cef_string_t* text, [Immutable]cef_range_t* replacement_range, int relative_cursor_pos)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_string_t*, cef_range_t*, int, void>)ime_commit_text)(self, text, replacement_range, relative_cursor_pos);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int keep_selection)*
@@ -767,8 +968,13 @@ namespace CefNet.CApi
 		/// function is only used when window rendering is disabled.
 		/// </summary>
 		[NativeName("ime_finish_composing_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ImeFinishComposingText(int keep_selection);
+		public unsafe void ImeFinishComposingText(int keep_selection)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, void>)ime_finish_composing_text)(self, keep_selection);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -781,8 +987,13 @@ namespace CefNet.CApi
 		/// function is only used when window rendering is disabled.
 		/// </summary>
 		[NativeName("ime_cancel_composition")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ImeCancelComposition();
+		public unsafe void ImeCancelComposition()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)ime_cancel_composition)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, _cef_drag_data_t* drag_data, const const _cef_mouse_event_t* event, cef_drag_operations_mask_t allowed_ops)*
@@ -799,8 +1010,13 @@ namespace CefNet.CApi
 		/// window rendering is disabled.
 		/// </summary>
 		[NativeName("drag_target_drag_enter")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void DragTargetDragEnter(cef_drag_data_t* drag_data, [Immutable]cef_mouse_event_t* @event, CefDragOperationsMask allowed_ops);
+		public unsafe void DragTargetDragEnter(cef_drag_data_t* drag_data, [Immutable]cef_mouse_event_t* @event, CefDragOperationsMask allowed_ops)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_drag_data_t*, cef_mouse_event_t*, CefDragOperationsMask, void>)drag_target_drag_enter)(self, drag_data, @event, allowed_ops);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const const _cef_mouse_event_t* event, cef_drag_operations_mask_t allowed_ops)*
@@ -814,8 +1030,13 @@ namespace CefNet.CApi
 		/// rendering is disabled.
 		/// </summary>
 		[NativeName("drag_target_drag_over")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void DragTargetDragOver([Immutable]cef_mouse_event_t* @event, CefDragOperationsMask allowed_ops);
+		public unsafe void DragTargetDragOver([Immutable]cef_mouse_event_t* @event, CefDragOperationsMask allowed_ops)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_mouse_event_t*, CefDragOperationsMask, void>)drag_target_drag_over)(self, @event, allowed_ops);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -828,8 +1049,13 @@ namespace CefNet.CApi
 		/// rendering is disabled.
 		/// </summary>
 		[NativeName("drag_target_drag_leave")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void DragTargetDragLeave();
+		public unsafe void DragTargetDragLeave()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)drag_target_drag_leave)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, const const _cef_mouse_event_t* event)*
@@ -844,8 +1070,13 @@ namespace CefNet.CApi
 		/// is disabled.
 		/// </summary>
 		[NativeName("drag_target_drop")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void DragTargetDrop([Immutable]cef_mouse_event_t* @event);
+		public unsafe void DragTargetDrop([Immutable]cef_mouse_event_t* @event)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_mouse_event_t*, void>)drag_target_drop)(self, @event);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int x, int y, cef_drag_operations_mask_t op)*
@@ -862,8 +1093,13 @@ namespace CefNet.CApi
 		/// disabled.
 		/// </summary>
 		[NativeName("drag_source_ended_at")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void DragSourceEndedAt(int x, int y, CefDragOperationsMask op);
+		public unsafe void DragSourceEndedAt(int x, int y, CefDragOperationsMask op)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, int, CefDragOperationsMask, void>)drag_source_ended_at)(self, x, y, op);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self)*
@@ -878,9 +1114,14 @@ namespace CefNet.CApi
 		/// then all DragTarget* functions should be called before DragSource* mthods.
 		/// This function is only used when window rendering is disabled.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("drag_source_system_drag_ended")]
-		public unsafe extern void DragSourceSystemDragEnded();
+		public unsafe void DragSourceSystemDragEnded()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, void>)drag_source_system_drag_ended)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_navigation_entry_t* (*)(_cef_browser_host_t* self)*
@@ -891,9 +1132,14 @@ namespace CefNet.CApi
 		/// Returns the current visible navigation entry for this browser. This
 		/// function can only be called on the UI thread.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_visible_navigation_entry")]
-		public unsafe extern cef_navigation_entry_t* GetVisibleNavigationEntry();
+		public unsafe cef_navigation_entry_t* GetVisibleNavigationEntry()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_navigation_entry_t*>)get_visible_navigation_entry)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, cef_state_t accessibility_state)*
@@ -926,8 +1172,13 @@ namespace CefNet.CApi
 		/// objects using CefAccessibiltyHandler callbacks if desired.
 		/// </summary>
 		[NativeName("set_accessibility_state")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetAccessibilityState(CefState accessibility_state);
+		public unsafe void SetAccessibilityState(CefState accessibility_state)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, CefState, void>)set_accessibility_state)(self, accessibility_state);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int enabled, const cef_size_t* min_size, const cef_size_t* max_size)*
@@ -940,8 +1191,13 @@ namespace CefNet.CApi
 		/// |min_size| and |max_size| define the range of allowed sizes.
 		/// </summary>
 		[NativeName("set_auto_resize_enabled")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetAutoResizeEnabled(int enabled, [Immutable]cef_size_t* min_size, [Immutable]cef_size_t* max_size);
+		public unsafe void SetAutoResizeEnabled(int enabled, [Immutable]cef_size_t* min_size, [Immutable]cef_size_t* max_size)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, cef_size_t*, cef_size_t*, void>)set_auto_resize_enabled)(self, enabled, min_size, max_size);
+			}
+		}
 
 		/// <summary>
 		/// _cef_extension_t* (*)(_cef_browser_host_t* self)*
@@ -953,8 +1209,13 @@ namespace CefNet.CApi
 		/// hosted. See cef_request_context_t::LoadExtension for details.
 		/// </summary>
 		[NativeName("get_extension")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_extension_t* GetExtension();
+		public unsafe cef_extension_t* GetExtension()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, cef_extension_t*>)get_extension)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_host_t* self)*
@@ -967,8 +1228,13 @@ namespace CefNet.CApi
 		/// cef_request_context_t::LoadExtension for details.
 		/// </summary>
 		[NativeName("is_background_host")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsBackgroundHost();
+		public unsafe int IsBackgroundHost()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int>)is_background_host)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_host_t* self, int mute)*
@@ -979,8 +1245,13 @@ namespace CefNet.CApi
 		/// Set whether the browser&apos;s audio is muted.
 		/// </summary>
 		[NativeName("set_audio_muted")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetAudioMuted(int mute);
+		public unsafe void SetAudioMuted(int mute)
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int, void>)set_audio_muted)(self, mute);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_host_t* self)*
@@ -992,8 +1263,13 @@ namespace CefNet.CApi
 		/// be called on the UI thread.
 		/// </summary>
 		[NativeName("is_audio_muted")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsAudioMuted();
+		public unsafe int IsAudioMuted()
+		{
+			fixed (cef_browser_host_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_host_t*, int>)is_audio_muted)(self);
+			}
+		}
 	}
 }
 

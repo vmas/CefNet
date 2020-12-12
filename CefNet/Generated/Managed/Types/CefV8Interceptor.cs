@@ -33,6 +33,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefV8Interceptor : CefBaseRefCounted<cef_v8interceptor_t>, ICefV8InterceptorPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly GetByNameDelegate fnGetByName = GetByNameImpl;
 
 		private static readonly GetByIndexDelegate fnGetByIndex = GetByIndexImpl;
@@ -41,6 +42,7 @@ namespace CefNet
 
 		private static readonly SetByIndexDelegate fnSetByIndex = SetByIndexImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefV8Interceptor Create(IntPtr instance)
 		{
 			return new CefV8Interceptor((cef_v8interceptor_t*)instance);
@@ -49,10 +51,17 @@ namespace CefNet
 		public CefV8Interceptor()
 		{
 			cef_v8interceptor_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->get_byname = (void*)Marshal.GetFunctionPointerForDelegate(fnGetByName);
 			self->get_byindex = (void*)Marshal.GetFunctionPointerForDelegate(fnGetByIndex);
 			self->set_byname = (void*)Marshal.GetFunctionPointerForDelegate(fnSetByName);
 			self->set_byindex = (void*)Marshal.GetFunctionPointerForDelegate(fnSetByIndex);
+			#else
+			self->get_byname = (delegate* unmanaged[Stdcall]<cef_v8interceptor_t*, cef_string_t*, cef_v8value_t*, cef_v8value_t**, cef_string_t*, int>)&GetByNameImpl;
+			self->get_byindex = (delegate* unmanaged[Stdcall]<cef_v8interceptor_t*, int, cef_v8value_t*, cef_v8value_t**, cef_string_t*, int>)&GetByIndexImpl;
+			self->set_byname = (delegate* unmanaged[Stdcall]<cef_v8interceptor_t*, cef_string_t*, cef_v8value_t*, cef_v8value_t*, cef_string_t*, int>)&SetByNameImpl;
+			self->set_byindex = (delegate* unmanaged[Stdcall]<cef_v8interceptor_t*, int, cef_v8value_t*, cef_v8value_t*, cef_string_t*, int>)&SetByIndexImpl;
+			#endif
 		}
 
 		public CefV8Interceptor(cef_v8interceptor_t* instance)
@@ -77,10 +86,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetByNameDelegate(cef_v8interceptor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_v8interceptor_t* self, const cef_string_t* name, _cef_v8value_t* object, _cef_v8value_t** retval, cef_string_t* exception)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetByNameImpl(cef_v8interceptor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8Interceptor;
@@ -115,10 +127,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int GetByIndexDelegate(cef_v8interceptor_t* self, int index, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_v8interceptor_t* self, int index, _cef_v8value_t* object, _cef_v8value_t** retval, cef_string_t* exception)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int GetByIndexImpl(cef_v8interceptor_t* self, int index, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8Interceptor;
@@ -153,10 +168,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int SetByNameDelegate(cef_v8interceptor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_v8interceptor_t* self, const cef_string_t* name, _cef_v8value_t* object, _cef_v8value_t* value, cef_string_t* exception)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int SetByNameImpl(cef_v8interceptor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8Interceptor;
@@ -189,10 +207,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int SetByIndexDelegate(cef_v8interceptor_t* self, int index, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_v8interceptor_t* self, int index, _cef_v8value_t* object, _cef_v8value_t* value, cef_string_t* exception)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int SetByIndexImpl(cef_v8interceptor_t* self, int index, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8Interceptor;

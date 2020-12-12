@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// Returns a copy of the current object.
 		/// </summary>
 		[NativeName("clone")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_drag_data_t* Clone();
+		public unsafe cef_drag_data_t* Clone()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_drag_data_t*>)clone)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_drag_data_t* self)*
@@ -51,8 +56,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if this object is read-only.
 		/// </summary>
 		[NativeName("is_read_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsReadOnly();
+		public unsafe int IsReadOnly()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, int>)is_read_only)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_drag_data_t* self)*
@@ -63,8 +73,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the drag data is a link.
 		/// </summary>
 		[NativeName("is_link")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsLink();
+		public unsafe int IsLink()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, int>)is_link)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_drag_data_t* self)*
@@ -75,8 +90,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the drag data is a text or html fragment.
 		/// </summary>
 		[NativeName("is_fragment")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsFragment();
+		public unsafe int IsFragment()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, int>)is_fragment)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_drag_data_t* self)*
@@ -87,8 +107,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the drag data is a file.
 		/// </summary>
 		[NativeName("is_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsFile();
+		public unsafe int IsFile()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, int>)is_file)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_drag_data_t* self)*
@@ -100,8 +125,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_link_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetLinkUrl();
+		public unsafe cef_string_userfree_t GetLinkUrl()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_userfree_t>)get_link_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_drag_data_t* self)*
@@ -113,8 +143,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_link_title")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetLinkTitle();
+		public unsafe cef_string_userfree_t GetLinkTitle()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_userfree_t>)get_link_title)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_drag_data_t* self)*
@@ -126,8 +161,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_link_metadata")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetLinkMetadata();
+		public unsafe cef_string_userfree_t GetLinkMetadata()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_userfree_t>)get_link_metadata)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_drag_data_t* self)*
@@ -139,8 +179,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_fragment_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFragmentText();
+		public unsafe cef_string_userfree_t GetFragmentText()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_userfree_t>)get_fragment_text)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_drag_data_t* self)*
@@ -152,8 +197,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_fragment_html")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFragmentHtml();
+		public unsafe cef_string_userfree_t GetFragmentHtml()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_userfree_t>)get_fragment_html)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_drag_data_t* self)*
@@ -166,8 +216,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_fragment_base_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFragmentBaseUrl();
+		public unsafe cef_string_userfree_t GetFragmentBaseUrl()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_userfree_t>)get_fragment_base_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_drag_data_t* self)*
@@ -179,8 +234,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_file_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFileName();
+		public unsafe cef_string_userfree_t GetFileName()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_userfree_t>)get_file_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_drag_data_t* self, _cef_stream_writer_t* writer)*
@@ -194,8 +254,13 @@ namespace CefNet.CApi
 		/// get_file_name() to get a suggested name for the file.
 		/// </summary>
 		[NativeName("get_file_contents")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetFileContents(cef_stream_writer_t* writer);
+		public unsafe UIntPtr GetFileContents(cef_stream_writer_t* writer)
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_stream_writer_t*, UIntPtr>)get_file_contents)(self, writer);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_drag_data_t* self, cef_string_list_t names)*
@@ -207,8 +272,13 @@ namespace CefNet.CApi
 		/// window.
 		/// </summary>
 		[NativeName("get_file_names")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetFileNames(cef_string_list_t names);
+		public unsafe int GetFileNames(cef_string_list_t names)
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_list_t, int>)get_file_names)(self, names);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_drag_data_t* self, const cef_string_t* url)*
@@ -219,8 +289,13 @@ namespace CefNet.CApi
 		/// Set the link URL that is being dragged.
 		/// </summary>
 		[NativeName("set_link_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetLinkUrl([Immutable]cef_string_t* url);
+		public unsafe void SetLinkUrl([Immutable]cef_string_t* url)
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_t*, void>)set_link_url)(self, url);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_drag_data_t* self, const cef_string_t* title)*
@@ -231,8 +306,13 @@ namespace CefNet.CApi
 		/// Set the title associated with the link being dragged.
 		/// </summary>
 		[NativeName("set_link_title")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetLinkTitle([Immutable]cef_string_t* title);
+		public unsafe void SetLinkTitle([Immutable]cef_string_t* title)
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_t*, void>)set_link_title)(self, title);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_drag_data_t* self, const cef_string_t* data)*
@@ -243,8 +323,13 @@ namespace CefNet.CApi
 		/// Set the metadata associated with the link being dragged.
 		/// </summary>
 		[NativeName("set_link_metadata")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetLinkMetadata([Immutable]cef_string_t* data);
+		public unsafe void SetLinkMetadata([Immutable]cef_string_t* data)
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_t*, void>)set_link_metadata)(self, data);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_drag_data_t* self, const cef_string_t* text)*
@@ -255,8 +340,13 @@ namespace CefNet.CApi
 		/// Set the plain text fragment that is being dragged.
 		/// </summary>
 		[NativeName("set_fragment_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetFragmentText([Immutable]cef_string_t* text);
+		public unsafe void SetFragmentText([Immutable]cef_string_t* text)
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_t*, void>)set_fragment_text)(self, text);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_drag_data_t* self, const cef_string_t* html)*
@@ -267,8 +357,13 @@ namespace CefNet.CApi
 		/// Set the text/html fragment that is being dragged.
 		/// </summary>
 		[NativeName("set_fragment_html")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetFragmentHtml([Immutable]cef_string_t* html);
+		public unsafe void SetFragmentHtml([Immutable]cef_string_t* html)
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_t*, void>)set_fragment_html)(self, html);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_drag_data_t* self, const cef_string_t* base_url)*
@@ -279,8 +374,13 @@ namespace CefNet.CApi
 		/// Set the base URL that the fragment came from.
 		/// </summary>
 		[NativeName("set_fragment_base_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetFragmentBaseUrl([Immutable]cef_string_t* base_url);
+		public unsafe void SetFragmentBaseUrl([Immutable]cef_string_t* base_url)
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_t*, void>)set_fragment_base_url)(self, base_url);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_drag_data_t* self)*
@@ -293,8 +393,13 @@ namespace CefNet.CApi
 		/// to drag in this kind of data.
 		/// </summary>
 		[NativeName("reset_file_contents")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ResetFileContents();
+		public unsafe void ResetFileContents()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_drag_data_t*, void>)reset_file_contents)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_drag_data_t* self, const cef_string_t* path, const cef_string_t* display_name)*
@@ -305,8 +410,13 @@ namespace CefNet.CApi
 		/// Add a file that is being dragged into the webview.
 		/// </summary>
 		[NativeName("add_file")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void AddFile([Immutable]cef_string_t* path, [Immutable]cef_string_t* display_name);
+		public unsafe void AddFile([Immutable]cef_string_t* path, [Immutable]cef_string_t* display_name)
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_string_t*, cef_string_t*, void>)add_file)(self, path, display_name);
+			}
+		}
 
 		/// <summary>
 		/// _cef_image_t* (*)(_cef_drag_data_t* self)*
@@ -318,8 +428,13 @@ namespace CefNet.CApi
 		/// representation is available.
 		/// </summary>
 		[NativeName("get_image")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_image_t* GetImage();
+		public unsafe cef_image_t* GetImage()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_image_t*>)get_image)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_point_t (*)(_cef_drag_data_t* self)*
@@ -330,8 +445,13 @@ namespace CefNet.CApi
 		/// Get the image hotspot (drag start location relative to image dimensions).
 		/// </summary>
 		[NativeName("get_image_hotspot")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_point_t GetImageHotspot();
+		public unsafe cef_point_t GetImageHotspot()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, cef_point_t>)get_image_hotspot)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_drag_data_t* self)*
@@ -342,8 +462,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if an image representation of drag data is available.
 		/// </summary>
 		[NativeName("has_image")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasImage();
+		public unsafe int HasImage()
+		{
+			fixed (cef_drag_data_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_drag_data_t*, int>)has_image)(self);
+			}
+		}
 	}
 }
 

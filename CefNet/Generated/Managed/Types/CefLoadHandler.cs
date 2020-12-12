@@ -30,6 +30,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefLoadHandler : CefBaseRefCounted<cef_load_handler_t>, ICefLoadHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnLoadingStateChangeDelegate fnOnLoadingStateChange = OnLoadingStateChangeImpl;
 
 		private static readonly OnLoadStartDelegate fnOnLoadStart = OnLoadStartImpl;
@@ -38,6 +39,7 @@ namespace CefNet
 
 		private static readonly OnLoadErrorDelegate fnOnLoadError = OnLoadErrorImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefLoadHandler Create(IntPtr instance)
 		{
 			return new CefLoadHandler((cef_load_handler_t*)instance);
@@ -46,10 +48,17 @@ namespace CefNet
 		public CefLoadHandler()
 		{
 			cef_load_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_loading_state_change = (void*)Marshal.GetFunctionPointerForDelegate(fnOnLoadingStateChange);
 			self->on_load_start = (void*)Marshal.GetFunctionPointerForDelegate(fnOnLoadStart);
 			self->on_load_end = (void*)Marshal.GetFunctionPointerForDelegate(fnOnLoadEnd);
 			self->on_load_error = (void*)Marshal.GetFunctionPointerForDelegate(fnOnLoadError);
+			#else
+			self->on_loading_state_change = (delegate* unmanaged[Stdcall]<cef_load_handler_t*, cef_browser_t*, int, int, int, void>)&OnLoadingStateChangeImpl;
+			self->on_load_start = (delegate* unmanaged[Stdcall]<cef_load_handler_t*, cef_browser_t*, cef_frame_t*, CefTransitionType, void>)&OnLoadStartImpl;
+			self->on_load_end = (delegate* unmanaged[Stdcall]<cef_load_handler_t*, cef_browser_t*, cef_frame_t*, int, void>)&OnLoadEndImpl;
+			self->on_load_error = (delegate* unmanaged[Stdcall]<cef_load_handler_t*, cef_browser_t*, cef_frame_t*, CefErrorCode, cef_string_t*, cef_string_t*, void>)&OnLoadErrorImpl;
+			#endif
 		}
 
 		public CefLoadHandler(cef_load_handler_t* instance)
@@ -71,10 +80,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnLoadingStateChangeDelegate(cef_load_handler_t* self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnLoadingStateChangeImpl(cef_load_handler_t* self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLoadHandler;
@@ -105,10 +117,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnLoadStartDelegate(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefTransitionType transition_type);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_transition_type_t transition_type)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnLoadStartImpl(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefTransitionType transition_type)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLoadHandler;
@@ -138,10 +153,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnLoadEndDelegate(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, int httpStatusCode)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnLoadEndImpl(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLoadHandler;
@@ -168,10 +186,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnLoadErrorDelegate(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefErrorCode errorCode, cef_string_t* errorText, cef_string_t* failedUrl);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_errorcode_t errorCode, const cef_string_t* errorText, const cef_string_t* failedUrl)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnLoadErrorImpl(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefErrorCode errorCode, cef_string_t* errorText, cef_string_t* failedUrl)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLoadHandler;

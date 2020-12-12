@@ -42,8 +42,13 @@ namespace CefNet.CApi
 		/// browser process.
 		/// </summary>
 		[NativeName("get_host")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_browser_host_t* GetHost();
+		public unsafe cef_browser_host_t* GetHost()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, cef_browser_host_t*>)get_host)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_t* self)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the browser can navigate backwards.
 		/// </summary>
 		[NativeName("can_go_back")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int CanGoBack();
+		public unsafe int CanGoBack()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, int>)can_go_back)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_t* self)*
@@ -66,8 +76,13 @@ namespace CefNet.CApi
 		/// Navigate backwards.
 		/// </summary>
 		[NativeName("go_back")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GoBack();
+		public unsafe void GoBack()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_t*, void>)go_back)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_t* self)*
@@ -78,8 +93,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the browser can navigate forwards.
 		/// </summary>
 		[NativeName("can_go_forward")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int CanGoForward();
+		public unsafe int CanGoForward()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, int>)can_go_forward)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_t* self)*
@@ -90,8 +110,13 @@ namespace CefNet.CApi
 		/// Navigate forwards.
 		/// </summary>
 		[NativeName("go_forward")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GoForward();
+		public unsafe void GoForward()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_t*, void>)go_forward)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_t* self)*
@@ -102,8 +127,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the browser is currently loading.
 		/// </summary>
 		[NativeName("is_loading")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsLoading();
+		public unsafe int IsLoading()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, int>)is_loading)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_t* self)*
@@ -114,8 +144,13 @@ namespace CefNet.CApi
 		/// Reload the current page.
 		/// </summary>
 		[NativeName("reload")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Reload();
+		public unsafe void Reload()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_t*, void>)reload)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_t* self)*
@@ -126,8 +161,13 @@ namespace CefNet.CApi
 		/// Reload the current page ignoring any cached data.
 		/// </summary>
 		[NativeName("reload_ignore_cache")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void ReloadIgnoreCache();
+		public unsafe void ReloadIgnoreCache()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_t*, void>)reload_ignore_cache)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_t* self)*
@@ -138,8 +178,13 @@ namespace CefNet.CApi
 		/// Stop loading the page.
 		/// </summary>
 		[NativeName("stop_load")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void StopLoad();
+		public unsafe void StopLoad()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_t*, void>)stop_load)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_t* self)*
@@ -151,8 +196,13 @@ namespace CefNet.CApi
 		/// used as the tabId for extension APIs.
 		/// </summary>
 		[NativeName("get_identifier")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetIdentifier();
+		public unsafe int GetIdentifier()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, int>)get_identifier)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_t* self, _cef_browser_t* that)*
@@ -164,8 +214,13 @@ namespace CefNet.CApi
 		/// object.
 		/// </summary>
 		[NativeName("is_same")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSame(cef_browser_t* that);
+		public unsafe int IsSame(cef_browser_t* that)
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, cef_browser_t*, int>)is_same)(self, that);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_t* self)*
@@ -176,8 +231,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the window is a popup window.
 		/// </summary>
 		[NativeName("is_popup")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsPopup();
+		public unsafe int IsPopup()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, int>)is_popup)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_browser_t* self)*
@@ -188,8 +248,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if a document has been loaded in the browser.
 		/// </summary>
 		[NativeName("has_document")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasDocument();
+		public unsafe int HasDocument()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, int>)has_document)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_frame_t* (*)(_cef_browser_t* self)*
@@ -200,8 +265,13 @@ namespace CefNet.CApi
 		/// Returns the main (top-level) frame for the browser window.
 		/// </summary>
 		[NativeName("get_main_frame")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_frame_t* GetMainFrame();
+		public unsafe cef_frame_t* GetMainFrame()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, cef_frame_t*>)get_main_frame)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_frame_t* (*)(_cef_browser_t* self)*
@@ -212,8 +282,13 @@ namespace CefNet.CApi
 		/// Returns the focused frame for the browser window.
 		/// </summary>
 		[NativeName("get_focused_frame")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_frame_t* GetFocusedFrame();
+		public unsafe cef_frame_t* GetFocusedFrame()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, cef_frame_t*>)get_focused_frame)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_frame_t* (*)(_cef_browser_t* self, int64 identifier)*
@@ -224,8 +299,13 @@ namespace CefNet.CApi
 		/// Returns the frame with the specified identifier, or NULL if not found.
 		/// </summary>
 		[NativeName("get_frame_byident")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_frame_t* GetFrameByIdent(long identifier);
+		public unsafe cef_frame_t* GetFrameByIdent(long identifier)
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, long, cef_frame_t*>)get_frame_byident)(self, identifier);
+			}
+		}
 
 		/// <summary>
 		/// _cef_frame_t* (*)(_cef_browser_t* self, const cef_string_t* name)*
@@ -236,8 +316,13 @@ namespace CefNet.CApi
 		/// Returns the frame with the specified name, or NULL if not found.
 		/// </summary>
 		[NativeName("get_frame")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_frame_t* GetFrame([Immutable]cef_string_t* name);
+		public unsafe cef_frame_t* GetFrame([Immutable]cef_string_t* name)
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, cef_string_t*, cef_frame_t*>)get_frame)(self, name);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_browser_t* self)*
@@ -248,8 +333,13 @@ namespace CefNet.CApi
 		/// Returns the number of frames that currently exist.
 		/// </summary>
 		[NativeName("get_frame_count")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetFrameCount();
+		public unsafe UIntPtr GetFrameCount()
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_t*, UIntPtr>)get_frame_count)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_t* self, size_t* identifiersCount, int64* identifiers)*
@@ -260,8 +350,13 @@ namespace CefNet.CApi
 		/// Returns the identifiers of all existing frames.
 		/// </summary>
 		[NativeName("get_frame_identifiers")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetFrameIdentifiers(UIntPtr* identifiersCount, long* identifiers);
+		public unsafe void GetFrameIdentifiers(UIntPtr* identifiersCount, long* identifiers)
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_t*, UIntPtr*, long*, void>)get_frame_identifiers)(self, identifiersCount, identifiers);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_t* self, cef_string_list_t names)*
@@ -272,8 +367,13 @@ namespace CefNet.CApi
 		/// Returns the names of all existing frames.
 		/// </summary>
 		[NativeName("get_frame_names")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetFrameNames(cef_string_list_t names);
+		public unsafe void GetFrameNames(cef_string_list_t names)
+		{
+			fixed (cef_browser_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_t*, cef_string_list_t, void>)get_frame_names)(self, names);
+			}
+		}
 	}
 }
 

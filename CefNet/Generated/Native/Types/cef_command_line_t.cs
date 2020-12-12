@@ -46,8 +46,13 @@ namespace CefNet.CApi
 		/// if this function returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_command_line_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_command_line_t* self)*
@@ -59,8 +64,13 @@ namespace CefNet.CApi
 		/// expose read-only objects.
 		/// </summary>
 		[NativeName("is_read_only")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsReadOnly();
+		public unsafe int IsReadOnly()
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_command_line_t*, int>)is_read_only)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_command_line_t* (*)(_cef_command_line_t* self)*
@@ -71,8 +81,13 @@ namespace CefNet.CApi
 		/// Returns a writable copy of this object.
 		/// </summary>
 		[NativeName("copy")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_command_line_t* Copy();
+		public unsafe cef_command_line_t* Copy()
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_command_line_t*>)copy)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, int argc, const const char** argv)*
@@ -85,8 +100,13 @@ namespace CefNet.CApi
 		/// supported on non-Windows platforms.
 		/// </summary>
 		[NativeName("init_from_argv")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void InitFromArgv(int argc, [Immutable]byte** argv);
+		public unsafe void InitFromArgv(int argc, [Immutable]byte** argv)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, int, byte**, void>)init_from_argv)(self, argc, argv);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, const cef_string_t* command_line)*
@@ -98,8 +118,13 @@ namespace CefNet.CApi
 		/// GetCommandLineW(). This function is only supported on Windows.
 		/// </summary>
 		[NativeName("init_from_string")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void InitFromString([Immutable]cef_string_t* command_line);
+		public unsafe void InitFromString([Immutable]cef_string_t* command_line)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_t*, void>)init_from_string)(self, command_line);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self)*
@@ -111,8 +136,13 @@ namespace CefNet.CApi
 		/// component unchanged.
 		/// </summary>
 		[NativeName("reset")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Reset();
+		public unsafe void Reset()
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, void>)reset)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, cef_string_list_t argv)*
@@ -124,8 +154,13 @@ namespace CefNet.CApi
 		/// array: { program, [(--|-|/)switch[=value]]*, [--], [argument]* }
 		/// </summary>
 		[NativeName("get_argv")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetArgv(cef_string_list_t argv);
+		public unsafe void GetArgv(cef_string_list_t argv)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_list_t, void>)get_argv)(self, argv);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_command_line_t* self)*
@@ -138,8 +173,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_command_line_string")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetCommandLineString();
+		public unsafe cef_string_userfree_t GetCommandLineString()
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_userfree_t>)get_command_line_string)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_command_line_t* self)*
@@ -151,8 +191,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_program")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetProgram();
+		public unsafe cef_string_userfree_t GetProgram()
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_userfree_t>)get_program)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, const cef_string_t* program)*
@@ -163,8 +208,13 @@ namespace CefNet.CApi
 		/// Set the program part of the command line string (the first item).
 		/// </summary>
 		[NativeName("set_program")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetProgram([Immutable]cef_string_t* program);
+		public unsafe void SetProgram([Immutable]cef_string_t* program)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_t*, void>)set_program)(self, program);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_command_line_t* self)*
@@ -175,8 +225,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the command line has switches.
 		/// </summary>
 		[NativeName("has_switches")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasSwitches();
+		public unsafe int HasSwitches()
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_command_line_t*, int>)has_switches)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_command_line_t* self, const cef_string_t* name)*
@@ -187,8 +242,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the command line contains the given switch.
 		/// </summary>
 		[NativeName("has_switch")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasSwitch([Immutable]cef_string_t* name);
+		public unsafe int HasSwitch([Immutable]cef_string_t* name)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_t*, int>)has_switch)(self, name);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_command_line_t* self, const cef_string_t* name)*
@@ -201,8 +261,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_switch_value")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetSwitchValue([Immutable]cef_string_t* name);
+		public unsafe cef_string_userfree_t GetSwitchValue([Immutable]cef_string_t* name)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_t*, cef_string_userfree_t>)get_switch_value)(self, name);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, cef_string_map_t switches)*
@@ -214,8 +279,13 @@ namespace CefNet.CApi
 		/// NULL string is returned.
 		/// </summary>
 		[NativeName("get_switches")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetSwitches(cef_string_map_t switches);
+		public unsafe void GetSwitches(cef_string_map_t switches)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_map_t, void>)get_switches)(self, switches);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, const cef_string_t* name)*
@@ -227,8 +297,13 @@ namespace CefNet.CApi
 		/// pass an NULL value string.
 		/// </summary>
 		[NativeName("append_switch")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void AppendSwitch([Immutable]cef_string_t* name);
+		public unsafe void AppendSwitch([Immutable]cef_string_t* name)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_t*, void>)append_switch)(self, name);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, const cef_string_t* name, const cef_string_t* value)*
@@ -239,8 +314,13 @@ namespace CefNet.CApi
 		/// Add a switch with the specified value to the end of the command line.
 		/// </summary>
 		[NativeName("append_switch_with_value")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void AppendSwitchWithValue([Immutable]cef_string_t* name, [Immutable]cef_string_t* value);
+		public unsafe void AppendSwitchWithValue([Immutable]cef_string_t* name, [Immutable]cef_string_t* value)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_t*, cef_string_t*, void>)append_switch_with_value)(self, name, value);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_command_line_t* self)*
@@ -251,8 +331,13 @@ namespace CefNet.CApi
 		/// True if there are remaining command line arguments.
 		/// </summary>
 		[NativeName("has_arguments")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasArguments();
+		public unsafe int HasArguments()
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_command_line_t*, int>)has_arguments)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, cef_string_list_t arguments)*
@@ -263,8 +348,13 @@ namespace CefNet.CApi
 		/// Get the remaining command line arguments.
 		/// </summary>
 		[NativeName("get_arguments")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetArguments(cef_string_list_t arguments);
+		public unsafe void GetArguments(cef_string_list_t arguments)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_list_t, void>)get_arguments)(self, arguments);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, const cef_string_t* argument)*
@@ -275,8 +365,13 @@ namespace CefNet.CApi
 		/// Add an argument to the end of the command line.
 		/// </summary>
 		[NativeName("append_argument")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void AppendArgument([Immutable]cef_string_t* argument);
+		public unsafe void AppendArgument([Immutable]cef_string_t* argument)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_t*, void>)append_argument)(self, argument);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_command_line_t* self, const cef_string_t* wrapper)*
@@ -288,8 +383,13 @@ namespace CefNet.CApi
 		/// &quot;valgrind&quot; or &quot;gdb --args&quot;.
 		/// </summary>
 		[NativeName("prepend_wrapper")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void PrependWrapper([Immutable]cef_string_t* wrapper);
+		public unsafe void PrependWrapper([Immutable]cef_string_t* wrapper)
+		{
+			fixed (cef_command_line_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_command_line_t*, cef_string_t*, void>)prepend_wrapper)(self, wrapper);
+			}
+		}
 	}
 }
 

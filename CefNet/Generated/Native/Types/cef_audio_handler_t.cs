@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// they are also pre-filled with some sensible defaults.
 		/// </summary>
 		[NativeName("get_audio_parameters")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetAudioParameters(cef_browser_t* browser, cef_audio_parameters_t* @params);
+		public unsafe int GetAudioParameters(cef_browser_t* browser, cef_audio_parameters_t* @params)
+		{
+			fixed (cef_audio_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, cef_audio_parameters_t*, int>)get_audio_parameters)(self, browser, @params);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, const cef_audio_parameters_t* params, int channels)*
@@ -57,8 +62,13 @@ namespace CefNet.CApi
 		/// channel layout. |channels| is the number of channels.
 		/// </summary>
 		[NativeName("on_audio_stream_started")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnAudioStreamStarted(cef_browser_t* browser, [Immutable]cef_audio_parameters_t* @params, int channels);
+		public unsafe void OnAudioStreamStarted(cef_browser_t* browser, [Immutable]cef_audio_parameters_t* @params, int channels)
+		{
+			fixed (cef_audio_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, cef_audio_parameters_t*, int, void>)on_audio_stream_started)(self, browser, @params, channels);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, const float** data, int frames, int64 pts)*
@@ -76,8 +86,13 @@ namespace CefNet.CApi
 		/// array in bytes.
 		/// </summary>
 		[NativeName("on_audio_stream_packet")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnAudioStreamPacket(cef_browser_t* browser, [Immutable]float** data, int frames, long pts);
+		public unsafe void OnAudioStreamPacket(cef_browser_t* browser, [Immutable]float** data, int frames, long pts)
+		{
+			fixed (cef_audio_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, float**, int, long, void>)on_audio_stream_packet)(self, browser, data, frames, pts);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser)*
@@ -90,8 +105,13 @@ namespace CefNet.CApi
 		/// called multiple times for the same stream.
 		/// </summary>
 		[NativeName("on_audio_stream_stopped")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnAudioStreamStopped(cef_browser_t* browser);
+		public unsafe void OnAudioStreamStopped(cef_browser_t* browser)
+		{
+			fixed (cef_audio_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, void>)on_audio_stream_stopped)(self, browser);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, const cef_string_t* message)*
@@ -105,8 +125,13 @@ namespace CefNet.CApi
 		/// stream will be stopped immediately.
 		/// </summary>
 		[NativeName("on_audio_stream_error")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnAudioStreamError(cef_browser_t* browser, [Immutable]cef_string_t* message);
+		public unsafe void OnAudioStreamError(cef_browser_t* browser, [Immutable]cef_string_t* message)
+		{
+			fixed (cef_audio_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_audio_handler_t*, cef_browser_t*, cef_string_t*, void>)on_audio_stream_error)(self, browser, message);
+			}
+		}
 	}
 }
 

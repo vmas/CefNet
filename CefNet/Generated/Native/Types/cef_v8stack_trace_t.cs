@@ -44,8 +44,13 @@ namespace CefNet.CApi
 		/// returns false (0).
 		/// </summary>
 		[NativeName("is_valid")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsValid();
+		public unsafe int IsValid()
+		{
+			fixed (cef_v8stack_trace_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_trace_t*, int>)is_valid)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_v8stack_trace_t* self)*
@@ -56,8 +61,13 @@ namespace CefNet.CApi
 		/// Returns the number of stack frames.
 		/// </summary>
 		[NativeName("get_frame_count")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetFrameCount();
+		public unsafe int GetFrameCount()
+		{
+			fixed (cef_v8stack_trace_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_trace_t*, int>)get_frame_count)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_v8stack_frame_t* (*)(_cef_v8stack_trace_t* self, int index)*
@@ -68,8 +78,13 @@ namespace CefNet.CApi
 		/// Returns the stack frame at the specified 0-based index.
 		/// </summary>
 		[NativeName("get_frame")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_v8stack_frame_t* GetFrame(int index);
+		public unsafe cef_v8stack_frame_t* GetFrame(int index)
+		{
+			fixed (cef_v8stack_trace_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_v8stack_trace_t*, int, cef_v8stack_frame_t*>)get_frame)(self, index);
+			}
+		}
 	}
 }
 

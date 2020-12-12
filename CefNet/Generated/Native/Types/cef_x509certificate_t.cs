@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// match the host name of the web server.
 		/// </summary>
 		[NativeName("get_subject")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_x509cert_principal_t* GetSubject();
+		public unsafe cef_x509cert_principal_t* GetSubject()
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, cef_x509cert_principal_t*>)get_subject)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_x509cert_principal_t* (*)(_cef_x509certificate_t* self)*
@@ -52,8 +57,13 @@ namespace CefNet.CApi
 		/// Returns the issuer of the X.509 certificate.
 		/// </summary>
 		[NativeName("get_issuer")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_x509cert_principal_t* GetIssuer();
+		public unsafe cef_x509cert_principal_t* GetIssuer()
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, cef_x509cert_principal_t*>)get_issuer)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_binary_value_t* (*)(_cef_x509certificate_t* self)*
@@ -65,8 +75,13 @@ namespace CefNet.CApi
 		/// possibly includes a leading 00 byte.
 		/// </summary>
 		[NativeName("get_serial_number")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_binary_value_t* GetSerialNumber();
+		public unsafe cef_binary_value_t* GetSerialNumber()
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, cef_binary_value_t*>)get_serial_number)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_time_t (*)(_cef_x509certificate_t* self)*
@@ -78,8 +93,13 @@ namespace CefNet.CApi
 		/// CefTime.GetTimeT() will return 0 if no date was specified.
 		/// </summary>
 		[NativeName("get_valid_start")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_time_t GetValidStart();
+		public unsafe cef_time_t GetValidStart()
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, cef_time_t>)get_valid_start)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_time_t (*)(_cef_x509certificate_t* self)*
@@ -91,8 +111,13 @@ namespace CefNet.CApi
 		/// CefTime.GetTimeT() will return 0 if no date was specified.
 		/// </summary>
 		[NativeName("get_valid_expiry")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_time_t GetValidExpiry();
+		public unsafe cef_time_t GetValidExpiry()
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, cef_time_t>)get_valid_expiry)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_binary_value_t* (*)(_cef_x509certificate_t* self)*
@@ -103,8 +128,13 @@ namespace CefNet.CApi
 		/// Returns the DER encoded data for the X.509 certificate.
 		/// </summary>
 		[NativeName("get_derencoded")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_binary_value_t* GetDEREncoded();
+		public unsafe cef_binary_value_t* GetDEREncoded()
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, cef_binary_value_t*>)get_derencoded)(self);
+			}
+		}
 
 		/// <summary>
 		/// _cef_binary_value_t* (*)(_cef_x509certificate_t* self)*
@@ -115,8 +145,13 @@ namespace CefNet.CApi
 		/// Returns the PEM encoded data for the X.509 certificate.
 		/// </summary>
 		[NativeName("get_pemencoded")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_binary_value_t* GetPEMEncoded();
+		public unsafe cef_binary_value_t* GetPEMEncoded()
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, cef_binary_value_t*>)get_pemencoded)(self);
+			}
+		}
 
 		/// <summary>
 		/// size_t (*)(_cef_x509certificate_t* self)*
@@ -128,8 +163,13 @@ namespace CefNet.CApi
 		/// certificate is self-signed.
 		/// </summary>
 		[NativeName("get_issuer_chain_size")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern UIntPtr GetIssuerChainSize();
+		public unsafe UIntPtr GetIssuerChainSize()
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, UIntPtr>)get_issuer_chain_size)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_x509certificate_t* self, size_t* chainCount, _cef_binary_value_t** chain)*
@@ -141,9 +181,14 @@ namespace CefNet.CApi
 		/// to encode a certificate in the chain it is still present in the array but
 		/// is an NULL string.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_derencoded_issuer_chain")]
-		public unsafe extern void GetDEREncodedIssuerChain(UIntPtr* chainCount, cef_binary_value_t** chain);
+		public unsafe void GetDEREncodedIssuerChain(UIntPtr* chainCount, cef_binary_value_t** chain)
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, UIntPtr*, cef_binary_value_t**, void>)get_derencoded_issuer_chain)(self, chainCount, chain);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_x509certificate_t* self, size_t* chainCount, _cef_binary_value_t** chain)*
@@ -155,9 +200,14 @@ namespace CefNet.CApi
 		/// to encode a certificate in the chain it is still present in the array but
 		/// is an NULL string.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_pemencoded_issuer_chain")]
-		public unsafe extern void GetPEMEncodedIssuerChain(UIntPtr* chainCount, cef_binary_value_t** chain);
+		public unsafe void GetPEMEncodedIssuerChain(UIntPtr* chainCount, cef_binary_value_t** chain)
+		{
+			fixed (cef_x509certificate_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_x509certificate_t*, UIntPtr*, cef_binary_value_t**, void>)get_pemencoded_issuer_chain)(self, chainCount, chain);
+			}
+		}
 	}
 }
 

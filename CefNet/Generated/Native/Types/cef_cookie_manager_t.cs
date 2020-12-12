@@ -45,8 +45,13 @@ namespace CefNet.CApi
 		/// called before any cookies are accessed.
 		/// </summary>
 		[NativeName("set_supported_schemes")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void SetSupportedSchemes(cef_string_list_t schemes, int include_defaults, cef_completion_callback_t* callback);
+		public unsafe void SetSupportedSchemes(cef_string_list_t schemes, int include_defaults, cef_completion_callback_t* callback)
+		{
+			fixed (cef_cookie_manager_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_cookie_manager_t*, cef_string_list_t, int, cef_completion_callback_t*, void>)set_supported_schemes)(self, schemes, include_defaults, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_cookie_manager_t* self, _cef_cookie_visitor_t* visitor)*
@@ -59,8 +64,13 @@ namespace CefNet.CApi
 		/// cannot be accessed.
 		/// </summary>
 		[NativeName("visit_all_cookies")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int VisitAllCookies(cef_cookie_visitor_t* visitor);
+		public unsafe int VisitAllCookies(cef_cookie_visitor_t* visitor)
+		{
+			fixed (cef_cookie_manager_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_cookie_manager_t*, cef_cookie_visitor_t*, int>)visit_all_cookies)(self, visitor);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_cookie_manager_t* self, const cef_string_t* url, int includeHttpOnly, _cef_cookie_visitor_t* visitor)*
@@ -75,8 +85,13 @@ namespace CefNet.CApi
 		/// Returns false (0) if cookies cannot be accessed.
 		/// </summary>
 		[NativeName("visit_url_cookies")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int VisitUrlCookies([Immutable]cef_string_t* url, int includeHttpOnly, cef_cookie_visitor_t* visitor);
+		public unsafe int VisitUrlCookies([Immutable]cef_string_t* url, int includeHttpOnly, cef_cookie_visitor_t* visitor)
+		{
+			fixed (cef_cookie_manager_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_cookie_manager_t*, cef_string_t*, int, cef_cookie_visitor_t*, int>)visit_url_cookies)(self, url, includeHttpOnly, visitor);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_cookie_manager_t* self, const cef_string_t* url, const const _cef_cookie_t* cookie, _cef_set_cookie_callback_t* callback)*
@@ -93,8 +108,13 @@ namespace CefNet.CApi
 		/// false (0) if an invalid URL is specified or if cookies cannot be accessed.
 		/// </summary>
 		[NativeName("set_cookie")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int SetCookie([Immutable]cef_string_t* url, [Immutable]cef_cookie_t* cookie, cef_set_cookie_callback_t* callback);
+		public unsafe int SetCookie([Immutable]cef_string_t* url, [Immutable]cef_cookie_t* cookie, cef_set_cookie_callback_t* callback)
+		{
+			fixed (cef_cookie_manager_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_cookie_manager_t*, cef_string_t*, cef_cookie_t*, cef_set_cookie_callback_t*, int>)set_cookie)(self, url, cookie, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_cookie_manager_t* self, const cef_string_t* url, const cef_string_t* cookie_name, _cef_delete_cookies_callback_t* callback)*
@@ -113,8 +133,13 @@ namespace CefNet.CApi
 		/// the Visit*Cookies() functions.
 		/// </summary>
 		[NativeName("delete_cookies")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int DeleteCookies([Immutable]cef_string_t* url, [Immutable]cef_string_t* cookie_name, cef_delete_cookies_callback_t* callback);
+		public unsafe int DeleteCookies([Immutable]cef_string_t* url, [Immutable]cef_string_t* cookie_name, cef_delete_cookies_callback_t* callback)
+		{
+			fixed (cef_cookie_manager_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_cookie_manager_t*, cef_string_t*, cef_string_t*, cef_delete_cookies_callback_t*, int>)delete_cookies)(self, url, cookie_name, callback);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_cookie_manager_t* self, _cef_completion_callback_t* callback)*
@@ -127,8 +152,13 @@ namespace CefNet.CApi
 		/// Returns false (0) if cookies cannot be accessed.
 		/// </summary>
 		[NativeName("flush_store")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int FlushStore(cef_completion_callback_t* callback);
+		public unsafe int FlushStore(cef_completion_callback_t* callback)
+		{
+			fixed (cef_cookie_manager_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_cookie_manager_t*, cef_completion_callback_t*, int>)flush_store)(self, callback);
+			}
+		}
 	}
 }
 

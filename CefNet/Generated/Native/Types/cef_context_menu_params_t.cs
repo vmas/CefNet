@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// Coords are relative to the associated RenderView&apos;s origin.
 		/// </summary>
 		[NativeName("get_xcoord")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetXCoord();
+		public unsafe int GetXCoord()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, int>)get_xcoord)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_context_menu_params_t* self)*
@@ -53,8 +58,13 @@ namespace CefNet.CApi
 		/// Coords are relative to the associated RenderView&apos;s origin.
 		/// </summary>
 		[NativeName("get_ycoord")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetYCoord();
+		public unsafe int GetYCoord()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, int>)get_ycoord)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_context_menu_type_flags_t (*)(_cef_context_menu_params_t* self)*
@@ -66,8 +76,13 @@ namespace CefNet.CApi
 		/// invoked on.
 		/// </summary>
 		[NativeName("get_type_flags")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefContextMenuTypeFlags GetTypeFlags();
+		public unsafe CefContextMenuTypeFlags GetTypeFlags()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, CefContextMenuTypeFlags>)get_type_flags)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_context_menu_params_t* self)*
@@ -80,8 +95,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_link_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetLinkUrl();
+		public unsafe cef_string_userfree_t GetLinkUrl()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_userfree_t>)get_link_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_context_menu_params_t* self)*
@@ -94,8 +114,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_unfiltered_link_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetUnfilteredLinkUrl();
+		public unsafe cef_string_userfree_t GetUnfilteredLinkUrl()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_userfree_t>)get_unfiltered_link_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_context_menu_params_t* self)*
@@ -108,8 +133,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_source_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetSourceUrl();
+		public unsafe cef_string_userfree_t GetSourceUrl()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_userfree_t>)get_source_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_context_menu_params_t* self)*
@@ -121,8 +151,13 @@ namespace CefNet.CApi
 		/// NULL contents.
 		/// </summary>
 		[NativeName("has_image_contents")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasImageContents();
+		public unsafe int HasImageContents()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, int>)has_image_contents)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_context_menu_params_t* self)*
@@ -135,8 +170,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_title_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetTitleText();
+		public unsafe cef_string_userfree_t GetTitleText()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_userfree_t>)get_title_text)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_context_menu_params_t* self)*
@@ -148,8 +188,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_page_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetPageUrl();
+		public unsafe cef_string_userfree_t GetPageUrl()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_userfree_t>)get_page_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_context_menu_params_t* self)*
@@ -161,8 +206,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_frame_url")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFrameUrl();
+		public unsafe cef_string_userfree_t GetFrameUrl()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_userfree_t>)get_frame_url)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_context_menu_params_t* self)*
@@ -175,8 +225,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_frame_charset")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetFrameCharset();
+		public unsafe cef_string_userfree_t GetFrameCharset()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_userfree_t>)get_frame_charset)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_context_menu_media_type_t (*)(_cef_context_menu_params_t* self)*
@@ -187,8 +242,13 @@ namespace CefNet.CApi
 		/// Returns the type of context node that the context menu was invoked on.
 		/// </summary>
 		[NativeName("get_media_type")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefContextMenuMediaType GetMediaType();
+		public unsafe CefContextMenuMediaType GetMediaType()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, CefContextMenuMediaType>)get_media_type)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_context_menu_media_state_flags_t (*)(_cef_context_menu_params_t* self)*
@@ -200,8 +260,13 @@ namespace CefNet.CApi
 		/// any, that the context menu was invoked on.
 		/// </summary>
 		[NativeName("get_media_state_flags")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefContextMenuMediaStateFlags GetMediaStateFlags();
+		public unsafe CefContextMenuMediaStateFlags GetMediaStateFlags()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, CefContextMenuMediaStateFlags>)get_media_state_flags)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_context_menu_params_t* self)*
@@ -214,8 +279,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_selection_text")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetSelectionText();
+		public unsafe cef_string_userfree_t GetSelectionText()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_userfree_t>)get_selection_text)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_context_menu_params_t* self)*
@@ -228,8 +298,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_misspelled_word")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetMisspelledWord();
+		public unsafe cef_string_userfree_t GetMisspelledWord()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_userfree_t>)get_misspelled_word)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_context_menu_params_t* self, cef_string_list_t suggestions)*
@@ -241,9 +316,14 @@ namespace CefNet.CApi
 		/// |suggestions| from the spell check service for the misspelled word if there
 		/// is one.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_dictionary_suggestions")]
-		public unsafe extern int GetDictionarySuggestions(cef_string_list_t suggestions);
+		public unsafe int GetDictionarySuggestions(cef_string_list_t suggestions)
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, cef_string_list_t, int>)get_dictionary_suggestions)(self, suggestions);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_context_menu_params_t* self)*
@@ -254,8 +334,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the context menu was invoked on an editable node.
 		/// </summary>
 		[NativeName("is_editable")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsEditable();
+		public unsafe int IsEditable()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, int>)is_editable)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_context_menu_params_t* self)*
@@ -267,8 +352,13 @@ namespace CefNet.CApi
 		/// spell-check is enabled.
 		/// </summary>
 		[NativeName("is_spell_check_enabled")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSpellCheckEnabled();
+		public unsafe int IsSpellCheckEnabled()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, int>)is_spell_check_enabled)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_context_menu_edit_state_flags_t (*)(_cef_context_menu_params_t* self)*
@@ -280,8 +370,13 @@ namespace CefNet.CApi
 		/// any, that the context menu was invoked on.
 		/// </summary>
 		[NativeName("get_edit_state_flags")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefContextMenuEditStateFlags GetEditStateFlags();
+		public unsafe CefContextMenuEditStateFlags GetEditStateFlags()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, CefContextMenuEditStateFlags>)get_edit_state_flags)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_context_menu_params_t* self)*
@@ -294,8 +389,13 @@ namespace CefNet.CApi
 		/// items).
 		/// </summary>
 		[NativeName("is_custom_menu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsCustomMenu();
+		public unsafe int IsCustomMenu()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, int>)is_custom_menu)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_context_menu_params_t* self)*
@@ -306,8 +406,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the context menu was invoked from a pepper plugin.
 		/// </summary>
 		[NativeName("is_pepper_menu")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsPepperMenu();
+		public unsafe int IsPepperMenu()
+		{
+			fixed (cef_context_menu_params_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, int>)is_pepper_menu)(self);
+			}
+		}
 	}
 }
 

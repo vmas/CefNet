@@ -242,6 +242,10 @@ namespace CefNet
 		/// <param name="libcefHandle">The Chromium Embedded Framework library handle.</param>
 		protected virtual bool TryInitializeDllImportResolver(IntPtr libcefHandle)
 		{
+#if NET
+			NativeLibrary.SetDllImportResolver(typeof(CefApi).Assembly, ResolveNativeLibrary);
+			return true;
+#else
 			Type nativeLibraryType = Type.GetType("System.Runtime.InteropServices.NativeLibrary");
 			if (nativeLibraryType is null)
 				return false;
@@ -260,6 +264,7 @@ namespace CefNet
 			});
 
 			return true;
+#endif
 		}
 
 		/// <summary>
@@ -550,7 +555,7 @@ namespace CefNet
 		}
 
 
-		#region CefRenderProcessHandler
+#region CefRenderProcessHandler
 
 		/// <summary>
 		/// Raises the <see cref="WebKitInitialized"/> event.
@@ -645,8 +650,31 @@ namespace CefNet
 			}
 		}
 
-		#endregion
+#endregion
 
+		/// <summary>
+		/// Called on the browser process UI thread to retrieve the list of schemes
+		/// that should support cookies. 
+		/// </summary>
+		/// <param name="schemes">Providing an null value and setting <paramref name="includeDefaults"/> to false
+		/// will disable all loading and saving of cookies.
+		/// </param>
+		/// <param name="includeDefaults">
+		/// If true the default schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;)
+		/// will also be supported.
+		/// </param>
+		/// <remarks>
+		/// This state will apply to the <see cref="CefCookieManager"/> associated with the
+		/// global <see cref="CefRequestContext"/>. It will also be used as the initial state for
+		/// any new <see cref="CefRequestContext"/>&apos;s created by the client. After creating a new
+		/// <see cref="CefRequestContext"/> the <see cref="CefCookieManager.SetSupportedSchemes"/>
+		/// function may be called on the associated <see cref="CefCookieManager"/> to futher
+		/// override these values.
+		/// </remarks>
+		protected internal virtual void GetCookieableSchemes(CefStringList schemes, ref int includeDefaults)
+		{
+
+		}
 
 		/// <summary>
 		/// Raises the <see cref="CefContextInitialized"/> event.<para/>
@@ -703,5 +731,19 @@ namespace CefNet
 
 		}
 
+		/// <summary>
+		/// Provides the default client for use with a newly created browser window.
+		/// </summary>
+		/// <returns>
+		/// Returns the default client for use with a newly created browser window. If
+		/// null is returned the browser will be unmanaged (no callbacks will be
+		/// executed for that browser) and application shutdown will be blocked until
+		/// the browser window is closed manually. 
+		/// </returns>
+		/// <remarks>This function is currently only used with the chrome runtime.</remarks>
+		protected internal virtual CefClient GetDefaultClient()
+		{
+			return null;
+		}
 	}
 }

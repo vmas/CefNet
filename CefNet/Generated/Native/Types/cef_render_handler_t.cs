@@ -40,8 +40,13 @@ namespace CefNet.CApi
 		/// provided the default implementation will be used.
 		/// </summary>
 		[NativeName("get_accessibility_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_accessibility_handler_t* GetAccessibilityHandler();
+		public unsafe cef_accessibility_handler_t* GetAccessibilityHandler()
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_accessibility_handler_t*>)get_accessibility_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_rect_t* rect)*
@@ -54,8 +59,13 @@ namespace CefNet.CApi
 		/// the rectangle from GetViewRect will be used.
 		/// </summary>
 		[NativeName("get_root_screen_rect")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetRootScreenRect(cef_browser_t* browser, cef_rect_t* rect);
+		public unsafe int GetRootScreenRect(cef_browser_t* browser, cef_rect_t* rect)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, cef_rect_t*, int>)get_root_screen_rect)(self, browser, rect);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_rect_t* rect)*
@@ -67,8 +77,13 @@ namespace CefNet.CApi
 		/// coordinates. This function must always provide a non-NULL rectangle.
 		/// </summary>
 		[NativeName("get_view_rect")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void GetViewRect(cef_browser_t* browser, cef_rect_t* rect);
+		public unsafe void GetViewRect(cef_browser_t* browser, cef_rect_t* rect)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, cef_rect_t*, void>)get_view_rect)(self, browser, rect);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, int viewX, int viewY, int* screenX, int* screenY)*
@@ -80,8 +95,13 @@ namespace CefNet.CApi
 		/// coordinates. Return true (1) if the screen coordinates were provided.
 		/// </summary>
 		[NativeName("get_screen_point")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetScreenPoint(cef_browser_t* browser, int viewX, int viewY, int* screenX, int* screenY);
+		public unsafe int GetScreenPoint(cef_browser_t* browser, int viewX, int viewY, int* screenX, int* screenY)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, int, int, int*, int*, int>)get_screen_point)(self, browser, viewX, viewY, screenX, screenY);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, _cef_screen_info_t* screen_info)*
@@ -97,8 +117,13 @@ namespace CefNet.CApi
 		/// drawn correctly.
 		/// </summary>
 		[NativeName("get_screen_info")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int GetScreenInfo(cef_browser_t* browser, cef_screen_info_t* screen_info);
+		public unsafe int GetScreenInfo(cef_browser_t* browser, cef_screen_info_t* screen_info)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, cef_screen_info_t*, int>)get_screen_info)(self, browser, screen_info);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, int show)*
@@ -110,8 +135,13 @@ namespace CefNet.CApi
 		/// should be shown if |show| is true (1) and hidden if |show| is false (0).
 		/// </summary>
 		[NativeName("on_popup_show")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnPopupShow(cef_browser_t* browser, int show);
+		public unsafe void OnPopupShow(cef_browser_t* browser, int show)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, int, void>)on_popup_show)(self, browser, show);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, const cef_rect_t* rect)*
@@ -123,8 +153,13 @@ namespace CefNet.CApi
 		/// contains the new location and size in view coordinates.
 		/// </summary>
 		[NativeName("on_popup_size")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnPopupSize(cef_browser_t* browser, [Immutable]cef_rect_t* rect);
+		public unsafe void OnPopupSize(cef_browser_t* browser, [Immutable]cef_rect_t* rect)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, cef_rect_t*, void>)on_popup_size)(self, browser, rect);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_paint_element_type_t type, size_t dirtyRectsCount, const cef_rect_t* dirtyRects, const void* buffer, int width, int height)*
@@ -143,8 +178,13 @@ namespace CefNet.CApi
 		/// cef_window_tInfo::shared_texture_enabled is set to false (0).
 		/// </summary>
 		[NativeName("on_paint")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnPaint(cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, [Immutable]cef_rect_t* dirtyRects, [Immutable]void* buffer, int width, int height);
+		public unsafe void OnPaint(cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, [Immutable]cef_rect_t* dirtyRects, [Immutable]void* buffer, int width, int height)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, CefPaintElementType, UIntPtr, cef_rect_t*, void*, int, int, void>)on_paint)(self, browser, type, dirtyRectsCount, dirtyRects, buffer, width, height);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_paint_element_type_t type, size_t dirtyRectsCount, const cef_rect_t* dirtyRects, void* shared_handle)*
@@ -161,21 +201,13 @@ namespace CefNet.CApi
 		/// is set to true (1), and is currently only supported on Windows.
 		/// </summary>
 		[NativeName("on_accelerated_paint")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnAcceleratedPaint(cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, [Immutable]cef_rect_t* dirtyRects, void* shared_handle);
-
-		/// <summary>
-		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, HCURSOR cursor, cef_cursor_type_t type, const const _cef_cursor_info_t* custom_cursor_info)*
-		/// </summary>
-		public void* on_cursor_change;
-
-		/// <summary>
-		/// Called when the browser&apos;s cursor has changed. If |type| is CT_CUSTOM then
-		/// |custom_cursor_info| will be populated with the custom cursor information.
-		/// </summary>
-		[NativeName("on_cursor_change")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnCursorChange(cef_browser_t* browser, IntPtr cursor, CefCursorType type, [Immutable]cef_cursor_info_t* custom_cursor_info);
+		public unsafe void OnAcceleratedPaint(cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, [Immutable]cef_rect_t* dirtyRects, void* shared_handle)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, CefPaintElementType, UIntPtr, cef_rect_t*, void*, void>)on_accelerated_paint)(self, browser, type, dirtyRectsCount, dirtyRects, shared_handle);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, _cef_drag_data_t* drag_data, cef_drag_operations_mask_t allowed_ops, int x, int y)*
@@ -195,8 +227,13 @@ namespace CefNet.CApi
 		/// operation has ended.
 		/// </summary>
 		[NativeName("start_dragging")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int StartDragging(cef_browser_t* browser, cef_drag_data_t* drag_data, CefDragOperationsMask allowed_ops, int x, int y);
+		public unsafe int StartDragging(cef_browser_t* browser, cef_drag_data_t* drag_data, CefDragOperationsMask allowed_ops, int x, int y)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, cef_drag_data_t*, CefDragOperationsMask, int, int, int>)start_dragging)(self, browser, drag_data, allowed_ops, x, y);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_drag_operations_mask_t operation)*
@@ -210,8 +247,13 @@ namespace CefNet.CApi
 		/// copy, link).
 		/// </summary>
 		[NativeName("update_drag_cursor")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void UpdateDragCursor(cef_browser_t* browser, CefDragOperationsMask operation);
+		public unsafe void UpdateDragCursor(cef_browser_t* browser, CefDragOperationsMask operation)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, CefDragOperationsMask, void>)update_drag_cursor)(self, browser, operation);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, double x, double y)*
@@ -222,8 +264,13 @@ namespace CefNet.CApi
 		/// Called when the scroll offset has changed.
 		/// </summary>
 		[NativeName("on_scroll_offset_changed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnScrollOffsetChanged(cef_browser_t* browser, double x, double y);
+		public unsafe void OnScrollOffsetChanged(cef_browser_t* browser, double x, double y)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, double, double, void>)on_scroll_offset_changed)(self, browser, x, y);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, const cef_range_t* selected_range, size_t character_boundsCount, const cef_rect_t* character_bounds)*
@@ -235,9 +282,14 @@ namespace CefNet.CApi
 		/// range of characters that have been selected. |character_bounds| is the
 		/// bounds of each character in view coordinates.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_ime_composition_range_changed")]
-		public unsafe extern void OnImeCompositionRangeChanged(cef_browser_t* browser, [Immutable]cef_range_t* selected_range, UIntPtr character_boundsCount, [Immutable]cef_rect_t* character_bounds);
+		public unsafe void OnImeCompositionRangeChanged(cef_browser_t* browser, [Immutable]cef_range_t* selected_range, UIntPtr character_boundsCount, [Immutable]cef_rect_t* character_bounds)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, cef_range_t*, UIntPtr, cef_rect_t*, void>)on_ime_composition_range_changed)(self, browser, selected_range, character_boundsCount, character_bounds);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, const cef_string_t* selected_text, const cef_range_t* selected_range)*
@@ -250,8 +302,13 @@ namespace CefNet.CApi
 		/// character range.
 		/// </summary>
 		[NativeName("on_text_selection_changed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnTextSelectionChanged(cef_browser_t* browser, [Immutable]cef_string_t* selected_text, [Immutable]cef_range_t* selected_range);
+		public unsafe void OnTextSelectionChanged(cef_browser_t* browser, [Immutable]cef_string_t* selected_text, [Immutable]cef_range_t* selected_range)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, cef_string_t*, cef_range_t*, void>)on_text_selection_changed)(self, browser, selected_text, selected_range);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_text_input_mode_t input_mode)*
@@ -264,9 +321,14 @@ namespace CefNet.CApi
 		/// opened. If |input_mode| is CEF_TEXT_INPUT_MODE_NONE, any existing keyboard
 		/// for this browser should be hidden.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_virtual_keyboard_requested")]
-		public unsafe extern void OnVirtualKeyboardRequested(cef_browser_t* browser, CefTextInputMode input_mode);
+		public unsafe void OnVirtualKeyboardRequested(cef_browser_t* browser, CefTextInputMode input_mode)
+		{
+			fixed (cef_render_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_render_handler_t*, cef_browser_t*, CefTextInputMode, void>)on_virtual_keyboard_requested)(self, browser, input_mode);
+			}
+		}
 	}
 }
 

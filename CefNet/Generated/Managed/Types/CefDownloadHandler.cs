@@ -29,10 +29,12 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefDownloadHandler : CefBaseRefCounted<cef_download_handler_t>, ICefDownloadHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnBeforeDownloadDelegate fnOnBeforeDownload = OnBeforeDownloadImpl;
 
 		private static readonly OnDownloadUpdatedDelegate fnOnDownloadUpdated = OnDownloadUpdatedImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefDownloadHandler Create(IntPtr instance)
 		{
 			return new CefDownloadHandler((cef_download_handler_t*)instance);
@@ -41,8 +43,13 @@ namespace CefNet
 		public CefDownloadHandler()
 		{
 			cef_download_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_before_download = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforeDownload);
 			self->on_download_updated = (void*)Marshal.GetFunctionPointerForDelegate(fnOnDownloadUpdated);
+			#else
+			self->on_before_download = (delegate* unmanaged[Stdcall]<cef_download_handler_t*, cef_browser_t*, cef_download_item_t*, cef_string_t*, cef_before_download_callback_t*, void>)&OnBeforeDownloadImpl;
+			self->on_download_updated = (delegate* unmanaged[Stdcall]<cef_download_handler_t*, cef_browser_t*, cef_download_item_t*, cef_download_item_callback_t*, void>)&OnDownloadUpdatedImpl;
+			#endif
 		}
 
 		public CefDownloadHandler(cef_download_handler_t* instance)
@@ -64,10 +71,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnBeforeDownloadDelegate(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_string_t* suggested_name, cef_before_download_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_download_handler_t* self, _cef_browser_t* browser, _cef_download_item_t* download_item, const cef_string_t* suggested_name, _cef_before_download_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnBeforeDownloadImpl(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_string_t* suggested_name, cef_before_download_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDownloadHandler;
@@ -95,10 +105,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnDownloadUpdatedDelegate(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_download_item_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_download_handler_t* self, _cef_browser_t* browser, _cef_download_item_t* download_item, _cef_download_item_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnDownloadUpdatedImpl(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_download_item_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDownloadHandler;

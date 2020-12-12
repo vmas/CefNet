@@ -32,6 +32,33 @@ namespace CefNet.CApi
 		public cef_base_ref_counted_t @base;
 
 		/// <summary>
+		/// void (*)(_cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)*
+		/// </summary>
+		public void* get_cookieable_schemes;
+
+		/// <summary>
+		/// Called on the browser process UI thread to retrieve the list of schemes
+		/// that should support cookies. If |include_defaults| is true (1) the default
+		/// schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;) will also be supported. Providing
+		/// an NULL |schemes| value and setting |include_defaults| to false (0) will
+		/// disable all loading and saving of cookies.
+		/// This state will apply to the cef_cookie_manager_t associated with the
+		/// global cef_request_context_t. It will also be used as the initial state for
+		/// any new cef_request_context_ts created by the client. After creating a new
+		/// cef_request_context_t the cef_cookie_manager_t::SetSupportedSchemes
+		/// function may be called on the associated cef_cookie_manager_t to futher
+		/// override these values.
+		/// </summary>
+		[NativeName("get_cookieable_schemes")]
+		public unsafe void GetCookieableSchemes(cef_string_list_t schemes, int* include_defaults)
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_string_list_t, int*, void>)get_cookieable_schemes)(self, schemes, include_defaults);
+			}
+		}
+
+		/// <summary>
 		/// void (*)(_cef_browser_process_handler_t* self)*
 		/// </summary>
 		public void* on_context_initialized;
@@ -41,8 +68,13 @@ namespace CefNet.CApi
 		/// has been initialized.
 		/// </summary>
 		[NativeName("on_context_initialized")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnContextInitialized();
+		public unsafe void OnContextInitialized()
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, void>)on_context_initialized)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_process_handler_t* self, _cef_command_line_t* command_line)*
@@ -56,9 +88,14 @@ namespace CefNet.CApi
 		/// opportunity to modify the child process command line. Do not keep a
 		/// reference to |command_line| outside of this function.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_before_child_process_launch")]
-		public unsafe extern void OnBeforeChildProcessLaunch(cef_command_line_t* command_line);
+		public unsafe void OnBeforeChildProcessLaunch(cef_command_line_t* command_line)
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_command_line_t*, void>)on_before_child_process_launch)(self, command_line);
+			}
+		}
 
 		/// <summary>
 		/// _cef_print_handler_t* (*)(_cef_browser_process_handler_t* self)*
@@ -70,8 +107,13 @@ namespace CefNet.CApi
 		/// provided then printing will not be supported on the Linux platform.
 		/// </summary>
 		[NativeName("get_print_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_print_handler_t* GetPrintHandler();
+		public unsafe cef_print_handler_t* GetPrintHandler()
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_print_handler_t*>)get_print_handler)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_browser_process_handler_t* self, int64 delay_ms)*
@@ -93,9 +135,35 @@ namespace CefNet.CApi
 		/// specified delay and any currently pending scheduled call should be
 		/// cancelled.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("on_schedule_message_pump_work")]
-		public unsafe extern void OnScheduleMessagePumpWork(long delay_ms);
+		public unsafe void OnScheduleMessagePumpWork(long delay_ms)
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, long, void>)on_schedule_message_pump_work)(self, delay_ms);
+			}
+		}
+
+		/// <summary>
+		/// _cef_client_t* (*)(_cef_browser_process_handler_t* self)*
+		/// </summary>
+		public void* get_default_client;
+
+		/// <summary>
+		/// Return the default client for use with a newly created browser window. If
+		/// null is returned the browser will be unmanaged (no callbacks will be
+		/// executed for that browser) and application shutdown will be blocked until
+		/// the browser window is closed manually. This function is currently only used
+		/// with the chrome runtime.
+		/// </summary>
+		[NativeName("get_default_client")]
+		public unsafe cef_client_t* GetDefaultClient()
+		{
+			fixed (cef_browser_process_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_client_t*>)get_default_client)(self);
+			}
+		}
 	}
 }
 

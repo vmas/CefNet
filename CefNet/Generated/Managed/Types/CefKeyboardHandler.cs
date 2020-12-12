@@ -29,10 +29,12 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefKeyboardHandler : CefBaseRefCounted<cef_keyboard_handler_t>, ICefKeyboardHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnPreKeyEventDelegate fnOnPreKeyEvent = OnPreKeyEventImpl;
 
 		private static readonly OnKeyEventDelegate fnOnKeyEvent = OnKeyEventImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefKeyboardHandler Create(IntPtr instance)
 		{
 			return new CefKeyboardHandler((cef_keyboard_handler_t*)instance);
@@ -41,8 +43,13 @@ namespace CefNet
 		public CefKeyboardHandler()
 		{
 			cef_keyboard_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_pre_key_event = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPreKeyEvent);
 			self->on_key_event = (void*)Marshal.GetFunctionPointerForDelegate(fnOnKeyEvent);
+			#else
+			self->on_pre_key_event = (delegate* unmanaged[Stdcall]<cef_keyboard_handler_t*, cef_browser_t*, cef_key_event_t*, CefEventHandle, int*, int>)&OnPreKeyEventImpl;
+			self->on_key_event = (delegate* unmanaged[Stdcall]<cef_keyboard_handler_t*, cef_browser_t*, cef_key_event_t*, CefEventHandle, int>)&OnKeyEventImpl;
+			#endif
 		}
 
 		public CefKeyboardHandler(cef_keyboard_handler_t* instance)
@@ -65,10 +72,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnPreKeyEventDelegate(cef_keyboard_handler_t* self, cef_browser_t* browser, cef_key_event_t* @event, CefEventHandle os_event, int* is_keyboard_shortcut);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_keyboard_handler_t* self, _cef_browser_t* browser, const const _cef_key_event_t* event, CefEventHandle os_event, int* is_keyboard_shortcut)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnPreKeyEventImpl(cef_keyboard_handler_t* self, cef_browser_t* browser, cef_key_event_t* @event, CefEventHandle os_event, int* is_keyboard_shortcut)
 		{
 			var instance = GetInstance((IntPtr)self) as CefKeyboardHandler;
@@ -94,10 +104,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnKeyEventDelegate(cef_keyboard_handler_t* self, cef_browser_t* browser, cef_key_event_t* @event, CefEventHandle os_event);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_keyboard_handler_t* self, _cef_browser_t* browser, const const _cef_key_event_t* event, CefEventHandle os_event)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnKeyEventImpl(cef_keyboard_handler_t* self, cef_browser_t* browser, cef_key_event_t* @event, CefEventHandle os_event)
 		{
 			var instance = GetInstance((IntPtr)self) as CefKeyboardHandler;

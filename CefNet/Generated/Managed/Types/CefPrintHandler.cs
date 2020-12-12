@@ -30,6 +30,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefPrintHandler : CefBaseRefCounted<cef_print_handler_t>, ICefPrintHandlerPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnPrintStartDelegate fnOnPrintStart = OnPrintStartImpl;
 
 		private static readonly OnPrintSettingsDelegate fnOnPrintSettings = OnPrintSettingsImpl;
@@ -42,6 +43,7 @@ namespace CefNet
 
 		private static readonly GetPdfPaperSizeDelegate fnGetPdfPaperSize = GetPdfPaperSizeImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefPrintHandler Create(IntPtr instance)
 		{
 			return new CefPrintHandler((cef_print_handler_t*)instance);
@@ -50,12 +52,21 @@ namespace CefNet
 		public CefPrintHandler()
 		{
 			cef_print_handler_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_print_start = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPrintStart);
 			self->on_print_settings = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPrintSettings);
 			self->on_print_dialog = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPrintDialog);
 			self->on_print_job = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPrintJob);
 			self->on_print_reset = (void*)Marshal.GetFunctionPointerForDelegate(fnOnPrintReset);
 			self->get_pdf_paper_size = (void*)Marshal.GetFunctionPointerForDelegate(fnGetPdfPaperSize);
+			#else
+			self->on_print_start = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, void>)&OnPrintStartImpl;
+			self->on_print_settings = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, cef_print_settings_t*, int, void>)&OnPrintSettingsImpl;
+			self->on_print_dialog = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, int, cef_print_dialog_callback_t*, int>)&OnPrintDialogImpl;
+			self->on_print_job = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, cef_string_t*, cef_string_t*, cef_print_job_callback_t*, int>)&OnPrintJobImpl;
+			self->on_print_reset = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, void>)&OnPrintResetImpl;
+			self->get_pdf_paper_size = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, int, cef_size_t>)&GetPdfPaperSizeImpl;
+			#endif
 		}
 
 		public CefPrintHandler(cef_print_handler_t* instance)
@@ -76,10 +87,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnPrintStartDelegate(cef_print_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_print_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnPrintStartImpl(cef_print_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -103,10 +117,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnPrintSettingsDelegate(cef_print_handler_t* self, cef_browser_t* browser, cef_print_settings_t* settings, int get_defaults);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_print_handler_t* self, _cef_browser_t* browser, _cef_print_settings_t* settings, int get_defaults)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnPrintSettingsImpl(cef_print_handler_t* self, cef_browser_t* browser, cef_print_settings_t* settings, int get_defaults)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -132,10 +149,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnPrintDialogDelegate(cef_print_handler_t* self, cef_browser_t* browser, int has_selection, cef_print_dialog_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_print_handler_t* self, _cef_browser_t* browser, int has_selection, _cef_print_dialog_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnPrintDialogImpl(cef_print_handler_t* self, cef_browser_t* browser, int has_selection, cef_print_dialog_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -161,10 +181,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate int OnPrintJobDelegate(cef_print_handler_t* self, cef_browser_t* browser, cef_string_t* document_name, cef_string_t* pdf_file_path, cef_print_job_callback_t* callback);
 
+#endif // NET_LESS_5_0
 		// int (*)(_cef_print_handler_t* self, _cef_browser_t* browser, const cef_string_t* document_name, const cef_string_t* pdf_file_path, _cef_print_job_callback_t* callback)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe int OnPrintJobImpl(cef_print_handler_t* self, cef_browser_t* browser, cef_string_t* document_name, cef_string_t* pdf_file_path, cef_print_job_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -187,10 +210,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnPrintResetDelegate(cef_print_handler_t* self, cef_browser_t* browser);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_print_handler_t* self, _cef_browser_t* browser)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnPrintResetImpl(cef_print_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -214,10 +240,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_size_t GetPdfPaperSizeDelegate(cef_print_handler_t* self, int device_units_per_inch);
 
+#endif // NET_LESS_5_0
 		// cef_size_t (*)(_cef_print_handler_t* self, int device_units_per_inch)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_size_t GetPdfPaperSizeImpl(cef_print_handler_t* self, int device_units_per_inch)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;

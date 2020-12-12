@@ -371,6 +371,7 @@ namespace CefGen
 					var root = new CodeField(decl.Name, "fn" + fnname);
 					root.Attributes = CodeAttributes.Private | CodeAttributes.Static | CodeAttributes.ReadOnly;
 					root.Value = fnname + "Impl";
+					root.LegacyDefine = "NET_LESS_5_0";
 					nativeRoots.Add(root);
 				}
 
@@ -403,6 +404,10 @@ namespace CefGen
 		{
 			var constructorLines = new List<string>();
 			constructorLines.Add(TypeSymbol.Name + "* self = this.NativeInstance;");
+
+			var legacyCode = new List<string>();
+			var modernCode = new List<string>();
+
 			foreach (ISymbol symbol in TypeSymbol.GetMembers())
 			{
 				if (symbol is IFieldSymbol field)
@@ -415,13 +420,30 @@ namespace CefGen
 						List<CefParameterInfo> args = GenerateManagedCallback(method);
 						GenerateNativeCallbackDelegate(method);
 						GenerateNativeCallback(field, method, args, avoid != null);
-						constructorLines.Add(string.Format("self->{0} = (void*)Marshal.GetFunctionPointerForDelegate(fn{1});", field.Name, method.Name));
+
+						legacyCode.Add(string.Format("self->{0} = (void*)Marshal.GetFunctionPointerForDelegate(fn{1});", field.Name, method.Name));
+
+						var argTypes = new List<string>();
+						argTypes.Add(TypeSymbol.Name + "*");
+						argTypes.AddRange(method.Parameters.Select(arg => arg.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)));
+						argTypes.Add(method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
+						string delegateType = "delegate* unmanaged[Stdcall]<" + string.Join(", ", argTypes) + ">";
+						modernCode.Add(string.Format("self->{0} = ({2})&{1}Impl;", field.Name, method.Name, delegateType));
+						
 					}
 					else if (field.Type.Name != "cef_base_ref_counted_t")
 					{
 						throw new NotImplementedException();
 					}
 				}
+			}
+			if ((modernCode.Count | legacyCode.Count) != 0)
+			{
+				constructorLines.Add("#if NET_LESS_5_0");
+				constructorLines.AddRange(legacyCode);
+				constructorLines.Add("#else");
+				constructorLines.AddRange(modernCode);
+				constructorLines.Add("#endif");
 			}
 			return constructorLines;
 		}
@@ -525,7 +547,7 @@ namespace CefGen
 						}
 					}
 				}
-				else if (!Equals(property.SetterType, property.GetterType))
+				else if (!SymbolEqualityComparer.Default.Equals(property.SetterType, property.GetterType))
 				{
 
 					if (property.GetterType.Name == "cef_string_userfree_t"
@@ -565,6 +587,7 @@ namespace CefGen
 			delegateDecl.CustomAttributes.AddUnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Winapi);
 			delegateDecl.Parameters.Add(new CodeMethodParameter("self") { Type = TypeSymbol.Name + "*" });
 			delegateDecl.ReturnTypeName = method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			delegateDecl.LegacyDefine = "NET_LESS_5_0";
 
 			foreach (IParameterSymbol parameter in method.Parameters)
 			{
@@ -579,9 +602,11 @@ namespace CefGen
 		{
 			var callback = new CodeMethod(method.Name + "Impl");
 			callback.Attributes = CodeAttributes.Private | CodeAttributes.Static | CodeAttributes.Unsafe;
+			callback.CustomAttributes.AddUnmanagedCallesOnlyAttribute();
 			callback.HasThisArg = true;
 			callback.RetVal = new CodeMethodParameter(null) { Type = method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat) };
 			callback.Parameters.Add(new CodeMethodParameter("self") { Type = TypeSymbol.Name + "*" });
+
 			callback.Comments.AddComment(field.GetComment());
 			foreach (IParameterSymbol parameter in method.Parameters)
 			{
@@ -608,7 +633,7 @@ namespace CefGen
 			foreach (IParameterSymbol arg in method.Parameters)
 			{
 				index++;
-				CefParameterInfo managedInfo = managedArgs.First(cpi => Equals(cpi.Symbol, arg));
+				CefParameterInfo managedInfo = managedArgs.First(cpi => SymbolEqualityComparer.Default.Equals(cpi.Symbol, arg));
 				if (managedInfo.IsArraySize)
 					continue;
 

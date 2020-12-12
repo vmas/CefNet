@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// for every new copy of a pointer to a given object.
 		/// </summary>
 		[NativeName("add_ref")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void AddRef();
+		public unsafe void AddRef()
+		{
+			fixed (cef_base_ref_counted_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_base_ref_counted_t*, void>)add_ref)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_base_ref_counted_t* self)*
@@ -53,8 +58,13 @@ namespace CefNet.CApi
 		/// resulting reference count is 0.
 		/// </summary>
 		[NativeName("release")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int Release();
+		public unsafe int Release()
+		{
+			fixed (cef_base_ref_counted_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_base_ref_counted_t*, int>)release)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_base_ref_counted_t* self)*
@@ -65,8 +75,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the current reference count is 1.
 		/// </summary>
 		[NativeName("has_one_ref")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasOneRef();
+		public unsafe int HasOneRef()
+		{
+			fixed (cef_base_ref_counted_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_base_ref_counted_t*, int>)has_one_ref)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_base_ref_counted_t* self)*
@@ -77,8 +92,13 @@ namespace CefNet.CApi
 		/// Returns true (1) if the current reference count is at least 1.
 		/// </summary>
 		[NativeName("has_at_least_one_ref")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int HasAtLeastOneRef();
+		public unsafe int HasAtLeastOneRef()
+		{
+			fixed (cef_base_ref_counted_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_base_ref_counted_t*, int>)has_at_least_one_ref)(self);
+			}
+		}
 	}
 }
 

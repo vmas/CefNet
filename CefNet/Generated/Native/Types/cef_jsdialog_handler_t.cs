@@ -53,8 +53,13 @@ namespace CefNet.CApi
 		/// dismissed.
 		/// </summary>
 		[NativeName("on_jsdialog")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnJSDialog(cef_browser_t* browser, [Immutable]cef_string_t* origin_url, CefJSDialogType dialog_type, [Immutable]cef_string_t* message_text, [Immutable]cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message);
+		public unsafe int OnJSDialog(cef_browser_t* browser, [Immutable]cef_string_t* origin_url, CefJSDialogType dialog_type, [Immutable]cef_string_t* message_text, [Immutable]cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message)
+		{
+			fixed (cef_jsdialog_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_jsdialog_handler_t*, cef_browser_t*, cef_string_t*, CefJSDialogType, cef_string_t*, cef_string_t*, cef_jsdialog_callback_t*, int*, int>)on_jsdialog)(self, browser, origin_url, dialog_type, message_text, default_prompt_text, callback, suppress_message);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser, const cef_string_t* message_text, int is_reload, _cef_jsdialog_callback_t* callback)*
@@ -70,8 +75,13 @@ namespace CefNet.CApi
 		/// dialog is dismissed.
 		/// </summary>
 		[NativeName("on_before_unload_dialog")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnBeforeUnloadDialog(cef_browser_t* browser, [Immutable]cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback);
+		public unsafe int OnBeforeUnloadDialog(cef_browser_t* browser, [Immutable]cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback)
+		{
+			fixed (cef_jsdialog_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_jsdialog_handler_t*, cef_browser_t*, cef_string_t*, int, cef_jsdialog_callback_t*, int>)on_before_unload_dialog)(self, browser, message_text, is_reload, callback);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser)*
@@ -84,8 +94,13 @@ namespace CefNet.CApi
 		/// dialogs are currently pending.
 		/// </summary>
 		[NativeName("on_reset_dialog_state")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnResetDialogState(cef_browser_t* browser);
+		public unsafe void OnResetDialogState(cef_browser_t* browser)
+		{
+			fixed (cef_jsdialog_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_jsdialog_handler_t*, cef_browser_t*, void>)on_reset_dialog_state)(self, browser);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser)*
@@ -96,8 +111,13 @@ namespace CefNet.CApi
 		/// Called when the default implementation dialog is closed.
 		/// </summary>
 		[NativeName("on_dialog_closed")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnDialogClosed(cef_browser_t* browser);
+		public unsafe void OnDialogClosed(cef_browser_t* browser)
+		{
+			fixed (cef_jsdialog_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_jsdialog_handler_t*, cef_browser_t*, void>)on_dialog_closed)(self, browser);
+			}
+		}
 	}
 }
 

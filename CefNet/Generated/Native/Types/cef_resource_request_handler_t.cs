@@ -45,8 +45,13 @@ namespace CefNet.CApi
 		/// modified in this callback.
 		/// </summary>
 		[NativeName("get_cookie_access_filter")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_cookie_access_filter_t* GetCookieAccessFilter(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request);
+		public unsafe cef_cookie_access_filter_t* GetCookieAccessFilter(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)
+		{
+			fixed (cef_resource_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_cookie_access_filter_t*>)get_cookie_access_filter)(self, browser, frame, request);
+			}
+		}
 
 		/// <summary>
 		/// cef_return_value_t (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_request_callback_t* callback)*
@@ -64,8 +69,13 @@ namespace CefNet.CApi
 		/// request asynchronously. Return RV_CANCEL to cancel the request immediately.
 		/// </summary>
 		[NativeName("on_before_resource_load")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern CefReturnValue OnBeforeResourceLoad(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_request_callback_t* callback);
+		public unsafe CefReturnValue OnBeforeResourceLoad(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_request_callback_t* callback)
+		{
+			fixed (cef_resource_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_request_callback_t*, CefReturnValue>)on_before_resource_load)(self, browser, frame, request, callback);
+			}
+		}
 
 		/// <summary>
 		/// _cef_resource_handler_t* (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request)*
@@ -81,8 +91,13 @@ namespace CefNet.CApi
 		/// |request| object cannot not be modified in this callback.
 		/// </summary>
 		[NativeName("get_resource_handler")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_resource_handler_t* GetResourceHandler(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request);
+		public unsafe cef_resource_handler_t* GetResourceHandler(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)
+		{
+			fixed (cef_resource_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_resource_handler_t*>)get_resource_handler)(self, browser, frame, request);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response, cef_string_t* new_url)*
@@ -100,8 +115,13 @@ namespace CefNet.CApi
 		/// be modified in this callback.
 		/// </summary>
 		[NativeName("on_resource_redirect")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnResourceRedirect(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_string_t* new_url);
+		public unsafe void OnResourceRedirect(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_string_t* new_url)
+		{
+			fixed (cef_resource_request_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_resource_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_response_t*, cef_string_t*, void>)on_resource_redirect)(self, browser, frame, request, response, new_url);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response)*
@@ -121,8 +141,13 @@ namespace CefNet.CApi
 		/// OnBeforeResourceLoad or GetResourceHandler to perform redirects.
 		/// </summary>
 		[NativeName("on_resource_response")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int OnResourceResponse(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response);
+		public unsafe int OnResourceResponse(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response)
+		{
+			fixed (cef_resource_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_response_t*, int>)on_resource_response)(self, browser, frame, request, response);
+			}
+		}
 
 		/// <summary>
 		/// _cef_response_filter_t* (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response)*
@@ -136,9 +161,14 @@ namespace CefNet.CApi
 		/// |request| and |response| represent the request and response respectively
 		/// and cannot be modified in this callback.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.ForwardRef)]
 		[NativeName("get_resource_response_filter")]
-		public unsafe extern cef_response_filter_t* GetResourceResponseFilter(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response);
+		public unsafe cef_response_filter_t* GetResourceResponseFilter(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response)
+		{
+			fixed (cef_resource_request_handler_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_resource_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_response_t*, cef_response_filter_t*>)get_resource_response_filter)(self, browser, frame, request, response);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response, cef_urlrequest_status_t status, int64 received_content_length)*
@@ -162,8 +192,13 @@ namespace CefNet.CApi
 		/// frame is invalid.
 		/// </summary>
 		[NativeName("on_resource_load_complete")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnResourceLoadComplete(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, CefUrlRequestStatus status, long received_content_length);
+		public unsafe void OnResourceLoadComplete(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, CefUrlRequestStatus status, long received_content_length)
+		{
+			fixed (cef_resource_request_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_resource_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, cef_response_t*, CefUrlRequestStatus, long, void>)on_resource_load_complete)(self, browser, frame, request, response, status, received_content_length);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, int* allow_os_execution)*
@@ -181,8 +216,13 @@ namespace CefNet.CApi
 		/// ANALYSIS BEFORE ALLOWING OS EXECUTION.
 		/// </summary>
 		[NativeName("on_protocol_execution")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void OnProtocolExecution(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int* allow_os_execution);
+		public unsafe void OnProtocolExecution(cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int* allow_os_execution)
+		{
+			fixed (cef_resource_request_handler_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_resource_request_handler_t*, cef_browser_t*, cef_frame_t*, cef_request_t*, int*, void>)on_protocol_execution)(self, browser, frame, request, allow_os_execution);
+			}
+		}
 	}
 }
 

@@ -29,6 +29,7 @@ namespace CefNet
 	/// </remarks>
 	public unsafe partial class CefApp : CefBaseRefCounted<cef_app_t>, ICefAppPrivate
 	{
+#if NET_LESS_5_0
 		private static readonly OnBeforeCommandLineProcessingDelegate fnOnBeforeCommandLineProcessing = OnBeforeCommandLineProcessingImpl;
 
 		private static readonly OnRegisterCustomSchemesDelegate fnOnRegisterCustomSchemes = OnRegisterCustomSchemesImpl;
@@ -39,6 +40,7 @@ namespace CefNet
 
 		private static readonly GetRenderProcessHandlerDelegate fnGetRenderProcessHandler = GetRenderProcessHandlerImpl;
 
+#endif // NET_LESS_5_0
 		internal static unsafe CefApp Create(IntPtr instance)
 		{
 			return new CefApp((cef_app_t*)instance);
@@ -47,11 +49,19 @@ namespace CefNet
 		public CefApp()
 		{
 			cef_app_t* self = this.NativeInstance;
+			#if NET_LESS_5_0
 			self->on_before_command_line_processing = (void*)Marshal.GetFunctionPointerForDelegate(fnOnBeforeCommandLineProcessing);
 			self->on_register_custom_schemes = (void*)Marshal.GetFunctionPointerForDelegate(fnOnRegisterCustomSchemes);
 			self->get_resource_bundle_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetResourceBundleHandler);
 			self->get_browser_process_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetBrowserProcessHandler);
 			self->get_render_process_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetRenderProcessHandler);
+			#else
+			self->on_before_command_line_processing = (delegate* unmanaged[Stdcall]<cef_app_t*, cef_string_t*, cef_command_line_t*, void>)&OnBeforeCommandLineProcessingImpl;
+			self->on_register_custom_schemes = (delegate* unmanaged[Stdcall]<cef_app_t*, cef_scheme_registrar_t*, void>)&OnRegisterCustomSchemesImpl;
+			self->get_resource_bundle_handler = (delegate* unmanaged[Stdcall]<cef_app_t*, cef_resource_bundle_handler_t*>)&GetResourceBundleHandlerImpl;
+			self->get_browser_process_handler = (delegate* unmanaged[Stdcall]<cef_app_t*, cef_browser_process_handler_t*>)&GetBrowserProcessHandlerImpl;
+			self->get_render_process_handler = (delegate* unmanaged[Stdcall]<cef_app_t*, cef_render_process_handler_t*>)&GetRenderProcessHandlerImpl;
+			#endif
 		}
 
 		public CefApp(cef_app_t* instance)
@@ -77,10 +87,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnBeforeCommandLineProcessingDelegate(cef_app_t* self, cef_string_t* process_type, cef_command_line_t* command_line);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_app_t* self, const cef_string_t* process_type, _cef_command_line_t* command_line)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnBeforeCommandLineProcessingImpl(cef_app_t* self, cef_string_t* process_type, cef_command_line_t* command_line)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;
@@ -105,10 +118,13 @@ namespace CefNet
 		{
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate void OnRegisterCustomSchemesDelegate(cef_app_t* self, cef_scheme_registrar_t* registrar);
 
+#endif // NET_LESS_5_0
 		// void (*)(_cef_app_t* self, _cef_scheme_registrar_t* registrar)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe void OnRegisterCustomSchemesImpl(cef_app_t* self, cef_scheme_registrar_t* registrar)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;
@@ -130,10 +146,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_resource_bundle_handler_t* GetResourceBundleHandlerDelegate(cef_app_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_resource_bundle_handler_t* (*)(_cef_app_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_resource_bundle_handler_t* GetResourceBundleHandlerImpl(cef_app_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;
@@ -156,10 +175,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_browser_process_handler_t* GetBrowserProcessHandlerDelegate(cef_app_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_browser_process_handler_t* (*)(_cef_app_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_browser_process_handler_t* GetBrowserProcessHandlerImpl(cef_app_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;
@@ -182,10 +204,13 @@ namespace CefNet
 			return default;
 		}
 
+#if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		private unsafe delegate cef_render_process_handler_t* GetRenderProcessHandlerDelegate(cef_app_t* self);
 
+#endif // NET_LESS_5_0
 		// _cef_render_process_handler_t* (*)(_cef_app_t* self)*
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 		private static unsafe cef_render_process_handler_t* GetRenderProcessHandlerImpl(cef_app_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;

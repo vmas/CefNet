@@ -39,8 +39,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_name")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetName();
+		public unsafe cef_string_userfree_t GetName()
+		{
+			fixed (cef_web_plugin_info_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_web_plugin_info_t*, cef_string_userfree_t>)get_name)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_web_plugin_info_t* self)*
@@ -52,8 +57,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_path")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetPath();
+		public unsafe cef_string_userfree_t GetPath()
+		{
+			fixed (cef_web_plugin_info_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_web_plugin_info_t*, cef_string_userfree_t>)get_path)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_web_plugin_info_t* self)*
@@ -65,8 +75,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_version")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetVersion();
+		public unsafe cef_string_userfree_t GetVersion()
+		{
+			fixed (cef_web_plugin_info_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_web_plugin_info_t*, cef_string_userfree_t>)get_version)(self);
+			}
+		}
 
 		/// <summary>
 		/// cef_string_userfree_t (*)(_cef_web_plugin_info_t* self)*
@@ -78,8 +93,13 @@ namespace CefNet.CApi
 		/// The resulting string must be freed by calling cef_string_userfree_free().
 		/// </summary>
 		[NativeName("get_description")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern cef_string_userfree_t GetDescription();
+		public unsafe cef_string_userfree_t GetDescription()
+		{
+			fixed (cef_web_plugin_info_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_web_plugin_info_t*, cef_string_userfree_t>)get_description)(self);
+			}
+		}
 	}
 }
 

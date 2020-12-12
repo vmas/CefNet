@@ -31,7 +31,7 @@ namespace CefNet.Net
 		private CefUrlRequestStatus _requestStatus;
 		private Stream _stream;
 		private RequestOperation _activeOperation;
-		private volatile Exception _exception;
+		private Exception _exception;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CefNetWebRequest"/> class.
@@ -89,7 +89,7 @@ namespace CefNet.Net
 			if (_authentication is null)
 				return false;
 
-			RequestOperation op = _activeOperation;
+			RequestOperation op = Volatile.Read(ref _activeOperation);
 			if (op is null)
 				return false;
 
@@ -102,8 +102,9 @@ namespace CefNet.Net
 				NetworkCredential credential = (t.Status == TaskStatus.RanToCompletion) ? t.Result : null;
 				if (credential is null)
 					callback.Cancel();
-				callback.Continue(credential.UserName, credential.Password);
-			}).ConfigureAwait(false);
+				else
+					callback.Continue(credential.UserName, credential.Password);
+			}, op.cancellationToken, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.DenyChildAttach, TaskScheduler.Default);
 			return true;
 		}
 
@@ -205,7 +206,7 @@ namespace CefNet.Net
 			this.ResponseWasCached = request.ResponseWasCached();
 
 			IsCompleted = true;
-			RequestOperation op = Volatile.Read(ref _activeOperation);
+			RequestOperation op = Interlocked.Exchange(ref _activeOperation, null);
 			if (op is null || op.continuation is null)
 				return;
 
@@ -219,7 +220,12 @@ namespace CefNet.Net
 
 		private bool IsCompleted { get; set; }
 
-		private void GetResult() { }
+		private void GetResult()
+		{
+			Exception exception = Volatile.Read(ref _exception);
+			if (exception is not null)
+				throw exception;
+		}
 
 		void INotifyCompletion.OnCompleted(Action continuation)
 		{
@@ -229,7 +235,9 @@ namespace CefNet.Net
 			RequestOperation op = Volatile.Read(ref _activeOperation);
 			if (op is null)
 			{
-				throw new InvalidOperationException();
+				IsCompleted = true;
+				Interlocked.CompareExchange(ref _exception, new InvalidOperationException(), null);
+				continuation();
 			}
 			else
 			{
@@ -245,7 +253,7 @@ namespace CefNet.Net
 		{
 			get
 			{
-				RequestOperation op = _activeOperation;
+				RequestOperation op = Volatile.Read(ref _activeOperation);
 				return op is null ? _request : op.request.Request;
 			}
 		}
@@ -259,7 +267,7 @@ namespace CefNet.Net
 		{
 			get
 			{
-				RequestOperation op = _activeOperation;
+				RequestOperation op = Volatile.Read(ref _activeOperation);
 				return op is null ? _response : op.request.Response;
 			}
 		}
@@ -271,7 +279,7 @@ namespace CefNet.Net
 		{
 			get
 			{
-				RequestOperation op = _activeOperation;
+				RequestOperation op = Volatile.Read(ref _activeOperation);
 				return op is null ? _requestStatus : op.request.RequestStatus;
 			}
 		}
@@ -359,7 +367,7 @@ namespace CefNet.Net
 			try
 			{
 				_activeOperation.request = await CreateUrlRequest(request, context, cancellationToken).ConfigureAwait(false);
-				using (cancellationToken.Register(_activeOperation.request.Cancel))
+				using (cancellationToken.Register(Abort))
 				{
 					await this;
 				}
@@ -369,10 +377,11 @@ namespace CefNet.Net
 				Interlocked.Exchange(ref _activeOperation, null);
 			}
 
-			if (_exception is null)
+			Exception exception = Volatile.Read(ref _exception);
+			if (exception is null)
 				return;
 
-			ExceptionDispatchInfo.Capture(_exception).Throw();
+			ExceptionDispatchInfo.Capture(exception).Throw();
 		}
 
 		private Task<CefUrlRequest> CreateUrlRequest(CefRequest request, CefRequestContext context, CancellationToken cancellationToken)
@@ -408,14 +417,34 @@ namespace CefNet.Net
 		}
 
 		/// <summary>
+		/// Cancels the request to a resource.
+		/// </summary>
+		public void Abort()
+		{
+			Volatile.Write(ref _exception, new OperationCanceledException());
+			RequestOperation op = Interlocked.Exchange(ref _activeOperation, null);
+			if (op is null)
+				return;
+			op.request?.Cancel();
+			IsCompleted = true;
+			if (op.continuation is null)
+				return;
+			op.continuation();
+		}
+
+		/// <summary>
 		/// Gets the stream that is used to read the body of the response from the server.
 		/// </summary>
 		/// <returns>A <see cref="Stream"/> containing the body of the response.</returns>
 		public virtual Stream GetResponseStream()
 		{
 			if (!IsCompleted)
-				GetWaitTask().Wait(_activeOperation.cancellationToken);
-
+			{
+				RequestOperation op = Volatile.Read(ref _activeOperation);
+				if (op is null)
+					return null;
+				GetWaitTask().Wait(op.cancellationToken);
+			}
 			return _stream;
 		}
 
@@ -425,7 +454,9 @@ namespace CefNet.Net
 		/// <param name="exception">The exception to bind to the request.</param>
 		protected void SetException(Exception exception)
 		{
-			_exception = exception;
+			if (exception is null)
+				throw new ArgumentNullException(nameof(exception));
+			Volatile.Write(ref _exception, exception);
 		}
 
 		/// <summary>

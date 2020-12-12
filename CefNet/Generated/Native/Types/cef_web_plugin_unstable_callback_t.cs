@@ -41,8 +41,13 @@ namespace CefNet.CApi
 		/// 120 seconds.
 		/// </summary>
 		[NativeName("is_unstable")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void IsUnstable([Immutable]cef_string_t* path, int unstable);
+		public unsafe void IsUnstable([Immutable]cef_string_t* path, int unstable)
+		{
+			fixed (cef_web_plugin_unstable_callback_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_web_plugin_unstable_callback_t*, cef_string_t*, int, void>)is_unstable)(self, path, unstable);
+			}
+		}
 	}
 }
 

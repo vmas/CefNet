@@ -52,7 +52,7 @@ EOF
 BINARYNAME="AvaloniaApp"
 CONFIGURATION="Debug"
 NETTARGET="netcoreapp3.1"
-CEFZIP="cef_binary_86.0.18%2Bgd3ead8b%2Bchromium-86.0.4240.111_macosx64_minimal.tar.bz2"
+CEFZIP="cef_binary_87.1.6%2Bg315d248%2Bchromium-87.0.4280.66_macosx64_minimal.tar.bz2"
 TARGET="bin"
 
 
@@ -70,8 +70,8 @@ CEFFRAMEWORK_DIR="$(find $CEFBINARIES -name "Release")"
 
 if [ ! -d "$CEFFRAMEWORK_DIR" ]; then
     if [ ! -f "$CEFBINARIES/$CEFZIP" ]; then
-        echo "downloading cef binaries from http://opensource.spotify.com/cefbuilds/$CEFZIP"
-        curl -o "$CEFBINARIES/$CEFZIP" "http://opensource.spotify.com/cefbuilds/$CEFZIP"
+        echo "downloading cef binaries from https://cef-builds.spotifycdn.com/$CEFZIP"
+        curl -o "$CEFBINARIES/$CEFZIP" "https://cef-builds.spotifycdn.com/$CEFZIP"
     fi
     echo "unzipping cef binaries"
     tar -jxvf "$CEFBINARIES/$CEFZIP" --strip-components 1 -C "./$CEFBINARIES"

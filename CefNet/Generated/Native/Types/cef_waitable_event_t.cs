@@ -46,8 +46,13 @@ namespace CefNet.CApi
 		/// Put the event in the un-signaled state.
 		/// </summary>
 		[NativeName("reset")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Reset();
+		public unsafe void Reset()
+		{
+			fixed (cef_waitable_event_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_waitable_event_t*, void>)reset)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_waitable_event_t* self)*
@@ -59,8 +64,13 @@ namespace CefNet.CApi
 		/// to be woken up.
 		/// </summary>
 		[NativeName("signal")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Signal();
+		public unsafe void Signal()
+		{
+			fixed (cef_waitable_event_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_waitable_event_t*, void>)signal)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_waitable_event_t* self)*
@@ -73,8 +83,13 @@ namespace CefNet.CApi
 		/// this function will also cause a reset.
 		/// </summary>
 		[NativeName("is_signaled")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int IsSignaled();
+		public unsafe int IsSignaled()
+		{
+			fixed (cef_waitable_event_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_waitable_event_t*, int>)is_signaled)(self);
+			}
+		}
 
 		/// <summary>
 		/// void (*)(_cef_waitable_event_t* self)*
@@ -87,8 +102,13 @@ namespace CefNet.CApi
 		/// be called on the browser process UI or IO threads.
 		/// </summary>
 		[NativeName("wait")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern void Wait();
+		public unsafe void Wait()
+		{
+			fixed (cef_waitable_event_t* self = &this)
+			{
+				((delegate* unmanaged[Stdcall]<cef_waitable_event_t*, void>)wait)(self);
+			}
+		}
 
 		/// <summary>
 		/// int (*)(_cef_waitable_event_t* self, int64 max_ms)*
@@ -103,8 +123,13 @@ namespace CefNet.CApi
 		/// called on the browser process UI or IO threads.
 		/// </summary>
 		[NativeName("timed_wait")]
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		public unsafe extern int TimedWait(long max_ms);
+		public unsafe int TimedWait(long max_ms)
+		{
+			fixed (cef_waitable_event_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_waitable_event_t*, long, int>)timed_wait)(self, max_ms);
+			}
+		}
 	}
 }
 
