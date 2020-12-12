@@ -203,7 +203,7 @@ namespace CefNet.Internal
 			if (surface is null || surface.PixelSize != new PixelSize(pixelBuffer.Width, pixelBuffer.Height))
 			{
 				surface?.Dispose();
-				surface = new WriteableBitmap(new PixelSize(pixelBuffer.Width, pixelBuffer.Height), OffscreenGraphics.DpiScale.Dpi, PixelFormat.Bgra8888);
+				surface = new WriteableBitmap(new PixelSize(pixelBuffer.Width, pixelBuffer.Height), OffscreenGraphics.DpiScale.Dpi, PixelFormat.Bgra8888, AlphaFormat.Premul);
 				pixelBuffer.Surface = surface;
 			}
 

@@ -64,7 +64,7 @@ namespace AvaloniaApp
 		public static AppBuilder BuildAvaloniaApp()
 			=> AppBuilder.Configure<App>()
 				.UsePlatformDetect()
-				.LogToDebug();
+				.LogToTrace();
 
 
 		private static void App_FrameworkInitialized(object sender, EventArgs e)
