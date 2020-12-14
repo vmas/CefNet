@@ -112,6 +112,16 @@ namespace WpfCoreApp
 			AddTab(true);
 		}
 
+		private void BackButton_Click(object sender, RoutedEventArgs e)
+		{
+			SelectedView?.GoBack();
+		}
+
+		private void ForwardButton_Click(object sender, RoutedEventArgs e)
+		{
+			SelectedView?.GoForward();
+		}
+
 		private void NavigateButton_Click(object sender, RoutedEventArgs e)
 		{
 			//SelectedView?.Navigate("http://yandex.ru");
