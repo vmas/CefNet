@@ -19,7 +19,7 @@ The API of this project is not frozen and is subject to change.
 1. Install [.NET Core SDK](https://www.microsoft.com/net/download)
 2. Install the [DotAsm](https://www.nuget.org/packages/DotAsm/) tool: `dotnet tool install -g DotAsm`
 3. Run `git clone https://github.com/CefNet/CefNet.git`
-4. Download a [CEF package](http://opensource.spotify.com/cefbuilds/index.html). See [Directory.Build.props](https://github.com/CefNet/CefNet/blob/master/Directory.Build.props) for the required CEF version.
+4. Download a [CEF package](https://cef-builds.spotifycdn.com/index.html). See [Directory.Build.props](Directory.Build.props) for the required CEF version.
 5. Extract all files into the cef/ directory.
 6. Copy cef/Resources/icudtl.dat into cef/Release/.
 

@@ -33,7 +33,7 @@
     <PackageReleaseNotes>
       CEF v.$(CefVersion).*.
       Binary packages are available for download at:
-      http://opensource.spotify.com/cefbuilds/index.html
+      https://cef-builds.spotifycdn.com/index.html
     </PackageReleaseNotes>
   </PropertyGroup>
 </Project>
