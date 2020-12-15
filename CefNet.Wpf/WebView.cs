@@ -660,6 +660,55 @@ namespace CefNet.Wpf
 			e.Handled = true;
 		}
 
+		protected override void OnTouchDown(TouchEventArgs e)
+		{
+			OnTouch(e);
+			e.Handled = true;
+		}
+
+		protected override void OnTouchMove(TouchEventArgs e)
+		{
+			OnTouch(e);
+			e.Handled = true;
+		}
+
+		protected override void OnTouchUp(TouchEventArgs e)
+		{
+			OnTouch(e);
+			e.Handled = true;
+		}
+
+		private void OnTouch(TouchEventArgs e)
+		{
+			TouchPoint touchPoint = e.GetTouchPoint(this);
+
+			var eventInfo = new CefTouchEvent();
+			switch (touchPoint.Action)
+			{
+				case TouchAction.Down:
+					eventInfo.Type = CefTouchEventType.Pressed;
+					break;
+				case TouchAction.Move:
+					eventInfo.Type = CefTouchEventType.Moved;
+					break;
+				case TouchAction.Up:
+					eventInfo.Type = CefTouchEventType.Released;
+					break;
+				default:
+					throw new NotSupportedException();
+			}
+
+			Point pt = touchPoint.Position;
+			CefPoint point = PointToViewport(new CefPoint((int)pt.X, (int)pt.Y));
+			eventInfo.X = point.X;
+			eventInfo.Y = point.Y;
+			eventInfo.PointerType = CefPointerType.Touch;
+			eventInfo.RadiusX = (float)touchPoint.Size.Width / 2;
+			eventInfo.RadiusY = (float)touchPoint.Size.Height / 2;
+			eventInfo.Id = touchPoint.TouchDevice.Id;
+			SendTouchEvent(eventInfo);
+		}
+
 		protected virtual bool ProcessPreviewKey(CefKeyEventType eventType, KeyEventArgs e)
 		{
 			SetKeyboardLayoutForCefUIThreadIfNeeded();

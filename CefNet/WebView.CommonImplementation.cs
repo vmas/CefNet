@@ -1014,6 +1014,15 @@ namespace CefNet
 		}
 
 		/// <summary>
+		/// Send a touch event to the browser.
+		/// </summary>
+		/// <param name="eventInfo">The touch event information.</param>
+		public void SendTouchEvent(CefTouchEvent eventInfo)
+		{
+			this.BrowserObject?.Host.SendTouchEvent(eventInfo);
+		}
+
+		/// <summary>
 		/// Call this function when the user drags the mouse into the web view.
 		/// <para/>This function is only used when window rendering is disabled.
 		/// </summary>

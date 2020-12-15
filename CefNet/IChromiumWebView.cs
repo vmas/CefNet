@@ -351,6 +351,12 @@ namespace CefNet
 		void SendMouseWheelEvent(int x, int y, int deltaX, int deltaY);
 
 		/// <summary>
+		/// Send a touch event to the browser.
+		/// </summary>
+		/// <param name="eventInfo">The touch event information.</param>
+		void SendTouchEvent(CefTouchEvent eventInfo);
+
+		/// <summary>
 		/// Sends the KeyDown event to the browser.
 		/// </summary>
 		/// <param name="c">The character associated with the key.</param>

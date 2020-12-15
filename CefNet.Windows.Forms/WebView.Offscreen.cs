@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -148,6 +149,12 @@ namespace CefNet.Windows.Forms
 			{
 				OnSizeChanged(EventArgs.Empty);
 			}
+
+			// enable WM_TOUCH
+			const int TWF_WANTPALM = 0x00000002;
+			const int SM_MAXIMUMTOUCHES = 95;
+			if (NativeMethods.GetSystemMetrics(SM_MAXIMUMTOUCHES) > 0)
+				NativeMethods.RegisterTouchWindow(Handle, TWF_WANTPALM);
 
 			base.OnHandleCreated(e);
 		}
@@ -539,10 +546,6 @@ namespace CefNet.Windows.Forms
 					SendMouseMoveEvent(e.X, e.Y, modifiers);
 				}
 			}
-			else
-			{
-
-			}
 			base.OnMouseMove(e);
 		}
 
@@ -700,6 +703,9 @@ namespace CefNet.Windows.Forms
 			const int WM_MOUSEHWHEEL = 0x20E;
 			const int WM_INPUTLANGCHANGE = 0x0051;
 
+			if (IsMouseEventFromTouch(in m))
+				return true;
+
 			switch (m.Msg)
 			{
 				case WM_INPUTLANGCHANGE:
@@ -736,8 +742,71 @@ namespace CefNet.Windows.Forms
 				case 0x84: //WM_NCHITTEST
 					m.Result = new IntPtr(1); // HTCLIENT
 					return true;
+				case 0x0240: // WM_TOUCH
+					if (!OnTouch(ref m))
+						return false;
+					m.Result = IntPtr.Zero;
+					return true;
+				case 0x0020:
+					m.Result = new IntPtr(1);
+					return true;
 			}
 			return false;
+		}
+
+		private unsafe bool OnTouch(ref Message m)
+		{
+			int inputCount = NativeMethods.LoWord(m.WParam);
+
+			TOUCHINPUT[] inputs;
+			inputs = new TOUCHINPUT[inputCount];
+
+			bool handled = false;
+			fixed (TOUCHINPUT* pInputs = inputs)
+			{
+				if (!NativeMethods.GetTouchInputInfo(m.LParam, inputCount, pInputs, sizeof(TOUCHINPUT)))
+					return false;
+				
+				const int TOUCHEVENTF_DOWN = 0x0002;
+				const int TOUCHEVENTF_MOVE = 0x0001;
+				const int TOUCHEVENTF_UP = 0x0004;
+				const int TOUCHINPUTMASKF_CONTACTAREA = 0x0004;
+
+				for (int i = 0; i < inputCount; i++)
+				{
+					TOUCHINPUT* touchInput = &pInputs[i];
+
+					var eventInfo = new CefTouchEvent();
+					eventInfo.Id = touchInput->id;
+					eventInfo.PointerType = CefPointerType.Touch;
+					Point p = PointToClient(new Point(touchInput->x / 100, touchInput->y / 100));
+					CefPoint cp = new CefPoint(p.X, p.Y);
+					cp = PointToViewport(cp);
+					eventInfo.X = cp.X;
+					eventInfo.Y = cp.Y;
+
+					if ((touchInput->mask & TOUCHINPUTMASKF_CONTACTAREA) != 0)
+					{
+						eventInfo.RadiusX = touchInput->cxContact / 200;
+						eventInfo.RadiusY = touchInput->cyContact / 200;
+					}
+
+					if ((touchInput->flags & TOUCHEVENTF_DOWN) != 0)
+						eventInfo.Type = CefTouchEventType.Pressed;
+					else if ((touchInput->flags & TOUCHEVENTF_UP) != 0)
+						eventInfo.Type = CefTouchEventType.Released;
+					else if ((touchInput->flags & TOUCHEVENTF_MOVE) != 0)
+						eventInfo.Type = CefTouchEventType.Moved;
+
+					SendTouchEvent(eventInfo);
+
+					handled = true;
+				}
+			}
+
+			NativeMethods.CloseTouchInputHandle(m.LParam);
+
+			return handled;
 		}
 
 		protected override bool ProcessCmdKey(ref Message m, Keys keyData)
@@ -930,6 +999,20 @@ namespace CefNet.Windows.Forms
 					_keyboardLayout = hkl;
 				});
 			}
+		}
+
+		/// <summary>
+		/// Helper function to detect mouse messages coming from emulation of touch
+		/// events. These should be ignored.
+		/// </summary>
+		protected static bool IsMouseEventFromTouch(in Message message)
+		{
+			const int WM_MOUSEFIRST = 0x0200;
+			const int WM_MOUSELAST = 0x20D;
+			const uint MOUSEEVENTF_FROMTOUCH = 0xFF515700;
+
+			return (message.Msg >= WM_MOUSEFIRST) && (message.Msg <= WM_MOUSELAST) &&
+				(NativeMethods.GetMessageExtraInfo().ToInt64() & MOUSEEVENTF_FROMTOUCH) == MOUSEEVENTF_FROMTOUCH;
 		}
 
 	}

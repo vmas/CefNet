@@ -97,6 +97,21 @@ namespace CefNet.WinApi
 		[DllImport("Dwmapi.dll", CharSet = CharSet.Auto, PreserveSig = false)]
 		public static extern bool DwmIsCompositionEnabled();
 
+		[DllImport("User32.dll")]
+		public static extern int GetSystemMetrics(int nIndex);
+
+		[DllImport("User32.dll", SetLastError = true)]
+		public static extern bool RegisterTouchWindow(IntPtr hWnd, int flags);
+
+		[DllImport("User32.dll", SetLastError = true)]
+		public static extern bool CloseTouchInputHandle(IntPtr hTouchInput);
+
+		[DllImport("User32.dll", SetLastError = true)]
+		public unsafe static extern bool GetTouchInputInfo(IntPtr hTouchInput, int cInputs, TOUCHINPUT* pInputs, int cbSize);
+
+		[DllImport("User32.dll")]
+		public static extern IntPtr GetMessageExtraInfo();
+
 		public static IntPtr MakeParam(short high, short low)
 		{
 			unchecked
@@ -153,5 +168,20 @@ namespace CefNet.WinApi
 		/// A handle to the icon color bitmap.
 		/// </summary>
 		public IntPtr HbmColor;
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	unsafe struct TOUCHINPUT
+	{
+		public int x;
+		public int y;
+		public IntPtr hSource;
+		public int id;
+		public int flags;
+		public int mask;
+		public int time;
+		public IntPtr dwExtraInfo;
+		public int cxContact;
+		public int cyContact;
 	}
 }

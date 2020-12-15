@@ -713,16 +713,22 @@ namespace CefNet.Avalonia
 
 		protected override void OnPointerMoved(PointerEventArgs e)
 		{
-			CefEventFlags modifiers = CefEventFlags.None;
-
-			PointerPoint pointerPoint = e.GetCurrentPoint(this);
-			PointerPointProperties pp = pointerPoint.Properties;
-			if (pp.IsLeftButtonPressed)
-				modifiers |= CefEventFlags.LeftMouseButton;
-			if (pp.IsRightButtonPressed)
-				modifiers |= CefEventFlags.RightMouseButton;
-			Point mousePos = pointerPoint.Position;// e.GetPosition(this);
-			SendMouseMoveEvent((int)mousePos.X, (int)mousePos.Y, modifiers);
+			if (e.Pointer.Type == PointerType.Touch)
+			{
+				OnTouch(CefTouchEventType.Moved, e);
+			}
+			else
+			{
+				CefEventFlags modifiers = CefEventFlags.None;
+				PointerPoint pointerPoint = e.GetCurrentPoint(this);
+				PointerPointProperties pp = pointerPoint.Properties;
+				if (pp.IsLeftButtonPressed)
+					modifiers |= CefEventFlags.LeftMouseButton;
+				if (pp.IsRightButtonPressed)
+					modifiers |= CefEventFlags.RightMouseButton;
+				Point mousePos = pointerPoint.Position;// e.GetPosition(this);
+				SendMouseMoveEvent((int)mousePos.X, (int)mousePos.Y, modifiers);
+			}
 			base.OnPointerMoved(e);
 		}
 
@@ -742,8 +748,15 @@ namespace CefNet.Avalonia
 			}
 			if (e.GetCurrentPoint(null).Properties.PointerUpdateKind.GetMouseButton() <= MouseButton.Right)
 			{
-				Point mousePos = e.GetPosition(this);
-				SendMouseDownEvent((int)mousePos.X, (int)mousePos.Y, GetButton(e), e.ClickCount, GetModifierKeys(e.KeyModifiers));
+				if (e.Pointer.Type == PointerType.Touch)
+				{
+					OnTouch(CefTouchEventType.Pressed, e);
+				}
+				else
+				{
+					Point mousePos = e.GetPosition(this);
+					SendMouseDownEvent((int)mousePos.X, (int)mousePos.Y, GetButton(e), e.ClickCount, GetModifierKeys(e.KeyModifiers));
+				}
 			}
 			base.OnPointerPressed(e);
 		}
@@ -754,8 +767,15 @@ namespace CefNet.Avalonia
 			if (e.GetCurrentPoint(null).Properties.PointerUpdateKind.GetMouseButton() > MouseButton.Right)
 				return;
 
-			Point mousePos = e.GetPosition(this);
-			SendMouseUpEvent((int)mousePos.X, (int)mousePos.Y, GetButton(e), 1, GetModifierKeys(e.KeyModifiers));
+			if (e.Pointer.Type == PointerType.Touch)
+			{
+				OnTouch(CefTouchEventType.Released, e);
+			}
+			else
+			{
+				Point mousePos = e.GetPosition(this);
+				SendMouseUpEvent((int)mousePos.X, (int)mousePos.Y, GetButton(e), 1, GetModifierKeys(e.KeyModifiers));
+			}
 		}
 
 		protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
@@ -766,6 +786,20 @@ namespace CefNet.Avalonia
 			Point mousePos = e.GetPosition(this);
 			SendMouseWheelEvent((int)mousePos.X, (int)mousePos.Y, (int)e.Delta.X * WHEEL_DELTA, (int)e.Delta.Y * WHEEL_DELTA);
 			e.Handled = true;
+		}
+
+		private void OnTouch(CefTouchEventType eventType, PointerEventArgs e)
+		{
+			Point pt = e.GetPosition(this);
+			CefPoint location = PointToViewport(new CefPoint((int)pt.X, (int)pt.Y));
+			var eventInfo = new CefTouchEvent();
+			eventInfo.Type = eventType;
+			eventInfo.X = location.X;
+			eventInfo.Y = location.Y;
+			eventInfo.Id = e.Pointer.Id;
+			eventInfo.PointerType = CefPointerType.Touch;
+			eventInfo.Modifiers = (uint)GetModifierKeys(e.KeyModifiers);
+			SendTouchEvent(eventInfo);
 		}
 
 		protected virtual bool ProcessPreviewKey(CefKeyEventType eventType, KeyEventArgs e)
