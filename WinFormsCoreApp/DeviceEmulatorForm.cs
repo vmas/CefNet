@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WinFormsCoreApp
@@ -32,6 +33,7 @@ namespace WinFormsCoreApp
 			view.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 			view.Navigated += View_Navigated;
 			view.CreateWindow += View_CreateWindow;
+			view.BrowserCreated += View_BrowserCreated;
 			this.Controls.Add(view);
 		}
 
@@ -45,6 +47,13 @@ namespace WinFormsCoreApp
 		{
 			this.ResumeLayout(true);
 			base.OnResizeEnd(e);
+		}
+
+		private async void View_BrowserCreated(object sender, EventArgs e)
+		{
+			await view.SetUserAgentOverrideAsync("Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Safari/604.1", null, "iPhone", CancellationToken.None);
+			await view.SetTouchEmulationEnabledAsync(true, null, CancellationToken.None);
+			await view.SetEmulatedMediaAsync(null, new Dictionary<string, string> { ["any-pointer"] = "coarse" }, CancellationToken.None);
 		}
 
 		private void View_CreateWindow(object sender, CefNet.CreateWindowEventArgs e)
