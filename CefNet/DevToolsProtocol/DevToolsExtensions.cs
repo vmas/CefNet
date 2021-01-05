@@ -341,6 +341,8 @@ namespace CefNet
 					viewportDict.SetDouble("scale", viewport.Scale);
 					args.SetDictionary("clip", viewportDict);
 				}
+				if (settings.CaptureBeyondViewport)
+					args.SetBool("captureBeyondViewport", true);
 			}
 
 			byte[] rv = await ExecuteDevToolsMethodInternalAsync(webview, "Page.captureScreenshot", args, cancellationToken).ConfigureAwait(false);

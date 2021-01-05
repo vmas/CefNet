@@ -46,6 +46,12 @@ namespace CefNet
 		/// Defaults to true.
 		/// </summary>
 		public bool FromSurface { get; set; } = true;
+
+		/// <summary>
+		/// Capture the screenshot beyond the viewport.
+		/// </summary>
+		public bool CaptureBeyondViewport { get; set; }
+
 	}
 
 	/// <summary>
