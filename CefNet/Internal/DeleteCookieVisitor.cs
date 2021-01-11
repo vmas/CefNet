@@ -10,10 +10,11 @@ namespace CefNet.Internal
 		private readonly CancellationTokenRegistration _cancellation;
 		private readonly string _domain;
 		private readonly string _name;
+		private readonly string _path;
 		private bool _continue;
 		private int _count;
 
-		public DeleteCookieVisitor(string domain, string name, CancellationToken cancellationToken)
+		public DeleteCookieVisitor(string domain, string name, string path, CancellationToken cancellationToken)
 		{
 			if (domain is null)
 				throw new ArgumentNullException(nameof(domain));
@@ -22,6 +23,7 @@ namespace CefNet.Internal
 			_continue = true;
 			_name = name;
 			_domain = domain;
+			_path = path;
 #if NET45
 			_completion = new TaskCompletionSource<int>();
 #else
@@ -41,8 +43,11 @@ namespace CefNet.Internal
 			{
 				if (_name is null || _name.Equals(cookie.Name, StringComparison.OrdinalIgnoreCase))
 				{
-					_count++;
-					deleteCookie = 1;
+					if (_path is null || _path.Equals(cookie.Path, StringComparison.InvariantCultureIgnoreCase))
+					{
+						_count++;
+						deleteCookie = 1;
+					}
 				}
 			}
 			return _continue;
