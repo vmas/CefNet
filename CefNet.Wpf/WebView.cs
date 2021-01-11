@@ -44,6 +44,11 @@ namespace CefNet.Wpf
 		public static readonly RoutedEvent StatusTextChangedEvent = EventManager.RegisterRoutedEvent(nameof(StatusTextChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(WebView));
 
 		/// <summary>
+		/// Identifies the <see cref="ScriptDialogOpening"/> routed event.
+		/// </summary>
+		public static readonly RoutedEvent ScriptDialogOpeningEvent = EventManager.RegisterRoutedEvent(nameof(ScriptDialogOpening), RoutingStrategy.Bubble, typeof(EventHandler<IScriptDialogOpeningEventArgs>), typeof(WebView));
+
+		/// <summary>
 		/// Identifies the <see cref="StartDragging"/> routed event.
 		/// </summary>
 		public static readonly RoutedEvent StartDraggingEvent = EventManager.RegisterRoutedEvent(nameof(StartDragging), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(WebView));

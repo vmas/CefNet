@@ -96,6 +96,11 @@ namespace CefNet
 		event EventHandler<DevToolsProtocolEventAvailableEventArgs> DevToolsProtocolEventAvailable;
 
 		/// <summary>
+		/// Occurs when a JavaScript dialog (alert, confirm, prompt, beforeunload) displays for the WebView.
+		/// </summary>
+		event EventHandler<IScriptDialogOpeningEventArgs> ScriptDialogOpening;
+
+		/// <summary>
 		/// Gets and sets a default URL.
 		/// </summary>
 		/// <remarks>

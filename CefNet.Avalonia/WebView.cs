@@ -131,23 +131,48 @@ namespace CefNet.Avalonia
 		public static readonly RoutedEvent StatusTextChangedEvent = RoutedEvent.Register<WebView, RoutedEventArgs>(nameof(StatusTextChanged), RoutingStrategies.Bubble);
 
 		/// <summary>
-		/// Adds a handler for the <see cref="PdfPrintFinished"/> attached event.
+		/// Adds a handler for the <see cref="StatusTextChanged"/> attached event.
 		/// </summary>
-		/// <param name="element">An object that raise the <see cref="PdfPrintFinished"/> routed event.</param>
+		/// <param name="element">An object that raise the <see cref="StatusTextChanged"/> routed event.</param>
 		/// <param name="handler">The handler.</param>
 		public static void AddStatusTextChangedHandler(IInteractive element, EventHandler<EventArgs> handler)
 		{
-			element?.AddHandler(PdfPrintFinishedEvent, handler);
+			element?.AddHandler(StatusTextChangedEvent, handler);
 		}
 
 		/// <summary>
-		/// Removes a handler for the <see cref="PdfPrintFinished"/> attached event.
+		/// Removes a handler for the <see cref="StatusTextChanged"/> attached event.
 		/// </summary>
-		/// <param name="element">An object that raise the <see cref="PdfPrintFinished"/> routed event.</param>
+		/// <param name="element">An object that raise the <see cref="StatusTextChanged"/> routed event.</param>
 		/// <param name="handler">The handler.</param>
 		public static void RemoveStatusTextChangedHandler(IInteractive element, EventHandler<EventArgs> handler)
 		{
-			element?.RemoveHandler(PdfPrintFinishedEvent, handler);
+			element?.RemoveHandler(StatusTextChangedEvent, handler);
+		}
+
+		/// <summary>
+		/// Identifies the <see cref="ScriptDialogOpening"/> routed event.
+		/// </summary>
+		public static readonly RoutedEvent ScriptDialogOpeningEvent = RoutedEvent.Register<WebView, ScriptDialogOpeningRoutedEventArgs>(nameof(ScriptDialogOpening), RoutingStrategies.Bubble);
+
+		/// <summary>
+		/// Adds a handler for the <see cref="ScriptDialogOpening"/> attached event.
+		/// </summary>
+		/// <param name="element">An object that raise the <see cref="ScriptDialogOpening"/> routed event.</param>
+		/// <param name="handler">The handler.</param>
+		public static void AddScriptDialogOpeningHandler(IInteractive element, EventHandler<ScriptDialogOpeningRoutedEventArgs> handler)
+		{
+			element?.AddHandler(ScriptDialogOpeningEvent, handler);
+		}
+
+		/// <summary>
+		/// Removes a handler for the <see cref="ScriptDialogOpening"/> attached event.
+		/// </summary>
+		/// <param name="element">An object that raise the <see cref="ScriptDialogOpening"/> routed event.</param>
+		/// <param name="handler">The handler.</param>
+		public static void RemoveScriptDialogOpeningHandler(IInteractive element, EventHandler<ScriptDialogOpeningRoutedEventArgs> handler)
+		{
+			element?.RemoveHandler(ScriptDialogOpeningEvent, handler);
 		}
 
 		protected bool IsDesignMode

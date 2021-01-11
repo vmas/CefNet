@@ -130,7 +130,6 @@ namespace CefNet
 		/// </summary>
 		public event EventHandler<DevToolsProtocolEventAvailableEventArgs> DevToolsProtocolEventAvailable;
 
-
 		private static CefBrowserSettings _DefaultBrowserSettings;
 
 		//private LifeSpanGlue lifeSpanHandler;
@@ -930,6 +929,27 @@ namespace CefNet
 		protected virtual void OnDevToolsProtocolEventAvailable(DevToolsProtocolEventAvailableEventArgs e)
 		{
 			DevToolsProtocolEventAvailable?.Invoke(this, e);
+		}
+
+		void IChromiumWebViewPrivate.RaiseScriptDialogOpening(IScriptDialogOpeningEventArgs e)
+		{
+			RaiseCrossThreadEvent(OnScriptDialogOpening, e, true);
+		}
+
+		/// <inheritdoc />
+		public event EventHandler<IScriptDialogOpeningEventArgs> ScriptDialogOpening
+		{
+			add { AddHandler(in ScriptDialogOpeningEvent, value); }
+			remove { RemoveHandler(in ScriptDialogOpeningEvent, value); }
+		}
+
+		/// <summary>
+		/// Raises the <see cref="ScriptDialogOpening"/> event.
+		/// </summary>
+		/// <param name="e">A <see cref="IScriptDialogOpeningEventArgs"/> that contains the event data.</param>
+		protected virtual void OnScriptDialogOpening(IScriptDialogOpeningEventArgs e)
+		{
+			ScriptDialogOpeningEvent?.Invoke(this, e);
 		}
 
 		private void InitMouseEvent(int x, int y, CefEventFlags modifiers)

@@ -30,6 +30,7 @@ namespace WpfCoreApp
 			InitializeComponent();
 			this.Loaded += MainWindow_Loaded;
 			EventManager.RegisterClassHandler(typeof(WebView), CustomWebView.FullscreenEvent, new EventHandler<FullscreenModeChangeEventArgs>(HandleFullscreenEvent));
+			EventManager.RegisterClassHandler(typeof(WebView), WebView.ScriptDialogOpeningEvent, new EventHandler<IScriptDialogOpeningEventArgs>(HandleScriptDialogOpeningEvent));
 		}
 
 		private WindowStyle defaultWindowStyle;
@@ -63,6 +64,20 @@ namespace WpfCoreApp
 				WindowState = WindowState.Normal;
 				ResizeMode = ResizeMode.CanResize;
 				Topmost = false;
+			}
+		}
+
+		private void HandleScriptDialogOpeningEvent(object sender, IScriptDialogOpeningEventArgs e)
+		{
+			if (e.Kind == ScriptDialogKind.Alert)
+			{
+				e.Handled = true;
+
+				CefJSDialogCallback dialogCallback = e.GetDeferral();
+				Dispatcher.InvokeAsync(() => MessageBox.Show(e.Message, "WPF dialog")).Task.ContinueWith(t =>
+				{
+					dialogCallback.Continue(t.Result == MessageBoxResult.OK, null);
+				});
 			}
 		}
 
@@ -125,7 +140,7 @@ namespace WpfCoreApp
 		private void NavigateButton_Click(object sender, RoutedEventArgs e)
 		{
 			//SelectedView?.Navigate("http://yandex.ru");
-			SelectedView?.Navigate("http://example.com");
+			SelectedView?.Navigate("https://cefnet.github.io/winsize.html");
 		}
 
 		private void txtAddress_KeyDown(object sender, KeyEventArgs e)

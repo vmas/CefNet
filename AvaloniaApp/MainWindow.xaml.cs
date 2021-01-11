@@ -8,6 +8,7 @@ using Avalonia.Threading;
 using CefNet;
 using CefNet.Avalonia;
 using System;
+using System.Diagnostics;
 
 namespace AvaloniaApp
 {
@@ -26,6 +27,7 @@ namespace AvaloniaApp
 
 			this.Opened += MainWindow_Opened;
 			CustomWebView.FullscreenEvent.AddClassHandler(typeof(WebView), HandleFullscreenEvent);
+			WebView.ScriptDialogOpeningEvent.AddClassHandler(typeof(WebView), HandleScriptDialogOpeningEvent);
 
 #if DEBUG
 			this.AttachDevTools();
@@ -63,6 +65,15 @@ namespace AvaloniaApp
 				this.HasSystemDecorations = true;
 				WindowState = WindowState.Normal;
 				Topmost = false;
+			}
+		}
+
+		private void HandleScriptDialogOpeningEvent(object sender, RoutedEventArgs e)
+		{
+			var ea = (ScriptDialogOpeningRoutedEventArgs)e;
+			if (ea.Kind == ScriptDialogKind.Alert)
+			{
+				Debug.Print("Alert: " + ea.Message);
 			}
 		}
 
@@ -117,7 +128,7 @@ namespace AvaloniaApp
 		private void NavigateButton_Click(object sender, RoutedEventArgs e)
 		{
 			//SelectedView?.Navigate("http://yandex.ru");
-			SelectedView?.Navigate("http://example.com");
+			SelectedView?.Navigate("https://cefnet.github.io/winsize.html");
 		}
 
 		private void txtAddress_KeyDown(object sender, KeyEventArgs e)
