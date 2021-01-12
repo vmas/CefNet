@@ -33,7 +33,7 @@ namespace CefNet
 		/// Returns a deferral object used for asynchronous continuation of JavaScript dialog requests.
 		/// </summary>
 		/// <returns>The deferral object to complete or cancel.</returns>
-		CefJSDialogCallback GetDeferral();
+		ScriptDialogDeferral GetDeferral();
 
 		/// <summary>
 		/// Gets or sets a value that indicates that messages should be suppressed.

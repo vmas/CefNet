@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 
 namespace CefNet.Internal
 {
@@ -39,9 +40,11 @@ namespace CefNet.Internal
 		/// <returns></returns>
 		internal protected virtual bool OnJSDialog(CefBrowser browser, string originUrl, CefJSDialogType dialogType, string messageText, string defaultPromptText, CefJSDialogCallback callback, ref int suppressMessage)
 		{
-			var ea = new ScriptDialogOpeningEventArgs(originUrl, (ScriptDialogKind)dialogType, messageText, defaultPromptText, callback);
+			ScriptDialogDeferral dialogDeferral = CreateScriptDialogDeferral(callback);
+			var ea = new ScriptDialogOpeningEventArgs(originUrl, (ScriptDialogKind)dialogType, messageText, defaultPromptText, dialogDeferral);
 			WebView.RaiseScriptDialogOpening(ea);
 			suppressMessage = ea.Suppress ? 1 : 0;
+			if (!ea.Handled) ReleaseScriptDialogDeferral(dialogDeferral);
 			return ea.Handled;
 		}
 
@@ -66,13 +69,17 @@ namespace CefNet.Internal
 		/// <remarks>Custom dialogs may be either modal or modeless.</remarks>
 		internal protected virtual bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback)
 		{
-			var ea = new ScriptDialogOpeningEventArgs(messageText, isReload, callback);
+			ScriptDialogDeferral dialogDeferral = CreateScriptDialogDeferral(callback);
+			var ea = new ScriptDialogOpeningEventArgs(messageText, isReload, dialogDeferral);
 			WebView.RaiseScriptDialogOpening(ea);
+			if (!ea.Handled) ReleaseScriptDialogDeferral(dialogDeferral);
 			return ea.Handled;
 		}
 
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		internal extern bool AvoidOnResetDialogState();
+		internal bool AvoidOnResetDialogState()
+		{
+			return false;
+		}
 
 		/// <summary>
 		/// Called to cancel any pending dialogs and reset any saved dialog state. Will be called due to events like
@@ -81,7 +88,7 @@ namespace CefNet.Internal
 		/// <param name="browser"></param>
 		internal protected virtual void OnResetDialogState(CefBrowser browser)
 		{
-
+			Interlocked.Exchange(ref _scriptDialogDeferral, null)?.Dispose();
 		}
 
 		[MethodImpl(MethodImplOptions.ForwardRef)]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace CefNet.Internal
 {
@@ -29,6 +30,8 @@ namespace CefNet.Internal
 		private bool _isAudioGlueInitialized;
 		private CefAudioHandlerGlue _audioGlue;
 		private bool _avoidAudioGlue;
+
+		private IDisposable _scriptDialogDeferral;
 
 		protected internal IChromiumWebViewPrivate WebView { get; private set; }
 
@@ -226,6 +229,18 @@ namespace CefNet.Internal
 		internal void NotifyPopupBrowserCreating()
 		{
 			WebView.RaisePopupBrowserCreating();
+		}
+
+		internal bool ReleaseScriptDialogDeferral(ScriptDialogDeferral deferral)
+		{
+			return ReferenceEquals(deferral, Interlocked.CompareExchange(ref _scriptDialogDeferral, null, deferral));
+		}
+
+		protected ScriptDialogDeferral CreateScriptDialogDeferral(CefJSDialogCallback callback)
+		{
+			var deferral = new ScriptDialogDeferral(this, callback);
+			_scriptDialogDeferral = deferral;
+			return deferral;
 		}
 
 	}

@@ -103,17 +103,21 @@ namespace CefNet.Internal
 		/// <inheritdoc />
 		protected override bool OnJSDialog(CefBrowser browser, string originUrl, CefJSDialogType dialogType, string messageText, string defaultPromptText, CefJSDialogCallback callback, ref int suppressMessage)
 		{
-			var ea = new ScriptDialogOpeningRoutedEventArgs(originUrl, (ScriptDialogKind)dialogType, messageText, defaultPromptText, callback);
+			ScriptDialogDeferral dialogDeferral = CreateScriptDialogDeferral(callback);
+			var ea = new ScriptDialogOpeningRoutedEventArgs(originUrl, (ScriptDialogKind)dialogType, messageText, defaultPromptText, dialogDeferral);
 			WebView.RaiseScriptDialogOpening(ea);
 			suppressMessage = ea.Suppress ? 1 : 0;
+			if (!ea.Handled) ((IDisposable)dialogDeferral).Dispose();
 			return ea.Handled;
 		}
 
 		/// <inheritdoc />
 		protected override bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback)
 		{
-			var ea = new ScriptDialogOpeningRoutedEventArgs(messageText, isReload, callback);
+			ScriptDialogDeferral dialogDeferral = CreateScriptDialogDeferral(callback);
+			var ea = new ScriptDialogOpeningRoutedEventArgs(messageText, isReload, dialogDeferral);
 			WebView.RaiseScriptDialogOpening(ea);
+			if (!ea.Handled) ((IDisposable)dialogDeferral).Dispose();
 			return ea.Handled;
 		}
 

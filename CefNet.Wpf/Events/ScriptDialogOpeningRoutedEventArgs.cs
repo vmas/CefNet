@@ -16,7 +16,7 @@ namespace CefNet.Wpf
 	/// </summary>
 	public sealed class ScriptDialogOpeningRoutedEventArgs : RoutedEventArgs, IScriptDialogOpeningEventArgs
 	{
-		private readonly CefJSDialogCallback _callback;
+		private readonly ScriptDialogDeferral _callback;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ScriptDialogOpeningEventArgs"/> class. 
@@ -26,7 +26,7 @@ namespace CefNet.Wpf
 		/// <param name="message">The message of the dialog box.</param>
 		/// <param name="defaultText">The default value to use for the result of the prompt JavaScript function.</param>
 		/// <param name="callback"></param>
-		public ScriptDialogOpeningRoutedEventArgs(string originUrl, ScriptDialogKind kind, string message, string defaultText, CefJSDialogCallback callback)
+		public ScriptDialogOpeningRoutedEventArgs(string originUrl, ScriptDialogKind kind, string message, string defaultText, ScriptDialogDeferral callback)
 			: base(WebView.ScriptDialogOpeningEvent)
 		{
 			this.Uri = Uri.TryCreate(originUrl, UriKind.Absolute, out Uri uri) ? uri : null;
@@ -43,7 +43,7 @@ namespace CefNet.Wpf
 		/// <param name="message">The message of the dialog box.</param>
 		/// <param name="reload">Indicates that the event is fired before page reloading.</param>
 		/// <param name="callback"></param>
-		public ScriptDialogOpeningRoutedEventArgs(string message, bool reload, CefJSDialogCallback callback)
+		public ScriptDialogOpeningRoutedEventArgs(string message, bool reload, ScriptDialogDeferral callback)
 			: base(WebView.ScriptDialogOpeningEvent)
 		{
 			this.Uri = null;
@@ -72,8 +72,9 @@ namespace CefNet.Wpf
 		public bool IsReload { get; set; }
 
 		/// <inheritdoc/>
-		public CefJSDialogCallback GetDeferral()
+		public ScriptDialogDeferral GetDeferral()
 		{
+			this.Handled = true;
 			return _callback;
 		}
 	}

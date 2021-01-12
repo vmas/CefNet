@@ -73,10 +73,10 @@ namespace WpfCoreApp
 			{
 				e.Handled = true;
 
-				CefJSDialogCallback dialogCallback = e.GetDeferral();
+				ScriptDialogDeferral dialogCallback = e.GetDeferral();
 				Dispatcher.InvokeAsync(() => MessageBox.Show(e.Message, "WPF dialog")).Task.ContinueWith(t =>
 				{
-					dialogCallback.Continue(t.Result == MessageBoxResult.OK, null);
+					dialogCallback.Accept();
 				});
 			}
 		}
