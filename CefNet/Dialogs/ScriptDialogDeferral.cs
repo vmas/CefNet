@@ -67,6 +67,8 @@ namespace CefNet
 
 		void IDisposable.Dispose()
 		{
+			if (_viewGlueRef.TryGetTarget(out WebViewGlue viewGlue))
+				viewGlue.ReleaseScriptDialogDeferral(this);
 			Interlocked.Exchange(ref _callback, null)?.Dispose();
 		}
 
