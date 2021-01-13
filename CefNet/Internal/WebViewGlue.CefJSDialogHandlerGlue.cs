@@ -44,7 +44,7 @@ namespace CefNet.Internal
 			var ea = new ScriptDialogOpeningEventArgs(originUrl, (ScriptDialogKind)dialogType, messageText, defaultPromptText, dialogDeferral);
 			WebView.RaiseScriptDialogOpening(ea);
 			suppressMessage = ea.Suppress ? 1 : 0;
-			if (!ea.Handled) ReleaseScriptDialogDeferral(dialogDeferral);
+			if (!ea.Handled) ((IDisposable)dialogDeferral).Dispose();
 			return ea.Handled;
 		}
 
@@ -72,7 +72,7 @@ namespace CefNet.Internal
 			ScriptDialogDeferral dialogDeferral = CreateScriptDialogDeferral(callback);
 			var ea = new ScriptDialogOpeningEventArgs(messageText, isReload, dialogDeferral);
 			WebView.RaiseScriptDialogOpening(ea);
-			if (!ea.Handled) ReleaseScriptDialogDeferral(dialogDeferral);
+			if (!ea.Handled) ((IDisposable)dialogDeferral).Dispose();
 			return ea.Handled;
 		}
 

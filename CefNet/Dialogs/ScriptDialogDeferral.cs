@@ -50,11 +50,16 @@ namespace CefNet
 			{
 				Interlocked.Exchange(ref _callback, null)?.Continue(true, null);
 			}
+			else
+			{
+				Interlocked.Exchange(ref _callback, null)?.Dispose();
+			}
 		}
 
 		/// <summary>
 		/// Responds with Cancel.
 		/// </summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void Cancel()
 		{
 			Continue(false, null);
@@ -62,7 +67,7 @@ namespace CefNet
 
 		void IDisposable.Dispose()
 		{
-			Volatile.Write(ref _callback, null);
+			Interlocked.Exchange(ref _callback, null)?.Dispose();
 		}
 
 	}
