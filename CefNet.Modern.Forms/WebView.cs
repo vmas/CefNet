@@ -21,6 +21,7 @@ namespace CefNet.Modern.Forms
 		private EventHandler<ITextFoundEventArgs> TextFoundEvent;
 		private EventHandler<IPdfPrintFinishedEventArgs> PdfPrintFinishedEvent;
 		private EventHandler<EventArgs> StatusTextChangedEvent;
+		private EventHandler<IScriptDialogOpeningEventArgs> ScriptDialogOpeningEvent;
 
 		/// <summary>
 		/// Occurs when the user starts dragging content in the web view.

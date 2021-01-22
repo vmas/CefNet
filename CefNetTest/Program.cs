@@ -184,7 +184,7 @@ namespace CefNetTest
 	{
 		private CefLifeSpanHandlerClass CefLifeSpan = new CefLifeSpanHandlerClass();
 
-		public override CefLifeSpanHandler GetLifeSpanHandler()
+		protected override CefLifeSpanHandler GetLifeSpanHandler()
 		{
 			return CefLifeSpan;
 		}
@@ -192,7 +192,7 @@ namespace CefNetTest
 
 	sealed class CefLifeSpanHandlerClass : CefLifeSpanHandler
 	{
-		public override void OnBeforeClose(CefBrowser browser)
+		protected override void OnBeforeClose(CefBrowser browser)
 		{
 			// TODO: Check how many browsers do exist and quit message
 			//       loop only when last browser is closed. Otherwise
