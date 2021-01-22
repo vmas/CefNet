@@ -531,10 +531,12 @@ namespace CefNet.Wpf
 
 		void IWpfWebViewPrivate.RaiseCefCursorChange(CursorChangeEventArgs e)
 		{
-			Dispatcher.BeginInvoke(new Action(() =>
-			{
-				this.Cursor = e.Cursor;
-			}), DispatcherPriority.Normal);
+			RaiseCrossThreadEvent(OnCursorChange, e, true);
+		}
+
+		protected virtual void OnCursorChange(CursorChangeEventArgs e)
+		{
+			this.Cursor = e.Cursor;
 		}
 
 		void IWpfWebViewPrivate.CefSetToolTip(string text)

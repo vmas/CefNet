@@ -289,12 +289,17 @@ namespace CefNet.Windows.Forms
 
 		void IWinFormsWebViewPrivate.RaiseCefCursorChange(CursorChangeEventArgs e)
 		{
-			RaiseCrossThreadEvent(OnCursorChange, e, false);
+			RaiseCrossThreadEvent(OnCursorChange, e, true);
 		}
 
+		/// <summary>
+		/// Called when the browser&apos;s cursor has changed.
+		/// </summary>
+		/// <param name="e">A <see cref="CursorChangeEventArgs"/> that contains the event data.</param>
 		protected virtual void OnCursorChange(CursorChangeEventArgs e)
 		{
-			this.Cursor = e.Cursor;
+			if (this.WindowlessRenderingEnabled)
+				this.Cursor = e.Cursor;
 		}
 
 		void IWinFormsWebViewPrivate.CefSetToolTip(string text)
@@ -739,7 +744,7 @@ namespace CefNet.Windows.Forms
 					NativeMethods.PostMessage(m.HWnd, WM_MOUSEHWHEEL, NativeMethods.MakeParam(delta, 0), NativeMethods.MakeParam((short)mousePos.Y, (short)mousePos.X));
 					m.Result = IntPtr.Zero;
 					return true;
-				case 0x84: //WM_NCHITTEST
+				case 0x84: // WM_NCHITTEST
 					m.Result = new IntPtr(1); // HTCLIENT
 					return true;
 				case 0x0240: // WM_TOUCH
@@ -747,7 +752,9 @@ namespace CefNet.Windows.Forms
 						return false;
 					m.Result = IntPtr.Zero;
 					return true;
-				case 0x0020:
+				case 0x0020: // WM_SETCURSOR
+					if (m.LParam == new IntPtr(1))
+						return false;
 					m.Result = new IntPtr(1);
 					return true;
 			}

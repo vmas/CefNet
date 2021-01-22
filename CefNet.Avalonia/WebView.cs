@@ -659,10 +659,12 @@ namespace CefNet.Avalonia
 
 		void IAvaloniaWebViewPrivate.RaiseCefCursorChange(CursorChangeEventArgs e)
 		{
-			Dispatcher.UIThread.Post(new Action(() =>
-			{
-				this.Cursor = e.Cursor;
-			}), DispatcherPriority.Normal);
+			RaiseCrossThreadEvent(OnCursorChange, e, true);
+		}
+
+		protected virtual void OnCursorChange(CursorChangeEventArgs e)
+		{
+			this.Cursor = e.Cursor;
 		}
 
 		void IAvaloniaWebViewPrivate.CefSetToolTip(string text)
