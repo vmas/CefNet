@@ -44,6 +44,11 @@ namespace CefNet.Wpf
 		public static readonly RoutedEvent StatusTextChangedEvent = EventManager.RegisterRoutedEvent(nameof(StatusTextChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(WebView));
 
 		/// <summary>
+		/// Identifies the <see cref="ScriptDialogOpening"/> routed event.
+		/// </summary>
+		public static readonly RoutedEvent ScriptDialogOpeningEvent = EventManager.RegisterRoutedEvent(nameof(ScriptDialogOpening), RoutingStrategy.Bubble, typeof(EventHandler<IScriptDialogOpeningEventArgs>), typeof(WebView));
+
+		/// <summary>
 		/// Identifies the <see cref="StartDragging"/> routed event.
 		/// </summary>
 		public static readonly RoutedEvent StartDraggingEvent = EventManager.RegisterRoutedEvent(nameof(StartDragging), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(WebView));
@@ -526,10 +531,12 @@ namespace CefNet.Wpf
 
 		void IWpfWebViewPrivate.RaiseCefCursorChange(CursorChangeEventArgs e)
 		{
-			Dispatcher.BeginInvoke(new Action(() =>
-			{
-				this.Cursor = e.Cursor;
-			}), DispatcherPriority.Normal);
+			RaiseCrossThreadEvent(OnCursorChange, e, true);
+		}
+
+		protected virtual void OnCursorChange(CursorChangeEventArgs e)
+		{
+			this.Cursor = e.Cursor;
 		}
 
 		void IWpfWebViewPrivate.CefSetToolTip(string text)
@@ -658,6 +665,55 @@ namespace CefNet.Wpf
 			Point mousePos = e.GetPosition(this);
 			SendMouseWheelEvent((int)mousePos.X, (int)mousePos.Y, e.Delta, 0);
 			e.Handled = true;
+		}
+
+		protected override void OnTouchDown(TouchEventArgs e)
+		{
+			OnTouch(e);
+			e.Handled = true;
+		}
+
+		protected override void OnTouchMove(TouchEventArgs e)
+		{
+			OnTouch(e);
+			e.Handled = true;
+		}
+
+		protected override void OnTouchUp(TouchEventArgs e)
+		{
+			OnTouch(e);
+			e.Handled = true;
+		}
+
+		private void OnTouch(TouchEventArgs e)
+		{
+			TouchPoint touchPoint = e.GetTouchPoint(this);
+
+			var eventInfo = new CefTouchEvent();
+			switch (touchPoint.Action)
+			{
+				case TouchAction.Down:
+					eventInfo.Type = CefTouchEventType.Pressed;
+					break;
+				case TouchAction.Move:
+					eventInfo.Type = CefTouchEventType.Moved;
+					break;
+				case TouchAction.Up:
+					eventInfo.Type = CefTouchEventType.Released;
+					break;
+				default:
+					throw new NotSupportedException();
+			}
+
+			Point pt = touchPoint.Position;
+			CefPoint point = PointToViewport(new CefPoint((int)pt.X, (int)pt.Y));
+			eventInfo.X = point.X;
+			eventInfo.Y = point.Y;
+			eventInfo.PointerType = CefPointerType.Touch;
+			eventInfo.RadiusX = (float)touchPoint.Size.Width / 2;
+			eventInfo.RadiusY = (float)touchPoint.Size.Height / 2;
+			eventInfo.Id = touchPoint.TouchDevice.Id;
+			SendTouchEvent(eventInfo);
 		}
 
 		protected virtual bool ProcessPreviewKey(CefKeyEventType eventType, KeyEventArgs e)

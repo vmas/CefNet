@@ -96,6 +96,11 @@ namespace CefNet
 		event EventHandler<DevToolsProtocolEventAvailableEventArgs> DevToolsProtocolEventAvailable;
 
 		/// <summary>
+		/// Occurs when a JavaScript dialog (alert, confirm, prompt, beforeunload) displays for the WebView.
+		/// </summary>
+		event EventHandler<IScriptDialogOpeningEventArgs> ScriptDialogOpening;
+
+		/// <summary>
 		/// Gets and sets a default URL.
 		/// </summary>
 		/// <remarks>
@@ -349,6 +354,12 @@ namespace CefNet
 		/// <param name="deltaX">A movement delta in the X direction.</param>
 		/// <param name="deltaY">A movement delta in the Y direction.</param>
 		void SendMouseWheelEvent(int x, int y, int deltaX, int deltaY);
+
+		/// <summary>
+		/// Send a touch event to the browser.
+		/// </summary>
+		/// <param name="eventInfo">The touch event information.</param>
+		void SendTouchEvent(CefTouchEvent eventInfo);
 
 		/// <summary>
 		/// Sends the KeyDown event to the browser.

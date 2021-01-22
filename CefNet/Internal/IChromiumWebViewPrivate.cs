@@ -30,5 +30,6 @@ namespace CefNet.Internal
 		void RaiseTextFound(ITextFoundEventArgs e);
 		void RaisePdfPrintFinished(IPdfPrintFinishedEventArgs e);
 		void RaiseDevToolsEventAvailable(DevToolsProtocolEventAvailableEventArgs e);
+		void RaiseScriptDialogOpening(IScriptDialogOpeningEventArgs e);
 	}
 }

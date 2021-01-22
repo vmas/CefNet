@@ -22,6 +22,7 @@ namespace CefNet.Windows.Forms
 		private EventHandler<ITextFoundEventArgs> TextFoundEvent;
 		private EventHandler<IPdfPrintFinishedEventArgs> PdfPrintFinishedEvent;
 		private EventHandler<EventArgs> StatusTextChangedEvent;
+		private EventHandler<IScriptDialogOpeningEventArgs> ScriptDialogOpeningEvent;
 
 		public WebView()
 			: this((WebView)null)
@@ -43,6 +44,7 @@ namespace CefNet.Windows.Forms
 				this.Opener = opener;
 				this.WindowlessRenderingEnabled = opener.WindowlessRenderingEnabled;
 				this.BrowserSettings = opener.BrowserSettings;
+				SimulateDevice(opener.Device);
 			}
 			Initialize();
 		}

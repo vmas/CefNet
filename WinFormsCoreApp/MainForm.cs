@@ -72,6 +72,7 @@ namespace WinFormsCoreApp
 			btnBack.Top = menu.Bottom;
 			btnBack.Width = btnBack.Height;
 			btnBack.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+			btnBack.Click += (s, e) => { SelectedView?.GoBack(); };
 			this.Controls.Add(btnBack);
 
 			btnForward = new Button();
@@ -81,6 +82,7 @@ namespace WinFormsCoreApp
 			btnForward.Top = menu.Bottom;
 			btnForward.Width = btnForward.Height;
 			btnForward.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+			btnForward.Click += (s, e) => { SelectedView?.GoForward(); };
 			this.Controls.Add(btnForward);
 
 			btnGo = new Button();

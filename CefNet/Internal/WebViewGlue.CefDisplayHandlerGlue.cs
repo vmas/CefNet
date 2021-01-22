@@ -156,5 +156,26 @@ namespace CefNet.Internal
 		{
 
 		}
+
+		internal bool AvoidOnCursorChange()
+		{
+			return false;
+		}
+
+		/// <summary>
+		/// Called when the browser&apos;s cursor has changed.
+		/// </summary>
+		/// <param name="browser">The browser.</param>
+		/// <param name="cursor">The cursor handle.</param>
+		/// <param name="type">The cursor type.</param>
+		/// <param name="customCursorInfo">
+		/// The custom cursor information (if <paramref name="type"/> is <see cref="CefCursorType.Custom"/>).
+		/// </param>
+		/// <returns>true if the cursor change was handled or false for default handling.</returns>
+		internal protected virtual bool OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
+		{
+			return false;
+		}
+
 	}
 }

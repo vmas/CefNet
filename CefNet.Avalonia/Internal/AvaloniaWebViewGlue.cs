@@ -17,6 +17,7 @@ namespace CefNet.Internal
 			get { return (IAvaloniaWebViewPrivate)base.WebView; }
 		}
 
+		/// <inheritdoc />
 		protected override bool OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
 		{
 			var ea = new CursorChangeEventArgs(type != CefCursorType.Custom ? CursorInteropHelper.Create(cursorHandle) : CustomCursor.Create(ref customCursorInfo), type);
@@ -24,12 +25,14 @@ namespace CefNet.Internal
 			return ea.Handled;
 		}
 
+		/// <inheritdoc />
 		protected override bool OnTooltip(CefBrowser browser, ref string text)
 		{
 			WebView.CefSetToolTip(text);
 			return true;
 		}
 
+		/// <inheritdoc />
 		protected override void OnStatusMessage(CefBrowser browser, string message)
 		{
 			WebView.CefSetStatusText(message);
@@ -85,14 +88,37 @@ namespace CefNet.Internal
 			WebView.RaiseCefCursorChange(new CursorChangeEventArgs(cursor, cursorType));
 		}
 
+		/// <inheritdoc />
 		protected override void OnFindResult(CefBrowser browser, int identifier, int count, CefRect selectionRect, int activeMatchOrdinal, bool finalUpdate)
 		{
 			WebView.RaiseTextFound(new TextFoundRoutedEventArgs(identifier, count, selectionRect, activeMatchOrdinal, finalUpdate));
 		}
 
+		/// <inheritdoc />
 		protected override void OnPdfPrintFinished(string path, bool success)
 		{
 			WebView.RaisePdfPrintFinished(new PdfPrintFinishedRoutedEventArgs(path, success));
+		}
+
+		/// <inheritdoc />
+		protected override bool OnJSDialog(CefBrowser browser, string originUrl, CefJSDialogType dialogType, string messageText, string defaultPromptText, CefJSDialogCallback callback, ref int suppressMessage)
+		{
+			ScriptDialogDeferral dialogDeferral = CreateScriptDialogDeferral(callback);
+			var ea = new ScriptDialogOpeningRoutedEventArgs(originUrl, (ScriptDialogKind)dialogType, messageText, defaultPromptText, dialogDeferral);
+			WebView.RaiseScriptDialogOpening(ea);
+			suppressMessage = ea.Suppress ? 1 : 0;
+			if (!ea.Handled) ((IDisposable)dialogDeferral).Dispose();
+			return ea.Handled;
+		}
+
+		/// <inheritdoc />
+		protected override bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback)
+		{
+			ScriptDialogDeferral dialogDeferral = CreateScriptDialogDeferral(callback);
+			var ea = new ScriptDialogOpeningRoutedEventArgs(messageText, isReload, dialogDeferral);
+			WebView.RaiseScriptDialogOpening(ea);
+			if (!ea.Handled) ((IDisposable)dialogDeferral).Dispose();
+			return ea.Handled;
 		}
 
 	}

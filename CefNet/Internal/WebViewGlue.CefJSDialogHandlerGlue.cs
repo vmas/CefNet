@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 
 namespace CefNet.Internal
 {
 	public partial class WebViewGlue
 	{
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		internal extern bool AvoidOnJSDialog();
+		internal bool AvoidOnJSDialog()
+		{
+			return false;
+		}
 
 		/// <summary>
 		/// Called to run a JavaScript dialog. Return true if the application will use a custom dialog or
@@ -37,30 +40,46 @@ namespace CefNet.Internal
 		/// <returns></returns>
 		internal protected virtual bool OnJSDialog(CefBrowser browser, string originUrl, CefJSDialogType dialogType, string messageText, string defaultPromptText, CefJSDialogCallback callback, ref int suppressMessage)
 		{
-			return false;
+			ScriptDialogDeferral dialogDeferral = CreateScriptDialogDeferral(callback);
+			var ea = new ScriptDialogOpeningEventArgs(originUrl, (ScriptDialogKind)dialogType, messageText, defaultPromptText, dialogDeferral);
+			WebView.RaiseScriptDialogOpening(ea);
+			suppressMessage = ea.Suppress ? 1 : 0;
+			if (!ea.Handled) ((IDisposable)dialogDeferral).Dispose();
+			return ea.Handled;
 		}
 
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		internal extern bool AvoidOnBeforeUnloadDialog();
-
-		/// <summary>
-		/// Called to run a dialog asking the user if they want to leave a page. Return false to use the default dialog
-		/// implementation. Return true if the application will use a custom dialog or if the callback has been executed
-		/// immediately. Custom dialogs may be either modal or modeless. If a custom dialog is used the application must
-		/// execute <paramref name="callback"/> once the custom dialog is dismissed.
-		/// </summary>
-		/// <param name="browser"></param>
-		/// <param name="messageText"></param>
-		/// <param name="isReload"></param>
-		/// <param name="callback"></param>
-		/// <returns></returns>
-		internal protected virtual bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback)
+		internal bool AvoidOnBeforeUnloadDialog()
 		{
 			return false;
 		}
 
-		[MethodImpl(MethodImplOptions.ForwardRef)]
-		internal extern bool AvoidOnResetDialogState();
+		/// <summary>
+		/// Called to run a dialog asking the user if they want to leave a page.
+		/// </summary>
+		/// <param name="browser">The browser.</param>
+		/// <param name="messageText">The message of the dialog box.</param>
+		/// <param name="isReload">Indicates that the method is called before page reloading.</param>
+		/// <param name="callback">
+		/// If a custom dialog is used the application must execute <paramref name="callback"/> once the custom dialog is dismissed.
+		/// </param>
+		/// <returns>
+		/// Return false to use the default dialog implementation. Return true if the application will
+		/// use a custom dialog or if the callback has been executed immediately.
+		/// </returns>
+		/// <remarks>Custom dialogs may be either modal or modeless.</remarks>
+		internal protected virtual bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback)
+		{
+			ScriptDialogDeferral dialogDeferral = CreateScriptDialogDeferral(callback);
+			var ea = new ScriptDialogOpeningEventArgs(messageText, isReload, dialogDeferral);
+			WebView.RaiseScriptDialogOpening(ea);
+			if (!ea.Handled) ((IDisposable)dialogDeferral).Dispose();
+			return ea.Handled;
+		}
+
+		internal bool AvoidOnResetDialogState()
+		{
+			return false;
+		}
 
 		/// <summary>
 		/// Called to cancel any pending dialogs and reset any saved dialog state. Will be called due to events like
@@ -69,7 +88,7 @@ namespace CefNet.Internal
 		/// <param name="browser"></param>
 		internal protected virtual void OnResetDialogState(CefBrowser browser)
 		{
-
+			Interlocked.Exchange(ref _scriptDialogDeferral, null)?.Dispose();
 		}
 
 		[MethodImpl(MethodImplOptions.ForwardRef)]

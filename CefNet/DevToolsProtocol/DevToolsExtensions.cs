@@ -341,6 +341,8 @@ namespace CefNet
 					viewportDict.SetDouble("scale", viewport.Scale);
 					args.SetDictionary("clip", viewportDict);
 				}
+				if (settings.CaptureBeyondViewport)
+					args.SetBool("captureBeyondViewport", true);
 			}
 
 			byte[] rv = await ExecuteDevToolsMethodInternalAsync(webview, "Page.captureScreenshot", args, cancellationToken).ConfigureAwait(false);
@@ -373,9 +375,7 @@ namespace CefNet
 			if (webview is null)
 				throw new ArgumentNullException(nameof(webview));
 
-			byte[] rv = await ExecuteDevToolsMethodInternalAsync(webview, "Network.clearBrowserCache", null, cancellationToken);
-			if (rv is null || rv.Length != 2 || rv[0] != '{' || rv[1] != '}')
-				throw new InvalidOperationException();
+			ThrowIfNotEmptyResponse(await ExecuteDevToolsMethodInternalAsync(webview, "Network.clearBrowserCache", null, cancellationToken).ConfigureAwait(false));
 		}
 
 		/// <summary>
@@ -389,10 +389,91 @@ namespace CefNet
 			if (webview is null)
 				throw new ArgumentNullException(nameof(webview));
 
-			byte[] rv = await ExecuteDevToolsMethodInternalAsync(webview, "Network.clearBrowserCookies", null, cancellationToken);
-			if (rv is null || rv.Length != 2 || rv[0] != '{' || rv[1] != '}')
-				throw new InvalidOperationException();
+			ThrowIfNotEmptyResponse(await ExecuteDevToolsMethodInternalAsync(webview, "Network.clearBrowserCookies", null, cancellationToken).ConfigureAwait(false));
 		}
 
+		#region Emulation
+
+		/// <summary>
+		/// Overrides user agent with the given string.
+		/// </summary>
+		/// <param name="webview">The WebView control.</param>
+		/// <param name="userAgent">User agent to use.</param>
+		/// <param name="acceptLanguage">Browser langugage to emulate.</param>
+		/// <param name="platform">The platform navigator.platform should return.</param>
+		/// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+		/// <returns>The task object representing the asynchronous operation.</returns>
+		public static async Task SetUserAgentOverrideAsync(this IChromiumWebView webview, string userAgent, string acceptLanguage, string platform, CancellationToken cancellationToken)
+		{
+			if (webview is null)
+				throw new ArgumentNullException(nameof(webview));
+
+			var args = new CefDictionaryValue();
+			args.SetString("userAgent", userAgent);
+			if (acceptLanguage is not null)
+				args.SetString("acceptLanguage", acceptLanguage);
+			if (platform is not null)
+				args.SetString("platform", platform);
+			ThrowIfNotEmptyResponse(await ExecuteDevToolsMethodInternalAsync(webview, "Emulation.setUserAgentOverride", args, cancellationToken).ConfigureAwait(false));
+		}
+
+		/// <summary>
+		/// Enables touch on platforms which do not support them.
+		/// </summary>
+		/// <param name="webview">The WebView control.</param>
+		/// <param name="enabled">True whether the touch event emulation should be enabled.</param>
+		/// <param name="maxTouchPoints">Maximum touch points supported. Defaults to one.</param>
+		/// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+		/// <returns>The task object representing the asynchronous operation.</returns>
+		public static async Task SetTouchEmulationEnabledAsync(this IChromiumWebView webview, bool enabled, int? maxTouchPoints, CancellationToken cancellationToken)
+		{
+			if (webview is null)
+				throw new ArgumentNullException(nameof(webview));
+
+			var args = new CefDictionaryValue();
+			args.SetBool("enabled", enabled);
+			if (maxTouchPoints is not null)
+			{
+				if (maxTouchPoints.Value < 1 || maxTouchPoints.Value > 16)
+					throw new ArgumentOutOfRangeException(nameof(maxTouchPoints), "Touch points must be between 1 and 16.");
+				args.SetInt("maxTouchPoints", maxTouchPoints.Value);
+			}
+			ThrowIfNotEmptyResponse(await ExecuteDevToolsMethodInternalAsync(webview, "Emulation.setTouchEmulationEnabled", args, cancellationToken).ConfigureAwait(false));
+		}
+
+		/// <summary>
+		/// Emulates the given media type or media feature for CSS media queries.
+		/// </summary>
+		/// <param name="webview">The WebView control.</param>
+		/// <param name="media">Media type to emulate. Empty string disables the override.</param>
+		/// <param name="features">Media features to emulate.</param>
+		/// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+		/// <returns>The task object representing the asynchronous operation.</returns>
+		public static async Task SetEmulatedMediaAsync(this IChromiumWebView webview, string media, IDictionary<string, string> features, CancellationToken cancellationToken)
+		{
+			if (webview is null)
+				throw new ArgumentNullException(nameof(webview));
+
+			var args = new CefDictionaryValue();
+			args.SetString("media", media);
+			if (features is not null)
+			{
+				foreach (KeyValuePair<string, string> feature in features)
+				{
+					if (string.IsNullOrWhiteSpace(feature.Key))
+						throw new ArgumentOutOfRangeException(nameof(features), "Key may not be empty.");
+					args.SetString(feature.Key, feature.Value);
+				}
+			}
+			ThrowIfNotEmptyResponse(await ExecuteDevToolsMethodInternalAsync(webview, "Emulation.setEmulatedMedia", args, cancellationToken).ConfigureAwait(false));
+		}
+
+		#endregion
+
+		private static void ThrowIfNotEmptyResponse(byte[] response)
+		{
+			if (response is null || response.Length != 2 || response[0] != '{' || response[1] != '}')
+				throw new InvalidOperationException();
+		}
 	}
 }

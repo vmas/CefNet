@@ -131,23 +131,48 @@ namespace CefNet.Avalonia
 		public static readonly RoutedEvent StatusTextChangedEvent = RoutedEvent.Register<WebView, RoutedEventArgs>(nameof(StatusTextChanged), RoutingStrategies.Bubble);
 
 		/// <summary>
-		/// Adds a handler for the <see cref="PdfPrintFinished"/> attached event.
+		/// Adds a handler for the <see cref="StatusTextChanged"/> attached event.
 		/// </summary>
-		/// <param name="element">An object that raise the <see cref="PdfPrintFinished"/> routed event.</param>
+		/// <param name="element">An object that raise the <see cref="StatusTextChanged"/> routed event.</param>
 		/// <param name="handler">The handler.</param>
 		public static void AddStatusTextChangedHandler(IInteractive element, EventHandler<EventArgs> handler)
 		{
-			element?.AddHandler(PdfPrintFinishedEvent, handler);
+			element?.AddHandler(StatusTextChangedEvent, handler);
 		}
 
 		/// <summary>
-		/// Removes a handler for the <see cref="PdfPrintFinished"/> attached event.
+		/// Removes a handler for the <see cref="StatusTextChanged"/> attached event.
 		/// </summary>
-		/// <param name="element">An object that raise the <see cref="PdfPrintFinished"/> routed event.</param>
+		/// <param name="element">An object that raise the <see cref="StatusTextChanged"/> routed event.</param>
 		/// <param name="handler">The handler.</param>
 		public static void RemoveStatusTextChangedHandler(IInteractive element, EventHandler<EventArgs> handler)
 		{
-			element?.RemoveHandler(PdfPrintFinishedEvent, handler);
+			element?.RemoveHandler(StatusTextChangedEvent, handler);
+		}
+
+		/// <summary>
+		/// Identifies the <see cref="ScriptDialogOpening"/> routed event.
+		/// </summary>
+		public static readonly RoutedEvent ScriptDialogOpeningEvent = RoutedEvent.Register<WebView, ScriptDialogOpeningRoutedEventArgs>(nameof(ScriptDialogOpening), RoutingStrategies.Bubble);
+
+		/// <summary>
+		/// Adds a handler for the <see cref="ScriptDialogOpening"/> attached event.
+		/// </summary>
+		/// <param name="element">An object that raise the <see cref="ScriptDialogOpening"/> routed event.</param>
+		/// <param name="handler">The handler.</param>
+		public static void AddScriptDialogOpeningHandler(IInteractive element, EventHandler<ScriptDialogOpeningRoutedEventArgs> handler)
+		{
+			element?.AddHandler(ScriptDialogOpeningEvent, handler);
+		}
+
+		/// <summary>
+		/// Removes a handler for the <see cref="ScriptDialogOpening"/> attached event.
+		/// </summary>
+		/// <param name="element">An object that raise the <see cref="ScriptDialogOpening"/> routed event.</param>
+		/// <param name="handler">The handler.</param>
+		public static void RemoveScriptDialogOpeningHandler(IInteractive element, EventHandler<ScriptDialogOpeningRoutedEventArgs> handler)
+		{
+			element?.RemoveHandler(ScriptDialogOpeningEvent, handler);
 		}
 
 		protected bool IsDesignMode
@@ -635,10 +660,12 @@ namespace CefNet.Avalonia
 
 		void IAvaloniaWebViewPrivate.RaiseCefCursorChange(CursorChangeEventArgs e)
 		{
-			Dispatcher.UIThread.Post(new Action(() =>
-			{
-				this.Cursor = e.Cursor;
-			}), DispatcherPriority.Normal);
+			RaiseCrossThreadEvent(OnCursorChange, e, true);
+		}
+
+		protected virtual void OnCursorChange(CursorChangeEventArgs e)
+		{
+			this.Cursor = e.Cursor;
 		}
 
 		void IAvaloniaWebViewPrivate.CefSetToolTip(string text)
@@ -714,16 +741,22 @@ namespace CefNet.Avalonia
 
 		protected override void OnPointerMoved(PointerEventArgs e)
 		{
-			CefEventFlags modifiers = CefEventFlags.None;
-
-			PointerPoint pointerPoint = e.GetCurrentPoint(this);
-			PointerPointProperties pp = pointerPoint.Properties;
-			if (pp.IsLeftButtonPressed)
-				modifiers |= CefEventFlags.LeftMouseButton;
-			if (pp.IsRightButtonPressed)
-				modifiers |= CefEventFlags.RightMouseButton;
-			Point mousePos = pointerPoint.Position;// e.GetPosition(this);
-			SendMouseMoveEvent((int)mousePos.X, (int)mousePos.Y, modifiers);
+			if (e.Pointer.Type == PointerType.Touch)
+			{
+				OnTouch(CefTouchEventType.Moved, e);
+			}
+			else
+			{
+				CefEventFlags modifiers = CefEventFlags.None;
+				PointerPoint pointerPoint = e.GetCurrentPoint(this);
+				PointerPointProperties pp = pointerPoint.Properties;
+				if (pp.IsLeftButtonPressed)
+					modifiers |= CefEventFlags.LeftMouseButton;
+				if (pp.IsRightButtonPressed)
+					modifiers |= CefEventFlags.RightMouseButton;
+				Point mousePos = pointerPoint.Position;// e.GetPosition(this);
+				SendMouseMoveEvent((int)mousePos.X, (int)mousePos.Y, modifiers);
+			}
 			base.OnPointerMoved(e);
 		}
 
@@ -743,8 +776,15 @@ namespace CefNet.Avalonia
 			}
 			if (e.GetCurrentPoint(null).Properties.PointerUpdateKind.GetMouseButton() <= MouseButton.Right)
 			{
-				Point mousePos = e.GetPosition(this);
-				SendMouseDownEvent((int)mousePos.X, (int)mousePos.Y, GetButton(e), e.ClickCount, GetModifierKeys(e.KeyModifiers));
+				if (e.Pointer.Type == PointerType.Touch)
+				{
+					OnTouch(CefTouchEventType.Pressed, e);
+				}
+				else
+				{
+					Point mousePos = e.GetPosition(this);
+					SendMouseDownEvent((int)mousePos.X, (int)mousePos.Y, GetButton(e), e.ClickCount, GetModifierKeys(e.KeyModifiers));
+				}
 			}
 			base.OnPointerPressed(e);
 		}
@@ -755,8 +795,15 @@ namespace CefNet.Avalonia
 			if (e.GetCurrentPoint(null).Properties.PointerUpdateKind.GetMouseButton() > MouseButton.Right)
 				return;
 
-			Point mousePos = e.GetPosition(this);
-			SendMouseUpEvent((int)mousePos.X, (int)mousePos.Y, GetButton(e), 1, GetModifierKeys(e.KeyModifiers));
+			if (e.Pointer.Type == PointerType.Touch)
+			{
+				OnTouch(CefTouchEventType.Released, e);
+			}
+			else
+			{
+				Point mousePos = e.GetPosition(this);
+				SendMouseUpEvent((int)mousePos.X, (int)mousePos.Y, GetButton(e), 1, GetModifierKeys(e.KeyModifiers));
+			}
 		}
 
 		protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
@@ -767,6 +814,20 @@ namespace CefNet.Avalonia
 			Point mousePos = e.GetPosition(this);
 			SendMouseWheelEvent((int)mousePos.X, (int)mousePos.Y, (int)e.Delta.X * WHEEL_DELTA, (int)e.Delta.Y * WHEEL_DELTA);
 			e.Handled = true;
+		}
+
+		private void OnTouch(CefTouchEventType eventType, PointerEventArgs e)
+		{
+			Point pt = e.GetPosition(this);
+			CefPoint location = PointToViewport(new CefPoint((int)pt.X, (int)pt.Y));
+			var eventInfo = new CefTouchEvent();
+			eventInfo.Type = eventType;
+			eventInfo.X = location.X;
+			eventInfo.Y = location.Y;
+			eventInfo.Id = e.Pointer.Id;
+			eventInfo.PointerType = CefPointerType.Touch;
+			eventInfo.Modifiers = (uint)GetModifierKeys(e.KeyModifiers);
+			SendTouchEvent(eventInfo);
 		}
 
 		protected virtual bool ProcessPreviewKey(CefKeyEventType eventType, KeyEventArgs e)

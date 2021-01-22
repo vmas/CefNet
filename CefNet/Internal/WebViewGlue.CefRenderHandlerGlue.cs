@@ -128,16 +128,6 @@ namespace CefNet.Internal
 
 		}
 
-		internal bool AvoidOnCursorChange()
-		{
-			return false;
-		}
-
-		internal protected virtual bool OnCursorChange(CefBrowser browser, IntPtr cursor, CefCursorType type, CefCursorInfo customCursorInfo)
-		{
-			return false;
-		}
-
 		[MethodImpl(MethodImplOptions.ForwardRef)]
 		internal extern bool AvoidStartDragging();
 

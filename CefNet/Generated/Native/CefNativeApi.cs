@@ -20,7 +20,7 @@ namespace CefNet.CApi
 {
 	public static partial class CefNativeApi
 	{
-		public static readonly string ApiHash = "7f349b7262bfe13bda037370004f56a6081e543b";
+		public static readonly string ApiHash = "89715b43c948313782d2546131f510eab1975844";
 
 		/// <summary>
 		/// Add an entry to the cross-origin access whitelist.

@@ -16,7 +16,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup>
-    <CefVersion>87.1</CefVersion>
+    <CefVersion>88.1</CefVersion>
     <VersionBuild>$([System.DateTime]::UtcNow.ToString(yy))$([System.DateTime]::UtcNow.DayOfYear.ToString(000))</VersionBuild>
     <VersionRevision>$([System.DateTime]::UtcNow.ToString(HHmm))</VersionRevision>
     <VersionPrefix>$(CefVersion).$(VersionBuild).$(VersionRevision)</VersionPrefix>
@@ -33,7 +33,7 @@
     <PackageReleaseNotes>
       CEF v.$(CefVersion).*.
       Binary packages are available for download at:
-      http://opensource.spotify.com/cefbuilds/index.html
+      https://cef-builds.spotifycdn.com/index.html
     </PackageReleaseNotes>
   </PropertyGroup>
 </Project>

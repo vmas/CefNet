@@ -22,20 +22,5 @@ namespace CefNet.Internal
 			return true;
 		}
 
-		protected internal override bool OnJSDialog(CefBrowser browser, string originUrl, CefJSDialogType dialogType, string messageText, string defaultPromptText, CefJSDialogCallback callback, ref int suppressMessage)
-		{
-			return base.OnJSDialog(browser, originUrl, dialogType, messageText, defaultPromptText, callback, ref suppressMessage);
-		}
-
-		protected internal override bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback)
-		{
-			return base.OnBeforeUnloadDialog(browser, messageText, isReload, callback);
-		}
-
-		protected internal override void OnResetDialogState(CefBrowser browser)
-		{
-			base.OnResetDialogState(browser);
-		}
-
 	}
 }
