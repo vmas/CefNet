@@ -178,7 +178,7 @@ namespace CefNet.Internal
 
 					surface = GetSurface(ViewPixels);
 					pixelSize = surface.PixelSize;
-					drawingContext.DrawImage(surface, 1, new Rect(0, 0, pixelSize.Width, pixelSize.Height), new Rect(surface.Size));
+					drawingContext.DrawImage(surface, new Rect(0, 0, pixelSize.Width, pixelSize.Height), new Rect(surface.Size));
 
 					PixelBuffer pixelBuffer = PopupPixels;
 					if (pixelBuffer == null)
@@ -187,7 +187,7 @@ namespace CefNet.Internal
 					surface = GetSurface(pixelBuffer);
 					Size size = surface.Size;
 					pixelSize = surface.PixelSize;
-					drawingContext.DrawImage(surface, 1,
+					drawingContext.DrawImage(surface,
 						new Rect(0, 0, pixelSize.Width, pixelSize.Height),
 						new Rect(_popupBounds.X, _popupBounds.Y, size.Width, size.Height));
 				}
@@ -203,7 +203,7 @@ namespace CefNet.Internal
 			if (surface is null || surface.PixelSize != new PixelSize(pixelBuffer.Width, pixelBuffer.Height))
 			{
 				surface?.Dispose();
-				surface = new WriteableBitmap(new PixelSize(pixelBuffer.Width, pixelBuffer.Height), OffscreenGraphics.DpiScale.Dpi, PixelFormat.Bgra8888);
+				surface = new WriteableBitmap(new PixelSize(pixelBuffer.Width, pixelBuffer.Height), OffscreenGraphics.DpiScale.Dpi, PixelFormat.Bgra8888, AlphaFormat.Premul);
 				pixelBuffer.Surface = surface;
 			}
 

@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Logging.Serilog;
 using Avalonia.Threading;
 using CefNet;
 using WinFormsCoreApp;
@@ -65,7 +64,7 @@ namespace AvaloniaApp
 		public static AppBuilder BuildAvaloniaApp()
 			=> AppBuilder.Configure<App>()
 				.UsePlatformDetect()
-				.LogToDebug();
+				.LogToTrace();
 
 
 		private static void App_FrameworkInitialized(object sender, EventArgs e)

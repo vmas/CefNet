@@ -20,6 +20,7 @@ namespace AvaloniaApp
 		private TabControl tabs = null;
 		private Menu menu = null;
 		private DockPanel controlsPanel = null;
+		private SystemDecorations _systemDecorations;
 
 		public MainWindow()
 		{
@@ -28,10 +29,6 @@ namespace AvaloniaApp
 			this.Opened += MainWindow_Opened;
 			CustomWebView.FullscreenEvent.AddClassHandler(typeof(WebView), HandleFullscreenEvent);
 			WebView.ScriptDialogOpeningEvent.AddClassHandler(typeof(WebView), HandleScriptDialogOpeningEvent);
-
-#if DEBUG
-			this.AttachDevTools();
-#endif
 		}
 
 		private void InitializeComponent()
@@ -53,7 +50,7 @@ namespace AvaloniaApp
 				menu.IsVisible = false;
 				controlsPanel.IsVisible = false;
 				tabHeaders.IsVisible = false;
-				this.HasSystemDecorations = false;
+				_systemDecorations = this.SystemDecorations;
 				WindowState = WindowState.Maximized;
 				Topmost = true;
 			}
@@ -62,7 +59,7 @@ namespace AvaloniaApp
 				menu.IsVisible = true;
 				controlsPanel.IsVisible = true;
 				tabHeaders.IsVisible = true;
-				this.HasSystemDecorations = true;
+				this.SystemDecorations = _systemDecorations;
 				WindowState = WindowState.Normal;
 				Topmost = false;
 			}
