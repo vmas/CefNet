@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using CefNet.CApi;
+using CefNet.Internal;
 
 namespace CefNet
 {
@@ -106,7 +109,17 @@ namespace CefNet
 			return !(a == b);
 		}
 
-
+		/// <summary>
+		/// Retrieves this frame&apos;s HTML source as an asynchronous operation.
+		/// </summary>
+		/// <param name="cancellationToken"></param>
+		/// <returns>The task object that when completed returns the frame source as a string.</returns>
+		public Task<string> GetSourceAsync(CancellationToken cancellationToken)
+		{
+			var visitor = new CefNetStringVisitor();
+			this.GetSource(visitor);
+			return visitor.GetAsync(cancellationToken);
+		}
 
 	}
 }
