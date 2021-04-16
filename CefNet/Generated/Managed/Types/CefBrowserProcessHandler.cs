@@ -100,7 +100,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void GetCookieableSchemesImpl(cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -125,7 +127,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_browser_process_handler_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnContextInitializedImpl(cef_browser_process_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -156,7 +160,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_browser_process_handler_t* self, _cef_command_line_t* command_line)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnBeforeChildProcessLaunchImpl(cef_browser_process_handler_t* self, cef_command_line_t* command_line)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -183,7 +189,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_print_handler_t* (*)(_cef_browser_process_handler_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_print_handler_t* GetPrintHandlerImpl(cef_browser_process_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -225,7 +233,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_browser_process_handler_t* self, int64 delay_ms)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnScheduleMessagePumpWorkImpl(cef_browser_process_handler_t* self, long delay_ms)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;
@@ -254,7 +264,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_client_t* (*)(_cef_browser_process_handler_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_client_t* GetDefaultClientImpl(cef_browser_process_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefBrowserProcessHandler;

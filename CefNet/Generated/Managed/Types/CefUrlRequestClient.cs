@@ -88,7 +88,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnRequestCompleteImpl(cef_urlrequest_client_t* self, cef_urlrequest_t* request)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;
@@ -119,7 +121,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request, int64 current, int64 total)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnUploadProgressImpl(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;
@@ -149,7 +153,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request, int64 current, int64 total)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDownloadProgressImpl(cef_urlrequest_client_t* self, cef_urlrequest_t* request, long current, long total)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;
@@ -179,7 +185,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_urlrequest_client_t* self, _cef_urlrequest_t* request, const void* data, size_t data_length)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDownloadDataImpl(cef_urlrequest_client_t* self, cef_urlrequest_t* request, void* data, UIntPtr data_length)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;
@@ -216,7 +224,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_urlrequest_client_t* self, int isProxy, const cef_string_t* host, int port, const cef_string_t* realm, const cef_string_t* scheme, _cef_auth_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetAuthCredentialsImpl(cef_urlrequest_client_t* self, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefUrlRequestClient;

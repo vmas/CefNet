@@ -86,7 +86,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// size_t (*)(_cef_read_handler_t* self, void* ptr, size_t size, size_t n)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe UIntPtr ReadImpl(cef_read_handler_t* self, void* ptr, UIntPtr size, UIntPtr n)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;
@@ -115,7 +117,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_read_handler_t* self, int64 offset, int whence)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int SeekImpl(cef_read_handler_t* self, long offset, int whence)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;
@@ -140,7 +144,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int64 (*)(_cef_read_handler_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe long TellImpl(cef_read_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;
@@ -165,7 +171,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_read_handler_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int EofImpl(cef_read_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;
@@ -192,7 +200,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_read_handler_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int MayBlockImpl(cef_read_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefReadHandler;

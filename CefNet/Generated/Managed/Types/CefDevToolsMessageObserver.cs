@@ -103,7 +103,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser, const void* message, size_t message_size)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnDevToolsMessageImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, void* message, UIntPtr message_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;
@@ -140,7 +142,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser, int message_id, int success, const void* result, size_t result_size)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDevToolsMethodResultImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, int message_id, int success, void* result, UIntPtr result_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;
@@ -173,7 +177,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser, const cef_string_t* method, const void* params, size_t params_size)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDevToolsEventImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser, cef_string_t* method, void* @params, UIntPtr params_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;
@@ -203,7 +209,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDevToolsAgentAttachedImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;
@@ -234,7 +242,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_dev_tools_message_observer_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDevToolsAgentDetachedImpl(cef_dev_tools_message_observer_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDevToolsMessageObserver;

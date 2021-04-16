@@ -73,7 +73,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_domvisitor_t* self, _cef_domdocument_t* document)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void VisitImpl(cef_domvisitor_t* self, cef_domdocument_t* document)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDOMVisitor;

@@ -93,7 +93,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_app_t* self, const cef_string_t* process_type, _cef_command_line_t* command_line)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnBeforeCommandLineProcessingImpl(cef_app_t* self, cef_string_t* process_type, cef_command_line_t* command_line)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;
@@ -124,7 +126,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_app_t* self, _cef_scheme_registrar_t* registrar)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnRegisterCustomSchemesImpl(cef_app_t* self, cef_scheme_registrar_t* registrar)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;
@@ -152,7 +156,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_resource_bundle_handler_t* (*)(_cef_app_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_resource_bundle_handler_t* GetResourceBundleHandlerImpl(cef_app_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;
@@ -181,7 +187,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_browser_process_handler_t* (*)(_cef_app_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_browser_process_handler_t* GetBrowserProcessHandlerImpl(cef_app_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;
@@ -210,7 +218,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_render_process_handler_t* (*)(_cef_app_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_render_process_handler_t* GetRenderProcessHandlerImpl(cef_app_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefApp;

@@ -25,6 +25,8 @@ namespace CefGen.CodeDom
 
 		public string Name { get; }
 
+		public string Condition { get; set; }
+
 		public List<string> Parameters { get; } = new List<string>(0);
 
 		public void AddParameter<T>(T value)

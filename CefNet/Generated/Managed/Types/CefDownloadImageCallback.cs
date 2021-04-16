@@ -72,7 +72,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_download_image_callback_t* self, const cef_string_t* image_url, int http_status_code, _cef_image_t* image)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDownloadImageFinishedImpl(cef_download_image_callback_t* self, cef_string_t* image_url, int http_status_code, cef_image_t* image)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDownloadImageCallback;

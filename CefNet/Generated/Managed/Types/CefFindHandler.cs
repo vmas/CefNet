@@ -74,7 +74,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_find_handler_t* self, _cef_browser_t* browser, int identifier, int count, const cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnFindResultImpl(cef_find_handler_t* self, cef_browser_t* browser, int identifier, int count, cef_rect_t* selectionRect, int activeMatchOrdinal, int finalUpdate)
 		{
 			var instance = GetInstance((IntPtr)self) as CefFindHandler;

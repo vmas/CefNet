@@ -71,7 +71,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_web_plugin_unstable_callback_t* self, const cef_string_t* path, int unstable)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void IsUnstableImpl(cef_web_plugin_unstable_callback_t* self, cef_string_t* path, int unstable)
 		{
 			var instance = GetInstance((IntPtr)self) as CefWebPluginUnstableCallback;

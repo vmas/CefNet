@@ -73,7 +73,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_web_plugin_info_visitor_t* self, _cef_web_plugin_info_t* info, int count, int total)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int VisitImpl(cef_web_plugin_info_visitor_t* self, cef_web_plugin_info_t* info, int count, int total)
 		{
 			var instance = GetInstance((IntPtr)self) as CefWebPluginInfoVisitor;

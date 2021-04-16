@@ -473,12 +473,16 @@ namespace CefGen
 
 		private void WriteCustomAttributes(IList<CustomCodeAttribute> customAttributes)
 		{
-			foreach (string s in customAttributes.Select(a => a.ToString()).OrderBy(s => s.Length))
+			foreach (CustomCodeAttribute attribute in customAttributes.OrderBy(a => a.ToString().Length))
 			{
+				if (attribute.Condition != null)
+					Output.WriteLine("#if " + attribute.Condition);
 				WriteIndent();
 				Output.Write("[");
-				Output.Write(s);
+				Output.Write(attribute.ToString());
 				Output.WriteLine("]");
+				if (attribute.Condition != null)
+					Output.WriteLine("#endif");
 			}
 		}
 

@@ -75,7 +75,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_accessibility_handler_t* self, _cef_value_t* value)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnAccessibilityTreeChangeImpl(cef_accessibility_handler_t* self, cef_value_t* value)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAccessibilityHandler;
@@ -104,7 +106,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_accessibility_handler_t* self, _cef_value_t* value)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnAccessibilityLocationChangeImpl(cef_accessibility_handler_t* self, cef_value_t* value)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAccessibilityHandler;

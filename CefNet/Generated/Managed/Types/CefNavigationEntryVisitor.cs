@@ -74,7 +74,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_navigation_entry_visitor_t* self, _cef_navigation_entry_t* entry, int current, int index, int total)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int VisitImpl(cef_navigation_entry_visitor_t* self, cef_navigation_entry_t* entry, int current, int index, int total)
 		{
 			var instance = GetInstance((IntPtr)self) as CefNavigationEntryVisitor;

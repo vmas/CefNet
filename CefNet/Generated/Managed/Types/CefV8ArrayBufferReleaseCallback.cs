@@ -70,7 +70,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_v8array_buffer_release_callback_t* self, void* buffer)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void ReleaseBufferImpl(cef_v8array_buffer_release_callback_t* self, void* buffer)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8ArrayBufferReleaseCallback;

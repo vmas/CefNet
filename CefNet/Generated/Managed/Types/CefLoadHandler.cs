@@ -86,7 +86,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnLoadingStateChangeImpl(cef_load_handler_t* self, cef_browser_t* browser, int isLoading, int canGoBack, int canGoForward)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLoadHandler;
@@ -123,7 +125,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_transition_type_t transition_type)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnLoadStartImpl(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefTransitionType transition_type)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLoadHandler;
@@ -159,7 +163,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, int httpStatusCode)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnLoadEndImpl(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, int httpStatusCode)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLoadHandler;
@@ -192,7 +198,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_load_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_errorcode_t errorCode, const cef_string_t* errorText, const cef_string_t* failedUrl)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnLoadErrorImpl(cef_load_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, CefErrorCode errorCode, cef_string_t* errorText, cef_string_t* failedUrl)
 		{
 			var instance = GetInstance((IntPtr)self) as CefLoadHandler;

@@ -82,7 +82,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_resource_bundle_handler_t* self, int string_id, cef_string_t* string)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetLocalizedStringImpl(cef_resource_bundle_handler_t* self, int string_id, cef_string_t* @string)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceBundleHandler;
@@ -120,7 +122,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_resource_bundle_handler_t* self, int resource_id, void** data, size_t* data_size)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetDataResourceImpl(cef_resource_bundle_handler_t* self, int resource_id, void** data, UIntPtr* data_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceBundleHandler;
@@ -156,7 +160,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_resource_bundle_handler_t* self, int resource_id, cef_scale_factor_t scale_factor, void** data, size_t* data_size)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetDataResourceForScaleImpl(cef_resource_bundle_handler_t* self, int resource_id, CefScaleFactor scale_factor, void** data, UIntPtr* data_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceBundleHandler;

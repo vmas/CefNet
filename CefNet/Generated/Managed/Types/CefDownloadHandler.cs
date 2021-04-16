@@ -77,7 +77,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_download_handler_t* self, _cef_browser_t* browser, _cef_download_item_t* download_item, const cef_string_t* suggested_name, _cef_before_download_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnBeforeDownloadImpl(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_string_t* suggested_name, cef_before_download_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDownloadHandler;
@@ -111,7 +113,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_download_handler_t* self, _cef_browser_t* browser, _cef_download_item_t* download_item, _cef_download_item_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDownloadUpdatedImpl(cef_download_handler_t* self, cef_browser_t* browser, cef_download_item_t* download_item, cef_download_item_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDownloadHandler;

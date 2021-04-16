@@ -85,7 +85,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_context_menu_params_t* params, _cef_menu_model_t* model)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnBeforeContextMenuImpl(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model)
 		{
 			var instance = GetInstance((IntPtr)self) as CefContextMenuHandler;
@@ -122,7 +124,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_context_menu_params_t* params, _cef_menu_model_t* model, _cef_run_context_menu_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int RunContextMenuImpl(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, cef_menu_model_t* model, cef_run_context_menu_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefContextMenuHandler;
@@ -161,7 +165,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_context_menu_params_t* params, int command_id, cef_event_flags_t event_flags)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnContextMenuCommandImpl(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_context_menu_params_t* @params, int command_id, CefEventFlags event_flags)
 		{
 			var instance = GetInstance((IntPtr)self) as CefContextMenuHandler;
@@ -192,7 +198,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_context_menu_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnContextMenuDismissedImpl(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
 		{
 			var instance = GetInstance((IntPtr)self) as CefContextMenuHandler;

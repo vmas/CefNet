@@ -68,7 +68,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_string_visitor_t* self, const cef_string_t* string)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void VisitImpl(cef_string_visitor_t* self, cef_string_t* @string)
 		{
 			var instance = GetInstance((IntPtr)self) as CefStringVisitor;

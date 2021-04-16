@@ -79,7 +79,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_request_context_handler_t* self, _cef_request_context_t* request_context)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnRequestContextInitializedImpl(cef_request_context_handler_t* self, cef_request_context_t* request_context)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestContextHandler;
@@ -124,7 +126,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_request_context_handler_t* self, const cef_string_t* mime_type, const cef_string_t* plugin_url, int is_main_frame, const cef_string_t* top_origin_url, _cef_web_plugin_info_t* plugin_info, cef_plugin_policy_t* plugin_policy)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnBeforePluginLoadImpl(cef_request_context_handler_t* self, cef_string_t* mime_type, cef_string_t* plugin_url, int is_main_frame, cef_string_t* top_origin_url, cef_web_plugin_info_t* plugin_info, CefPluginPolicy* plugin_policy)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestContextHandler;
@@ -168,7 +172,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_resource_request_handler_t* (*)(_cef_request_context_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, int is_navigation, int is_download, const cef_string_t* request_initiator, int* disable_default_handling)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_resource_request_handler_t* GetResourceRequestHandlerImpl(cef_request_context_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, cef_string_t* request_initiator, int* disable_default_handling)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestContextHandler;

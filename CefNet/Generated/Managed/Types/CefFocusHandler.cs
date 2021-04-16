@@ -80,7 +80,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_focus_handler_t* self, _cef_browser_t* browser, int next)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnTakeFocusImpl(cef_focus_handler_t* self, cef_browser_t* browser, int next)
 		{
 			var instance = GetInstance((IntPtr)self) as CefFocusHandler;
@@ -111,7 +113,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_focus_handler_t* self, _cef_browser_t* browser, cef_focus_source_t source)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnSetFocusImpl(cef_focus_handler_t* self, cef_browser_t* browser, CefFocusSource source)
 		{
 			var instance = GetInstance((IntPtr)self) as CefFocusHandler;
@@ -139,7 +143,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_focus_handler_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnGotFocusImpl(cef_focus_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefFocusHandler;

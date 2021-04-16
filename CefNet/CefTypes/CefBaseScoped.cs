@@ -146,7 +146,9 @@ namespace CefNet.Internal
 			return instance;
 		}
 
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private unsafe static void DelImpl(cef_base_scoped_t* self)
 		{
 			CefBaseScoped instance;

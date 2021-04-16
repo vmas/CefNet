@@ -93,7 +93,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_print_handler_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnPrintStartImpl(cef_print_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -123,7 +125,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_print_handler_t* self, _cef_browser_t* browser, _cef_print_settings_t* settings, int get_defaults)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnPrintSettingsImpl(cef_print_handler_t* self, cef_browser_t* browser, cef_print_settings_t* settings, int get_defaults)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -155,7 +159,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_print_handler_t* self, _cef_browser_t* browser, int has_selection, _cef_print_dialog_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnPrintDialogImpl(cef_print_handler_t* self, cef_browser_t* browser, int has_selection, cef_print_dialog_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -187,7 +193,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_print_handler_t* self, _cef_browser_t* browser, const cef_string_t* document_name, const cef_string_t* pdf_file_path, _cef_print_job_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnPrintJobImpl(cef_print_handler_t* self, cef_browser_t* browser, cef_string_t* document_name, cef_string_t* pdf_file_path, cef_print_job_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -216,7 +224,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_print_handler_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnPrintResetImpl(cef_print_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
@@ -246,7 +256,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// cef_size_t (*)(_cef_print_handler_t* self, int device_units_per_inch)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_size_t GetPdfPaperSizeImpl(cef_print_handler_t* self, int device_units_per_inch)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;

@@ -70,7 +70,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_resolve_callback_t* self, cef_errorcode_t result, cef_string_list_t resolved_ips)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnResolveCompletedImpl(cef_resolve_callback_t* self, CefErrorCode result, cef_string_list_t resolved_ips)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResolveCallback;

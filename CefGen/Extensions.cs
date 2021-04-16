@@ -427,6 +427,7 @@ namespace CefGen
 		{
 			var attr = new CustomCodeAttribute("UnmanagedCallersOnly");
 			attr.Parameters.Add("CallConvs = new[] { typeof(CallConvStdcall) }");
+			attr.Condition = "!NET_LESS_5_0";
 			list.Add(attr);
 		}
 	}

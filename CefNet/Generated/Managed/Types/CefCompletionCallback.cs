@@ -65,7 +65,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_completion_callback_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnCompleteImpl(cef_completion_callback_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefCompletionCallback;

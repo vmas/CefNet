@@ -70,7 +70,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_task_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void ExecuteImpl(cef_task_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefTask;

@@ -77,7 +77,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_drag_handler_t* self, _cef_browser_t* browser, _cef_drag_data_t* dragData, cef_drag_operations_mask_t mask)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnDragEnterImpl(cef_drag_handler_t* self, cef_browser_t* browser, cef_drag_data_t* dragData, CefDragOperationsMask mask)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDragHandler;
@@ -110,7 +112,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_drag_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, size_t regionsCount, const cef_draggable_region_t* regions)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDraggableRegionsChangedImpl(cef_drag_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, UIntPtr regionsCount, cef_draggable_region_t* regions)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDragHandler;

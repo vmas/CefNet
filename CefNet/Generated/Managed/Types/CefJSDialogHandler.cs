@@ -96,7 +96,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser, const cef_string_t* origin_url, cef_jsdialog_type_t dialog_type, const cef_string_t* message_text, const cef_string_t* default_prompt_text, _cef_jsdialog_callback_t* callback, int* suppress_message)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnJSDialogImpl(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, CefJSDialogType dialog_type, cef_string_t* message_text, cef_string_t* default_prompt_text, cef_jsdialog_callback_t* callback, int* suppress_message)
 		{
 			var instance = GetInstance((IntPtr)self) as CefJSDialogHandler;
@@ -131,7 +133,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser, const cef_string_t* message_text, int is_reload, _cef_jsdialog_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnBeforeUnloadDialogImpl(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefJSDialogHandler;
@@ -162,7 +166,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnResetDialogStateImpl(cef_jsdialog_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefJSDialogHandler;
@@ -190,7 +196,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_jsdialog_handler_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDialogClosedImpl(cef_jsdialog_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefJSDialogHandler;

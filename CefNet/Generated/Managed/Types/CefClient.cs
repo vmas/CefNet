@@ -122,7 +122,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_audio_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_audio_handler_t* GetAudioHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -151,7 +153,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_context_menu_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_context_menu_handler_t* GetContextMenuHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -180,7 +184,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_dialog_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_dialog_handler_t* GetDialogHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -208,7 +214,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_display_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_display_handler_t* GetDisplayHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -237,7 +245,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_download_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_download_handler_t* GetDownloadHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -265,7 +275,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_drag_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_drag_handler_t* GetDragHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -293,7 +305,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_find_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_find_handler_t* GetFindHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -321,7 +335,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_focus_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_focus_handler_t* GetFocusHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -350,7 +366,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_jsdialog_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_jsdialog_handler_t* GetJSDialogHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -378,7 +396,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_keyboard_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_keyboard_handler_t* GetKeyboardHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -406,7 +426,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_life_span_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_life_span_handler_t* GetLifeSpanHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -434,7 +456,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_load_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_load_handler_t* GetLoadHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -462,7 +486,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_render_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_render_handler_t* GetRenderHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -490,7 +516,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_request_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_request_handler_t* GetRequestHandlerImpl(cef_client_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;
@@ -523,7 +551,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_client_t* self, _cef_browser_t* browser, _cef_frame_t* frame, cef_process_id_t source_process, _cef_process_message_t* message)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnProcessMessageReceivedImpl(cef_client_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
 		{
 			var instance = GetInstance((IntPtr)self) as CefClient;

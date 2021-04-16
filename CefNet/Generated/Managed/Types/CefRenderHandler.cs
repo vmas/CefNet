@@ -124,7 +124,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_accessibility_handler_t* (*)(_cef_render_handler_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_accessibility_handler_t* GetAccessibilityHandlerImpl(cef_render_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -157,7 +159,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_rect_t* rect)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetRootScreenRectImpl(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -186,7 +190,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_rect_t* rect)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void GetViewRectImpl(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -216,7 +222,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, int viewX, int viewY, int* screenX, int* screenY)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetScreenPointImpl(cef_render_handler_t* self, cef_browser_t* browser, int viewX, int viewY, int* screenX, int* screenY)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -250,7 +258,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, _cef_screen_info_t* screen_info)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetScreenInfoImpl(cef_render_handler_t* self, cef_browser_t* browser, cef_screen_info_t* screen_info)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -279,7 +289,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, int show)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnPopupShowImpl(cef_render_handler_t* self, cef_browser_t* browser, int show)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -308,7 +320,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, const cef_rect_t* rect)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnPopupSizeImpl(cef_render_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -344,7 +358,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_paint_element_type_t type, size_t dirtyRectsCount, const cef_rect_t* dirtyRects, const void* buffer, int width, int height)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnPaintImpl(cef_render_handler_t* self, cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, cef_rect_t* dirtyRects, void* buffer, int width, int height)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -383,7 +399,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_paint_element_type_t type, size_t dirtyRectsCount, const cef_rect_t* dirtyRects, void* shared_handle)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnAcceleratedPaintImpl(cef_render_handler_t* self, cef_browser_t* browser, CefPaintElementType type, UIntPtr dirtyRectsCount, cef_rect_t* dirtyRects, void* shared_handle)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -426,7 +444,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_render_handler_t* self, _cef_browser_t* browser, _cef_drag_data_t* drag_data, cef_drag_operations_mask_t allowed_ops, int x, int y)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int StartDraggingImpl(cef_render_handler_t* self, cef_browser_t* browser, cef_drag_data_t* drag_data, CefDragOperationsMask allowed_ops, int x, int y)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -458,7 +478,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_drag_operations_mask_t operation)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void UpdateDragCursorImpl(cef_render_handler_t* self, cef_browser_t* browser, CefDragOperationsMask operation)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -486,7 +508,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, double x, double y)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnScrollOffsetChangedImpl(cef_render_handler_t* self, cef_browser_t* browser, double x, double y)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -516,7 +540,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, const cef_range_t* selected_range, size_t character_boundsCount, const cef_rect_t* character_bounds)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnImeCompositionRangeChangedImpl(cef_render_handler_t* self, cef_browser_t* browser, cef_range_t* selected_range, UIntPtr character_boundsCount, cef_rect_t* character_bounds)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -551,7 +577,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, const cef_string_t* selected_text, const cef_range_t* selected_range)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnTextSelectionChangedImpl(cef_render_handler_t* self, cef_browser_t* browser, cef_string_t* selected_text, cef_range_t* selected_range)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;
@@ -582,7 +610,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_render_handler_t* self, _cef_browser_t* browser, cef_text_input_mode_t input_mode)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnVirtualKeyboardRequestedImpl(cef_render_handler_t* self, cef_browser_t* browser, CefTextInputMode input_mode)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRenderHandler;

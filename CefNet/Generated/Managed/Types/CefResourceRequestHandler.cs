@@ -104,7 +104,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_cookie_access_filter_t* (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_cookie_access_filter_t* GetCookieAccessFilterImpl(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceRequestHandler;
@@ -145,7 +147,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// cef_return_value_t (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_request_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe CefReturnValue OnBeforeResourceLoadImpl(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_request_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceRequestHandler;
@@ -182,7 +186,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_resource_handler_t* (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_resource_handler_t* GetResourceHandlerImpl(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceRequestHandler;
@@ -222,7 +228,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response, cef_string_t* new_url)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnResourceRedirectImpl(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_string_t* new_url)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceRequestHandler;
@@ -265,7 +273,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnResourceResponseImpl(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceRequestHandler;
@@ -301,7 +311,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_response_filter_t* (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_response_filter_t* GetResourceResponseFilterImpl(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceRequestHandler;
@@ -348,7 +360,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response, cef_urlrequest_status_t status, int64 received_content_length)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnResourceLoadCompleteImpl(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, CefUrlRequestStatus status, long received_content_length)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceRequestHandler;
@@ -386,7 +400,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_resource_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, int* allow_os_execution)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnProtocolExecutionImpl(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int* allow_os_execution)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceRequestHandler;

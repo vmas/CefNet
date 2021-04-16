@@ -95,7 +95,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, int command_id, cef_event_flags_t event_flags)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void ExecuteCommandImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int command_id, CefEventFlags event_flags)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -124,7 +126,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, const cef_point_t* screen_point)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void MouseOutsideMenuImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, cef_point_t* screen_point)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -153,7 +157,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, int is_rtl)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void UnhandledOpenSubmenuImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -182,7 +188,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, int is_rtl)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void UnhandledCloseSubmenuImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, int is_rtl)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -210,7 +218,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void MenuWillShowImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -238,7 +248,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void MenuClosedImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;
@@ -268,7 +280,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_menu_model_delegate_t* self, _cef_menu_model_t* menu_model, cef_string_t* label)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int FormatLabelImpl(cef_menu_model_delegate_t* self, cef_menu_model_t* menu_model, cef_string_t* label)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMenuModelDelegate;

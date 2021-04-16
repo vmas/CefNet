@@ -119,7 +119,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, int user_gesture, int is_redirect)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnBeforeBrowseImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int user_gesture, int is_redirect)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -163,7 +165,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, const cef_string_t* target_url, cef_window_open_disposition_t target_disposition, int user_gesture)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnOpenUrlFromTabImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, CefWindowOpenDisposition target_disposition, int user_gesture)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -206,7 +210,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_resource_request_handler_t* (*)(_cef_request_handler_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, int is_navigation, int is_download, const cef_string_t* request_initiator, int* disable_default_handling)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_resource_request_handler_t* GetResourceRequestHandlerImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, cef_string_t* request_initiator, int* disable_default_handling)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -249,7 +255,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, const cef_string_t* origin_url, int isProxy, const cef_string_t* host, int port, const cef_string_t* realm, const cef_string_t* scheme, _cef_auth_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetAuthCredentialsImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -285,7 +293,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, const cef_string_t* origin_url, int64 new_size, _cef_request_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnQuotaRequestImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, long new_size, cef_request_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -320,7 +330,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, cef_errorcode_t cert_error, const cef_string_t* request_url, _cef_sslinfo_t* ssl_info, _cef_request_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnCertificateErrorImpl(cef_request_handler_t* self, cef_browser_t* browser, CefErrorCode cert_error, cef_string_t* request_url, cef_sslinfo_t* ssl_info, cef_request_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -361,7 +373,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_request_handler_t* self, _cef_browser_t* browser, int isProxy, const cef_string_t* host, int port, size_t certificatesCount, const _cef_x509certificate_t** certificates, _cef_select_client_certificate_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnSelectClientCertificateImpl(cef_request_handler_t* self, cef_browser_t* browser, int isProxy, cef_string_t* host, int port, UIntPtr certificatesCount, cef_x509certificate_t** certificates, cef_select_client_certificate_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -398,7 +412,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser, const cef_string_t* plugin_path)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnPluginCrashedImpl(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* plugin_path)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -428,7 +444,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnRenderViewReadyImpl(cef_request_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -457,7 +475,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser, cef_termination_status_t status)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnRenderProcessTerminatedImpl(cef_request_handler_t* self, cef_browser_t* browser, CefTerminationStatus status)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;
@@ -486,7 +506,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_request_handler_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnDocumentAvailableInMainFrameImpl(cef_request_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRequestHandler;

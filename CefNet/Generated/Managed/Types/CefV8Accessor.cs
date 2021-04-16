@@ -80,7 +80,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_v8accessor_t* self, const cef_string_t* name, _cef_v8value_t* object, _cef_v8value_t** retval, cef_string_t* exception)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetImpl(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8Accessor;
@@ -120,7 +122,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_v8accessor_t* self, const cef_string_t* name, _cef_v8value_t* object, _cef_v8value_t* value, cef_string_t* exception)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int SetImpl(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception)
 		{
 			var instance = GetInstance((IntPtr)self) as CefV8Accessor;

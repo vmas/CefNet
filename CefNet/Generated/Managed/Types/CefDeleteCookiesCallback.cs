@@ -70,7 +70,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_delete_cookies_callback_t* self, int num_deleted)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnCompleteImpl(cef_delete_cookies_callback_t* self, int num_deleted)
 		{
 			var instance = GetInstance((IntPtr)self) as CefDeleteCookiesCallback;

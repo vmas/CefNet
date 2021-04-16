@@ -105,7 +105,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnServerCreatedImpl(cef_server_handler_t* self, cef_server_t* server)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -136,7 +138,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnServerDestroyedImpl(cef_server_handler_t* self, cef_server_t* server)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -166,7 +170,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnClientConnectedImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -200,7 +206,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnClientDisconnectedImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -232,7 +240,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id, const cef_string_t* client_address, _cef_request_t* request)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnHttpRequestImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -272,7 +282,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id, const cef_string_t* client_address, _cef_request_t* request, _cef_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnWebSocketRequestImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request, cef_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -304,7 +316,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnWebSocketConnectedImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;
@@ -336,7 +350,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_server_handler_t* self, _cef_server_t* server, int connection_id, const void* data, size_t data_size)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnWebSocketMessageImpl(cef_server_handler_t* self, cef_server_t* server, int connection_id, void* data, UIntPtr data_size)
 		{
 			var instance = GetInstance((IntPtr)self) as CefServerHandler;

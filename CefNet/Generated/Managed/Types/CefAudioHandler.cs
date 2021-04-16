@@ -88,7 +88,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, cef_audio_parameters_t* params)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetAudioParametersImpl(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;
@@ -120,7 +122,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, const cef_audio_parameters_t* params, int channels)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnAudioStreamStartedImpl(cef_audio_handler_t* self, cef_browser_t* browser, cef_audio_parameters_t* @params, int channels)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;
@@ -155,7 +159,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, const float** data, int frames, int64 pts)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnAudioStreamPacketImpl(cef_audio_handler_t* self, cef_browser_t* browser, float** data, int frames, long pts)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;
@@ -185,7 +191,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnAudioStreamStoppedImpl(cef_audio_handler_t* self, cef_browser_t* browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;
@@ -216,7 +224,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_audio_handler_t* self, _cef_browser_t* browser, const cef_string_t* message)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnAudioStreamErrorImpl(cef_audio_handler_t* self, cef_browser_t* browser, cef_string_t* message)
 		{
 			var instance = GetInstance((IntPtr)self) as CefAudioHandler;

@@ -365,7 +365,9 @@ namespace CefNet.Internal
 			return instance;
 		}
 
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private unsafe static void AddRefImpl(cef_base_ref_counted_t* self)
 		{
 			RefCountedReference reference;
@@ -383,7 +385,9 @@ namespace CefNet.Internal
 			reference.AddRef();
 		}
 
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private unsafe static int ReleaseImpl(cef_base_ref_counted_t* self)
 		{
 			RefCountedReference reference;
@@ -405,7 +409,9 @@ namespace CefNet.Internal
 			return reference.Release();
 		}
 
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private unsafe static int HasOneRefImpl(cef_base_ref_counted_t* self)
 		{
 			RefCountedReference reference;
@@ -421,7 +427,9 @@ namespace CefNet.Internal
 			return (reference != null && reference.Count == 1) ? 1 : 0;
 		}
 
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private unsafe static int HasAtLeastOneRefImpl(cef_base_ref_counted_t* self)
 		{
 			RefCountedReference reference;

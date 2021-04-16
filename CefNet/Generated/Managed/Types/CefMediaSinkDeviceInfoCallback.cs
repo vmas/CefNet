@@ -70,7 +70,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_media_sink_device_info_callback_t* self, const const _cef_media_sink_device_info_t* device_info)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnMediaSinkDeviceInfoImpl(cef_media_sink_device_info_callback_t* self, cef_media_sink_device_info_t* device_info)
 		{
 			var instance = GetInstance((IntPtr)self) as CefMediaSinkDeviceInfoCallback;

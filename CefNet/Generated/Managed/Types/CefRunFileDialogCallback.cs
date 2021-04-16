@@ -73,7 +73,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_run_file_dialog_callback_t* self, int selected_accept_filter, cef_string_list_t file_paths)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnFileDialogDismissedImpl(cef_run_file_dialog_callback_t* self, int selected_accept_filter, cef_string_list_t file_paths)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRunFileDialogCallback;

@@ -99,7 +99,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_extension_handler_t* self, cef_errorcode_t result)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnExtensionLoadFailedImpl(cef_extension_handler_t* self, CefErrorCode result)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -127,7 +129,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_extension_handler_t* self, _cef_extension_t* extension)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnExtensionLoadedImpl(cef_extension_handler_t* self, cef_extension_t* extension)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -155,7 +159,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_extension_handler_t* self, _cef_extension_t* extension)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnExtensionUnloadedImpl(cef_extension_handler_t* self, cef_extension_t* extension)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -198,7 +204,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, const cef_string_t* url, _cef_client_t** client, _cef_browser_settings_t* settings)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnBeforeBackgroundBrowserImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_string_t* url, cef_client_t** client, cef_browser_settings_t* settings)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -242,7 +250,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, _cef_browser_t* active_browser, int index, const cef_string_t* url, int active, _cef_window_info_t* windowInfo, _cef_client_t** client, _cef_browser_settings_t* settings)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OnBeforeBrowserImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_browser_t* active_browser, int index, cef_string_t* url, int active, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -282,7 +292,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_browser_t* (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, int include_incognito)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_browser_t* GetActiveBrowserImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -320,7 +332,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, int include_incognito, _cef_browser_t* target_browser)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int CanAccessBrowserImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito, cef_browser_t* target_browser)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;
@@ -358,7 +372,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_extension_handler_t* self, _cef_extension_t* extension, _cef_browser_t* browser, const cef_string_t* file, _cef_get_extension_resource_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int GetExtensionResourceImpl(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_string_t* file, cef_get_extension_resource_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefExtensionHandler;

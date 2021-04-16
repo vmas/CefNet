@@ -71,7 +71,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_pdf_print_callback_t* self, const cef_string_t* path, int ok)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnPdfPrintFinishedImpl(cef_pdf_print_callback_t* self, cef_string_t* path, int ok)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPdfPrintCallback;

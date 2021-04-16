@@ -72,7 +72,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_response_filter_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int InitFilterImpl(cef_response_filter_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResponseFilter;
@@ -123,7 +125,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// cef_response_filter_status_t (*)(_cef_response_filter_t* self, void* data_in, size_t data_in_size, size_t* data_in_read, void* data_out, size_t data_out_size, size_t* data_out_written)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe CefResponseFilterStatus FilterImpl(cef_response_filter_t* self, void* data_in, UIntPtr data_in_size, UIntPtr* data_in_read, void* data_out, UIntPtr data_out_size, UIntPtr* data_out_written)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResponseFilter;

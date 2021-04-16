@@ -72,7 +72,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_end_tracing_callback_t* self, const cef_string_t* tracing_file)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnEndTracingCompleteImpl(cef_end_tracing_callback_t* self, cef_string_t* tracing_file)
 		{
 			var instance = GetInstance((IntPtr)self) as CefEndTracingCallback;

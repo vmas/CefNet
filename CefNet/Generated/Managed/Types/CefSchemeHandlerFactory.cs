@@ -76,7 +76,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// _cef_resource_handler_t* (*)(_cef_scheme_handler_factory_t* self, _cef_browser_t* browser, _cef_frame_t* frame, const cef_string_t* scheme_name, _cef_request_t* request)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe cef_resource_handler_t* CreateImpl(cef_scheme_handler_factory_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* scheme_name, cef_request_t* request)
 		{
 			var instance = GetInstance((IntPtr)self) as CefSchemeHandlerFactory;

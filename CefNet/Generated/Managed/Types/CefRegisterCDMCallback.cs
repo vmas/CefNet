@@ -73,7 +73,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_register_cdm_callback_t* self, cef_cdm_registration_error_t result, const cef_string_t* error_message)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void OnCDMRegistrationCompleteImpl(cef_register_cdm_callback_t* self, CefCDMRegistrationError result, cef_string_t* error_message)
 		{
 			var instance = GetInstance((IntPtr)self) as CefRegisterCDMCallback;

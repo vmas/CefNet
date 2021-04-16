@@ -79,7 +79,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_cookie_access_filter_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, const const _cef_cookie_t* cookie)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int CanSendCookieImpl(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_cookie_t* cookie)
 		{
 			var instance = GetInstance((IntPtr)self) as CefCookieAccessFilter;
@@ -115,7 +117,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_cookie_access_filter_t* self, _cef_browser_t* browser, _cef_frame_t* frame, _cef_request_t* request, _cef_response_t* response, const const _cef_cookie_t* cookie)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int CanSaveCookieImpl(cef_cookie_access_filter_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_response_t* response, cef_cookie_t* cookie)
 		{
 			var instance = GetInstance((IntPtr)self) as CefCookieAccessFilter;

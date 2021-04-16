@@ -101,7 +101,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_resource_handler_t* self, _cef_request_t* request, int* handle_request, _cef_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int OpenImpl(cef_resource_handler_t* self, cef_request_t* request, int* handle_request, cef_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceHandler;
@@ -136,7 +138,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_resource_handler_t* self, _cef_request_t* request, _cef_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int ProcessRequestImpl(cef_resource_handler_t* self, cef_request_t* request, cef_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceHandler;
@@ -177,7 +181,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_resource_handler_t* self, _cef_response_t* response, int64* response_length, cef_string_t* redirectUrl)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void GetResponseHeadersImpl(cef_resource_handler_t* self, cef_response_t* response, long* response_length, cef_string_t* redirectUrl)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceHandler;
@@ -216,7 +222,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_resource_handler_t* self, int64 bytes_to_skip, int64* bytes_skipped, _cef_resource_skip_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int SkipImpl(cef_resource_handler_t* self, long bytes_to_skip, long* bytes_skipped, cef_resource_skip_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceHandler;
@@ -257,7 +265,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, _cef_resource_read_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int ReadImpl(cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, cef_resource_read_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceHandler;
@@ -291,7 +301,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// int (*)(_cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, _cef_callback_t* callback)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe int ReadResponseImpl(cef_resource_handler_t* self, void* data_out, int bytes_to_read, int* bytes_read, cef_callback_t* callback)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceHandler;
@@ -316,7 +328,9 @@ namespace CefNet
 
 #endif // NET_LESS_5_0
 		// void (*)(_cef_resource_handler_t* self)*
+#if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
 		private static unsafe void CancelImpl(cef_resource_handler_t* self)
 		{
 			var instance = GetInstance((IntPtr)self) as CefResourceHandler;
