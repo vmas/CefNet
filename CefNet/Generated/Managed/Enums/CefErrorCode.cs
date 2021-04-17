@@ -430,7 +430,7 @@ namespace CefNet
 
 		TrustTokenOperationFailed = -506,
 
-		TrustTokenOperationCacheHit = -507,
+		TrustTokenOperationSuccessWithoutSendingRequest = -507,
 
 		FtpFailed = -601,
 
