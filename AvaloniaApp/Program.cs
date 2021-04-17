@@ -56,8 +56,8 @@ namespace AvaloniaApp
 
 			BuildAvaloniaApp()
 			// workaround for https://github.com/AvaloniaUI/Avalonia/issues/3533
-			.With(new AvaloniaNativePlatformOptions { UseGpu = false })
-			.StartWithClassicDesktopLifetime(args);
+			.With(new AvaloniaNativePlatformOptions { UseGpu = !PlatformInfo.IsMacOS })
+			.StartWithCefNetApplicationLifetime(args);
 		}
 
 		// Avalonia configuration, don't remove; also used by visual designer.
@@ -69,7 +69,7 @@ namespace AvaloniaApp
 
 		private static void App_FrameworkInitialized(object sender, EventArgs e)
 		{
-			if (PlatformInfo.IsMacOS || Environment.GetCommandLineArgs().Contains("--external-message-pump"))
+			if (CefNetApplication.Instance.UsesExternalMessageLoop)
 			{
 				messagePump = new Timer(_ => Dispatcher.UIThread.Post(CefApi.DoMessageLoopWork), null, messagePumpDelay, messagePumpDelay);
 			}
@@ -78,7 +78,6 @@ namespace AvaloniaApp
 		private static void App_FrameworkShutdown(object sender, EventArgs e)
 		{
 			messagePump?.Dispose();
-			app?.Shutdown();
 		}
 
 		private static async void OnScheduleMessagePumpWork(long delayMs)

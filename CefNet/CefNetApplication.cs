@@ -95,6 +95,11 @@ namespace CefNet
 		/// </summary>
 		public static bool AllowDotnetProcess { get; set; }
 
+		/// <summary>
+		/// Gets a value indicating that the application is using an external message loop.
+		/// </summary>
+		public bool UsesExternalMessageLoop { get; private set; }
+
 		private static void AssertApiVersion()
 		{
 			string hash = CefApi.CefApiHash(CefApiHashType.Universal);
@@ -230,6 +235,7 @@ namespace CefNet
 			if (retval != -1)
 				Environment.Exit(retval);
 
+			UsesExternalMessageLoop = settings.ExternalMessagePump;
 			if (!CefApi.Initialize(main_args, settings, this, IntPtr.Zero))
 				throw new CefRuntimeException("Failed to initialize the CEF browser process.");
 

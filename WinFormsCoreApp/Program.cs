@@ -62,6 +62,8 @@ namespace WinFormsCoreApp
 				}
 				
 				Application.Run(new MainForm());
+				GC.Collect();
+				GC.WaitForPendingFinalizers();
 			}
 			finally
 			{
