@@ -31,11 +31,6 @@ namespace CefNet.Internal
 			_application.OnBeforeChildProcessLaunch(new BeforeChildProcessLaunchEventArgs(commandLine));
 		}
 
-		public CefPrintHandler GetPrintHandler()
-		{
-			return _application.GetPrintHandler();
-		}
-
 		internal bool AvoidOnScheduleMessagePumpWork()
 		{
 			return false;

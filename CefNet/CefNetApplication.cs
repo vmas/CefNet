@@ -708,16 +708,6 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Return the handler for printing on Linux.<para/>
-		/// If a print handler is not provided then printing will not be supported on the Linux platform.
-		/// </summary>
-		/// <returns>The handler for printing.</returns>
-		public virtual CefPrintHandler GetPrintHandler()
-		{
-			return null;
-		}
-
-		/// <summary>
 		/// Called from any thread when work has been scheduled for the browser process main (UI) thread.<para/>
 		/// This callback should schedule a <see cref="CefApi.DoMessageLoopWork"/> call to happen on the main (UI) thread. 
 		/// </summary>
