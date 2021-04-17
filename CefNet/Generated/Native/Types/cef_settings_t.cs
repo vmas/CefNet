@@ -120,7 +120,9 @@ namespace CefNet.CApi
 		/// in-memory caches are used for storage and no data is persisted to disk.
 		/// HTML5 databases such as localStorage will only persist across sessions if a
 		/// cache path is specified. Can be overridden for individual CefRequestContext
-		/// instances via the CefRequestContextSettings.cache_path value.
+		/// instances via the CefRequestContextSettings.cache_path value. When using
+		/// the Chrome runtime the &quot;default&quot; profile will be used if |cache_path| and
+		/// |root_cache_path| have the same value.
 		/// </summary>
 		public cef_string_t cache_path;
 
@@ -142,7 +144,8 @@ namespace CefNet.CApi
 		/// directory on Linux, &quot;~/Library/Application Support/CEF/User Data&quot; directory
 		/// on Mac OS X, &quot;Local Settings@Application Data@CEF @User Data&quot; directory
 		/// under the user profile directory on Windows). If this value is non-empty
-		/// then it must be an absolute path.
+		/// then it must be an absolute path. When using the Chrome runtime this value
+		/// will be ignored in favor of the |root_cache_path| value.
 		/// </summary>
 		public cef_string_t user_data_path;
 
@@ -224,10 +227,10 @@ namespace CefNet.CApi
 
 		/// <summary>
 		/// The fully qualified path for the resources directory. If this value is
-		/// empty the cef.pak and/or devtools_resources.pak files must be located in
-		/// the module directory on Windows/Linux or the app bundle Resources directory
-		/// on Mac OS X. If this value is non-empty then it must be an absolute path.
-		/// Also configurable using the &quot;resources-dir-path&quot; command-line switch.
+		/// empty the *.pak files must be located in the module directory on
+		/// Windows/Linux or the app bundle Resources directory on Mac OS X. If this
+		/// value is non-empty then it must be an absolute path. Also configurable
+		/// using the &quot;resources-dir-path&quot; command-line switch.
 		/// </summary>
 		public cef_string_t resources_dir_path;
 
@@ -300,6 +303,21 @@ namespace CefNet.CApi
 		/// CefRequestContextSettings.accept_language_list value.
 		/// </summary>
 		public cef_string_t accept_language_list;
+
+		/// <summary>
+		/// Comma delimited list of schemes supported by the associated
+		/// CefCookieManager. If |cookieable_schemes_exclude_defaults| is false (0) the
+		/// default schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;) will also be supported.
+		/// Specifying a |cookieable_schemes_list| value and setting
+		/// |cookieable_schemes_exclude_defaults| to true (1) will disable all loading
+		/// and saving of cookies for this manager. Can be overridden
+		/// for individual CefRequestContext instances via the
+		/// CefRequestContextSettings.cookieable_schemes_list and
+		/// CefRequestContextSettings.cookieable_schemes_exclude_defaults values.
+		/// </summary>
+		public cef_string_t cookieable_schemes_list;
+
+		public int cookieable_schemes_exclude_defaults;
 
 		/// <summary>
 		/// GUID string used for identifying the application. This is passed to the

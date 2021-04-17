@@ -14,17 +14,6 @@
 	.class public CefBrowserProcessHandler
 	{
 
-		.method private final hidebysig newslot virtual instance bool CefNet.Internal.ICefBrowserProcessHandlerPrivate.AvoidGetCookieableSchemes()
-		{
-			.override method instance bool CefNet.Internal.ICefBrowserProcessHandlerPrivate::AvoidGetCookieableSchemes()
-			.maxstack 2
-			ldarg.0
-			ldvirtftn instance void CefNet.CefBrowserProcessHandler::GetCookieableSchemes(class CefNet.CefStringList, int32&)
-			ldftn instance void CefNet.CefBrowserProcessHandler::GetCookieableSchemes(class CefNet.CefStringList, int32&)
-			ceq
-			ret
-		}
-
 		.method private final hidebysig newslot virtual instance bool CefNet.Internal.ICefBrowserProcessHandlerPrivate.AvoidOnBeforeChildProcessLaunch()
 		{
 			.override method instance bool CefNet.Internal.ICefBrowserProcessHandlerPrivate::AvoidOnBeforeChildProcessLaunch()

@@ -66,6 +66,11 @@ namespace CefNet.Internal
 			return LoadGlue;
 		}
 
+		internal CefPrintHandler GetPrintHandler()
+		{
+			return PrintGlue;
+		}
+
 		internal CefRenderHandler GetRenderHandler()
 		{
 			return RenderGlue;

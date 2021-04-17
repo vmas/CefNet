@@ -20,7 +20,7 @@ namespace CefNet.CApi
 {
 	public static partial class CefNativeApi
 	{
-		public static readonly string ApiHash = "89715b43c948313782d2546131f510eab1975844";
+		public static readonly string ApiHash = "d128245052a84dd90cd38fed0e6be65824d37de5";
 
 		/// <summary>
 		/// Add an entry to the cross-origin access whitelist.
@@ -690,16 +690,18 @@ namespace CefNet.CApi
 		public static unsafe extern void cef_load_crlsets_file(cef_string_t* path);
 
 		/// <summary>
-		/// Returns the MediaRouter object associated with the global request context.
-		/// Equivalent to calling cef_request_context_t::cef_request_context_get_global_c
-		/// ontext()-&gt;get_media_router().
+		/// Returns the MediaRouter object associated with the global request context. If
+		/// |callback| is non-NULL it will be executed asnychronously on the UI thread
+		/// after the manager&apos;s storage has been initialized. Equivalent to calling cef_r
+		/// equest_context_t::cef_request_context_get_global_context()-&gt;get_media_router(
+		/// ).
 		/// </summary>
 		/// <remarks>
 		/// Defined in include/capi/cef_media_router_capi.h as
-		/// cef_media_router_t* cef_media_router_get_global()
+		/// cef_media_router_t* cef_media_router_get_global(_cef_completion_callback_t* callback)
 		/// </remarks>
 		[DllImport("libcef", CallingConvention = CallingConvention.Cdecl)]
-		public static unsafe extern cef_media_router_t* cef_media_router_get_global();
+		public static unsafe extern cef_media_router_t* cef_media_router_get_global(cef_completion_callback_t* callback);
 
 		/// <summary>
 		/// Create a new MenuModel with the specified |delegate|.

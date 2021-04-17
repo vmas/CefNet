@@ -84,9 +84,9 @@ namespace CefNet.Internal
 			return _implementation.AvoidGetPdfPaperSize();
 		}
 
-		protected internal unsafe override CefSize GetPdfPaperSize(int deviceUnitsPerInch)
+		protected internal unsafe override CefSize GetPdfPaperSize(CefBrowser browser, int deviceUnitsPerInch)
 		{
-			return _implementation.GetPdfPaperSize(deviceUnitsPerInch);
+			return _implementation.GetPdfPaperSize(browser, deviceUnitsPerInch);
 		}
 
 	}

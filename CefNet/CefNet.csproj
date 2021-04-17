@@ -81,7 +81,6 @@
     <Compile Remove="Generated\Managed\Internal\CefMediaSinkDeviceInfoCallbackGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefMenuModelDelegateGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefNavigationEntryVisitorGlue.cs" />
-    <Compile Remove="Generated\Managed\Internal\CefPrintHandlerGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefReadHandlerGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefRegisterCDMCallbackGlue.cs" />
     <Compile Remove="Generated\Managed\Internal\CefRequestContextHandlerGlue.cs" />

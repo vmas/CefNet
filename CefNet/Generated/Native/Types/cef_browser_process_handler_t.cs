@@ -32,33 +32,6 @@ namespace CefNet.CApi
 		public cef_base_ref_counted_t @base;
 
 		/// <summary>
-		/// void (*)(_cef_browser_process_handler_t* self, cef_string_list_t schemes, int* include_defaults)*
-		/// </summary>
-		public void* get_cookieable_schemes;
-
-		/// <summary>
-		/// Called on the browser process UI thread to retrieve the list of schemes
-		/// that should support cookies. If |include_defaults| is true (1) the default
-		/// schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;) will also be supported. Providing
-		/// an NULL |schemes| value and setting |include_defaults| to false (0) will
-		/// disable all loading and saving of cookies.
-		/// This state will apply to the cef_cookie_manager_t associated with the
-		/// global cef_request_context_t. It will also be used as the initial state for
-		/// any new cef_request_context_ts created by the client. After creating a new
-		/// cef_request_context_t the cef_cookie_manager_t::SetSupportedSchemes
-		/// function may be called on the associated cef_cookie_manager_t to futher
-		/// override these values.
-		/// </summary>
-		[NativeName("get_cookieable_schemes")]
-		public unsafe void GetCookieableSchemes(cef_string_list_t schemes, int* include_defaults)
-		{
-			fixed (cef_browser_process_handler_t* self = &this)
-			{
-				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_string_list_t, int*, void>)get_cookieable_schemes)(self, schemes, include_defaults);
-			}
-		}
-
-		/// <summary>
 		/// void (*)(_cef_browser_process_handler_t* self)*
 		/// </summary>
 		public void* on_context_initialized;
@@ -94,24 +67,6 @@ namespace CefNet.CApi
 			fixed (cef_browser_process_handler_t* self = &this)
 			{
 				((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_command_line_t*, void>)on_before_child_process_launch)(self, command_line);
-			}
-		}
-
-		/// <summary>
-		/// _cef_print_handler_t* (*)(_cef_browser_process_handler_t* self)*
-		/// </summary>
-		public void* get_print_handler;
-
-		/// <summary>
-		/// Return the handler for printing on Linux. If a print handler is not
-		/// provided then printing will not be supported on the Linux platform.
-		/// </summary>
-		[NativeName("get_print_handler")]
-		public unsafe cef_print_handler_t* GetPrintHandler()
-		{
-			fixed (cef_browser_process_handler_t* self = &this)
-			{
-				return ((delegate* unmanaged[Stdcall]<cef_browser_process_handler_t*, cef_print_handler_t*>)get_print_handler)(self);
 			}
 		}
 

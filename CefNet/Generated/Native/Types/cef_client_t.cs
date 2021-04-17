@@ -238,6 +238,24 @@ namespace CefNet.CApi
 		}
 
 		/// <summary>
+		/// _cef_print_handler_t* (*)(_cef_client_t* self)*
+		/// </summary>
+		public void* get_print_handler;
+
+		/// <summary>
+		/// Return the handler for printing on Linux. If a print handler is not
+		/// provided then printing will not be supported on the Linux platform.
+		/// </summary>
+		[NativeName("get_print_handler")]
+		public unsafe cef_print_handler_t* GetPrintHandler()
+		{
+			fixed (cef_client_t* self = &this)
+			{
+				return ((delegate* unmanaged[Stdcall]<cef_client_t*, cef_print_handler_t*>)get_print_handler)(self);
+			}
+		}
+
+		/// <summary>
 		/// _cef_render_handler_t* (*)(_cef_client_t* self)*
 		/// </summary>
 		public void* get_render_handler;

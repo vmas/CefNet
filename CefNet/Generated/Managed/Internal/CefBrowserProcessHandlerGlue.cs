@@ -29,16 +29,6 @@ namespace CefNet.Internal
 			_implementation = impl;
 		}
 
-		bool ICefBrowserProcessHandlerPrivate.AvoidGetCookieableSchemes()
-		{
-			return _implementation.AvoidGetCookieableSchemes();
-		}
-
-		protected internal unsafe override void GetCookieableSchemes(CefStringList schemes, ref int includeDefaults)
-		{
-			_implementation.GetCookieableSchemes(schemes, ref includeDefaults);
-		}
-
 		protected internal unsafe override void OnContextInitialized()
 		{
 			_implementation.OnContextInitialized();
@@ -52,11 +42,6 @@ namespace CefNet.Internal
 		protected internal unsafe override void OnBeforeChildProcessLaunch(CefCommandLine commandLine)
 		{
 			_implementation.OnBeforeChildProcessLaunch(commandLine);
-		}
-
-		protected internal unsafe override CefPrintHandler GetPrintHandler()
-		{
-			return _implementation.GetPrintHandler();
 		}
 
 		bool ICefBrowserProcessHandlerPrivate.AvoidOnScheduleMessagePumpWork()

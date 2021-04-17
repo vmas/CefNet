@@ -40,21 +40,6 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Set the schemes supported by this manager. If |include_defaults| is true
-		/// (1) the default schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;) will also be
-		/// supported. Calling this function with an NULL |schemes| value and
-		/// |include_defaults| set to false (0) will disable all loading and saving of
-		/// cookies for this manager. If |callback| is non-NULL it will be executed
-		/// asnychronously on the UI thread after the change has been applied. Must be
-		/// called before any cookies are accessed.
-		/// </summary>
-		public unsafe virtual void SetSupportedSchemes(CefStringList schemes, bool includeDefaults, CefCompletionCallback callback)
-		{
-			NativeInstance->SetSupportedSchemes(schemes.GetNativeInstance(), includeDefaults ? 1 : 0, (callback != null) ? callback.GetNativeInstance() : null);
-			GC.KeepAlive(this);
-		}
-
-		/// <summary>
 		/// Visit all cookies on the UI thread. The returned cookies are ordered by
 		/// longest path, then by earliest creation date. Returns false (0) if cookies
 		/// cannot be accessed.

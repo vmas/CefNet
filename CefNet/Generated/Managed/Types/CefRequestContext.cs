@@ -89,17 +89,6 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Gets the MediaRouter object associated with this context.
-		/// </summary>
-		public unsafe virtual CefMediaRouter MediaRouter
-		{
-			get
-			{
-				return SafeCall(CefMediaRouter.Wrap(CefMediaRouter.Create, NativeInstance->GetMediaRouter()));
-			}
-		}
-
-		/// <summary>
 		/// Returns true (1) if this object is pointing to the same context as |that|
 		/// object.
 		/// </summary>
@@ -119,7 +108,7 @@ namespace CefNet
 
 		/// <summary>
 		/// Returns the cookie manager for this object. If |callback| is non-NULL it
-		/// will be executed asnychronously on the IO thread after the manager&apos;s
+		/// will be executed asnychronously on the UI thread after the manager&apos;s
 		/// storage has been initialized.
 		/// </summary>
 		public unsafe virtual CefCookieManager GetCookieManager(CefCompletionCallback callback)
@@ -410,6 +399,16 @@ namespace CefNet
 				var cstr0 = new cef_string_t { Str = s0, Length = extensionId != null ? extensionId.Length : 0 };
 				return SafeCall(CefExtension.Wrap(CefExtension.Create, NativeInstance->GetExtension(&cstr0)));
 			}
+		}
+
+		/// <summary>
+		/// Returns the MediaRouter object associated with this context.  If |callback|
+		/// is non-NULL it will be executed asnychronously on the UI thread after the
+		/// manager&apos;s context has been initialized.
+		/// </summary>
+		public unsafe virtual CefMediaRouter GetMediaRouter(CefCompletionCallback callback)
+		{
+			return SafeCall(CefMediaRouter.Wrap(CefMediaRouter.Create, NativeInstance->GetMediaRouter((callback != null) ? callback.GetNativeInstance() : null)));
 		}
 	}
 }

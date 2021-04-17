@@ -140,7 +140,7 @@ namespace CefNet.CApi
 
 		/// <summary>
 		/// Returns the cookie manager for this object. If |callback| is non-NULL it
-		/// will be executed asnychronously on the IO thread after the manager&apos;s
+		/// will be executed asnychronously on the UI thread after the manager&apos;s
 		/// storage has been initialized.
 		/// </summary>
 		[NativeName("get_cookie_manager")]
@@ -538,19 +538,21 @@ namespace CefNet.CApi
 		}
 
 		/// <summary>
-		/// _cef_media_router_t* (*)(_cef_request_context_t* self)*
+		/// _cef_media_router_t* (*)(_cef_request_context_t* self, _cef_completion_callback_t* callback)*
 		/// </summary>
 		public void* get_media_router;
 
 		/// <summary>
-		/// Returns the MediaRouter object associated with this context.
+		/// Returns the MediaRouter object associated with this context.  If |callback|
+		/// is non-NULL it will be executed asnychronously on the UI thread after the
+		/// manager&apos;s context has been initialized.
 		/// </summary>
 		[NativeName("get_media_router")]
-		public unsafe cef_media_router_t* GetMediaRouter()
+		public unsafe cef_media_router_t* GetMediaRouter(cef_completion_callback_t* callback)
 		{
 			fixed (cef_request_context_t* self = &this)
 			{
-				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_media_router_t*>)get_media_router)(self);
+				return ((delegate* unmanaged[Stdcall]<cef_request_context_t*, cef_completion_callback_t*, cef_media_router_t*>)get_media_router)(self, callback);
 			}
 		}
 	}

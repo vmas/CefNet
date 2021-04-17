@@ -31,29 +31,6 @@ namespace CefNet.CApi
 		public cef_base_ref_counted_t @base;
 
 		/// <summary>
-		/// void (*)(_cef_cookie_manager_t* self, cef_string_list_t schemes, int include_defaults, _cef_completion_callback_t* callback)*
-		/// </summary>
-		public void* set_supported_schemes;
-
-		/// <summary>
-		/// Set the schemes supported by this manager. If |include_defaults| is true
-		/// (1) the default schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;) will also be
-		/// supported. Calling this function with an NULL |schemes| value and
-		/// |include_defaults| set to false (0) will disable all loading and saving of
-		/// cookies for this manager. If |callback| is non-NULL it will be executed
-		/// asnychronously on the UI thread after the change has been applied. Must be
-		/// called before any cookies are accessed.
-		/// </summary>
-		[NativeName("set_supported_schemes")]
-		public unsafe void SetSupportedSchemes(cef_string_list_t schemes, int include_defaults, cef_completion_callback_t* callback)
-		{
-			fixed (cef_cookie_manager_t* self = &this)
-			{
-				((delegate* unmanaged[Stdcall]<cef_cookie_manager_t*, cef_string_list_t, int, cef_completion_callback_t*, void>)set_supported_schemes)(self, schemes, include_defaults, callback);
-			}
-		}
-
-		/// <summary>
 		/// int (*)(_cef_cookie_manager_t* self, _cef_cookie_visitor_t* visitor)*
 		/// </summary>
 		public void* visit_all_cookies;

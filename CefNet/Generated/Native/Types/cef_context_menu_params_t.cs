@@ -396,23 +396,6 @@ namespace CefNet.CApi
 				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, int>)is_custom_menu)(self);
 			}
 		}
-
-		/// <summary>
-		/// int (*)(_cef_context_menu_params_t* self)*
-		/// </summary>
-		public void* is_pepper_menu;
-
-		/// <summary>
-		/// Returns true (1) if the context menu was invoked from a pepper plugin.
-		/// </summary>
-		[NativeName("is_pepper_menu")]
-		public unsafe int IsPepperMenu()
-		{
-			fixed (cef_context_menu_params_t* self = &this)
-			{
-				return ((delegate* unmanaged[Stdcall]<cef_context_menu_params_t*, int>)is_pepper_menu)(self);
-			}
-		}
 	}
 }
 

@@ -79,6 +79,19 @@ namespace CefNet.CApi
 		/// ignored if |cache_path| matches the CefSettings.cache_path value.
 		/// </summary>
 		public cef_string_t accept_language_list;
+
+		/// <summary>
+		/// Comma delimited list of schemes supported by the associated
+		/// CefCookieManager. If |cookieable_schemes_exclude_defaults| is false (0) the
+		/// default schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;) will also be supported.
+		/// Specifying a |cookieable_schemes_list| value and setting
+		/// |cookieable_schemes_exclude_defaults| to true (1) will disable all loading
+		/// and saving of cookies for this manager. These values will be ignored if
+		/// |cache_path| matches the CefSettings.cache_path value.
+		/// </summary>
+		public cef_string_t cookieable_schemes_list;
+
+		public int cookieable_schemes_exclude_defaults;
 	}
 }
 

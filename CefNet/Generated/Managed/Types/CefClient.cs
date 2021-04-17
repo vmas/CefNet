@@ -53,6 +53,8 @@ namespace CefNet
 
 		private static readonly GetLoadHandlerDelegate fnGetLoadHandler = GetLoadHandlerImpl;
 
+		private static readonly GetPrintHandlerDelegate fnGetPrintHandler = GetPrintHandlerImpl;
+
 		private static readonly GetRenderHandlerDelegate fnGetRenderHandler = GetRenderHandlerImpl;
 
 		private static readonly GetRequestHandlerDelegate fnGetRequestHandler = GetRequestHandlerImpl;
@@ -81,6 +83,7 @@ namespace CefNet
 			self->get_keyboard_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetKeyboardHandler);
 			self->get_life_span_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetLifeSpanHandler);
 			self->get_load_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetLoadHandler);
+			self->get_print_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetPrintHandler);
 			self->get_render_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetRenderHandler);
 			self->get_request_handler = (void*)Marshal.GetFunctionPointerForDelegate(fnGetRequestHandler);
 			self->on_process_message_received = (void*)Marshal.GetFunctionPointerForDelegate(fnOnProcessMessageReceived);
@@ -97,6 +100,7 @@ namespace CefNet
 			self->get_keyboard_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_keyboard_handler_t*>)&GetKeyboardHandlerImpl;
 			self->get_life_span_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_life_span_handler_t*>)&GetLifeSpanHandlerImpl;
 			self->get_load_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_load_handler_t*>)&GetLoadHandlerImpl;
+			self->get_print_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_print_handler_t*>)&GetPrintHandlerImpl;
 			self->get_render_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_render_handler_t*>)&GetRenderHandlerImpl;
 			self->get_request_handler = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_request_handler_t*>)&GetRequestHandlerImpl;
 			self->on_process_message_received = (delegate* unmanaged[Stdcall]<cef_client_t*, cef_browser_t*, cef_frame_t*, CefProcessId, cef_process_message_t*, int>)&OnProcessMessageReceivedImpl;
@@ -467,6 +471,37 @@ namespace CefNet
 				return default;
 			}
 			CefLoadHandler rv = instance.GetLoadHandler();
+			if (rv == null)
+				return null;
+			return (rv != null) ? rv.GetNativeInstance() : null;
+		}
+
+		/// <summary>
+		/// Return the handler for printing on Linux. If a print handler is not
+		/// provided then printing will not be supported on the Linux platform.
+		/// </summary>
+		protected internal unsafe virtual CefPrintHandler GetPrintHandler()
+		{
+			return default;
+		}
+
+#if NET_LESS_5_0
+		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
+		private unsafe delegate cef_print_handler_t* GetPrintHandlerDelegate(cef_client_t* self);
+
+#endif // NET_LESS_5_0
+		// _cef_print_handler_t* (*)(_cef_client_t* self)*
+#if !NET_LESS_5_0
+		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+#endif
+		private static unsafe cef_print_handler_t* GetPrintHandlerImpl(cef_client_t* self)
+		{
+			var instance = GetInstance((IntPtr)self) as CefClient;
+			if (instance == null)
+			{
+				return default;
+			}
+			CefPrintHandler rv = instance.GetPrintHandler();
 			if (rv == null)
 				return null;
 			return (rv != null) ? rv.GetNativeInstance() : null;

@@ -45,6 +45,7 @@ namespace CefNet.Internal
 		private CefDialogHandlerGlue DialogGlue { get; }
 		private CefDownloadHandlerGlue DownloadGlue { get; }
 		private CefFindHandlerGlue FindGlue { get; }
+		private CefPrintHandler PrintGlue { get; }
 
 		private CefContextMenuHandlerGlue ContextMenuGlue { get; }
 		private CefLoadHandlerGlue LoadGlue { get; }
@@ -63,6 +64,7 @@ namespace CefNet.Internal
 
 			this.ContextMenuGlue = new CefContextMenuHandlerGlue(this);
 			this.LoadGlue = new CefLoadHandlerGlue(this);
+			this.PrintGlue = new CefPrintHandlerGlue(this);
 
 			_partialAvoidResourceRequestGlue = AvoidOverloadOnBeforeResourceLoad() && AvoidGetResourceHandler()
 				&& AvoidOnResourceRedirect() && AvoidOnResourceResponse() && AvoidGetResourceResponseFilter()

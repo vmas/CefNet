@@ -74,8 +74,8 @@
 			.override method instance bool CefNet.Internal.ICefPrintHandlerPrivate::AvoidGetPdfPaperSize()
 			.maxstack 2
 			ldarg.0
-			ldvirtftn instance valuetype CefNet.CefSize CefNet.CefPrintHandler::GetPdfPaperSize(int32)
-			ldftn instance valuetype CefNet.CefSize CefNet.CefPrintHandler::GetPdfPaperSize(int32)
+			ldvirtftn instance valuetype CefNet.CefSize CefNet.CefPrintHandler::GetPdfPaperSize(class CefNet.CefBrowser, int32)
+			ldftn instance valuetype CefNet.CefSize CefNet.CefPrintHandler::GetPdfPaperSize(class CefNet.CefBrowser, int32)
 			ceq
 			ret
 		}

@@ -274,17 +274,6 @@ namespace CefNet
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether the context menu was invoked from a pepper plugin.
-		/// </summary>
-		public unsafe virtual bool IsPepperMenu
-		{
-			get
-			{
-				return SafeCall(NativeInstance->IsPepperMenu() != 0);
-			}
-		}
-
-		/// <summary>
 		/// Returns true (1) if suggestions exist, false (0) otherwise. Fills in
 		/// |suggestions| from the spell check service for the misspelled word if there
 		/// is one.

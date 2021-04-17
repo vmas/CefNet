@@ -65,7 +65,7 @@ namespace CefNet
 			self->on_print_dialog = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, int, cef_print_dialog_callback_t*, int>)&OnPrintDialogImpl;
 			self->on_print_job = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, cef_string_t*, cef_string_t*, cef_print_job_callback_t*, int>)&OnPrintJobImpl;
 			self->on_print_reset = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, void>)&OnPrintResetImpl;
-			self->get_pdf_paper_size = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, int, cef_size_t>)&GetPdfPaperSizeImpl;
+			self->get_pdf_paper_size = (delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, int, cef_size_t>)&GetPdfPaperSizeImpl;
 			#endif
 		}
 
@@ -245,28 +245,29 @@ namespace CefNet
 		/// Return the PDF paper size in device units. Used in combination with
 		/// cef_browser_host_t::print_to_pdf().
 		/// </summary>
-		protected internal unsafe virtual CefSize GetPdfPaperSize(int deviceUnitsPerInch)
+		protected internal unsafe virtual CefSize GetPdfPaperSize(CefBrowser browser, int deviceUnitsPerInch)
 		{
 			return default;
 		}
 
 #if NET_LESS_5_0
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-		private unsafe delegate cef_size_t GetPdfPaperSizeDelegate(cef_print_handler_t* self, int device_units_per_inch);
+		private unsafe delegate cef_size_t GetPdfPaperSizeDelegate(cef_print_handler_t* self, cef_browser_t* browser, int device_units_per_inch);
 
 #endif // NET_LESS_5_0
-		// cef_size_t (*)(_cef_print_handler_t* self, int device_units_per_inch)*
+		// cef_size_t (*)(_cef_print_handler_t* self, _cef_browser_t* browser, int device_units_per_inch)*
 #if !NET_LESS_5_0
 		[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
 #endif
-		private static unsafe cef_size_t GetPdfPaperSizeImpl(cef_print_handler_t* self, int device_units_per_inch)
+		private static unsafe cef_size_t GetPdfPaperSizeImpl(cef_print_handler_t* self, cef_browser_t* browser, int device_units_per_inch)
 		{
 			var instance = GetInstance((IntPtr)self) as CefPrintHandler;
 			if (instance == null || ((ICefPrintHandlerPrivate)instance).AvoidGetPdfPaperSize())
 			{
+				ReleaseIfNonNull((cef_base_ref_counted_t*)browser);
 				return default;
 			}
-			return instance.GetPdfPaperSize(device_units_per_inch);
+			return instance.GetPdfPaperSize(CefBrowser.Wrap(CefBrowser.Create, browser), device_units_per_inch);
 		}
 	}
 }

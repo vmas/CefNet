@@ -126,7 +126,7 @@ namespace CefNet.CApi
 		}
 
 		/// <summary>
-		/// cef_size_t (*)(_cef_print_handler_t* self, int device_units_per_inch)*
+		/// cef_size_t (*)(_cef_print_handler_t* self, _cef_browser_t* browser, int device_units_per_inch)*
 		/// </summary>
 		public void* get_pdf_paper_size;
 
@@ -135,11 +135,11 @@ namespace CefNet.CApi
 		/// cef_browser_host_t::print_to_pdf().
 		/// </summary>
 		[NativeName("get_pdf_paper_size")]
-		public unsafe cef_size_t GetPdfPaperSize(int device_units_per_inch)
+		public unsafe cef_size_t GetPdfPaperSize(cef_browser_t* browser, int device_units_per_inch)
 		{
 			fixed (cef_print_handler_t* self = &this)
 			{
-				return ((delegate* unmanaged[Stdcall]<cef_print_handler_t*, int, cef_size_t>)get_pdf_paper_size)(self, device_units_per_inch);
+				return ((delegate* unmanaged[Stdcall]<cef_print_handler_t*, cef_browser_t*, int, cef_size_t>)get_pdf_paper_size)(self, browser, device_units_per_inch);
 			}
 		}
 	}

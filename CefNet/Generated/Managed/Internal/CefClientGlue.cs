@@ -89,6 +89,11 @@ namespace CefNet.Internal
 			return _implementation.GetLoadHandler();
 		}
 
+		protected internal unsafe override CefPrintHandler GetPrintHandler()
+		{
+			return _implementation.GetPrintHandler();
+		}
+
 		protected internal unsafe override CefRenderHandler GetRenderHandler()
 		{
 			return _implementation.GetRenderHandler();
