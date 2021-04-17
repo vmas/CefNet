@@ -659,30 +659,6 @@ namespace CefNet
 #endregion
 
 		/// <summary>
-		/// Called on the browser process UI thread to retrieve the list of schemes
-		/// that should support cookies. 
-		/// </summary>
-		/// <param name="schemes">Providing an null value and setting <paramref name="includeDefaults"/> to false
-		/// will disable all loading and saving of cookies.
-		/// </param>
-		/// <param name="includeDefaults">
-		/// If true the default schemes (&quot;http&quot;, &quot;https&quot;, &quot;ws&quot; and &quot;wss&quot;)
-		/// will also be supported.
-		/// </param>
-		/// <remarks>
-		/// This state will apply to the <see cref="CefCookieManager"/> associated with the
-		/// global <see cref="CefRequestContext"/>. It will also be used as the initial state for
-		/// any new <see cref="CefRequestContext"/>&apos;s created by the client. After creating a new
-		/// <see cref="CefRequestContext"/> the <see cref="CefCookieManager.SetSupportedSchemes"/>
-		/// function may be called on the associated <see cref="CefCookieManager"/> to futher
-		/// override these values.
-		/// </remarks>
-		protected internal virtual void GetCookieableSchemes(CefStringList schemes, ref int includeDefaults)
-		{
-
-		}
-
-		/// <summary>
 		/// Raises the <see cref="CefContextInitialized"/> event.<para/>
 		/// Called on the browser process UI thread immediately after the CEF context has been initialized.
 		/// </summary>
