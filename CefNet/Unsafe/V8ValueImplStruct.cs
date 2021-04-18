@@ -12,6 +12,8 @@ namespace CefNet.Unsafe
 //#endif
 	unsafe struct V8ValueImplLayout
 	{
+		private static int MacOSV8LayoutFix = PlatformInfo.IsMacOS ? IntPtr.Size : 0;
+
 		public IntPtr v8value_vtable;
 		public IntPtr refcounted_vtable;
 		public IntPtr isolate;
@@ -23,6 +25,11 @@ namespace CefNet.Unsafe
 		public CefV8ValueType Type
 		{
 			get { return (CefV8ValueType)(type.ToInt64() & 0xFFFFFFFF); }
+		}
+
+		public static V8ValueImplLayout* FromCppObject(IntPtr cppObj)
+		{
+			return (V8ValueImplLayout*)IntPtr.Subtract(cppObj, MacOSV8LayoutFix);
 		}
 	}
 

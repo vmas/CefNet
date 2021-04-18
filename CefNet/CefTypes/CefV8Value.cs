@@ -506,32 +506,53 @@ namespace CefNet
 		{
 			get
 			{
+				CefV8ValueType type;
 				if (CefApi.UseUnsafeImplementation)
 				{
-					RefCountedWrapperStruct* ws = RefCountedWrapperStruct.FromRefCounted(this.NativeInstance);
-					return SafeCall(((V8ValueImplLayout*)(ws->cppObject))->Type);
+					type = V8ValueImplLayout.FromCppObject(RefCountedWrapperStruct.FromRefCounted(this.NativeInstance)->cppObject)->Type;
 				}
-
-				if (NativeInstance->IsUndefined() != 0) // TYPE_UNDEFINED
-					return CefV8ValueType.Undefined;
-				if (NativeInstance->IsNull() != 0)
-					return CefV8ValueType.Null;
-				if (NativeInstance->IsBool() != 0)
-					return CefV8ValueType.Bool;
-				if (NativeInstance->IsInt() != 0) // TYPE_INT, TYPE_UINT 
-					return CefV8ValueType.Int;
-				if (NativeInstance->IsDouble() != 0)  // TYPE_INT, TYPE_UINT, TYPE_DOUBLE
-					return CefV8ValueType.Double;
-				if (NativeInstance->IsDate() != 0)
-					return CefV8ValueType.Date;
-				if (NativeInstance->IsString() != 0) //TYPE_STRING
-					return CefV8ValueType.String;
-				if (NativeInstance->IsObject() != 0) //TYPE_OBJECT
-					return CefV8ValueType.Object;
-				if (NativeInstance->IsUInt() != 0) // TYPE_INT, TYPE_UINT
-					return CefV8ValueType.UInt;
+				else if (NativeInstance->IsUndefined() != 0) // TYPE_UNDEFINED
+				{
+					type = CefV8ValueType.Undefined;
+				}
+				else if (NativeInstance->IsNull() != 0)
+				{
+					type = CefV8ValueType.Null;
+				}
+				else if (NativeInstance->IsBool() != 0)
+				{
+					type = CefV8ValueType.Bool;
+				}
+				else if (NativeInstance->IsInt() != 0) // TYPE_INT, TYPE_UINT 
+				{
+					type = CefV8ValueType.Int;
+				}
+				else if (NativeInstance->IsDouble() != 0)  // TYPE_INT, TYPE_UINT, TYPE_DOUBLE
+				{
+					type = CefV8ValueType.Double;
+				}
+				else if (NativeInstance->IsDate() != 0)
+				{
+					type = CefV8ValueType.Date;
+				}
+				else if (NativeInstance->IsString() != 0) //TYPE_STRING
+				{
+					type = CefV8ValueType.String;
+				}
+				else if (NativeInstance->IsObject() != 0) //TYPE_OBJECT
+				{
+					type = CefV8ValueType.Object;
+				}
+				else if (NativeInstance->IsUInt() != 0) // TYPE_INT, TYPE_UINT
+				{
+					type = CefV8ValueType.UInt;
+				}
+				else
+				{
+					type = CefV8ValueType.Invalid;
+				}
 				GC.KeepAlive(this);
-				return CefV8ValueType.Invalid;
+				return type;
 			}
 		}
 

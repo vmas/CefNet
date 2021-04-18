@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -23,8 +24,9 @@ namespace AvaloniaApp
 		// SynchronizationContext-reliant code before AppMain is called: things aren't initialized
 		// yet and stuff might break.
 		[STAThread]
-		public static void Main(string[] args)
+		public static unsafe void Main(string[] args)
 		{
+
 			string cefPath;
 			bool externalMessagePump = args.Contains("--external-message-pump");
 
@@ -80,37 +82,26 @@ namespace AvaloniaApp
 			try
 			{
 				string filename = PlatformInfo.IsMacOS ? "/Users/osx/work/CefNet/bin/log.txt" : @"G:\log.txt";
-				File.AppendAllText(filename, $"[{DateTime.UtcNow.ToString()}] Start Test\r\n");
+				
+				var sb = new StringBuilder($"[{DateTime.UtcNow.ToString()}] Start Test\r\n");
+				sb.Append("1 = ").Append(context.Eval("1", null).Type).AppendLine();
+				sb.Append("'a' = ").Append(context.Eval("'a'", null).Type).AppendLine();
+				sb.Append("null = ").Append(context.Eval("null", null).Type).AppendLine();
+				sb.Append("true = ").Append(context.Eval("true", null).Type).AppendLine();
+				sb.Append("2.2 = ").Append(context.Eval("2.2", null).Type).AppendLine();
+				sb.Append("Date = ").Append(context.Eval("new Date()", null).Type).AppendLine();
+				sb.Append("Object = ").Append(context.Eval("new Object()", null).Type).AppendLine();
 
 
-				string code = "1";
-				string scriptUrl = null;
+				File.AppendAllText(filename, sb.ToString());
 
-				fixed (char* s0 = code)
-				fixed (char* s1 = scriptUrl)
-				{
-					var cstr0 = new cef_string_t { Str = s0, Length = code.Length };
-					var cstr1 = new cef_string_t { Str = s1, Length = scriptUrl != null ? scriptUrl.Length : 0 };
-
-
-					cef_v8value_t* rv = null;
-					cef_v8value_t** pRv = &rv;
-					cef_v8exception_t* jsex = null;
-					cef_v8exception_t** pJsex = &jsex;
-					string ok = context.NativeInstance->Eval(&cstr0, &cstr1, 1, pRv, pJsex).ToString();
-					File.AppendAllText(filename, ok + "\r\n");
-
-					RefCountedWrapperStruct* ws = RefCountedWrapperStruct.FromRefCounted(rv);
-					V8ValueImplLayout* cppobj = ((V8ValueImplLayout*)(ws->cppObject));
-					File.AppendAllText(filename, cppobj->Type.ToString() + "\r\n");
-
-				}
 			}
 			finally
 			{
 				context.Exit();
 			}
 		}
+		private static int _mkv;
 
 		private static void App_FrameworkInitialized(object sender, EventArgs e)
 		{
