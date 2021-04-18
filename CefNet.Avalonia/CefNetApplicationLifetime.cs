@@ -101,13 +101,20 @@ namespace CefNet
 				{
 					window.Close();
 				}
+				CefNetApplication.Instance.SignalForShutdown(ShutdownComplete);
 			}
-			finally
+			catch
 			{
-				_cts?.CancelAfter(1500);
-				_cts = null;
-				_isShuttingDown = false;
+				ShutdownComplete();
+				throw;
 			}
+		}
+
+		private void ShutdownComplete()
+		{
+			_cts?.Cancel();
+			_cts = null;
+			_isShuttingDown = false;
 		}
 
 		public int Start(string[] args)
@@ -118,21 +125,10 @@ namespace CefNet
 				_cts = new CancellationTokenSource();
 				MainWindow?.Show();
 
-
 				Dispatcher.UIThread.MainLoop(_cts.Token);
 
 				ControlledApplicationLifetimeExitEventArgs e = new ControlledApplicationLifetimeExitEventArgs(_exitCode);
 				this.Exit?.Invoke(this, e);
-
-				GC.Collect();
-				GC.WaitForPendingFinalizers();
-				if (CefNetApplication.Instance.UsesExternalMessageLoop)
-				{
-					for (int i = 0; i < 1000; i++)
-						CefApi.DoMessageLoopWork();
-				}
-				GC.Collect();
-				GC.WaitForPendingFinalizers();
 
 				Environment.ExitCode = e.ApplicationExitCode;
 				return e.ApplicationExitCode;

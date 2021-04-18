@@ -52,10 +52,11 @@ namespace WpfCoreApp
 
 		protected override void OnExit(ExitEventArgs e)
 		{
-			//Thread.Sleep(1000);
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-
+			using (var ev = new ManualResetEvent(false))
+			{
+				app.SignalForShutdown(() => ev.Set());
+				ev.WaitOne();
+			}
 			messagePump?.Dispose();
 			app?.Shutdown();
 			base.OnExit(e);

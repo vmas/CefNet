@@ -30,7 +30,7 @@ namespace WinFormsCoreApp
 
 
 			string cefPath = Path.Combine(Path.GetDirectoryName(GetProjectPath()), "cef");
-			bool externalMessagePump = args.Contains("--external-message-pump");
+			bool externalMessagePump = true;// args.Contains("--external-message-pump");
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			Application.ThreadException += Application_ThreadException;
@@ -60,10 +60,14 @@ namespace WinFormsCoreApp
 				{
 					messagePump = new System.Threading.Timer(_ => UIContext.Post(_ => CefApi.DoMessageLoopWork(), null), null, messagePumpDelay, messagePumpDelay);
 				}
-				
+
 				Application.Run(new MainForm());
-				GC.Collect();
-				GC.WaitForPendingFinalizers();
+
+				using (var ev = new ManualResetEvent(false))
+				{
+					app.SignalForShutdown(() => ev.Set());
+					ev.WaitOne();
+				}
 			}
 			finally
 			{

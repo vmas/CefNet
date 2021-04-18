@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace CefNet
 {
@@ -57,6 +58,8 @@ namespace CefNet
 		private static IntPtr _cefLibHandle;
 		private static ProcessType? _ProcessType;
 		private int _initThreadId;
+		private int _browsersCount;
+		private TaskCompletionSource<bool> _shutdownSignalTaskSource;
 
 		static CefNetApplication()
 		{
@@ -344,11 +347,29 @@ namespace CefNet
 		}
 
 		/// <summary>
+		/// Calls a <paramref name="callback"/> when the <see cref="CefNetApplication"/> is ready to shut down.
+		/// </summary>
+		/// <param name="callback">An action to run when the <see cref="CefNetApplication"/> is ready to shut down. </param>
+		public async void SignalForShutdown(Action callback)
+		{
+			var shutdownTaskSource = new TaskCompletionSource<bool>();
+			shutdownTaskSource = Interlocked.CompareExchange(ref _shutdownSignalTaskSource, shutdownTaskSource, null) ?? shutdownTaskSource;
+			if (Volatile.Read(ref _browsersCount) == 0)
+				shutdownTaskSource.TrySetResult(false);
+			await shutdownTaskSource.Task.ConfigureAwait(false);
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			callback();
+		}
+
+		/// <summary>
 		/// Shuts down a CEF application.
 		/// </summary>
 		public void Shutdown()
 		{
 			AssertAccess();
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
 			CefApi.Shutdown();
 		}
 
@@ -578,7 +599,7 @@ namespace CefNet
 		/// <param name="extraInfo">A read-only value originating from the browser creator or null.</param>
 		protected internal virtual void OnBrowserCreated(CefBrowser browser, CefDictionaryValue extraInfo)
 		{
-
+			Interlocked.Increment(ref _browsersCount);
 		}
 
 		/// <summary>
@@ -588,7 +609,8 @@ namespace CefNet
 		/// <param name="browser">The browser instance.</param>
 		protected internal virtual void OnBrowserDestroyed(CefBrowser browser)
 		{
-
+			if (Interlocked.Decrement(ref _browsersCount) == 0)
+				Volatile.Read(ref _shutdownSignalTaskSource)?.TrySetResult(true);
 		}
 
 		/// <summary>

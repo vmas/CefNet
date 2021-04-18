@@ -8,6 +8,7 @@ using Avalonia.Threading;
 using CefNet;
 using CefNet.Avalonia;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace AvaloniaApp
@@ -27,6 +28,7 @@ namespace AvaloniaApp
 			InitializeComponent();
 
 			this.Opened += MainWindow_Opened;
+			this.Closing += MainWindow_Closing;
 			CustomWebView.FullscreenEvent.AddClassHandler(typeof(WebView), HandleFullscreenEvent);
 			WebView.ScriptDialogOpeningEvent.AddClassHandler(typeof(WebView), HandleScriptDialogOpeningEvent);
 		}
@@ -81,6 +83,20 @@ namespace AvaloniaApp
 			isFirstLoad = false;
 
 			AddTab(true);
+		}
+
+		private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			// Close all tabs
+			var tablist = new List<WebViewTab>(tabs.ItemCount);
+			foreach (WebViewTab tab in tabs.Items)
+			{
+				tablist.Add(tab);
+			}
+			foreach (WebViewTab tab in tablist)
+			{
+				tab.Close();
+			}
 		}
 
 		private void AddTab(bool useGlobalContext)
