@@ -30,7 +30,7 @@ namespace WinFormsCoreApp
 
 
 			string cefPath = Path.Combine(Path.GetDirectoryName(GetProjectPath()), "cef");
-			bool externalMessagePump = true;// args.Contains("--external-message-pump");
+			bool externalMessagePump = args.Contains("--external-message-pump");
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			Application.ThreadException += Application_ThreadException;
