@@ -9,9 +9,9 @@ using System.Text;
 namespace CefNet.Unsafe
 {
 	[StructLayout(LayoutKind.Sequential)]
-#if DEBUG
+//#if DEBUG
 	public
-#endif
+//#endif
 	unsafe struct RefCountedWrapperStruct
 	{
 		public IntPtr type;

@@ -178,6 +178,9 @@ namespace AvaloniaApp
 			if (webView == null)
 				return;
 
+			webView.GetMainFrame().SendProcessMessage(CefProcessId.Renderer, new CefProcessMessage("test"));
+			return;
+
 			tab.PopupHandlingDisabled = true;
 			EventHandler<CreateWindowEventArgs> callback = null;
 			callback = (a, b) => {

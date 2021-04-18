@@ -7,6 +7,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Threading;
 using CefNet;
+using CefNet.CApi;
+using CefNet.Unsafe;
 using WinFormsCoreApp;
 
 namespace AvaloniaApp
@@ -33,7 +35,7 @@ namespace AvaloniaApp
 			}
 			else
 			{
-				cefPath = Path.Combine(Path.GetDirectoryName(GetProjectPath()), "cef");
+				cefPath = @"D:\Projects\Libs\CefNet\cef";
 			}
 
 			var settings = new CefSettings();
@@ -52,6 +54,7 @@ namespace AvaloniaApp
 
 			app = new CefAppImpl();
 			app.ScheduleMessagePumpWorkCallback = OnScheduleMessagePumpWork;
+			app.CefProcessMessageReceived += AppProcessMessageReceived;
 			app.Initialize(PlatformInfo.IsMacOS ? cefPath : Path.Combine(cefPath, "Release"), settings);
 
 			BuildAvaloniaApp()
@@ -66,6 +69,48 @@ namespace AvaloniaApp
 				.UsePlatformDetect()
 				.LogToTrace();
 
+
+		private static unsafe void AppProcessMessageReceived(object sender, CefProcessMessageReceivedEventArgs e)
+		{
+			if (e.Name != "test")
+				return;
+
+			CefV8Context context = e.Frame.V8Context;
+			context.Enter();
+			try
+			{
+				string filename = PlatformInfo.IsMacOS ? "/Users/osx/work/CefNet/bin/log.txt" : @"G:\log.txt";
+				File.AppendAllText(filename, $"[{DateTime.UtcNow.ToString()}] Start Test\r\n");
+
+
+				string code = "1";
+				string scriptUrl = null;
+
+				fixed (char* s0 = code)
+				fixed (char* s1 = scriptUrl)
+				{
+					var cstr0 = new cef_string_t { Str = s0, Length = code.Length };
+					var cstr1 = new cef_string_t { Str = s1, Length = scriptUrl != null ? scriptUrl.Length : 0 };
+
+
+					cef_v8value_t* rv = null;
+					cef_v8value_t** pRv = &rv;
+					cef_v8exception_t* jsex = null;
+					cef_v8exception_t** pJsex = &jsex;
+					string ok = context.NativeInstance->Eval(&cstr0, &cstr1, 1, pRv, pJsex).ToString();
+					File.AppendAllText(filename, ok + "\r\n");
+
+					RefCountedWrapperStruct* ws = RefCountedWrapperStruct.FromRefCounted(rv);
+					V8ValueImplLayout* cppobj = ((V8ValueImplLayout*)(ws->cppObject));
+					File.AppendAllText(filename, cppobj->Type.ToString() + "\r\n");
+
+				}
+			}
+			finally
+			{
+				context.Exit();
+			}
+		}
 
 		private static void App_FrameworkInitialized(object sender, EventArgs e)
 		{

@@ -7,9 +7,9 @@ using System.Text;
 namespace CefNet.Unsafe
 {
 	[StructLayout(LayoutKind.Sequential)]
-#if DEBUG
+//#if DEBUG
 	public
-#endif
+//#endif
 	unsafe struct V8ValueImplLayout
 	{
 		public IntPtr v8value_vtable;
@@ -28,9 +28,9 @@ namespace CefNet.Unsafe
 
 
 	[StructLayout(LayoutKind.Explicit)]
-#if DEBUG
+//#if DEBUG
 	public
-#endif
+//#endif
 	unsafe struct V8ValueImpl_ValueUnion
 	{
 		[FieldOffset(0)]
@@ -48,9 +48,9 @@ namespace CefNet.Unsafe
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-#if DEBUG
+//#if DEBUG
 	public
-#endif
+//#endif
 	unsafe struct V8ValueImplHandleLayout
 	{
 		public void* v8value_handle_vtable;
