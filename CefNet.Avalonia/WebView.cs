@@ -22,7 +22,7 @@ namespace CefNet.Avalonia
 		private CefRect _windowBounds;
 		private IntPtr _keyboardLayout;
 		private bool _allowResizeNotifications = true;
-		private bool _suppressLostFocusEvent = false;
+		private int _suppressLostFocusEvent = 0;
 		private PointerPressedEventArgs _lastPointerPressedEventArgs;
 		private Dictionary<InitialPropertyKeys, object> InitialPropertyBag = new Dictionary<InitialPropertyKeys, object>();
 
@@ -633,16 +633,20 @@ namespace CefNet.Avalonia
 			}
 			var runner = new AvaloniaContextMenuRunner(model, callback);
 			var pt = new Point(menuParams.XCoord, menuParams.YCoord);
+
+			Interlocked.Increment(ref _suppressLostFocusEvent);
 			try
 			{
-				_suppressLostFocusEvent = true;
 				if (Dispatcher.UIThread.CheckAccess())
 					return RunContextMenu(runner, pt);
 				return Dispatcher.UIThread.InvokeAsync(new Func<bool>(() => RunContextMenu(runner, pt))).GetAwaiter().GetResult();
 			}
 			finally
 			{
-				_suppressLostFocusEvent = false;
+				if (runner.CompletionTask is null)
+					Interlocked.Decrement(ref _suppressLostFocusEvent);
+				else
+					runner.CompletionTask.ContinueWith(_ => { Interlocked.Decrement(ref _suppressLostFocusEvent); });
 			}
 		}
 
@@ -734,7 +738,7 @@ namespace CefNet.Avalonia
 
 		protected override void OnLostFocus(RoutedEventArgs e)
 		{
-			if (!_suppressLostFocusEvent)
+			if (Volatile.Read(ref _suppressLostFocusEvent) == 0)
 				BrowserObject?.Host.SetFocus(false);
 			base.OnLostFocus(e);
 		}

@@ -3,8 +3,10 @@ using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Threading;
 using CefNet.Avalonia;
 using System;
+using System.Threading.Tasks;
 
 namespace CefNet.Internal
 {
@@ -13,6 +15,7 @@ namespace CefNet.Internal
 		private readonly MenuModel Model;
 		private CefRunContextMenuCallback Callback;
 		private ContextMenu Menu;
+		private TaskCompletionSource<bool> _completionSource;
 
 		public AvaloniaContextMenuRunner(CefMenuModel model, CefRunContextMenuCallback callback)
 		{
@@ -44,6 +47,11 @@ namespace CefNet.Internal
 				Callback.Continue((int)cid, CefEventFlags.LeftMouseButton);
 				Callback = null;
 			}
+		}
+
+		public Task CompletionTask
+		{
+			get { return _completionSource?.Task; }
 		}
 
 		private void Build(MenuModel model, AvaloniaList<object> menu)
@@ -94,15 +102,17 @@ namespace CefNet.Internal
 
 		public void RunMenuAt(Control control, Point point)
 		{
-			//Menu.PlacementTarget = control;
-			//Menu.Placement = PlacementMode.Relative;
-			//Menu.HorizontalOffset = point.X;
-			//Menu.VerticalOffset = point.Y;
-			Menu.Open(control);
+			_completionSource = new TaskCompletionSource<bool>();
+			Dispatcher.UIThread.Post(() =>
+			{
+				Menu.Open(control);
+				_completionSource.TrySetResult(true);
+			});
 		}
 
 		public void Cancel()
 		{
+			_completionSource?.TrySetResult(false);
 			Callback?.Cancel();
 			Callback = null;
 		}
